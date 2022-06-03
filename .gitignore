@@ -1,5 +1,5 @@
 .vs/*
-packages/*
+**/packages/
 external/*
 **/x64/
 *.vcxproj.user
