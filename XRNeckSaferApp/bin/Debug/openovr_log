@@ -1,0 +1,2 @@
+[2022-05-26 18:00:01.834] oovr_abort_raw_va:114	- OpenComposite Error
+[2022-05-26 18:00:01.834] ERR:38	- OpenComposite DLLMain ERROR: Cannot init VR: unsupported apptype 2

@@ -1,0 +1,2 @@
+﻿  pch.cpp
+E:\VS2017\Projekte\XRNeckSafer\XR_APILAYER_NOVENDOR_XRNeckSafer\pch.h(40,10): fatal error C1083: Cannot open include file: 'XrError.h': No such file or directory
