@@ -55,4 +55,4 @@ This can be done in several steps. To temporarily inhibit autorotation use the H
 
 
 
-Download link: [XRNeckSaferV01.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/VRNeckSafer/Release/VRNeckSaferV01.zip)
+Download link: [XRNeckSaferBeta1.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta1.zip)
