@@ -1,10 +1,12 @@
 ﻿using SharpDX;
 using System;
+using System.Collections.Generic;
 using System.IO.MemoryMappedFiles;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Valve.VR;
-
+using Silk.NET.Core.Native;
+using Silk.NET.OpenXR;
 namespace XRNeckSafer
 {
     public class VRStuff
@@ -29,6 +31,67 @@ namespace XRNeckSafer
             shm = MemoryMappedFile.CreateOrOpen(shmName, shmSize);
         }
 
+        public unsafe List<String> ListApiLayers()
+        {
+            List<String> LayerNameList = new List<String>();
+
+            AppDomain dom = AppDomain.CreateDomain("temporaryXr");
+            try
+            {
+                // Load the OpenXR package into a temporary app domain. This is so make sure that the registry is read everytime when looking for implicit API layer.
+                AssemblyName assemblyName = new AssemblyName();
+                assemblyName.CodeBase = typeof(XR).Assembly.Location;
+                Assembly assembly = dom.Load(assemblyName);
+                Type localXR = assembly.GetType("Silk.NET.OpenXR.XR");
+
+                XR xr = (XR)localXR.GetMethod("GetApi").Invoke(null, null);
+
+                // Make sure our layer is installed.
+                uint layerCount = 0;
+                xr.EnumerateApiLayerProperties(ref layerCount, null);
+                var layers = new ApiLayerProperties[layerCount];
+                for (int i = 0; i < layers.Length; i++)
+                {
+                    layers[i].Type = StructureType.TypeApiLayerProperties;
+                }
+                var layersSpan = new Span<ApiLayerProperties>(layers);
+                if (xr.EnumerateApiLayerProperties(ref layerCount, layersSpan) == Silk.NET.OpenXR.Result.Success)
+                {
+                    bool found = false;
+                    for (int i = 0; i < layers.Length; i++)
+                    {
+                        fixed (void* nptr = layers[i].LayerName)
+                        {
+                            string layerName = SilkMarshal.PtrToString(new System.IntPtr(nptr));
+                            LayerNameList.Add(layerName);
+                            if (layerName == "XR_APILAYER_NOVENDOR_XRNeckSafer")
+                            {
+                                found = true;
+                            }
+                        }
+                    }
+
+                    if (!found)
+                    {
+                        LayerNameList.Add("\n--> XRNeckSafer API Layer NOT active! <--");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Failed to query API layers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Failed to initialize OpenXR", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                AppDomain.Unload(dom);
+            }
+            return LayerNameList;
+
+        }
         public void resetHmdOrientation()
         {
             MemoryMappedViewAccessor accessor = shm.CreateViewAccessor();

@@ -104,13 +104,13 @@
             this.MultipleLRButtonsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.resetOptionsToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aPILayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableAPILayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listApiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aPILayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.enableAPILayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listApiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupAuto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AutorotGridView)).BeginInit();
             this.HMDYawBox.SuspendLayout();
@@ -492,11 +492,11 @@
             // AccumReset
             // 
             this.AccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AccumReset.Location = new System.Drawing.Point(72, 98);
+            this.AccumReset.Location = new System.Drawing.Point(69, 100);
             this.AccumReset.Name = "AccumReset";
-            this.AccumReset.Size = new System.Drawing.Size(49, 35);
+            this.AccumReset.Size = new System.Drawing.Size(57, 34);
             this.AccumReset.TabIndex = 54;
-            this.AccumReset.Text = "Accum Reset";
+            this.AccumReset.Text = "Set Acc. Reset";
             this.AccumReset.UseVisualStyleBackColor = true;
             this.AccumReset.Click += new System.EventHandler(this.AccumReset_Click);
             // 
@@ -786,55 +786,55 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(109, 22);
             this.toolStripMenuItem2.Text = "10 deg";
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(109, 22);
             this.toolStripMenuItem4.Text = "20 deg";
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(109, 22);
             this.toolStripMenuItem5.Text = "30 deg";
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(109, 22);
             this.toolStripMenuItem6.Text = "40 deg";
             // 
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(109, 22);
             this.toolStripMenuItem7.Text = "50 deg";
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(109, 22);
             this.toolStripMenuItem8.Text = "60 deg";
             // 
             // toolStripMenuItem9
             // 
             this.toolStripMenuItem9.Name = "toolStripMenuItem9";
-            this.toolStripMenuItem9.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(109, 22);
             this.toolStripMenuItem9.Text = "70 deg";
             // 
             // toolStripMenuItem10
             // 
             this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(109, 22);
             this.toolStripMenuItem10.Text = "80 deg";
             // 
             // toolStripMenuItem11
             // 
             this.toolStripMenuItem11.Name = "toolStripMenuItem11";
-            this.toolStripMenuItem11.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem11.Size = new System.Drawing.Size(109, 22);
             this.toolStripMenuItem11.Text = "90 deg";
             // 
             // MultipleLRButtonsToolStripMenuItem
@@ -855,6 +855,30 @@
             this.resetOptionsToDefaultToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.resetOptionsToDefaultToolStripMenuItem.Text = "Reset options to default";
             this.resetOptionsToDefaultToolStripMenuItem.Click += new System.EventHandler(this.resetOptionsToDefaultToolStripMenuItem_Click);
+            // 
+            // aPILayerToolStripMenuItem
+            // 
+            this.aPILayerToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.aPILayerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enableAPILayerToolStripMenuItem,
+            this.listApiToolStripMenuItem});
+            this.aPILayerToolStripMenuItem.Name = "aPILayerToolStripMenuItem";
+            this.aPILayerToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.aPILayerToolStripMenuItem.Text = "OpenXR";
+            // 
+            // enableAPILayerToolStripMenuItem
+            // 
+            this.enableAPILayerToolStripMenuItem.Enabled = false;
+            this.enableAPILayerToolStripMenuItem.Name = "enableAPILayerToolStripMenuItem";
+            this.enableAPILayerToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.enableAPILayerToolStripMenuItem.Text = "Activate XRNS OpenXR API Layer";
+            // 
+            // listApiToolStripMenuItem
+            // 
+            this.listApiToolStripMenuItem.Name = "listApiToolStripMenuItem";
+            this.listApiToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.listApiToolStripMenuItem.Text = "Show active OpenXR API Layers";
+            this.listApiToolStripMenuItem.Click += new System.EventHandler(this.listApiToolStripMenuItem_Click);
             // 
             // notifyIcon
             // 
@@ -882,29 +906,6 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
-            // aPILayerToolStripMenuItem
-            // 
-            this.aPILayerToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.aPILayerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.enableAPILayerToolStripMenuItem,
-            this.listApiToolStripMenuItem});
-            this.aPILayerToolStripMenuItem.Name = "aPILayerToolStripMenuItem";
-            this.aPILayerToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
-            this.aPILayerToolStripMenuItem.Text = "API Layer";
-            // 
-            // enableAPILayerToolStripMenuItem
-            // 
-            this.enableAPILayerToolStripMenuItem.Name = "enableAPILayerToolStripMenuItem";
-            this.enableAPILayerToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.enableAPILayerToolStripMenuItem.Text = "Activate XRNS OpenXR API Layer";
-            // 
-            // listApiToolStripMenuItem
-            // 
-            this.listApiToolStripMenuItem.Name = "listApiToolStripMenuItem";
-            this.listApiToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.listApiToolStripMenuItem.Text = "List active OpenXR API Layers";
-            this.listApiToolStripMenuItem.Click += new System.EventHandler(this.listApiToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -922,7 +923,6 @@
             this.MinimumSize = new System.Drawing.Size(292, 501);
             this.Name = "MainForm";
             this.Text = "XRNS";
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.Resize += new System.EventHandler(this.MainForm_Resize);

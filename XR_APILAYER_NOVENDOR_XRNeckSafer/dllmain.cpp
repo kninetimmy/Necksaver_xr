@@ -260,7 +260,7 @@ namespace {
         //restore current location but add
 //        location->pose.position = lastHmdLocation.pose.position + delta;
 
-        location->pose.position = pos + trans;
+        location->pose.position = pos - trans;
 
         DebugLog("<-- XRNeckSafer_xrLocateSpace %d\n", result);
         return result;

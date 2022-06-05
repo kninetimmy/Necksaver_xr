@@ -1,5 +1,6 @@
 ﻿using SharpDX;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -216,7 +217,7 @@ namespace XRNeckSafer
             bool h2 = checkButtonPress(SetHoldButton2, conf.HoldButton2);
             bool h3 = checkButtonPress(SetHoldButton3, conf.HoldButton3);
             bool h4 = checkButtonPress(SetHoldButton4, conf.HoldButton4);
-            bool pitchlimit= vr.getHmdPitch() - 90 > conf.PitchLimForAutorot;
+            bool pitchlimit = vr.getHmdPitch() - 90 > conf.PitchLimForAutorot;
 
             bool autofrozen = h1 || h2 || h3 || h4 || pitchlimit;
 
@@ -278,10 +279,10 @@ namespace XRNeckSafer
             while (hmdYaw < -180) hmdYaw += 360;
             while (hmdYaw > 180) hmdYaw -= 360;
 
-//            if (vr.HmdIsActive())
-                HMDYawLabel.Text = "HMD yaw: " + Math.Round(hmdYaw) + " deg";
-//            else
-//                HMDYawLabel.Text = "HMD yaw: standby";
+            //            if (vr.HmdIsActive())
+            HMDYawLabel.Text = "HMD yaw: " + Math.Round(hmdYaw) + " deg";
+            //            else
+            //                HMDYawLabel.Text = "HMD yaw: standby";
 
             if (reset_pressed)
             {
@@ -361,7 +362,7 @@ namespace XRNeckSafer
                 if (gr.hmd != hmdYaw)
                 {
                     gr.hmd = (int)hmdYaw;
-                    gr.rot = (int)hmdYaw+ sum_offset_angle;
+                    gr.rot = (int)hmdYaw + sum_offset_angle;
                     gr.Refresh();
                 }
             }
@@ -573,12 +574,12 @@ namespace XRNeckSafer
         {
             if (conf.MultipleLRbuttons == false)
             {
-                ButtonForm frm = new ButtonForm(this, "Button for Left Rotation:", conf.LeftButton); 
+                ButtonForm frm = new ButtonForm(this, "Button for Left Rotation:", conf.LeftButton);
                 frm.ShowDialog();
             }
             else
             {
-                MultiButtons frm = new MultiButtons(this, "Left",  conf.LeftButton, conf.LeftButton2, conf.LeftButton3);
+                MultiButtons frm = new MultiButtons(this, "Left", conf.LeftButton, conf.LeftButton2, conf.LeftButton3);
                 frm.ShowDialog();
             }
             setButtonToolTip(SetLeftButton, conf.LeftButton);
@@ -722,7 +723,7 @@ namespace XRNeckSafer
             if (conf.MinimizeToTray) minimizeToTrayToolStripMenuItem.Checked = true;
             if (conf.MultipleLRbuttons) MultipleLRButtonsToolStripMenuItem.Checked = true;
 
-            ToolStripMenuItem item= (ToolStripMenuItem)PitchLimToolStripMenuItem.DropDownItems[conf.PitchLimForAutorot / 10 - 1];
+            ToolStripMenuItem item = (ToolStripMenuItem)PitchLimToolStripMenuItem.DropDownItems[conf.PitchLimForAutorot / 10 - 1];
             item.Checked = true;
         }
 
@@ -744,7 +745,7 @@ namespace XRNeckSafer
         {
             foreach (ToolStripMenuItem item in PitchLimToolStripMenuItem.DropDownItems) item.Checked = false;
             ((ToolStripMenuItem)e.ClickedItem).Checked = true;
-            int.TryParse(e.ClickedItem.Text.Substring(0,2), out conf.PitchLimForAutorot);
+            int.TryParse(e.ClickedItem.Text.Substring(0, 2), out conf.PitchLimForAutorot);
             conf.WriteConfig();
         }
 
@@ -764,14 +765,17 @@ namespace XRNeckSafer
             }
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void listApiToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            List<String> LayerNames = vr.ListApiLayers();
 
+            string message = "";
+            string title = "OpenXR API Layers";
+            foreach (string name in LayerNames)
+            {
+                message = message + "\n" + name;
+            }
+            MessageBox.Show(message, title);
         }
     }
 }
