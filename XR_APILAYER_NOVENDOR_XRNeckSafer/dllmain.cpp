@@ -117,10 +117,10 @@ namespace {
     {
 
 #ifdef _DEBUG
-        va_list va;
-        va_start(va, fmt);
-        InternalLog(fmt, va);
-        va_end(va);
+//        va_list va;
+//        va_start(va, fmt);
+//        InternalLog(fmt, va);
+//        va_end(va);
 #endif
     }
 
@@ -148,9 +148,13 @@ namespace {
         lastHmdLocation.type = XR_TYPE_SPACE_LOCATION;
         lastHmdLocation.next = nullptr;
 
-        const XrResult result2 = nextXrLocateSpace(m_ViewSpace, m_LocalSpace, 0, &lastHmdLocation);
-        DebugLog("XrLocateSpace for HMD %d\n", result2);
+        XrSpaceLocation startingLocation;
 
+        const XrResult result2 = nextXrLocateSpace(m_ViewSpace, m_LocalSpace, 0, &startingLocation);
+        zeroHmdLocation = startingLocation;
+        lastHmdLocation = startingLocation;
+
+        DebugLog("XrLocateSpace for HMD %d\n", result2);
 
         DebugLog("<-- XRNeckSafer_xrCreateSession %d\n", result);
 
