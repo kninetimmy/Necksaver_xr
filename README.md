@@ -1,4 +1,4 @@
-Beware, XRNeckSafer is currently not working... We are looking into it... :)
+
 
 Installation:
 
