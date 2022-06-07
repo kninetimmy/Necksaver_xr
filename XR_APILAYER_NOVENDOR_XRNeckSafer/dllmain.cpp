@@ -16,6 +16,8 @@
 
 #include "pch.h"
 #include "math.h"
+#include <set>
+
 namespace {
     using namespace xr::math;
 
@@ -34,6 +36,7 @@ namespace {
     PFN_xrCreateSession nextXrCreateSession = nullptr;
     PFN_xrEndFrame nextXrEndFrame = nullptr;
 
+    std::set<XrSpace> isViewSpace;
 
     PFN_xrCreateReferenceSpace nextXrCreateReferenceSpace = nullptr;
 
@@ -43,7 +46,6 @@ namespace {
     XrVector3f trans;
 
     void Log(const char* fmt, ...);
-
 
     struct shmVal_s {
         float hmdYawAngle;
@@ -168,12 +170,6 @@ namespace {
         DebugLog("--> XRNeckSafer_xrEndFrame\n");
         const XrResult result = nextXrEndFrame(session, frameEndInfo);
         
-        buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues)); // is this really necessary each time?
-        if (NULL == buffer) {
-            Log("Cannot use MapViewOfFile: null buffer.");
-            return result;
-        }
-
         XrSpaceLocation location;
         location.type = XR_TYPE_SPACE_LOCATION;
         location.next = nullptr;
@@ -206,7 +202,7 @@ namespace {
         StoreXrQuaternion(&location.pose.orientation, substractedOrientation);
         
         //rotate translation by zero orientation
-        trans = { 0, 0, 0 };
+//        trans = { 0, 0, 0 };
         trans = { shmValues.lateralOffset, 0, shmValues.longitudinalOffset };
 //        StoreXrVector3(&trans,DirectX::XMVector3Rotate(LoadXrVector3(trans), substractedOrientation));
         DebugLog("x: %d\n", trans.x);
@@ -217,8 +213,25 @@ namespace {
             buffer->hmdYawAngle = angles.yaw * 180.f / (float)M_PI;
             buffer->hmdPitchAngle = angles.pitch * 180.f / (float)M_PI;
         }
-
         DebugLog("<-- XRNeckSafer_xrEndFrame %d\n", result);
+
+        return result;
+    }
+
+    // Overrides the behavior of xrCreateReferenceSpace().
+    XrResult XRNeckSafer_xrCreateReferenceSpace(
+        XrSession session,
+        const XrReferenceSpaceCreateInfo* createInfo,
+        XrSpace* space)
+    {
+        DebugLog("--> XRNeckSafer_xrCreateReferenceSpace\n");
+        // Call the chain to perform the actual operation.
+        const XrResult result = nextXrCreateReferenceSpace(session, createInfo, space);
+        if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_VIEW) {
+            isViewSpace.insert(*space);
+        }
+
+        DebugLog("<-- XRNeckSafer_xrCreateReferenceSpace %d\n", result);
 
         return result;
     }
@@ -235,6 +248,20 @@ namespace {
         DebugLog("--> XRNeckSafer_xrLocateViews\n");
         // Call the chain to perform the actual operation.
         const XrResult result = nextXrLocateViews(session, viewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views);
+
+        if (!isViewSpace.count(viewLocateInfo->space)) {
+            // get views in in VIEW space
+            XrView v[2];
+            const XrViewLocateInfo vinfo = { 
+                XR_TYPE_VIEW_LOCATE_INFO,
+                nullptr, 
+                XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO,
+                viewLocateInfo->displayTime,
+                m_ViewSpace 
+            };
+            nextXrLocateViews(session, &vinfo, viewState, viewCapacityInput, viewCountOutput, v);
+        }
+
         DebugLog("<-- XRNeckSafer_xrLocateViews %d\n", result);
 
         return result;
@@ -251,20 +278,34 @@ namespace {
         // Call the chain to perform the actual operation.
         const XrResult result = nextXrLocateSpace(space, baseSpace, time, location);
         
-        // not sure if this should really be done to *every* xrLocateSpace...
-        
+        bool spaceIsViewSpace = isViewSpace.count(space);
+        bool baseSpaceIsViewSpace = isViewSpace.count(baseSpace);
+
         // save current location
         XrVector3f pos = location->pose.position;
-        
+
         location->pose.position = { 0, 0, 0 };
 
-        StoreXrPose(&location->pose,
-            XMMatrixMultiply(LoadXrPose(location->pose),
-                DirectX::XMMatrixRotationRollPitchYaw(-shmValues.pitchOffset, -shmValues.yawOffset, 0.f)));
-        //restore current location but add
-//        location->pose.position = lastHmdLocation.pose.position + delta;
+        if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
 
-        location->pose.position = pos - trans;
+                StoreXrPose(&location->pose,
+                    XMMatrixMultiply(LoadXrPose(location->pose),
+                        DirectX::XMMatrixRotationRollPitchYaw(-shmValues.pitchOffset, -shmValues.yawOffset, 0.f)));
+                //restore current location but add
+        //        location->pose.position = lastHmdLocation.pose.position + delta;
+
+                location->pose.position = pos - trans;
+        }
+        if (baseSpaceIsViewSpace && !spaceIsViewSpace) {
+
+                 StoreXrPose(&location->pose,
+                    XMMatrixMultiply(LoadXrPose(location->pose),
+                        DirectX::XMMatrixRotationRollPitchYaw(shmValues.pitchOffset, shmValues.yawOffset, 0.f)));
+                //restore current location but add
+        //        location->pose.position = lastHmdLocation.pose.position + delta;
+
+                location->pose.position = pos - trans;
+        }
 
         DebugLog("<-- XRNeckSafer_xrLocateSpace %d\n", result);
         return result;
@@ -301,7 +342,10 @@ namespace {
             if (apiName == "xrEndFrame") {
                 nextXrEndFrame = reinterpret_cast<PFN_xrEndFrame>(*function);
                 *function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrEndFrame);
-             }
+            }
+            if (apiName == "xrCreateReferenceSpace") {
+                *function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrCreateReferenceSpace);
+            }
             
             // Leave all unhandled calls to the next layer.
         }
@@ -342,22 +386,12 @@ namespace {
         XrApiLayerCreateInfo chainApiLayerInfo = *apiLayerInfo;
         chainApiLayerInfo.nextInfo = apiLayerInfo->nextInfo->next;
         const XrResult result = apiLayerInfo->nextInfo->nextCreateApiLayerInstance(instanceCreateInfo, &chainApiLayerInfo, instance);
- 
-        if (result == XR_SUCCESS)
-        {
-            // Identify the application and load our configuration. Try by application first, then fallback to engines otherwise.
-//            config.Reset();
-//            if (!LoadConfiguration(instanceCreateInfo->applicationInfo.applicationName)) {
-//                LoadConfiguration(instanceCreateInfo->applicationInfo.engineName);
-//            }
-//            config.Dump();
-
-        }
 
         // doing this here because we need xrCreateReferenceSpace before it is intercepted
         PFN_xrVoidFunction function = NULL;
         const XrResult result2 = nextXrGetInstanceProcAddr(*instance, "xrCreateReferenceSpace", &function);
         nextXrCreateReferenceSpace = reinterpret_cast<PFN_xrCreateReferenceSpace>(function);
+        function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrCreateReferenceSpace);
 
         DebugLog("<-- XRNeckSafer_xrCreateApiLayerInstance %d\n", result);
 
@@ -450,13 +484,21 @@ extern "C" {
             Log("XRNeckSafer shared memory created\n");
         }
 
-        if (m_shmHandler) {
-            Log("XRNeckSafer shared memory ready\n");
-        }
+       if (m_shmHandler) {
+            buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
+            if (NULL != buffer) {
+                Log("XRNeckSafer shared memory ready\n");
+            }
+            else {
+                Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
+            }
+       }
         else {
             Log("Couldn't create XRNeckSafer shared memory\n");
         }
-    
+
+
+
         DebugLog("<-- XRNeckSafer_xrNegotiateLoaderApiLayerInterface\n");
 
         Log("%s layer is active\n", LayerName.c_str());
