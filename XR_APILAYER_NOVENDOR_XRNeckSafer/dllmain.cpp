@@ -178,9 +178,8 @@ namespace {
         DebugLog("XrLocateSpace for HMD %d\n", result2);
 
         //HMD moved since last update
-        delta = location.pose.position - lastHmdLocation.pose.position;
-
-        lastHmdLocation.pose.position = location.pose.position;
+    //    delta = location.pose.position - lastHmdLocation.pose.position;
+    //    lastHmdLocation.pose.position = location.pose.position;
 
         shmValues.yawOffset = buffer->yawOffset;
         shmValues.pitchOffset = buffer->pitchOffset;
@@ -194,17 +193,17 @@ namespace {
             buffer->resetHmdOrientation = false;
         }
 
-        //substract zero orientation from current orientation
+        //substract zero orientation from current orientation to get corrected relative HMD orientation
         const DirectX::XMVECTOR orientation = LoadXrQuaternion(location.pose.orientation);
-        const DirectX::XMVECTOR zeroorientation = LoadXrQuaternion(zeroHmdLocation.pose.orientation);
-        const DirectX::XMVECTOR invertZeroOrientation = DirectX::XMQuaternionConjugate(zeroorientation);
+        const DirectX::XMVECTOR zeroOrientation = LoadXrQuaternion(zeroHmdLocation.pose.orientation);
+        const DirectX::XMVECTOR invertZeroOrientation = DirectX::XMQuaternionConjugate(zeroOrientation);
         const DirectX::XMVECTOR substractedOrientation = DirectX::XMQuaternionMultiply(orientation, invertZeroOrientation);
         StoreXrQuaternion(&location.pose.orientation, substractedOrientation);
         
-        //rotate translation by zero orientation
-//        trans = { 0, 0, 0 };
+        //rotate translation by -zero orientation
         trans = { shmValues.lateralOffset, 0, shmValues.longitudinalOffset };
-//        StoreXrVector3(&trans,DirectX::XMVector3Rotate(LoadXrVector3(trans), substractedOrientation));
+        StoreXrVector3(&trans,DirectX::XMVector3Rotate(LoadXrVector3(trans), invertZeroOrientation));
+
         DebugLog("x: %d\n", trans.x);
         DebugLog("y: %d\n", trans.y);
         DebugLog("z: %d\n", trans.z);
@@ -227,6 +226,8 @@ namespace {
         DebugLog("--> XRNeckSafer_xrCreateReferenceSpace\n");
         // Call the chain to perform the actual operation.
         const XrResult result = nextXrCreateReferenceSpace(session, createInfo, space);
+       
+        // keep record of all the VIEW spaces of the app
         if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_VIEW) {
             isViewSpace.insert(*space);
         }
@@ -249,8 +250,16 @@ namespace {
         // Call the chain to perform the actual operation.
         const XrResult result = nextXrLocateViews(session, viewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views);
 
-        if (!isViewSpace.count(viewLocateInfo->space)) {
-            // get views in in VIEW space
+        // requested NOT for VIEW space: someone is actually asking for the views in a LOCAL/STAGE space
+        if (!isViewSpace.count(viewLocateInfo->space)) { 
+
+            // get already rotated head pose
+            XrSpaceLocation headLocation;
+            headLocation.type = XR_TYPE_SPACE_LOCATION;
+            headLocation.next = nullptr;
+            XRNeckSafer_xrLocateSpace(m_ViewSpace, viewLocateInfo->space, viewLocateInfo->displayTime,headLocation); 
+
+            // get pose of views in VIEW space
             XrView v[2];
             const XrViewLocateInfo vinfo = { 
                 XR_TYPE_VIEW_LOCATE_INFO,
@@ -260,6 +269,21 @@ namespace {
                 m_ViewSpace 
             };
             nextXrLocateViews(session, &vinfo, viewState, viewCapacityInput, viewCountOutput, v);
+
+            // rotate the views relative to center of head (base of VIEW space)
+            StoreXrPose(&v[0].pose,
+                    XMMatrixMultiply(LoadXrPose(v[0].pose),
+                                 LoadXrQuaternion(headLocation.pose.orientation )));
+            StoreXrPose(&v[1].pose,
+                    XMMatrixMultiply(LoadXrPose(v[1].pose),
+                                 LoadXrQuaternion(headLocation.pose.orientation )));
+
+            // add rotated eye positions to head position 
+            views[0].pose.position = headLocation.pose.position + v[0].pose.position;
+            views[1].pose.position = headLocation.pose.position + v[1].pose.position;
+            // set eye orientation to rotated eye orientation
+            views[0].pose.orientation = v[0].pose.position;
+            views[1].pose.orientation = v[1].pose.position;
         }
 
         DebugLog("<-- XRNeckSafer_xrLocateViews %d\n", result);
@@ -284,11 +308,11 @@ namespace {
         // save current location
         XrVector3f pos = location->pose.position;
 
-        location->pose.position = { 0, 0, 0 };
-
+  
         if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
 
-                StoreXrPose(&location->pose,
+            location->pose.position = { 0, 0, 0 };
+            StoreXrPose(&location->pose,
                     XMMatrixMultiply(LoadXrPose(location->pose),
                         DirectX::XMMatrixRotationRollPitchYaw(-shmValues.pitchOffset, -shmValues.yawOffset, 0.f)));
                 //restore current location but add
@@ -298,7 +322,8 @@ namespace {
         }
         if (baseSpaceIsViewSpace && !spaceIsViewSpace) {
 
-                 StoreXrPose(&location->pose,
+               location->pose.position = { 0, 0, 0 };
+               StoreXrPose(&location->pose,
                     XMMatrixMultiply(LoadXrPose(location->pose),
                         DirectX::XMMatrixRotationRollPitchYaw(shmValues.pitchOffset, shmValues.yawOffset, 0.f)));
                 //restore current location but add
