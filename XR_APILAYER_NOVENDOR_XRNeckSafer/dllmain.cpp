@@ -251,7 +251,7 @@ namespace {
         // Call the chain to perform the actual operation.
         const XrResult result = nextXrLocateViews(session, viewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views);
 
-        if (!isViewSpace.count(viewLocateInfo->space)) {
+        if (!isViewSpace.count(viewLocateInfo->space)) { 
             // get pose of views in VIEW space
             XrView v[2];
             const XrViewLocateInfo vinfo = { 
@@ -263,14 +263,15 @@ namespace {
             };
             nextXrLocateViews(session, &vinfo, viewState, viewCapacityInput, viewCountOutput, v);
 
-            // rotate the views
-                    StoreXrPose(&views[0].pose,
-                                XMMatrixMultiply(LoadXrPose(views[0].pose),
-                                                 XMMatrixRotationRollPitchYaw(0.f, -angle / 2.f, 0.f)));
-                    StoreXrPose(&views[1].pose,
-                                XMMatrixMultiply(LoadXrPose(views[1].pose),
-                                                 XMMatrixRotationRollPitchYaw(0.f, angle / 2.f, 0.f)));
-
+            // rotate the views relative to center of head (base of VIEW space)
+            StoreXrPose(&views[0].pose,
+                    XMMatrixMultiply(LoadXrPose(v[0].pose),
+                                XMMatrixRotationRollPitchYaw(-shmValues.pitchOffset, -shmValues.yawOffset, 0.f)));
+            StoreXrPose(&views[1].pose,
+                    XMMatrixMultiply(LoadXrPose(v[1].pose),
+                                 XMMatrixRotationRollPitchYaw(-shmValues.pitchOffset, -shmValues.yawOffset, 0.f)));
+            // add to requested views
+            
         }
 
         DebugLog("<-- XRNeckSafer_xrLocateViews %d\n", result);
