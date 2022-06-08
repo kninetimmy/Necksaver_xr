@@ -227,6 +227,8 @@ namespace {
         DebugLog("--> XRNeckSafer_xrCreateReferenceSpace\n");
         // Call the chain to perform the actual operation.
         const XrResult result = nextXrCreateReferenceSpace(session, createInfo, space);
+       
+        // keep record of all the VIEW spaces of the app
         if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_VIEW) {
             isViewSpace.insert(*space);
         }
@@ -250,7 +252,7 @@ namespace {
         const XrResult result = nextXrLocateViews(session, viewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views);
 
         if (!isViewSpace.count(viewLocateInfo->space)) {
-            // get views in in VIEW space
+            // get pose of views in VIEW space
             XrView v[2];
             const XrViewLocateInfo vinfo = { 
                 XR_TYPE_VIEW_LOCATE_INFO,
@@ -260,6 +262,15 @@ namespace {
                 m_ViewSpace 
             };
             nextXrLocateViews(session, &vinfo, viewState, viewCapacityInput, viewCountOutput, v);
+
+            // rotate the views
+                    StoreXrPose(&views[0].pose,
+                                XMMatrixMultiply(LoadXrPose(views[0].pose),
+                                                 XMMatrixRotationRollPitchYaw(0.f, -angle / 2.f, 0.f)));
+                    StoreXrPose(&views[1].pose,
+                                XMMatrixMultiply(LoadXrPose(views[1].pose),
+                                                 XMMatrixRotationRollPitchYaw(0.f, angle / 2.f, 0.f)));
+
         }
 
         DebugLog("<-- XRNeckSafer_xrLocateViews %d\n", result);
@@ -284,11 +295,11 @@ namespace {
         // save current location
         XrVector3f pos = location->pose.position;
 
-        location->pose.position = { 0, 0, 0 };
-
+  
         if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
 
-                StoreXrPose(&location->pose,
+            location->pose.position = { 0, 0, 0 };
+            StoreXrPose(&location->pose,
                     XMMatrixMultiply(LoadXrPose(location->pose),
                         DirectX::XMMatrixRotationRollPitchYaw(-shmValues.pitchOffset, -shmValues.yawOffset, 0.f)));
                 //restore current location but add
@@ -298,7 +309,8 @@ namespace {
         }
         if (baseSpaceIsViewSpace && !spaceIsViewSpace) {
 
-                 StoreXrPose(&location->pose,
+               location->pose.position = { 0, 0, 0 };
+               StoreXrPose(&location->pose,
                     XMMatrixMultiply(LoadXrPose(location->pose),
                         DirectX::XMMatrixRotationRollPitchYaw(shmValues.pitchOffset, shmValues.yawOffset, 0.f)));
                 //restore current location but add
