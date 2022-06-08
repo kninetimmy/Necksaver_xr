@@ -178,9 +178,8 @@ namespace {
         DebugLog("XrLocateSpace for HMD %d\n", result2);
 
         //HMD moved since last update
-        delta = location.pose.position - lastHmdLocation.pose.position;
-
-        lastHmdLocation.pose.position = location.pose.position;
+    //    delta = location.pose.position - lastHmdLocation.pose.position;
+    //    lastHmdLocation.pose.position = location.pose.position;
 
         shmValues.yawOffset = buffer->yawOffset;
         shmValues.pitchOffset = buffer->pitchOffset;
@@ -194,17 +193,17 @@ namespace {
             buffer->resetHmdOrientation = false;
         }
 
-        //substract zero orientation from current orientation
+        //substract zero orientation from current orientation to get corrected relative HMD orientation
         const DirectX::XMVECTOR orientation = LoadXrQuaternion(location.pose.orientation);
-        const DirectX::XMVECTOR zeroorientation = LoadXrQuaternion(zeroHmdLocation.pose.orientation);
-        const DirectX::XMVECTOR invertZeroOrientation = DirectX::XMQuaternionConjugate(zeroorientation);
+        const DirectX::XMVECTOR zeroOrientation = LoadXrQuaternion(zeroHmdLocation.pose.orientation);
+        const DirectX::XMVECTOR invertZeroOrientation = DirectX::XMQuaternionConjugate(zeroOrientation);
         const DirectX::XMVECTOR substractedOrientation = DirectX::XMQuaternionMultiply(orientation, invertZeroOrientation);
         StoreXrQuaternion(&location.pose.orientation, substractedOrientation);
         
-        //rotate translation by zero orientation
-//        trans = { 0, 0, 0 };
+        //rotate translation by -zero orientation
         trans = { shmValues.lateralOffset, 0, shmValues.longitudinalOffset };
-//        StoreXrVector3(&trans,DirectX::XMVector3Rotate(LoadXrVector3(trans), substractedOrientation));
+        StoreXrVector3(&trans,DirectX::XMVector3Rotate(LoadXrVector3(trans), invertZeroOrientation));
+
         DebugLog("x: %d\n", trans.x);
         DebugLog("y: %d\n", trans.y);
         DebugLog("z: %d\n", trans.z);
