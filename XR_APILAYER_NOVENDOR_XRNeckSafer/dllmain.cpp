@@ -251,7 +251,15 @@ namespace {
         // Call the chain to perform the actual operation.
         const XrResult result = nextXrLocateViews(session, viewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views);
 
+        // requested NOT for VIEW space: someone is actually asking for the views in a LOCAL/STAGE space
         if (!isViewSpace.count(viewLocateInfo->space)) { 
+
+            // get already rotated head pose
+            XrSpaceLocation headLocation;
+            headLocation.type = XR_TYPE_SPACE_LOCATION;
+            headLocation.next = nullptr;
+            XRNeckSafer_xrLocateSpace(m_ViewSpace, viewLocateInfo->space, viewLocateInfo->displayTime,headLocation); 
+
             // get pose of views in VIEW space
             XrView v[2];
             const XrViewLocateInfo vinfo = { 
@@ -264,14 +272,19 @@ namespace {
             nextXrLocateViews(session, &vinfo, viewState, viewCapacityInput, viewCountOutput, v);
 
             // rotate the views relative to center of head (base of VIEW space)
-            StoreXrPose(&views[0].pose,
+            StoreXrPose(&v[0].pose,
                     XMMatrixMultiply(LoadXrPose(v[0].pose),
-                                XMMatrixRotationRollPitchYaw(-shmValues.pitchOffset, -shmValues.yawOffset, 0.f)));
-            StoreXrPose(&views[1].pose,
+                                 LoadXrQuaternion(headLocation.pose.orientation )));
+            StoreXrPose(&v[1].pose,
                     XMMatrixMultiply(LoadXrPose(v[1].pose),
-                                 XMMatrixRotationRollPitchYaw(-shmValues.pitchOffset, -shmValues.yawOffset, 0.f)));
-            // add to requested views
-            
+                                 LoadXrQuaternion(headLocation.pose.orientation )));
+
+            // add rotated eye positions to head position 
+            views[0].pose.position = headLocation.pose.position + v[0].pose.position;
+            views[1].pose.position = headLocation.pose.position + v[1].pose.position;
+            // set eye orientation to rotated eye orientation
+            views[0].pose.orientation = v[0].pose.position;
+            views[1].pose.orientation = v[1].pose.position;
         }
 
         DebugLog("<-- XRNeckSafer_xrLocateViews %d\n", result);
