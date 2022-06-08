@@ -145,6 +145,7 @@ namespace {
         DebugLog("LOCAL space: %d\n", m_LocalSpace);
         referenceSpaceCreateInfo.referenceSpaceType = XR_REFERENCE_SPACE_TYPE_VIEW;
         const XrResult resV = nextXrCreateReferenceSpace(*session, &referenceSpaceCreateInfo, &m_ViewSpace);
+        isViewSpace.insert(m_ViewSpace);
         DebugLog("VIEW space: %d\n", m_ViewSpace);
 
         lastHmdLocation.type = XR_TYPE_SPACE_LOCATION;
@@ -237,60 +238,6 @@ namespace {
         return result;
     }
 
-    // Overrides the behavior of xrLocateViews().
-    XrResult XRNeckSafer_xrLocateViews(
-        const XrSession session,
-        const XrViewLocateInfo* const viewLocateInfo,
-        XrViewState* const viewState,
-        const uint32_t viewCapacityInput,
-        uint32_t* const viewCountOutput,
-        XrView* const views)
-    {
-        DebugLog("--> XRNeckSafer_xrLocateViews\n");
-        // Call the chain to perform the actual operation.
-        const XrResult result = nextXrLocateViews(session, viewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views);
-
-        // requested NOT for VIEW space: someone is actually asking for the views in a LOCAL/STAGE space
-        if (!isViewSpace.count(viewLocateInfo->space)) { 
-
-            // get already rotated head pose
-            XrSpaceLocation headLocation;
-            headLocation.type = XR_TYPE_SPACE_LOCATION;
-            headLocation.next = nullptr;
-            XRNeckSafer_xrLocateSpace(m_ViewSpace, viewLocateInfo->space, viewLocateInfo->displayTime,headLocation); 
-
-            // get pose of views in VIEW space
-            XrView v[2];
-            const XrViewLocateInfo vinfo = { 
-                XR_TYPE_VIEW_LOCATE_INFO,
-                nullptr, 
-                XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO,
-                viewLocateInfo->displayTime,
-                m_ViewSpace 
-            };
-            nextXrLocateViews(session, &vinfo, viewState, viewCapacityInput, viewCountOutput, v);
-
-            // rotate the views relative to center of head (base of VIEW space)
-            StoreXrPose(&v[0].pose,
-                    XMMatrixMultiply(LoadXrPose(v[0].pose),
-                                 LoadXrQuaternion(headLocation.pose.orientation )));
-            StoreXrPose(&v[1].pose,
-                    XMMatrixMultiply(LoadXrPose(v[1].pose),
-                                 LoadXrQuaternion(headLocation.pose.orientation )));
-
-            // add rotated eye positions to head position 
-            views[0].pose.position = headLocation.pose.position + v[0].pose.position;
-            views[1].pose.position = headLocation.pose.position + v[1].pose.position;
-            // set eye orientation to rotated eye orientation
-            views[0].pose.orientation = v[0].pose.position;
-            views[1].pose.orientation = v[1].pose.position;
-        }
-
-        DebugLog("<-- XRNeckSafer_xrLocateViews %d\n", result);
-
-        return result;
-    }
-
     // Overrides the behavior of xrLocateSpace()
     XrResult XRNeckSafer_xrLocateSpace(
         XrSpace space,
@@ -333,6 +280,60 @@ namespace {
         }
 
         DebugLog("<-- XRNeckSafer_xrLocateSpace %d\n", result);
+        return result;
+    }
+
+    // Overrides the behavior of xrLocateViews().
+    XrResult XRNeckSafer_xrLocateViews(
+        const XrSession session,
+        const XrViewLocateInfo* const viewLocateInfo,
+        XrViewState* const viewState,
+        const uint32_t viewCapacityInput,
+        uint32_t* const viewCountOutput,
+        XrView* const views)
+    {
+        DebugLog("--> XRNeckSafer_xrLocateViews\n");
+        // Call the chain to perform the actual operation.
+        const XrResult result = nextXrLocateViews(session, viewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views);
+
+        // requested NOT for VIEW space: someone is actually asking for the views in a LOCAL/STAGE space
+//        if (!isViewSpace.count(viewLocateInfo->space)) {
+//
+//            // get already rotated head pose
+//            XrSpaceLocation headLocation{ XR_TYPE_SPACE_LOCATION, nullptr };
+//            headLocation.type = XR_TYPE_SPACE_LOCATION;
+//            headLocation.next = nullptr;
+//            XRNeckSafer_xrLocateSpace(m_ViewSpace, viewLocateInfo->space, viewLocateInfo->displayTime, &headLocation);
+//
+//            // get pose of views in VIEW space
+//            XrView v[2]{ {XR_TYPE_VIEW, nullptr}, {XR_TYPE_VIEW, nullptr} };
+//            const XrViewLocateInfo vinfo = {
+//                XR_TYPE_VIEW_LOCATE_INFO,
+//                nullptr,
+//                XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO,
+//                viewLocateInfo->displayTime,
+//                m_ViewSpace
+//            };
+//            const XrResult result2 = nextXrLocateViews(session, &vinfo, viewState, viewCapacityInput, viewCountOutput, v);
+//
+//            // rotate the views relative to center of head (base of VIEW space)
+//            StoreXrPose(&v[0].pose,
+//                XMMatrixMultiply(LoadXrPose(v[0].pose),
+//                    DirectX::XMMatrixRotationQuaternion(LoadXrQuaternion(headLocation.pose.orientation))));
+//            StoreXrPose(&v[1].pose,
+//                XMMatrixMultiply(LoadXrPose(v[1].pose),
+//                    DirectX::XMMatrixRotationQuaternion(LoadXrQuaternion(headLocation.pose.orientation))));
+//
+//            // add rotated eye positions to head position 
+//            views[0].pose.position = headLocation.pose.position + v[0].pose.position;
+//            views[1].pose.position = headLocation.pose.position + v[1].pose.position;
+//            // set eye orientation to rotated eye orientation
+//            views[0].pose.orientation = v[0].pose.orientation;
+//            views[1].pose.orientation = v[1].pose.orientation;
+//        }
+
+        DebugLog("<-- XRNeckSafer_xrLocateViews %d\n", result);
+
         return result;
     }
 
