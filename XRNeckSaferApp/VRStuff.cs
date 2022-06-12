@@ -12,7 +12,9 @@ namespace XRNeckSafer
     public class VRStuff
     {
         MemoryMappedFile shm;
+        MemoryMappedViewAccessor accessor;
         public shmVal_s shmValues;
+
         public struct shmVal_s
         {
             public float hmdYawAngle;
@@ -21,7 +23,13 @@ namespace XRNeckSafer
             public float pitchOffset;
             public float lateralOffset;
             public float longitudinalOffset;
+            public int leftStartAt;
+            public int rightStartAt;
+            public float rightMultiplier;
+            public float leftMultiplier;
             public bool resetHmdOrientation;
+            public bool useSmoothRotation;
+            public bool hasBeenCentered;
         }
 
         public VRStuff()
@@ -29,6 +37,8 @@ namespace XRNeckSafer
             string shmName = "XRNeckSaferSHM";
             int shmSize = 80;
             shm = MemoryMappedFile.CreateOrOpen(shmName, shmSize);
+            accessor = shm.CreateViewAccessor();
+
         }
 
         public unsafe List<String> ListApiLayers()
@@ -94,13 +104,11 @@ namespace XRNeckSafer
         }
         public void resetHmdOrientation()
         {
-            MemoryMappedViewAccessor accessor = shm.CreateViewAccessor();
             shmValues.resetHmdOrientation = true;
             accessor.Write<shmVal_s>(0, ref shmValues);
         }
         public void updateHmdOrientation()
         {
-            MemoryMappedViewAccessor accessor = shm.CreateViewAccessor();
             accessor.Read<shmVal_s>(0, out shmValues);
         }
 
@@ -112,15 +120,22 @@ namespace XRNeckSafer
         {
             return shmValues.hmdPitchAngle;
         }
+        public void setSmoothRotationSettings(bool usesmooth, int leftstart, int rightstart, float leftmult, float rightmult)
+        {
+            shmValues.useSmoothRotation = usesmooth;
+            shmValues.leftStartAt = leftstart;
+            shmValues.rightStartAt = rightstart;
+            shmValues.leftMultiplier = leftmult;
+            shmValues.rightMultiplier = rightmult;
+            accessor.Write<shmVal_s>(0, ref shmValues);
+        }
 
         public void setOffset(int a, Vector3 trans)
         {
             shmValues.yawOffset = (float)(a * Math.PI / 180);
             shmValues.lateralOffset = trans.X;
             shmValues.longitudinalOffset = trans.Z;
-            MemoryMappedViewAccessor accessor = shm.CreateViewAccessor();
             accessor.Write<shmVal_s>(0, ref shmValues);
         }
-
     }
 }

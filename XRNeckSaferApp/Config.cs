@@ -61,20 +61,23 @@ namespace XRNeckSafer
         public ButtonConfig HoldButton1;
         public ButtonConfig HoldButton2;
         public ButtonConfig HoldButton3;
-        public ButtonConfig HoldButton4;
         public ButtonConfig AccuResetButton;
         public ButtonConfig AccuResetButton2;
         public ButtonConfig AccuResetButton3;
         public int Angle;
         public int TransLR;
         public int TransF;
+        public int SmoothLimL;
+        public int SmoothLimR;
+        public int SmoothMultL;
+        public int SmoothMultR;
         public bool Additiv;
-        public bool Auto;
         public bool StartMinimized;
         public bool MinimizeToTray;
         public bool MultipleLRbuttons;
         public int PitchLimForAutorot;
         public static string configfilename;
+        public string AutoMode;
         public List<int[]> AutoSteps;
 
 
@@ -92,19 +95,22 @@ namespace XRNeckSafer
             HoldButton1 = new ButtonConfig();
             HoldButton2 = new ButtonConfig();
             HoldButton3 = new ButtonConfig();
-            HoldButton4 = new ButtonConfig();
             AccuResetButton = new ButtonConfig();
             AccuResetButton2 = new ButtonConfig();
             AccuResetButton3 = new ButtonConfig();
             Angle = 30;
             TransLR = 0;
             TransF = 0;
+            SmoothLimL = 95;
+            SmoothLimR = 95;
+            SmoothMultL = 120;
+            SmoothMultR = 120;
             Additiv = false;
-            Auto = false;
             StartMinimized = false;
             MinimizeToTray = false;
             MultipleLRbuttons = false;
             PitchLimForAutorot = 90;
+            AutoMode = "Off";
             AutoSteps = new List<int[]>();
         }
 
@@ -130,7 +136,6 @@ namespace XRNeckSafer
                 if (c.HoldButton1  == null) c.HoldButton1   = new ButtonConfig();
                 if (c.HoldButton2  == null) c.HoldButton2   = new ButtonConfig();
                 if (c.HoldButton3  == null) c.HoldButton3   = new ButtonConfig();
-                if (c.HoldButton4  == null) c.HoldButton4  =  new ButtonConfig();
                 if (c.AccuResetButton == null) c.AccuResetButton = new ButtonConfig();
                 if (c.AccuResetButton2 == null) c.AccuResetButton2 = new ButtonConfig();
                 if (c.AccuResetButton3 == null) c.AccuResetButton3 = new ButtonConfig();

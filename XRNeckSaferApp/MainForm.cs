@@ -36,12 +36,15 @@ namespace XRNeckSafer
 
         public int min_form_heigh;
 
+        bool loading = true;
+
         public MainForm()
         {
 
             conf = Config.ReadConfig();
 
             InitializeComponent();
+
             min_form_heigh = Height;
             notifyIcon.ContextMenuStrip = contextMenuStrip;
             this.showToolStripMenuItem.Click += showToolStripMenuItem_Click;
@@ -56,9 +59,24 @@ namespace XRNeckSafer
             transFNUP.Value = conf.TransF;
             transLRNUP.Value = conf.TransLR;
             additivRB.Checked = conf.Additiv;
-            autoCB.Checked = conf.Auto;
-            if (conf.Auto) enableAuto(true);
-            else enableAuto(false);
+            if (conf.AutoMode == "stepwise")
+            {
+                ARstepwise.Checked = true;
+            }
+            else if (conf.AutoMode == "smooth")
+            {
+                ARsmooth.Checked = true;
+            }
+            else
+            {
+                AROffButton.Checked = true;
+            }
+            autorot_changed(new Object(), new EventArgs());
+
+            numericUpDownStartLeft.Value = conf.SmoothLimL;
+            numericUpDownStartRight.Value = conf.SmoothLimR;
+            numericUpDownMultLeft.Value = conf.SmoothMultL;
+            numericUpDownMultRight.Value = conf.SmoothMultR;
 
             setMenuCheckmarks();
 
@@ -98,36 +116,27 @@ namespace XRNeckSafer
             AutorotGridView.Columns[4].HeaderCell.Style.ForeColor = System.Drawing.Color.CadetBlue;
             AutorotGridView.Columns[4].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
 
-
             setButtonToolTip(SetLeftButton, conf.LeftButton);
             setButtonToolTip(SetRightButton, conf.RightButton);
             setButtonToolTip(SetResetButton, conf.ResetButton);
+            setButtonToolTip(AccumReset, conf.AccuResetButton);
             setButtonToolTip(SetHoldButton1, conf.HoldButton1);
-            setButtonToolTip(SetHoldButton2, conf.HoldButton2);
-            setButtonToolTip(SetHoldButton3, conf.HoldButton3);
-            setButtonToolTip(SetHoldButton4, conf.HoldButton4);
 
             setLabelToolTip(LeftLabel, conf.LeftButton);
             setLabelToolTip(RightLabel, conf.RightButton);
 
             error_label.Visible = check_autorot_config();
             error_label2.Visible = error_label.Visible;
-            loopTimer.Start();
-        }
+            numericUpDownStartLeft.Value = conf.SmoothLimL;
+            numericUpDownStartRight.Value = conf.SmoothLimR;
+            numericUpDownMultLeft.Value = conf.SmoothMultL;
+            numericUpDownMultLeft.Value = conf.SmoothMultR;
 
-        private void enableAuto(bool enable)
-        {
-            AddButton.Enabled = enable;
-            DeleteButton.Enabled = enable;
-            graphButton.Enabled = enable;
-            SetHoldButton1.Enabled = enable;
-            SetHoldButton2.Enabled = enable;
-            SetHoldButton3.Enabled = enable;
-            SetHoldButton4.Enabled = enable;
-            label2.Enabled = enable;
-            AutorotGridView.Enabled = enable;
-            AutorotGridView.ForeColor = enable ? SystemColors.ControlText : System.Drawing.Color.Gray;
-            if (!enable) auto_offset_angle = 0;
+            vr.setSmoothRotationSettings(conf.AutoMode=="smooth", conf.SmoothLimL, conf.SmoothLimR, conf.SmoothMultL, conf.SmoothMultR);
+
+            loopTimer.Start();
+            loading = false;
+
         }
 
         public void setButtonToolTip(Button b, ButtonConfig bc)
@@ -173,13 +182,6 @@ namespace XRNeckSafer
             conf.WriteConfig();
         }
 
-        private void autoCB_CheckedChanged(object sender, EventArgs e)
-        {
-            conf.Auto = autoCB.Checked;
-            enableAuto(autoCB.Checked);
-            conf.WriteConfig();
-        }
-
         bool checkButtonPress(Button b, ButtonConfig bc)
         {
             bool pressed = js.IsButtonPressed(bc);
@@ -202,6 +204,7 @@ namespace XRNeckSafer
             bool acc_res_pressed = js.IsButtonPressed(conf.AccuResetButton);
             bool l_pressed = js.IsButtonPressed(conf.LeftButton);
             bool r_pressed = js.IsButtonPressed(conf.RightButton);
+            bool h_pressed = checkButtonPress(SetHoldButton1, conf.HoldButton1);
             if (conf.MultipleLRbuttons)
             {
                 l_pressed |= js.IsButtonPressed(conf.LeftButton2);
@@ -212,14 +215,13 @@ namespace XRNeckSafer
                 reset_pressed |= js.IsButtonPressed(conf.ResetButton3);
                 acc_res_pressed |= js.IsButtonPressed(conf.AccuResetButton2);
                 acc_res_pressed |= js.IsButtonPressed(conf.AccuResetButton3);
+                h_pressed |= js.IsButtonPressed(conf.HoldButton2);
+                h_pressed |= js.IsButtonPressed(conf.HoldButton3);
             }
-            bool h1 = checkButtonPress(SetHoldButton1, conf.HoldButton1);
-            bool h2 = checkButtonPress(SetHoldButton2, conf.HoldButton2);
-            bool h3 = checkButtonPress(SetHoldButton3, conf.HoldButton3);
-            bool h4 = checkButtonPress(SetHoldButton4, conf.HoldButton4);
+
             bool pitchlimit = vr.getHmdPitch() - 90 > conf.PitchLimForAutorot;
 
-            bool autofrozen = h1 || h2 || h3 || h4 || pitchlimit;
+            bool autofrozen = h_pressed || pitchlimit;
 
             if (l_pressed)
             {
@@ -321,26 +323,35 @@ namespace XRNeckSafer
                 }
             }
 
-            if (autoCB.Checked)
+            if (!AROffButton.Checked)
             {
                 if (autofrozen)
                 {
                     AutorotLabel.Text = "Autorotation - on hold";
                     if (pitchlimit) AutorotLabel.Text += " (pitch limit)";
-                    else AutorotLabel.Text += " (button)";
+                    else AutorotLabel.Text += " (by button)";
                 }
                 else
                 {
                     AutorotLabel.Text = "Autorotation";
-                    calcAutoRotAndTrans((int)hmdYaw, ref auto_offset_angle, ref auto_trans_offset);
+                    if (conf.AutoMode == "stepwise")
+                    {
+                        calcAutoRotAndTrans((int)hmdYaw, ref auto_offset_angle, ref auto_trans_offset);
+                    }
+                    else
+                    {
+                        
+                        auto_offset_angle = 0;
+                        auto_trans_offset.X = 0;
+                        auto_trans_offset.Y = 0;
+                        auto_trans_offset.Z = 0;
+                    }
                 }
             }
-
 
             sum_offset_angle = joy_offset_angle + auto_offset_angle;
             if (Math.Abs(auto_trans_offset.X) > Math.Abs(trans_offset.X)) trans_offset.X = auto_trans_offset.X;
             if (Math.Abs(auto_trans_offset.Z) > Math.Abs(trans_offset.Z)) trans_offset.Z = auto_trans_offset.Z;
-
 
             if (last_offset_angle != sum_offset_angle
                 || last_offset_x != trans_offset.X
@@ -541,8 +552,10 @@ namespace XRNeckSafer
         private void AutorotGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
-            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, Size.Height - groupAuto.Location.Y - 111);
-            MaximumSize = new System.Drawing.Size(MaximumSize.Width, Math.Max(min_form_heigh, AutorotGridView.RowCount * 22 + 406));
+
+            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height-50);
+            //            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, Size.Height - stepwiseGroup.Location.Y - 111);
+            //            MaximumSize = new System.Drawing.Size(MaximumSize.Width, Math.Max(min_form_heigh, AutorotGridView.RowCount * 22 + 406));
             conf.WriteConfig();
             if (gr != null)
                 gr.Graph_ValuesChanged();
@@ -551,8 +564,9 @@ namespace XRNeckSafer
         private void AutorotGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
             AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
-            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, Size.Height - groupAuto.Location.Y - 111);
-            MaximumSize = new System.Drawing.Size(MaximumSize.Width, Math.Max(min_form_heigh, AutorotGridView.RowCount * 22 + 406));
+            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
+            //            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, Size.Height - stepwiseGroup.Location.Y - 111);
+            //            MaximumSize = new System.Drawing.Size(MaximumSize.Width, Math.Max(min_form_heigh, AutorotGridView.RowCount * 22 + 406));
             conf.WriteConfig();
             if (gr != null)
                 gr.Graph_ValuesChanged();
@@ -628,43 +642,31 @@ namespace XRNeckSafer
                 MultiButtons frm = new MultiButtons(this, "Accum Reset", conf.AccuResetButton, conf.AccuResetButton2, conf.AccuResetButton3);
                 frm.ShowDialog();
             }
+            setButtonToolTip(AccumReset, conf.AccuResetButton);
         }
 
         private void SetHoldButton1_Click(object sender, EventArgs e)
         {
-            ButtonForm frm = new ButtonForm(this, "Button for Reset:", conf.HoldButton1);
-            frm.ShowDialog();
+            if (conf.MultipleLRbuttons == false)
+            {
+                ButtonForm frm = new ButtonForm(this, "Hold Button:", conf.HoldButton1);
+                frm.ShowDialog();
+            }
+            else
+            {
+                MultiButtons frm = new MultiButtons(this, "Hold Button", conf.HoldButton1, conf.HoldButton2, conf.HoldButton3);
+                frm.ShowDialog();
+            }
             setButtonToolTip(SetHoldButton1, conf.HoldButton1);
-        }
-
-        private void SetHoldButton2_Click(object sender, EventArgs e)
-        {
-            ButtonForm frm = new ButtonForm(this, "Button for Reset:", conf.HoldButton2);
-            frm.ShowDialog();
-            setButtonToolTip(SetHoldButton2, conf.HoldButton2);
-        }
-
-        private void SetHoldButton3_Click(object sender, EventArgs e)
-        {
-            ButtonForm frm = new ButtonForm(this, "Button for Reset:", conf.HoldButton3);
-            frm.ShowDialog();
-            setButtonToolTip(SetHoldButton3, conf.HoldButton3);
-        }
-
-        private void SetHoldButton4_Click(object sender, EventArgs e)
-        {
-            ButtonForm frm = new ButtonForm(this, "Button for Reset:", conf.HoldButton4);
-            frm.ShowDialog();
-            setButtonToolTip(SetHoldButton4, conf.HoldButton4);
         }
 
         void sizeChanged()
         {
             VersionLabel.Location = new System.Drawing.Point(VersionLabel.Location.X, Size.Height - 56);
-            groupAuto.Height = Size.Height - groupAuto.Location.Y - 59;
+        //    stepwiseGroup.Height = Size.Height - stepwiseGroup.Location.Y - 59;
 
-            AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
-            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, Size.Height - groupAuto.Location.Y - 111);
+//            AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
+//            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, Size.Height - stepwiseGroup.Location.Y - 111);
         }
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
@@ -776,6 +778,58 @@ namespace XRNeckSafer
                 message = message + "\n" + name;
             }
             MessageBox.Show(message, title);
+        }
+
+        private void autorot_changed(object sender, EventArgs e)
+        {
+            if (AROffButton.Checked)
+            {
+                stepwiseGroup.Visible = false;
+                smoothGroup.Visible = false;
+                ARGroup.Height = 45;
+                conf.AutoMode = "off";
+                auto_offset_angle = 0;
+            }
+            if (ARsmooth.Checked)
+            {
+                stepwiseGroup.Visible = false;
+                smoothGroup.Visible = true;
+                ARGroup.Height = 140;
+                conf.AutoMode = "smooth";
+            }
+            if (ARstepwise.Checked)
+            {
+                stepwiseGroup.Visible = true;
+                smoothGroup.Visible = false;
+                ARGroup.Height = 217;
+                conf.AutoMode = "stepwise";
+            }
+            Height = ARGroup.Location.Y + ARGroup.Height + 60;
+            vr.setSmoothRotationSettings(conf.AutoMode == "smooth", conf.SmoothLimL, conf.SmoothLimR,
+                (float)conf.SmoothMultL / 100, (float)conf.SmoothMultR / 100);
+            conf.WriteConfig();
+        }
+        private void applySmoothSettings()
+        {
+            if (loading) return;
+
+            conf.SmoothLimL = (int)numericUpDownStartLeft.Value;
+            conf.SmoothLimR = (int)numericUpDownStartRight.Value;
+            conf.SmoothMultL = (int)numericUpDownMultLeft.Value;
+            conf.SmoothMultR = (int)numericUpDownMultLeft.Value;
+            vr.setSmoothRotationSettings(conf.AutoMode=="smooth", conf.SmoothLimL, conf.SmoothLimR, 
+                (float)conf.SmoothMultL / 100, (float)conf.SmoothMultR / 100);
+            conf.WriteConfig();
+        }
+
+        private void smooth_ValueChanged(object sender, EventArgs e)
+        {
+            applySmoothSettings();
+        }
+
+        private void smooth_ValueChanged(object sender, KeyEventArgs e)
+        {
+            applySmoothSettings();
         }
     }
 }
