@@ -170,14 +170,14 @@ namespace {
         return result;
     }
 
-    double RemapValue(float value, float from1, float to1, float from2, float to2)
+    float RemapValue(float value, float from1, float to1, float from2, float to2)
     {
         return  fmin((value - from1) / (to1 - from1) * (to2 - from2) + from2, to2);
     }
 
     void DoSmoothRotation(XrSpaceLocation location) {
 
-        if ( shmValues.hasBeenCentered) return;
+        if (!shmValues.hasBeenCentered) return;
 
         EulerAngles zangles = ToEulerAngles(location.pose.orientation);
 
@@ -190,10 +190,7 @@ namespace {
         float factor = RemapValue(fabs(zangles.yaw), startfrom, (float)M_PI, 0, 1);
 
         if (abs(zangles.yaw) >= startfrom) {
-            shmValues.yawOffset = factor * multiplier * (isright ? 1 : -1);
-        }
-        else {
-            shmValues.yawOffset = 0;
+            shmValues.yawOffset = shmValues.yawOffset + factor * multiplier * (isright ? 1 : -1);
         }
     }
 
@@ -242,12 +239,6 @@ namespace {
             shmValues.leftMultiplier = buffer->leftMultiplier;
             shmValues.rightMultiplier = buffer->rightMultiplier;
             DoSmoothRotation(location);
-        }
-        else {
-            shmValues.yawOffset = buffer->yawOffset;
-            shmValues.pitchOffset = buffer->pitchOffset;
-            shmValues.longitudinalOffset = buffer->longitudinalOffset;
-            shmValues.lateralOffset = buffer->lateralOffset;
         }
 
         //rotate translation by -zero orientation
