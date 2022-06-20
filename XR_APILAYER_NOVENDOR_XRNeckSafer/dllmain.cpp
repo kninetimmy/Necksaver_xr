@@ -40,7 +40,7 @@ namespace {
 
     PFN_xrCreateReferenceSpace nextXrCreateReferenceSpace = nullptr;
 
-    XrSpaceLocation zeroHmdLocation;
+    XrSpaceLocation centerHmdLocation;
     XrSpaceLocation lastHmdLocation;
     XrVector3f delta;
     XrVector3f trans;
@@ -160,7 +160,7 @@ namespace {
         XrSpaceLocation startingLocation;
 
         const XrResult result2 = nextXrLocateSpace(m_ViewSpace, m_LocalSpace, 0, &startingLocation);
-        zeroHmdLocation = startingLocation;
+        centerHmdLocation = startingLocation;
         lastHmdLocation = startingLocation;
 
         DebugLog("XrLocateSpace for HMD %d\n", result2);
@@ -168,30 +168,6 @@ namespace {
         DebugLog("<-- XRNeckSafer_xrCreateSession %d\n", result);
 
         return result;
-    }
-
-    float RemapValue(float value, float from1, float to1, float from2, float to2)
-    {
-        return  fmin((value - from1) / (to1 - from1) * (to2 - from2) + from2, to2);
-    }
-
-    void DoSmoothRotation(XrSpaceLocation location) {
-
-        if (!shmValues.hasBeenCentered) return;
-
-        EulerAngles zangles = ToEulerAngles(location.pose.orientation);
-
-        bool isright = zangles.yaw > 0;
-        float multiplier = isright ? shmValues.rightMultiplier : shmValues.leftMultiplier;
-        int startangle = isright ? shmValues.rightStartAt : shmValues.leftStartAt;
-
-        float startfrom = startangle * (float)M_PI / 180.f;
-
-        float factor = RemapValue(fabs(zangles.yaw), startfrom, (float)M_PI, 0, 1);
-
-        if (abs(zangles.yaw) >= startfrom) {
-            shmValues.yawOffset = shmValues.yawOffset + factor * multiplier * (isright ? 1 : -1);
-        }
     }
 
     XrResult XRNeckSafer_xrEndFrame(
@@ -212,49 +188,56 @@ namespace {
     //    delta = location.pose.position - lastHmdLocation.pose.position;
     //    lastHmdLocation.pose.position = location.pose.position;
 
+        if (location.locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT) {
+               
+        // center button pressed? -> current orientation gets center orientation
+        if (buffer->resetHmdOrientation) {
+            centerHmdLocation = location;
+            buffer->resetHmdOrientation = false;
+            shmValues.hasBeenCentered = true;
+            buffer->hasBeenCentered = shmValues.hasBeenCentered;
+        }
+
+        // refuse to do anything before centering
+        if (!shmValues.hasBeenCentered) return;
+
         shmValues.yawOffset = buffer->yawOffset;
         shmValues.pitchOffset = buffer->pitchOffset;
         shmValues.longitudinalOffset = buffer->longitudinalOffset;
         shmValues.lateralOffset = buffer->lateralOffset;
-        shmValues.resetHmdOrientation = buffer->resetHmdOrientation;
-
-        // reset button? -> current orientation gets zero orientation
-        if (shmValues.resetHmdOrientation) {
-            zeroHmdLocation = location;
-            buffer->resetHmdOrientation = false;
-            shmValues.hasBeenCentered = true;
-        }
-
-        //substract zero orientation from current orientation to get corrected relative HMD orientation
-        const DirectX::XMVECTOR orientation = LoadXrQuaternion(location.pose.orientation);
-        const DirectX::XMVECTOR zeroOrientation = LoadXrQuaternion(zeroHmdLocation.pose.orientation);
-        const DirectX::XMVECTOR invertZeroOrientation = DirectX::XMQuaternionConjugate(zeroOrientation);
-        const DirectX::XMVECTOR substractedOrientation = DirectX::XMQuaternionMultiply(orientation, invertZeroOrientation);
-        StoreXrQuaternion(&location.pose.orientation, substractedOrientation);
- 
         shmValues.useSmoothRotation = buffer->useSmoothRotation;
+
+        // translational offset has already been rotated in app
+        trans = { shmValues.lateralOffset, 0, shmValues.longitudinalOffset };
+
+        //substract center orientation from current orientation to get corrected relative HMD orientation
+        const DirectX::XMVECTOR orientation = LoadXrQuaternion(location.pose.orientation);
+        const DirectX::XMVECTOR centerOrientation = LoadXrQuaternion(centerHmdLocation.pose.orientation);
+        const DirectX::XMVECTOR invertCenterOrientation = DirectX::XMQuaternionConjugate(centerOrientation);
+        const DirectX::XMVECTOR substractedOrientation = DirectX::XMQuaternionMultiply(orientation, invertCenterOrientation);
+        StoreXrQuaternion(&location.pose.orientation, substractedOrientation);
+            
+            EulerAngles angles = ToEulerAngles(location.pose.orientation);
+            buffer->hmdYawAngle = angles.yaw * 180.f / (float)M_PI;
+            buffer->hmdPitchAngle = angles.pitch * 180.f / (float)M_PI;
+
         if (shmValues.useSmoothRotation) {
             shmValues.leftStartAt = buffer->leftStartAt;
             shmValues.rightStartAt = buffer->rightStartAt;
             shmValues.leftMultiplier = buffer->leftMultiplier;
             shmValues.rightMultiplier = buffer->rightMultiplier;
-            DoSmoothRotation(location);
+            trans = { 0, 0, 0 };
+
+            bool isright = angles.yaw > 0;
+            float multiplier = isright ? shmValues.rightMultiplier : shmValues.leftMultiplier;
+            int startangle = isright ? shmValues.rightStartAt : shmValues.leftStartAt;
+            float startfrom = startangle * (float)M_PI / 180.f;
+            if (abs(angles.yaw) >= startfrom) {
+                shmValues.yawOffset = (abs(zangles.yaw) - startfrom) * multiplier * (isright ? 1 : -1);
+            }
         }
 
-        //rotate translation by -zero orientation
-        trans = { shmValues.lateralOffset, 0, shmValues.longitudinalOffset };
-        StoreXrVector3(&trans,DirectX::XMVector3Rotate(LoadXrVector3(trans), invertZeroOrientation));
-
-        DebugLog("x: %d\n", trans.x);
-        DebugLog("y: %d\n", trans.y);
-        DebugLog("z: %d\n", trans.z);
-        if (location.locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT) {
-            EulerAngles angles = ToEulerAngles(location.pose.orientation);
-            buffer->hmdYawAngle = angles.yaw * 180.f / (float)M_PI;
-            buffer->hmdPitchAngle = angles.pitch * 180.f / (float)M_PI;
         }
-        buffer->hasBeenCentered = shmValues.hasBeenCentered;
-
         DebugLog("<-- XRNeckSafer_xrEndFrame %d\n", result);
 
         return result;
@@ -556,6 +539,7 @@ extern "C" {
             buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
             if (NULL != buffer) {
                 Log("XRNeckSafer shared memory ready\n");
+                buffer->hasBeenCentered = false;
             }
             else {
                 Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
