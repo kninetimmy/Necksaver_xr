@@ -1,9 +1,14 @@
 
+Changelog for beta2:
+- smooth autorotation (linear multiplication for now) Thanks Firdimigdi!
+- a memory leak fixed
+- work on compatibility with native OpenXR games (MSFS) but not there yet.
+- Some UI work
+- Reset button is now called Center button to avoid confusion
 
 Installation:
 
-1. Create a folder and unzip XRNeckSafer.zip into it.
-
+1. Create a folder and unzip XRNeckSaferBeta2.zip into it.
 2. Copy the OpenXrApiLayer to %ProgramFiles% (e.g. C:\Program Files\OpenXrApiLayer) 
    You will need admin rights to put them there. The install- and uninstall- scripts should be run from that location. 
    The rest of the files in the .zip including the .exe can stay out of the %ProgramFiles% folder. No need to run the .exe as admin. 
@@ -12,21 +17,32 @@ Installation:
 3. Start/Restart Mixed-Reality-Portal 
 4. Start OpenXR Developer Tools and check on system status. XR_APILAYER_NOVENDOR_XRNeckSafer should be listed as API Layer
 5. Start XRNeckSaferApp.exe in the main folder and go to OpenXR in the Menu on top. Select "Show active OpenXR API Layers".
-   This should list all the active Layers and should now include "XR_APILAYER_NOVENDOR_XRNeckSafer".
+   This should list all the active Layers and should now include "XR_APILAYER_NOVENDOR_XRNeckSafer". 
 6. If this works you can configure XRNeckSafer similar to VRNeckSafer.
-7. Once in game press the combined Game/XRNS reset button.
-8. Check that the HMD yaw value 
+7. Once in game press the combined Game/XRNS center button.
+8. Check that the HMD yaw value is changing when moving the HMD.
 
 Known issues:
 
 - The Menu "Activate XRNS OpenXR API Layer" is not working yet. That's why you have to use the powershell script...
-- Translation is not working correctly. Better leave it at 0 currently.
-- When an yaw offset is activated by VRNS your translational movement dos not account for it yet. 
-  Hard to describe but you will notice it when moving around in the cockpit with an activated yaw offset.
-  
-Should work with IL-2 and DCS together with OpenComposite. I tested it on my G2 only though...  
+- On some systems 5. might fail. If 4. was successfull disregard the error. XRNS should work anyway.
+- If translation is not working correctly reset HOME and ENVIRONMENT in Mixed Reality Portal (thanks Melanor8807).
+- When a rotation offset is activated by XRNS your translational movement dos not account for it yet. 
+  Hard to describe but you will notice it when moving around in the cockpit with an activated offset.
+- "Smooth" autorotation might cause nausea for some users! It does for me... So be careful und stop it when you feel uncomfortable!
+- When you are experiencing FPS loss with XRNS (especially with Oculus HMDs) try to minimize the XRNS App.
+- XRNS works with games that can use OpenComposite (e.g. IL-2 and DCS). Native OpenXR games are not working yet. 
 
-Thanks for you help guys!
+Roadmap:
+ - pitch axis
+ - user curves for smooth autorotation 
+ - fix for translational movement when rotated
+ - UI overhaul
+ - build instructions
+ - better documentation
+ - installer
+
+Thanks for you help and patience guys!
 Please use the XRNS discord for feedback: https://discord.gg/GgUpAejN
 
 Cheers,
@@ -58,4 +74,4 @@ This can be done in several steps. To temporarily inhibit autorotation use the H
 
 
 
-Download link: [XRNeckSaferBeta1.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta1.zip)
+Download link: [XRNeckSaferBeta2.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta2.zip)

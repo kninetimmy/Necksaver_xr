@@ -281,10 +281,16 @@ namespace XRNeckSafer
             while (hmdYaw < -180) hmdYaw += 360;
             while (hmdYaw > 180) hmdYaw -= 360;
 
-            //            if (vr.HmdIsActive())
-            HMDYawLabel.Text = "HMD yaw: " + Math.Round(hmdYaw) + " deg";
-            //            else
-            //                HMDYawLabel.Text = "HMD yaw: standby";
+            if (vr.HmdWasCentered())
+            {
+                HMDYawLabel.Location = new System.Drawing.Point(67, 18);
+                HMDYawLabel.Text = "HMD yaw: " + Math.Round(hmdYaw) + " deg";
+            }
+            else
+            {
+                HMDYawLabel.Location = new System.Drawing.Point(20, 18);
+                HMDYawLabel.Text = "HMD yaw: (not centered in game yet)";
+            }
 
             if (reset_pressed)
             {
@@ -340,7 +346,7 @@ namespace XRNeckSafer
                     }
                     else
                     {
-                        
+
                         auto_offset_angle = 0;
                         auto_trans_offset.X = 0;
                         auto_trans_offset.Y = 0;
@@ -358,6 +364,7 @@ namespace XRNeckSafer
                 || last_offset_z != trans_offset.Z)
             {
                 vr.setOffset(sum_offset_angle, trans_offset);
+                Text = "XRNS (" + sum_offset_angle + " deg)";
             }
 
             lastpressed = l_pressed || r_pressed;
@@ -365,8 +372,6 @@ namespace XRNeckSafer
             last_offset_angle = sum_offset_angle;
             last_offset_x = trans_offset.X;
             last_offset_z = trans_offset.Z;
-
-            Text = "XRNS (" + sum_offset_angle + " deg)";
 
             if (gr != null)
             {

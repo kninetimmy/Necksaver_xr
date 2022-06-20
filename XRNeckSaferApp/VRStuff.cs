@@ -112,6 +112,10 @@ namespace XRNeckSafer
             accessor.Read<shmVal_s>(0, out shmValues);
         }
 
+        public bool HmdWasCentered()
+        {
+            return shmValues.hasBeenCentered;
+        }
         public float getHmdYaw()
         {
             return shmValues.hmdYawAngle;
