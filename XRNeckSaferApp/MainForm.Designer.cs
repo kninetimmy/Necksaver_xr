@@ -30,22 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.groupAuto = new System.Windows.Forms.GroupBox();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.stepwiseGroup = new System.Windows.Forms.GroupBox();
             this.error_label2 = new System.Windows.Forms.Label();
-            this.AutorotLabel = new System.Windows.Forms.Label();
             this.error_label = new System.Windows.Forms.Label();
             this.graphButton = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.SetHoldButton4 = new System.Windows.Forms.Button();
-            this.SetHoldButton3 = new System.Windows.Forms.Button();
-            this.SetHoldButton2 = new System.Windows.Forms.Button();
-            this.SetHoldButton1 = new System.Windows.Forms.Button();
-            this.autoCB = new System.Windows.Forms.CheckBox();
             this.AutorotGridView = new System.Windows.Forms.DataGridView();
             this.act = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deact = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,6 +47,21 @@
             this.Fwd = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AddButton = new System.Windows.Forms.Button();
             this.DeleteButton = new System.Windows.Forms.Button();
+            this.smoothGroup = new System.Windows.Forms.GroupBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numericUpDownMultRight = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMultLeft = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownStartRight = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownStartLeft = new System.Windows.Forms.NumericUpDown();
+            this.AutorotLabel = new System.Windows.Forms.Label();
+            this.SetHoldButton1 = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -111,8 +119,17 @@
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupAuto.SuspendLayout();
+            this.ARGroup = new System.Windows.Forms.GroupBox();
+            this.ARsmooth = new System.Windows.Forms.RadioButton();
+            this.ARstepwise = new System.Windows.Forms.RadioButton();
+            this.AROffButton = new System.Windows.Forms.RadioButton();
+            this.stepwiseGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AutorotGridView)).BeginInit();
+            this.smoothGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultRight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultLeft)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartRight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLeft)).BeginInit();
             this.HMDYawBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.transFNUP)).BeginInit();
@@ -120,57 +137,41 @@
             ((System.ComponentModel.ISupportInitialize)(this.transLRNUP)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
+            this.ARGroup.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupAuto
+            // stepwiseGroup
             // 
-            this.groupAuto.Controls.Add(this.error_label2);
-            this.groupAuto.Controls.Add(this.AutorotLabel);
-            this.groupAuto.Controls.Add(this.error_label);
-            this.groupAuto.Controls.Add(this.graphButton);
-            this.groupAuto.Controls.Add(this.label2);
-            this.groupAuto.Controls.Add(this.SetHoldButton4);
-            this.groupAuto.Controls.Add(this.SetHoldButton3);
-            this.groupAuto.Controls.Add(this.SetHoldButton2);
-            this.groupAuto.Controls.Add(this.SetHoldButton1);
-            this.groupAuto.Controls.Add(this.autoCB);
-            this.groupAuto.Controls.Add(this.AutorotGridView);
-            this.groupAuto.Controls.Add(this.AddButton);
-            this.groupAuto.Controls.Add(this.DeleteButton);
-            this.groupAuto.Location = new System.Drawing.Point(12, 275);
-            this.groupAuto.Name = "groupAuto";
-            this.groupAuto.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupAuto.Size = new System.Drawing.Size(256, 167);
-            this.groupAuto.TabIndex = 13;
-            this.groupAuto.TabStop = false;
+            this.stepwiseGroup.Controls.Add(this.error_label2);
+            this.stepwiseGroup.Controls.Add(this.error_label);
+            this.stepwiseGroup.Controls.Add(this.graphButton);
+            this.stepwiseGroup.Controls.Add(this.AutorotGridView);
+            this.stepwiseGroup.Controls.Add(this.AddButton);
+            this.stepwiseGroup.Controls.Add(this.DeleteButton);
+            this.stepwiseGroup.Location = new System.Drawing.Point(10, 40);
+            this.stepwiseGroup.Name = "stepwiseGroup";
+            this.stepwiseGroup.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.stepwiseGroup.Size = new System.Drawing.Size(235, 166);
+            this.stepwiseGroup.TabIndex = 13;
+            this.stepwiseGroup.TabStop = false;
             // 
             // error_label2
             // 
             this.error_label2.AutoSize = true;
             this.error_label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.error_label2.ForeColor = System.Drawing.Color.Red;
-            this.error_label2.Location = new System.Drawing.Point(179, 29);
+            this.error_label2.Location = new System.Drawing.Point(129, 29);
             this.error_label2.Name = "error_label2";
             this.error_label2.Size = new System.Drawing.Size(38, 13);
             this.error_label2.TabIndex = 57;
             this.error_label2.Text = "value";
-            // 
-            // AutorotLabel
-            // 
-            this.AutorotLabel.AutoSize = true;
-            this.AutorotLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AutorotLabel.Location = new System.Drawing.Point(5, -2);
-            this.AutorotLabel.Name = "AutorotLabel";
-            this.AutorotLabel.Size = new System.Drawing.Size(91, 16);
-            this.AutorotLabel.TabIndex = 54;
-            this.AutorotLabel.Text = "Autorotation";
             // 
             // error_label
             // 
             this.error_label.AutoSize = true;
             this.error_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.error_label.ForeColor = System.Drawing.Color.Red;
-            this.error_label.Location = new System.Drawing.Point(176, 18);
+            this.error_label.Location = new System.Drawing.Point(126, 18);
             this.error_label.Name = "error_label";
             this.error_label.Size = new System.Drawing.Size(45, 13);
             this.error_label.TabIndex = 56;
@@ -180,79 +181,12 @@
             // 
             this.graphButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("graphButton.BackgroundImage")));
             this.graphButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.graphButton.Location = new System.Drawing.Point(226, 18);
+            this.graphButton.Location = new System.Drawing.Point(176, 18);
             this.graphButton.Name = "graphButton";
             this.graphButton.Size = new System.Drawing.Size(24, 22);
             this.graphButton.TabIndex = 55;
             this.graphButton.UseVisualStyleBackColor = true;
             this.graphButton.Click += new System.EventHandler(this.graphButton_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 39);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 15);
-            this.label2.TabIndex = 54;
-            this.label2.Text = "Hold Buttons";
-            // 
-            // SetHoldButton4
-            // 
-            this.SetHoldButton4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetHoldButton4.Location = new System.Drawing.Point(8, 137);
-            this.SetHoldButton4.Name = "SetHoldButton4";
-            this.SetHoldButton4.Size = new System.Drawing.Size(66, 22);
-            this.SetHoldButton4.TabIndex = 45;
-            this.SetHoldButton4.Text = "Hold 4";
-            this.SetHoldButton4.UseVisualStyleBackColor = true;
-            this.SetHoldButton4.Click += new System.EventHandler(this.SetHoldButton4_Click);
-            // 
-            // SetHoldButton3
-            // 
-            this.SetHoldButton3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetHoldButton3.Location = new System.Drawing.Point(8, 110);
-            this.SetHoldButton3.Name = "SetHoldButton3";
-            this.SetHoldButton3.Size = new System.Drawing.Size(66, 22);
-            this.SetHoldButton3.TabIndex = 44;
-            this.SetHoldButton3.Text = "Hold 3";
-            this.SetHoldButton3.UseVisualStyleBackColor = true;
-            this.SetHoldButton3.Click += new System.EventHandler(this.SetHoldButton3_Click);
-            // 
-            // SetHoldButton2
-            // 
-            this.SetHoldButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetHoldButton2.Location = new System.Drawing.Point(8, 83);
-            this.SetHoldButton2.Name = "SetHoldButton2";
-            this.SetHoldButton2.Size = new System.Drawing.Size(66, 22);
-            this.SetHoldButton2.TabIndex = 43;
-            this.SetHoldButton2.Text = "Hold 2";
-            this.SetHoldButton2.UseVisualStyleBackColor = true;
-            this.SetHoldButton2.Click += new System.EventHandler(this.SetHoldButton2_Click);
-            // 
-            // SetHoldButton1
-            // 
-            this.SetHoldButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetHoldButton1.Location = new System.Drawing.Point(9, 56);
-            this.SetHoldButton1.Name = "SetHoldButton1";
-            this.SetHoldButton1.Size = new System.Drawing.Size(66, 22);
-            this.SetHoldButton1.TabIndex = 42;
-            this.SetHoldButton1.Text = "Hold 1";
-            this.SetHoldButton1.UseVisualStyleBackColor = true;
-            this.SetHoldButton1.Click += new System.EventHandler(this.SetHoldButton1_Click);
-            // 
-            // autoCB
-            // 
-            this.autoCB.AutoSize = true;
-            this.autoCB.Cursor = System.Windows.Forms.Cursors.Default;
-            this.autoCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.autoCB.Location = new System.Drawing.Point(13, 20);
-            this.autoCB.Name = "autoCB";
-            this.autoCB.Size = new System.Drawing.Size(59, 17);
-            this.autoCB.TabIndex = 15;
-            this.autoCB.Text = "Enable";
-            this.autoCB.UseVisualStyleBackColor = true;
-            this.autoCB.CheckedChanged += new System.EventHandler(this.autoCB_CheckedChanged);
             // 
             // AutorotGridView
             // 
@@ -267,7 +201,7 @@
             this.rot,
             this.LR,
             this.Fwd});
-            this.AutorotGridView.Location = new System.Drawing.Point(81, 43);
+            this.AutorotGridView.Location = new System.Drawing.Point(31, 43);
             this.AutorotGridView.Name = "AutorotGridView";
             this.AutorotGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.AutorotGridView.Size = new System.Drawing.Size(169, 114);
@@ -279,8 +213,8 @@
             // act
             // 
             this.act.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.act.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle31.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.act.DefaultCellStyle = dataGridViewCellStyle31;
             this.act.Frozen = true;
             this.act.HeaderText = "act";
             this.act.Name = "act";
@@ -292,8 +226,8 @@
             // deact
             // 
             this.deact.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deact.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle32.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deact.DefaultCellStyle = dataGridViewCellStyle32;
             this.deact.Frozen = true;
             this.deact.HeaderText = "deact";
             this.deact.Name = "deact";
@@ -305,8 +239,8 @@
             // rot
             // 
             this.rot.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rot.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rot.DefaultCellStyle = dataGridViewCellStyle33;
             this.rot.Frozen = true;
             this.rot.HeaderText = "rot";
             this.rot.Name = "rot";
@@ -317,8 +251,8 @@
             // 
             // LR
             // 
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LR.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle34.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LR.DefaultCellStyle = dataGridViewCellStyle34;
             this.LR.Frozen = true;
             this.LR.HeaderText = "L/R";
             this.LR.Name = "LR";
@@ -327,8 +261,8 @@
             // 
             // Fwd
             // 
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Fwd.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle35.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Fwd.DefaultCellStyle = dataGridViewCellStyle35;
             this.Fwd.Frozen = true;
             this.Fwd.HeaderText = "Fwd";
             this.Fwd.Name = "Fwd";
@@ -338,7 +272,7 @@
             // AddButton
             // 
             this.AddButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddButton.Location = new System.Drawing.Point(81, 18);
+            this.AddButton.Location = new System.Drawing.Point(31, 18);
             this.AddButton.Name = "AddButton";
             this.AddButton.Size = new System.Drawing.Size(43, 22);
             this.AddButton.TabIndex = 40;
@@ -349,7 +283,7 @@
             // DeleteButton
             // 
             this.DeleteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DeleteButton.Location = new System.Drawing.Point(128, 18);
+            this.DeleteButton.Location = new System.Drawing.Point(78, 18);
             this.DeleteButton.Name = "DeleteButton";
             this.DeleteButton.Size = new System.Drawing.Size(43, 22);
             this.DeleteButton.TabIndex = 41;
@@ -357,15 +291,216 @@
             this.DeleteButton.UseVisualStyleBackColor = true;
             this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
+            // smoothGroup
+            // 
+            this.smoothGroup.Controls.Add(this.label20);
+            this.smoothGroup.Controls.Add(this.label18);
+            this.smoothGroup.Controls.Add(this.label13);
+            this.smoothGroup.Controls.Add(this.label7);
+            this.smoothGroup.Controls.Add(this.label6);
+            this.smoothGroup.Controls.Add(this.label5);
+            this.smoothGroup.Controls.Add(this.label4);
+            this.smoothGroup.Controls.Add(this.label2);
+            this.smoothGroup.Controls.Add(this.numericUpDownMultRight);
+            this.smoothGroup.Controls.Add(this.numericUpDownMultLeft);
+            this.smoothGroup.Controls.Add(this.numericUpDownStartRight);
+            this.smoothGroup.Controls.Add(this.numericUpDownStartLeft);
+            this.smoothGroup.Location = new System.Drawing.Point(10, 40);
+            this.smoothGroup.Name = "smoothGroup";
+            this.smoothGroup.Size = new System.Drawing.Size(235, 89);
+            this.smoothGroup.TabIndex = 57;
+            this.smoothGroup.TabStop = false;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(137, 13);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(61, 15);
+            this.label20.TabIndex = 58;
+            this.label20.Text = "Amplify by";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(43, 13);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(45, 15);
+            this.label18.TabIndex = 57;
+            this.label18.Text = "Start at";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(194, 43);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(18, 15);
+            this.label13.TabIndex = 56;
+            this.label13.Text = "%";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(93, 43);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(28, 15);
+            this.label7.TabIndex = 55;
+            this.label7.Text = "deg";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(127, 60);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(16, 13);
+            this.label6.TabIndex = 33;
+            this.label6.Text = "R";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(28, 60);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(16, 13);
+            this.label5.TabIndex = 32;
+            this.label5.Text = "R";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(128, 34);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(14, 13);
+            this.label4.TabIndex = 31;
+            this.label4.Text = "L";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(29, 34);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(14, 13);
+            this.label2.TabIndex = 30;
+            this.label2.Text = "L";
+            // 
+            // numericUpDownMultRight
+            // 
+            this.numericUpDownMultRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMultRight.Location = new System.Drawing.Point(146, 57);
+            this.numericUpDownMultRight.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericUpDownMultRight.Name = "numericUpDownMultRight";
+            this.numericUpDownMultRight.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownMultRight.TabIndex = 29;
+            this.numericUpDownMultRight.Value = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.numericUpDownMultRight.ValueChanged += new System.EventHandler(this.smooth_ValueChanged);
+            this.numericUpDownMultRight.KeyUp += new System.Windows.Forms.KeyEventHandler(this.smooth_ValueChanged);
+            // 
+            // numericUpDownMultLeft
+            // 
+            this.numericUpDownMultLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMultLeft.Location = new System.Drawing.Point(146, 31);
+            this.numericUpDownMultLeft.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericUpDownMultLeft.Name = "numericUpDownMultLeft";
+            this.numericUpDownMultLeft.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownMultLeft.TabIndex = 28;
+            this.numericUpDownMultLeft.Value = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.numericUpDownMultLeft.ValueChanged += new System.EventHandler(this.smooth_ValueChanged);
+            this.numericUpDownMultLeft.KeyUp += new System.Windows.Forms.KeyEventHandler(this.smooth_ValueChanged);
+            // 
+            // numericUpDownStartRight
+            // 
+            this.numericUpDownStartRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownStartRight.Location = new System.Drawing.Point(47, 57);
+            this.numericUpDownStartRight.Maximum = new decimal(new int[] {
+            180,
+            0,
+            0,
+            0});
+            this.numericUpDownStartRight.Name = "numericUpDownStartRight";
+            this.numericUpDownStartRight.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownStartRight.TabIndex = 27;
+            this.numericUpDownStartRight.Value = new decimal(new int[] {
+            95,
+            0,
+            0,
+            0});
+            this.numericUpDownStartRight.ValueChanged += new System.EventHandler(this.smooth_ValueChanged);
+            this.numericUpDownStartRight.KeyUp += new System.Windows.Forms.KeyEventHandler(this.smooth_ValueChanged);
+            // 
+            // numericUpDownStartLeft
+            // 
+            this.numericUpDownStartLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownStartLeft.Location = new System.Drawing.Point(47, 31);
+            this.numericUpDownStartLeft.Maximum = new decimal(new int[] {
+            180,
+            0,
+            0,
+            0});
+            this.numericUpDownStartLeft.Name = "numericUpDownStartLeft";
+            this.numericUpDownStartLeft.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownStartLeft.TabIndex = 26;
+            this.numericUpDownStartLeft.Value = new decimal(new int[] {
+            95,
+            0,
+            0,
+            0});
+            this.numericUpDownStartLeft.ValueChanged += new System.EventHandler(this.smooth_ValueChanged);
+            this.numericUpDownStartLeft.KeyUp += new System.Windows.Forms.KeyEventHandler(this.smooth_ValueChanged);
+            // 
+            // AutorotLabel
+            // 
+            this.AutorotLabel.AutoSize = true;
+            this.AutorotLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AutorotLabel.Location = new System.Drawing.Point(5, 0);
+            this.AutorotLabel.Name = "AutorotLabel";
+            this.AutorotLabel.Size = new System.Drawing.Size(91, 16);
+            this.AutorotLabel.TabIndex = 54;
+            this.AutorotLabel.Text = "Autorotation";
+            // 
+            // SetHoldButton1
+            // 
+            this.SetHoldButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetHoldButton1.Location = new System.Drawing.Point(198, 15);
+            this.SetHoldButton1.Name = "SetHoldButton1";
+            this.SetHoldButton1.Size = new System.Drawing.Size(48, 22);
+            this.SetHoldButton1.TabIndex = 42;
+            this.SetHoldButton1.Text = "Hold";
+            this.SetHoldButton1.UseVisualStyleBackColor = true;
+            this.SetHoldButton1.Click += new System.EventHandler(this.SetHoldButton1_Click);
+            // 
             // label12
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(8, 36);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(236, 13);
+            this.label12.Size = new System.Drawing.Size(239, 13);
             this.label12.TabIndex = 26;
-            this.label12.Text = "Set Reset Button to the same button as in game:";
+            this.label12.Text = "Set Center Button to the same button as in game:";
             // 
             // label11
             // 
@@ -413,9 +548,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(9, 88);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(233, 13);
+            this.label1.Size = new System.Drawing.Size(236, 13);
             this.label1.TabIndex = 55;
-            this.label1.Text = "When in cockpit press Reset Button to calibrate";
+            this.label1.Text = "When in cockpit press Center Button to calibrate";
             // 
             // label3
             // 
@@ -434,7 +569,7 @@
             this.SetResetButton.Name = "SetResetButton";
             this.SetResetButton.Size = new System.Drawing.Size(71, 35);
             this.SetResetButton.TabIndex = 28;
-            this.SetResetButton.Text = "Set Reset Button";
+            this.SetResetButton.Text = "Set Center Button";
             this.SetResetButton.UseVisualStyleBackColor = true;
             this.SetResetButton.Click += new System.EventHandler(this.SetResetButton_Click);
             // 
@@ -453,12 +588,12 @@
             // 
             this.VersionLabel.AutoSize = true;
             this.VersionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VersionLabel.Location = new System.Drawing.Point(237, 445);
+            this.VersionLabel.Location = new System.Drawing.Point(237, 503);
             this.VersionLabel.Name = "VersionLabel";
             this.VersionLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.VersionLabel.Size = new System.Drawing.Size(28, 13);
+            this.VersionLabel.Size = new System.Drawing.Size(34, 13);
             this.VersionLabel.TabIndex = 34;
-            this.VersionLabel.Text = "v0.2";
+            this.VersionLabel.Text = "beta2";
             this.VersionLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // groupBox1
@@ -875,6 +1010,7 @@
             // 
             // listApiToolStripMenuItem
             // 
+            this.listApiToolStripMenuItem.Enabled = false;
             this.listApiToolStripMenuItem.Name = "listApiToolStripMenuItem";
             this.listApiToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.listApiToolStripMenuItem.Text = "Show active OpenXR API Layers";
@@ -906,29 +1042,89 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
+            // ARGroup
+            // 
+            this.ARGroup.Controls.Add(this.smoothGroup);
+            this.ARGroup.Controls.Add(this.ARsmooth);
+            this.ARGroup.Controls.Add(this.ARstepwise);
+            this.ARGroup.Controls.Add(this.AROffButton);
+            this.ARGroup.Controls.Add(this.AutorotLabel);
+            this.ARGroup.Controls.Add(this.stepwiseGroup);
+            this.ARGroup.Controls.Add(this.SetHoldButton1);
+            this.ARGroup.Location = new System.Drawing.Point(12, 277);
+            this.ARGroup.Name = "ARGroup";
+            this.ARGroup.Size = new System.Drawing.Size(256, 216);
+            this.ARGroup.TabIndex = 56;
+            this.ARGroup.TabStop = false;
+            this.ARGroup.Text = "groupBox2";
+            // 
+            // ARsmooth
+            // 
+            this.ARsmooth.AutoSize = true;
+            this.ARsmooth.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ARsmooth.Location = new System.Drawing.Point(83, 18);
+            this.ARsmooth.Name = "ARsmooth";
+            this.ARsmooth.Size = new System.Drawing.Size(67, 17);
+            this.ARsmooth.TabIndex = 57;
+            this.ARsmooth.Text = "Smooth";
+            this.ARsmooth.UseVisualStyleBackColor = true;
+            this.ARsmooth.CheckedChanged += new System.EventHandler(this.autorot_changed);
+            // 
+            // ARstepwise
+            // 
+            this.ARstepwise.AutoSize = true;
+            this.ARstepwise.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ARstepwise.Location = new System.Drawing.Point(6, 18);
+            this.ARstepwise.Name = "ARstepwise";
+            this.ARstepwise.Size = new System.Drawing.Size(76, 17);
+            this.ARstepwise.TabIndex = 56;
+            this.ARstepwise.Text = "Stepwise";
+            this.ARstepwise.UseVisualStyleBackColor = true;
+            this.ARstepwise.CheckedChanged += new System.EventHandler(this.autorot_changed);
+            // 
+            // AROffButton
+            // 
+            this.AROffButton.AutoSize = true;
+            this.AROffButton.Checked = true;
+            this.AROffButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AROffButton.Location = new System.Drawing.Point(150, 18);
+            this.AROffButton.Name = "AROffButton";
+            this.AROffButton.Size = new System.Drawing.Size(42, 17);
+            this.AROffButton.TabIndex = 55;
+            this.AROffButton.TabStop = true;
+            this.AROffButton.Text = "Off";
+            this.AROffButton.UseVisualStyleBackColor = true;
+            this.AROffButton.CheckedChanged += new System.EventHandler(this.autorot_changed);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(276, 462);
+            this.ClientSize = new System.Drawing.Size(276, 641);
+            this.Controls.Add(this.ARGroup);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.HMDYawBox);
-            this.Controls.Add(this.groupAuto);
             this.Controls.Add(this.VersionLabel);
             this.Controls.Add(this.menuStrip);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.MaximumSize = new System.Drawing.Size(292, 2837);
-            this.MinimumSize = new System.Drawing.Size(292, 501);
+            this.MinimumSize = new System.Drawing.Size(292, 370);
             this.Name = "MainForm";
             this.Text = "XRNS";
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
-            this.groupAuto.ResumeLayout(false);
-            this.groupAuto.PerformLayout();
+            this.stepwiseGroup.ResumeLayout(false);
+            this.stepwiseGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AutorotGridView)).EndInit();
+            this.smoothGroup.ResumeLayout(false);
+            this.smoothGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultRight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultLeft)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartRight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLeft)).EndInit();
             this.HMDYawBox.ResumeLayout(false);
             this.HMDYawBox.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -939,14 +1135,15 @@
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.contextMenuStrip.ResumeLayout(false);
+            this.ARGroup.ResumeLayout(false);
+            this.ARGroup.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.GroupBox groupAuto;
-        private System.Windows.Forms.CheckBox autoCB;
+        private System.Windows.Forms.GroupBox stepwiseGroup;
         private System.Windows.Forms.Timer loopTimer;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
@@ -979,10 +1176,6 @@
         private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.Button DeleteButton;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button SetHoldButton4;
-        private System.Windows.Forms.Button SetHoldButton3;
-        private System.Windows.Forms.Button SetHoldButton2;
         private System.Windows.Forms.Button SetHoldButton1;
         private System.Windows.Forms.Button SetResetButton;
         private System.Windows.Forms.Label label3;
@@ -1021,6 +1214,23 @@
         private System.Windows.Forms.ToolStripMenuItem aPILayerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableAPILayerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listApiToolStripMenuItem;
+        private System.Windows.Forms.GroupBox ARGroup;
+        private System.Windows.Forms.RadioButton ARsmooth;
+        private System.Windows.Forms.RadioButton ARstepwise;
+        private System.Windows.Forms.RadioButton AROffButton;
+        private System.Windows.Forms.GroupBox smoothGroup;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown numericUpDownMultRight;
+        private System.Windows.Forms.NumericUpDown numericUpDownMultLeft;
+        private System.Windows.Forms.NumericUpDown numericUpDownStartRight;
+        private System.Windows.Forms.NumericUpDown numericUpDownStartLeft;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label18;
     }
 }
 
