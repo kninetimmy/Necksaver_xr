@@ -12,16 +12,15 @@ Installation:
 2. Copy the OpenXrApiLayer to %ProgramFiles% (e.g. C:\Program Files\OpenXrApiLayer) 
    You will need admin rights to put them there. The install- and uninstall- scripts should be run from that location. 
    The rest of the files in the .zip including the .exe can stay out of the %ProgramFiles% folder. No need to run the .exe as admin. 
-2. Go into the %ProgramFiles%\OpenXrApiLayer and run "Install-XR_APILAYER_NOVENDOR_XRNeckSafer.ps1" as a PowerShell script. 
+3. Go into the %ProgramFiles%\OpenXrApiLayer and run "Install-XR_APILAYER_NOVENDOR_XRNeckSafer.ps1" as a PowerShell script. 
    (right click on it and select "Execute with PowerShell") This will install the API Layer.
-3. Start/Restart Mixed-Reality-Portal 
-4. Start OpenXR Developer Tools and check on system status. XR_APILAYER_NOVENDOR_XRNeckSafer should be listed as API Layer
-5. Start XRNeckSaferApp.exe in the main folder and go to OpenXR in the Menu on top. Select "Show active OpenXR API Layers".
-   (disregard 5. for now, menu disabled until fixed)
+4. Start/Restart Mixed-Reality-Portal 
+5. Start OpenXR Developer Tools and check on system status. XR_APILAYER_NOVENDOR_XRNeckSafer should be listed as API Layer
+6. Start XRNeckSaferApp.exe in the main folder and go to OpenXR in the Menu on top. Select "Show active OpenXR API Layers". (disregard 5. for now, menu disabled until fixed)
    This should list all the active Layers and should now include "XR_APILAYER_NOVENDOR_XRNeckSafer". 
-6. If this works you can configure XRNeckSafer similar to VRNeckSafer.
-7. Once in game press the combined Game/XRNS center button.
-8. Check that the HMD yaw value is changing when moving the HMD.
+7. If this works you can configure XRNeckSafer similar to VRNeckSafer.
+8. Once in game press the combined Game/XRNS center button.
+9. Check that the HMD yaw value is changing when moving the HMD.
 
 Known issues:
 
