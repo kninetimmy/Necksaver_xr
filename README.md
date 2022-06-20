@@ -16,6 +16,7 @@ Installation:
    (right click on it and select "Execute with PowerShell") This will install the API Layer.
 3. Start/Restart Mixed-Reality-Portal 
 4. Start OpenXR Developer Tools and check on system status. XR_APILAYER_NOVENDOR_XRNeckSafer should be listed as API Layer
+   (disregard 4. for now, menu disabled until fixed)
 5. Start XRNeckSaferApp.exe in the main folder and go to OpenXR in the Menu on top. Select "Show active OpenXR API Layers".
    This should list all the active Layers and should now include "XR_APILAYER_NOVENDOR_XRNeckSafer". 
 6. If this works you can configure XRNeckSafer similar to VRNeckSafer.
