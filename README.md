@@ -3,6 +3,7 @@ Changelog for beta2b:
 - fixed extreme amplify values at very first start
 - hold button works now in smooth autorotation
 - manual L/R buttons work now in smooth autorotation
+
 (If you update from an earlier version you can just replace XR_APILAYER_NOVENDOR_XRNeckSafer.dll and XRNeckSaferApp.exe with the new versions)
 
 Changelog for beta2:
