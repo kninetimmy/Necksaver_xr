@@ -29,6 +29,7 @@ namespace XRNeckSafer
             public float leftMultiplier;
             public bool resetHmdOrientation;
             public bool useSmoothRotation;
+            public bool holdSmoothRotation;
             public bool hasBeenCentered;
         }
 
@@ -139,6 +140,12 @@ namespace XRNeckSafer
             shmValues.yawOffset = (float)(a * Math.PI / 180);
             shmValues.lateralOffset = trans.X;
             shmValues.longitudinalOffset = trans.Z;
+            accessor.Write<shmVal_s>(0, ref shmValues);
+        }
+
+        public void setSmoothHold(bool h)
+        {
+            shmValues.holdSmoothRotation = h;
             accessor.Write<shmVal_s>(0, ref shmValues);
         }
     }

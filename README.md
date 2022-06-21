@@ -1,9 +1,15 @@
+Changelog for beta2b:
+- smooth autorotation values are now saved correctly
+- fixed extreme amplify values at very first start
+- hold button works now in smooth autorotation
+- manual L/R buttons work now in smooth autorotation
+(If you update from an earlier version you can just replace XR_APILAYER_NOVENDOR_XRNeckSafer.dll and XRNeckSaferApp.exe with the new versions)
 
 Changelog for beta2:
 - smooth autorotation (linear multiplication for now) Thanks Firdimigdi!
 - a memory leak fixed
 - work on compatibility with native OpenXR games (MSFS) but not there yet.
-- Some UI work
+- some UI work
 - Reset button is now called Center button to avoid confusion
 
 Installation:
@@ -74,4 +80,4 @@ This can be done in several steps. To temporarily inhibit autorotation use the H
 
 
 
-Download link: [XRNeckSaferBeta2.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta2.zip)
+Download link: [XRNeckSaferBeta2b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta2b.zip)

@@ -62,6 +62,7 @@ namespace {
         float leftMultiplier;
         bool resetHmdOrientation;
         bool useSmoothRotation;
+        bool holdSmoothRotation;
         bool hasBeenCentered;
     } shmValues;
 
@@ -72,6 +73,8 @@ namespace {
     XrSpace m_LocalSpace{ XR_NULL_HANDLE };
     XrSpace m_ViewSpace{ XR_NULL_HANDLE };
     XrSession m_Session{ XR_NULL_HANDLE };
+
+    float holdYawOffsetValue;
 
     struct EulerAngles {
         float roll, pitch, yaw;
@@ -164,6 +167,7 @@ namespace {
         const XrResult result2 = nextXrLocateSpace(m_ViewSpace, m_LocalSpace, 0, &startingLocation);
         centerHmdLocation = startingLocation;
         lastHmdLocation = startingLocation;
+        holdYawOffsetValue = 0;
 
         DebugLog("XrLocateSpace for HMD %d\n", result2);
 
@@ -212,7 +216,7 @@ namespace {
             shmValues.longitudinalOffset = buffer->longitudinalOffset;
             shmValues.lateralOffset = buffer->lateralOffset;
             shmValues.useSmoothRotation = buffer->useSmoothRotation;
-
+            shmValues.holdSmoothRotation = buffer->holdSmoothRotation;
             // rotate translational to center orientation
             //trans = {
             //    shmValues.lateralOffset * ccos - shmValues.longitudinalOffset * csin,
@@ -241,14 +245,20 @@ namespace {
                 shmValues.rightStartAt = buffer->rightStartAt;
                 shmValues.leftMultiplier = buffer->leftMultiplier;
                 shmValues.rightMultiplier = buffer->rightMultiplier;
-                trans = { 0, 0, 0 };
+                //trans = { 0, 0, 0 };
 
-                bool isright = angles.yaw > 0;
-                float multiplier = isright ? shmValues.rightMultiplier : shmValues.leftMultiplier;
-                int startangle = isright ? shmValues.rightStartAt : shmValues.leftStartAt;
-                float startfrom = startangle * (float)M_PI / 180.f;
-                if (abs(angles.yaw) >= startfrom) {
-                    shmValues.yawOffset = (abs(angles.yaw) - startfrom) * multiplier * (isright ? 1 : -1);
+                if (!shmValues.holdSmoothRotation) {
+                    bool isright = angles.yaw > 0;
+                    float multiplier = isright ? shmValues.rightMultiplier : shmValues.leftMultiplier;
+                    int startangle = isright ? shmValues.rightStartAt : shmValues.leftStartAt;
+                    float startfrom = startangle * (float)M_PI / 180.f;
+                    if (abs(angles.yaw) >= startfrom) {
+                        shmValues.yawOffset = shmValues.yawOffset+(abs(angles.yaw) - startfrom) * multiplier * (isright ? 1 : -1);
+                    }
+                    holdYawOffsetValue = shmValues.yawOffset;
+                }
+                else {
+                    shmValues.yawOffset = holdYawOffsetValue;
                 }
             }
 

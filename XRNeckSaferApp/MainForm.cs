@@ -32,11 +32,11 @@ namespace XRNeckSafer
 
         public bool lastpressed;
 
+        public bool last_h_pressed;
+
         public bool autorot_config_error;
 
         public int min_form_heigh;
-
-        bool loading = true;
 
         public MainForm()
         {
@@ -130,13 +130,11 @@ namespace XRNeckSafer
             numericUpDownStartLeft.Value = conf.SmoothLimL;
             numericUpDownStartRight.Value = conf.SmoothLimR;
             numericUpDownMultLeft.Value = conf.SmoothMultL;
-            numericUpDownMultLeft.Value = conf.SmoothMultR;
+            numericUpDownMultRight.Value = conf.SmoothMultR;
 
-            vr.setSmoothRotationSettings(conf.AutoMode=="smooth", conf.SmoothLimL, conf.SmoothLimR, conf.SmoothMultL, conf.SmoothMultR);
+            vr.setSmoothRotationSettings(conf.AutoMode=="smooth", conf.SmoothLimL, conf.SmoothLimR, (float)conf.SmoothMultL/100, (float)conf.SmoothMultR/100);
 
             loopTimer.Start();
-            loading = false;
-
         }
 
         public void setButtonToolTip(Button b, ButtonConfig bc)
@@ -222,6 +220,12 @@ namespace XRNeckSafer
             bool pitchlimit = vr.getHmdPitch() - 90 > conf.PitchLimForAutorot;
 
             bool autofrozen = h_pressed || pitchlimit;
+
+            if (h_pressed != last_h_pressed)
+            {
+                vr.setSmoothHold(h_pressed);
+            }
+            last_h_pressed = h_pressed;
 
             if (l_pressed)
             {
@@ -668,11 +672,7 @@ namespace XRNeckSafer
         void sizeChanged()
         {
             VersionLabel.Location = new System.Drawing.Point(VersionLabel.Location.X, Size.Height - 56);
-        //    stepwiseGroup.Height = Size.Height - stepwiseGroup.Location.Y - 59;
-
-//            AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
-//            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, Size.Height - stepwiseGroup.Location.Y - 111);
-        }
+         }
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
             sizeChanged();
@@ -816,24 +816,56 @@ namespace XRNeckSafer
         }
         private void applySmoothSettings()
         {
-            if (loading) return;
-
-            conf.SmoothLimL = (int)numericUpDownStartLeft.Value;
-            conf.SmoothLimR = (int)numericUpDownStartRight.Value;
-            conf.SmoothMultL = (int)numericUpDownMultLeft.Value;
-            conf.SmoothMultR = (int)numericUpDownMultLeft.Value;
-            vr.setSmoothRotationSettings(conf.AutoMode=="smooth", conf.SmoothLimL, conf.SmoothLimR, 
-                (float)conf.SmoothMultL / 100, (float)conf.SmoothMultR / 100);
+            vr.setSmoothRotationSettings(conf.AutoMode == "smooth", conf.SmoothLimL, conf.SmoothLimR,
+               (float)conf.SmoothMultL / 100, (float)conf.SmoothMultR / 100);
             conf.WriteConfig();
         }
 
-        private void smooth_ValueChanged(object sender, EventArgs e)
+        private void numericUpDownMultLeft_ValueChanged(object sender, EventArgs e)
         {
+            conf.SmoothMultL = (int)numericUpDownMultLeft.Value;
             applySmoothSettings();
         }
 
-        private void smooth_ValueChanged(object sender, KeyEventArgs e)
+        private void numericUpDownMultLeft_KeyUp(object sender, KeyEventArgs e)
         {
+            conf.SmoothMultL = (int)numericUpDownMultLeft.Value;
+            applySmoothSettings();
+        }
+
+        private void numericUpDownMultRight_ValueChanged(object sender, EventArgs e)
+        {
+            conf.SmoothMultR = (int)numericUpDownMultRight.Value;
+            applySmoothSettings();
+        }
+
+        private void numericUpDownMultRight_KeyUp(object sender, KeyEventArgs e)
+        {
+            conf.SmoothMultR = (int)numericUpDownMultRight.Value;
+            applySmoothSettings();
+        }
+
+        private void numericUpDownStartLeft_ValueChanged(object sender, EventArgs e)
+        {
+            conf.SmoothLimL = (int)numericUpDownStartLeft.Value;
+            applySmoothSettings();
+        }
+
+        private void numericUpDownStartLeft_KeyUp(object sender, KeyEventArgs e)
+        {
+            conf.SmoothLimL = (int)numericUpDownStartLeft.Value;
+            applySmoothSettings();
+        }
+
+        private void numericUpDownStartRight_ValueChanged(object sender, EventArgs e)
+        {
+            conf.SmoothLimR = (int)numericUpDownStartRight.Value;
+            applySmoothSettings();
+        }
+
+        private void numericUpDownStartRight_KeyUp(object sender, KeyEventArgs e)
+        {
+            conf.SmoothLimR = (int)numericUpDownStartRight.Value;
             applySmoothSettings();
         }
     }

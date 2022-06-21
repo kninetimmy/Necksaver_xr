@@ -30,11 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
             this.stepwiseGroup = new System.Windows.Forms.GroupBox();
             this.error_label2 = new System.Windows.Forms.Label();
             this.error_label = new System.Windows.Forms.Label();
@@ -213,8 +213,8 @@
             // act
             // 
             this.act.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.act.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle36.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.act.DefaultCellStyle = dataGridViewCellStyle36;
             this.act.Frozen = true;
             this.act.HeaderText = "act";
             this.act.Name = "act";
@@ -226,8 +226,8 @@
             // deact
             // 
             this.deact.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deact.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle37.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deact.DefaultCellStyle = dataGridViewCellStyle37;
             this.deact.Frozen = true;
             this.deact.HeaderText = "deact";
             this.deact.Name = "deact";
@@ -239,8 +239,8 @@
             // rot
             // 
             this.rot.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rot.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle38.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rot.DefaultCellStyle = dataGridViewCellStyle38;
             this.rot.Frozen = true;
             this.rot.HeaderText = "rot";
             this.rot.Name = "rot";
@@ -251,8 +251,8 @@
             // 
             // LR
             // 
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LR.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle39.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LR.DefaultCellStyle = dataGridViewCellStyle39;
             this.LR.Frozen = true;
             this.LR.HeaderText = "L/R";
             this.LR.Name = "LR";
@@ -261,8 +261,8 @@
             // 
             // Fwd
             // 
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Fwd.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle40.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Fwd.DefaultCellStyle = dataGridViewCellStyle40;
             this.Fwd.Frozen = true;
             this.Fwd.HeaderText = "Fwd";
             this.Fwd.Name = "Fwd";
@@ -408,8 +408,8 @@
             0,
             0,
             0});
-            this.numericUpDownMultRight.ValueChanged += new System.EventHandler(this.smooth_ValueChanged);
-            this.numericUpDownMultRight.KeyUp += new System.Windows.Forms.KeyEventHandler(this.smooth_ValueChanged);
+            this.numericUpDownMultRight.ValueChanged += new System.EventHandler(this.numericUpDownMultRight_ValueChanged);
+            this.numericUpDownMultRight.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownMultRight_KeyUp);
             // 
             // numericUpDownMultLeft
             // 
@@ -428,8 +428,8 @@
             0,
             0,
             0});
-            this.numericUpDownMultLeft.ValueChanged += new System.EventHandler(this.smooth_ValueChanged);
-            this.numericUpDownMultLeft.KeyUp += new System.Windows.Forms.KeyEventHandler(this.smooth_ValueChanged);
+            this.numericUpDownMultLeft.ValueChanged += new System.EventHandler(this.numericUpDownMultLeft_ValueChanged);
+            this.numericUpDownMultLeft.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownMultLeft_KeyUp);
             // 
             // numericUpDownStartRight
             // 
@@ -448,8 +448,8 @@
             0,
             0,
             0});
-            this.numericUpDownStartRight.ValueChanged += new System.EventHandler(this.smooth_ValueChanged);
-            this.numericUpDownStartRight.KeyUp += new System.Windows.Forms.KeyEventHandler(this.smooth_ValueChanged);
+            this.numericUpDownStartRight.ValueChanged += new System.EventHandler(this.numericUpDownStartRight_ValueChanged);
+            this.numericUpDownStartRight.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownStartRight_KeyUp);
             // 
             // numericUpDownStartLeft
             // 
@@ -468,8 +468,8 @@
             0,
             0,
             0});
-            this.numericUpDownStartLeft.ValueChanged += new System.EventHandler(this.smooth_ValueChanged);
-            this.numericUpDownStartLeft.KeyUp += new System.Windows.Forms.KeyEventHandler(this.smooth_ValueChanged);
+            this.numericUpDownStartLeft.ValueChanged += new System.EventHandler(this.numericUpDownStartLeft_ValueChanged);
+            this.numericUpDownStartLeft.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownStartLeft_KeyUp);
             // 
             // AutorotLabel
             // 

@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 		Assets\XRNeckSaferBeta1.zip = Assets\XRNeckSaferBeta1.zip
 		Assets\XRNeckSaferBeta2.zip = Assets\XRNeckSaferBeta2.zip
+		Assets\XRNeckSaferBeta2b.zip = Assets\XRNeckSaferBeta2b.zip
 	EndProjectSection
 EndProject
 Global
