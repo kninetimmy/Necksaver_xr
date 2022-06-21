@@ -25,7 +25,7 @@ Installation:
 Known issues:
 
 - The Menu "Activate XRNS OpenXR API Layer" is not working yet. That's why you have to use the powershell script...
-- On some systems 5. might fail. If 4. was successfull disregard the error. XRNS should work anyway.
+- On some systems 6. might fail. If 5. was successfull disregard the error. XRNS should work anyway.
 - If translation is not working correctly reset HOME and ENVIRONMENT in Mixed Reality Portal (thanks Melanor8807).
 - When a rotation offset is activated by XRNS your translational movement dos not account for it yet. 
   Hard to describe but you will notice it when moving around in the cockpit with an activated offset.
