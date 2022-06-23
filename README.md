@@ -86,11 +86,11 @@ When in the game, press the assigned reset button to calibrate.
 Thats it. 
 
 
-If you prefer adding up the offset angle with every button click, select the "Accumulative" option.
+If you prefer adding up the offset angle with every button click, select the "Accum(ulative)" option.
 
-If you want to move your head position a few centimeters when using snap view (e.g. to look around your seat) use the Translation feature.
+If you want to move your head position a few centimeters when using snap view (e.g. to look around your seat) use the "Translation" feature.
 
-Enable the "Autorotation" feature to automatically activate the offset when turning your head over defined activation angles. No joystick buttons required.
+Enable one of the "Autorotation" features to automatically activate the offset when turning your head over defined activation angles. No joystick buttons required.
 This can be done in several steps or continuous (smooth). To temporarily inhibit autorotation use the Hold buttons.
 
 ### **Stepwise Autorotation**
