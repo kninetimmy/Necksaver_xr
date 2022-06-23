@@ -13,7 +13,9 @@
 - some UI work
 - Reset button is now called Center button to avoid confusion
 
-**Installation:**
+
+
+## **Installation:**
 
 0. Download [XRNeckSaferBeta2b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta2b.zip)
 1. Create a folder and unzip XRNeckSaferBeta2b.zip into it.
@@ -29,7 +31,7 @@
 8. Once in game press the combined Game/XRNS center button.
 9. Check that the HMD yaw value is changing when moving the HMD.
 
-**Known issues:**
+## **Known issues:**
 
 - The Menu "Activate XRNS OpenXR API Layer" is not working yet. That's why you have to use the powershell script...
 - On some systems 6. might fail. If 5. was successfull disregard the error. XRNS should work anyway.
@@ -40,7 +42,7 @@
 - When you are experiencing FPS loss with XRNS (especially with Oculus HMDs) try to minimize the XRNS App.
 - XRNS works with games that can use OpenComposite (e.g. IL-2 and DCS). Native OpenXR games are not working yet. 
 
-**Roadmap:**
+## **Roadmap:**
  - pitch axis
  - user curves for smooth autorotation 
  - fix for translational movement when rotated
@@ -50,25 +52,34 @@
  - better documentation
  - installer
 
-**Thanks**
-
-The OpenXR API Layer is heavily based on mbucchia's [XR_APILAYER_NOVENDOR_fov_modifier](https://github.com/mbucchia/XR_APILAYER_NOVENDOR_fov_modifier). Thanks for this and his kind help! 
-Thanks to Firdimigdi for his support on the smooth autorotation.
-
-This project uses several third-party libraries, which are used and distributed under their own license terms.
-
-**Feedback**
+## **Feedback**
 
 The easiest way to give feedback is to use the XRNS discord server:  https://discord.gg/pwcxxTE8TF
 
-**Description**
+## **Thanks**
+
+The OpenXR API Layer is heavily based on mbucchia's [XR_APILAYER_NOVENDOR_fov_modifier](https://github.com/mbucchia/XR_APILAYER_NOVENDOR_fov_modifier). Thanks for this and his kind help! 
+Thanks to Firdimigdi for his support on smooth autorotation.
+
+This project uses several third-party libraries, which are used and distributed under their own license terms.
+
+Thanks for you help and patience guys!
+
+Cheers,
+ J2_NobiWan
+
+
+### Download link: [XRNeckSaferBeta2b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta2b.zip)
+
+# **Description**
 
 XRNeckSafer tries to help virtual pilots flying in VR to not break their neck while trying to check their six.
-It adds an angular offset to the current viewing angle by pressing a joystick button. Currently working with IL2 and DCS with [OpenComposite](https://gitlab.com/znixian/OpenOVR/-/tree/openxr/).
+It adds an angular offset to the current viewing angle by pressing a joystick button. Currently working with IL2 and DCS with the **OpenXR** version of [**OpenComposite**](https://gitlab.com/znixian/OpenOVR/-/tree/openxr/).
 
-<img src="https://gitlab.com/NobiWan/vrnecksafer/-/raw/master/VRNeckSafer/Release/VRNSv209.JPG">    <img src="https://gitlab.com/NobiWan/vrnecksafer/-/raw/master/VRNeckSafer/Release/VRNSv209b.JPG"> 
+<img src="https://gitlab.com/NobiWan/xrnecksafer/-/raw/master/Assets/XRNS1.JPG">  <img src="https://gitlab.com/NobiWan/xrnecksafer/-/raw/master/Assets/XRNS2.JPG">
+ <img src="https://gitlab.com/NobiWan/vrnecksafer/-/raw/master/VRNeckSafer/Release/VRNSv209b.JPG"> 
  
-**How to use it:**
+## **How to use it:**
 
 Simply choose the two joystick/HOTAS buttons you want to use for left and right offset and the required rotation angle and set the Reset button as shown on the app.
 When in the game, press the assigned reset button to calibrate.
@@ -82,7 +93,7 @@ If you want to move your head position a few centimeters when using snap view (e
 Enable the "Autorotation" feature to automatically activate the offset when turning your head over defined activation angles. No joystick buttons required.
 This can be done in several steps or continuous (smooth). To temporarily inhibit autorotation use the Hold buttons.
 
-**Stepwise Autorotation**
+### **Stepwise Autorotation**
 
  There is a (very) small explanation coming up when you hover your mouse over the labels on top of the table in the app.
 
@@ -96,14 +107,9 @@ Lets assume you turned your head 85 deg to the right. This will have activated a
 
 Pressing the graph button (above the table) shows you a representation of the entered values and the resulting visual vs actual yaw motion: 
 
-**Smooth Autorotation**
+### **Smooth Autorotation**
 
 Smooth Autorotation gives a linear amplification of your head rotation, beginning at the **"Start at"** value. **"Amplify by"** 100%  means that for every degree head rotation you get one extra degree visual rotation. So, with a "Start at" value of 90 deg, if you turn your head to 100 you get 110 deg visual rotation (10 deg from 90 deg + 10 deg amplification). 200% gives 2 extra degrees for every "real" degree head rotation, and so on.
 
 
-Thanks for you help and patience guys!
-Cheers,
- J2_NobiWan
 
-
-Download link: [XRNeckSaferBeta2b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta2b.zip)
