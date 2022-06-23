@@ -1,29 +1,29 @@
-Changelog for beta2b:
+**Changelog for beta2b:**
 - smooth autorotation values are now saved correctly
 - fixed extreme amplify values at very first start
 - hold button works now in smooth autorotation
 - manual L/R buttons work now in smooth autorotation
 
-(If you update from an earlier version you can just replace XR_APILAYER_NOVENDOR_XRNeckSafer.dll and XRNeckSaferApp.exe with the new versions)
+(If you update from an earlier version you can just replace XR_APILAYER_NOVENDOR_XRNeckSafer.dll and XRNeckSaferApp.exe with the new versions. Stop Mixed Reality Portal before replacing the .dll)
 
-Changelog for beta2:
+**Changelog for beta2:**
 - smooth autorotation (linear multiplication for now) Thanks Firdimigdi!
 - a memory leak fixed
 - work on compatibility with native OpenXR games (MSFS) but not there yet.
 - some UI work
 - Reset button is now called Center button to avoid confusion
 
-Installation:
+**Installation:**
 
-1. Create a folder and unzip XRNeckSaferBeta2.zip into it.
-2. Copy the OpenXrApiLayer to %ProgramFiles% (e.g. C:\Program Files\OpenXrApiLayer) 
-   You will need admin rights to put them there. The install- and uninstall- scripts should be run from that location. 
-   The rest of the files in the .zip including the .exe can stay out of the %ProgramFiles% folder. No need to run the .exe as admin. 
-3. Go into the %ProgramFiles%\OpenXrApiLayer and run "Install-XR_APILAYER_NOVENDOR_XRNeckSafer.ps1" as a PowerShell script. 
-   (right click on it and select "Execute with PowerShell") This will install the API Layer.
+0. Download [XRNeckSaferBeta2b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta2b.zip)
+1. Create a folder and unzip XRNeckSaferBeta2b.zip into it.
+2. Stop Mixed-Reality-Portal and copy the OpenXrApiLayer folder to %ProgramFiles% (e.g. C:\Program Files\OpenXrApiLayer) 
+   You will need admin rights to put it there. The rest of the files in the .zip including the .exe can stay out of the %ProgramFiles% folder. 
+3. Go to the %ProgramFiles%\OpenXrApiLayer folder and run "Install-XR_APILAYER_NOVENDOR_XRNeckSafer.ps1" as a PowerShell script 
+   (right click on it and select "Execute with PowerShell"). This will install the API Layer.
 4. Start/Restart Mixed-Reality-Portal 
 5. Start OpenXR Developer Tools and check on system status. XR_APILAYER_NOVENDOR_XRNeckSafer should be listed as API Layer
-6. Start XRNeckSaferApp.exe in the main folder and go to OpenXR in the Menu on top. Select "Show active OpenXR API Layers". (disregard 5. for now, menu disabled until fixed)
+6. **(disregard 6, for now, menu disabled until fixed)** Start XRNeckSaferApp.exe in the main folder and go to OpenXR in the Menu on top. Select "Show active OpenXR API Layers". 
    This should list all the active Layers and should now include "XR_APILAYER_NOVENDOR_XRNeckSafer". 
 7. If this works you can configure XRNeckSafer similar to VRNeckSafer.
 8. Once in game press the combined Game/XRNS center button.
@@ -45,15 +45,16 @@ Roadmap:
  - user curves for smooth autorotation 
  - fix for translational movement when rotated
  - UI overhaul
+ - make it work with native OpenXR games (MSFS)
  - build instructions
  - better documentation
  - installer
 
 Thanks for you help and patience guys!
-Please use the XRNS discord for feedback: https://discord.gg/GgUpAejN
+Please use the XRNS discord for feedback: https://discord.gg/pwcxxTE8TF
 
 Cheers,
- J2 NobiWan
+ J2_NobiWan
 
 
 XRNeckSafer tries to help virtual pilots flying in VR to not break their neck while trying to check their six.
