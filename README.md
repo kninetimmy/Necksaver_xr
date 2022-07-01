@@ -28,7 +28,7 @@ This can be done in several steps or continuous (smooth). To temporarily inhibit
 
  There is a (very) small explanation coming up when you hover your mouse over the labels on top of the table in the app.
 
-**"act"** is the turn angle of your head when the extra rotation "rot" is activated. In my example this means when you turn your head more than 60 deg it will add an extra 10 deg. More than 70 deg head movement will add 20 deg extra rotation and so on.
+**"act"** is the turn angle of your head when the extra rotation **"rot"** is activated. In my example this means when you turn your head more than 60 deg it will add an extra 10 deg. More than 70 deg head movement will add 20 deg extra rotation and so on.
 
 **"de"** ist the turn angle of your head when an extra rotation angle is beeing deactivated again.
 
