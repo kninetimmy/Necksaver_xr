@@ -237,7 +237,7 @@ namespace XRNeckSafer
             else
             {
                 LeftLabel.ForeColor = SystemColors.ControlText;
-                LeftLabel.BackColor = SystemColors.Control;
+                LeftLabel.BackColor = System.Drawing.Color.Transparent;
                 SetLeftButton.ForeColor = SystemColors.ControlText;
                 SetLeftButton.BackColor = SystemColors.Control;
             }
@@ -251,7 +251,7 @@ namespace XRNeckSafer
             else
             {
                 RightLabel.ForeColor = SystemColors.ControlText;
-                RightLabel.BackColor = SystemColors.Control;
+                RightLabel.BackColor = System.Drawing.Color.Transparent;
                 SetRightButton.ForeColor = SystemColors.ControlText;
                 SetRightButton.BackColor = SystemColors.Control;
             }
@@ -337,13 +337,15 @@ namespace XRNeckSafer
             {
                 if (autofrozen)
                 {
-                    AutorotLabel.Text = "Autorotation - on hold";
-                    if (pitchlimit) AutorotLabel.Text += " (pitch limit)";
-                    else AutorotLabel.Text += " (by button)";
+
+ ///           xxxxx only when changed!
+                    ARGroup.Text = "Autorotation - on hold";
+                    if (pitchlimit) ARGroup.Text += " (pitch limit)";
+                    else ARGroup.Text += " (by button)";
                 }
                 else
                 {
-                    AutorotLabel.Text = "Autorotation";
+                    ARGroup.Text = "Autorotation";
                     if (conf.AutoMode == "stepwise")
                     {
                         calcAutoRotAndTrans((int)hmdYaw, ref auto_offset_angle, ref auto_trans_offset);
@@ -809,7 +811,8 @@ namespace XRNeckSafer
                 ARGroup.Height = 217;
                 conf.AutoMode = "stepwise";
             }
-            Height = ARGroup.Location.Y + ARGroup.Height + 60;
+            YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
+            Height = YawPitchTab.Location.Y+YawPitchTab.Height+60;
             vr.setSmoothRotationSettings(conf.AutoMode == "smooth", conf.SmoothLimL, conf.SmoothLimR,
                 (float)conf.SmoothMultL / 100, (float)conf.SmoothMultR / 100);
             conf.WriteConfig();

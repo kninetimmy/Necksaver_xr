@@ -24,10 +24,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="XR_APILAYER_NOVENDOR_XRNeckSafer.json" />
     <None Include="README.md" />
     <None Include="Install-XR_APILAYER_NOVENDOR_XRNeckSafer.ps1" />
     <None Include="Uninstall-XR_APILAYER_NOVENDOR_XRNeckSafer.ps1" />
+    <None Include="packages.config" />
+    <None Include="$(OpenXRLoaderBinaryRoot)\bin\openxr_loader.dll" />
   </ItemGroup>
 </Project>
