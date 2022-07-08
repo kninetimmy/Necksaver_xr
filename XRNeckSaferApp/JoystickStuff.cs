@@ -101,12 +101,6 @@ namespace XRNeckSafer
         }
         public bool IsPressed(bool use8wayhat, string JoystickGUID, string Button)
         {
- 
-//            if (ll.Count!= DInput.GetDevices(DeviceClass.GameControl, DeviceEnumerationFlags.AttachedOnly).Count)
-//            {
-//                GetJoysticks();
-
-//            }
             int j, b = -1, p = -1;
 
             j = IndexFromGuid(JoystickGUID);
@@ -143,12 +137,16 @@ namespace XRNeckSafer
             }
             try
             {
-                if (!Sticks[j].Attached && DInput.IsDeviceAttached(ll[j].InstanceGuid)) // Joystick reaquired?
+                //                bool isCurrentlyAttached = DInput.IsDeviceAttached(ll[j].InstanceGuid);
+//                if (DInput.IsDeviceAttached(ll[j].InstanceGuid))
                 {
-                    GetJoysticks();
-                }
+//                    if (!Sticks[j].Attached) // Joystick reaquired?
+//                    {
+//                        GetJoysticks();
+//                        j = IndexFromGuid(JoystickGUID);
+//                        if (j == -1) return false;
+//                    }
 
-                if (DInput.IsDeviceAttached(ll[j].InstanceGuid)) { 
                     JoystickState State = Sticks[j].Stick.GetCurrentState();
                     if ((p == -1) && (b == -1)) return false;
 
@@ -165,18 +163,23 @@ namespace XRNeckSafer
                         return (Math.Abs(State.PointOfViewControllers[p] - b) < 5000) || (State.PointOfViewControllers[p] == 31500 && b == 0);
                     }
                 }
-                else
-                {
-                    Sticks[j].Attached = false;
-                    return false;
-                }
+//                else
+//                {
+//                    Sticks[j].Attached = false;
+//                    return false;
+//                }
             }
             catch (Exception)
             {
-                GetJoysticks();
+                if (DInput.IsDeviceAttached(ll[j].InstanceGuid))
+                {
+ //                   if (!Sticks[j].Attached) // Joystick reaquired?
+                    {
+                        GetJoysticks();
+                    }
+                }
                 return false;
             }
-
         }
         public JoyBut ScanJoysticks()
         {

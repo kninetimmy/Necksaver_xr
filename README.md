@@ -22,7 +22,7 @@ If you prefer adding up the offset angle with every button click, select the "Ac
 If you want to move your head position a few centimeters when using snap view (e.g. to look around your seat) use the "Translation" feature.
 
 Enable one of the "Autorotation" features to automatically activate the offset when turning your head over defined activation angles. No joystick buttons required.
-This can be done in several steps or continuous (smooth). To temporarily inhibit autorotation use the Hold buttons.
+This can be done in several steps or continuous (linear). To temporarily inhibit autorotation use the Hold buttons.
 
 ### **Stepwise Autorotation**
 
@@ -38,20 +38,20 @@ Lets assume you turned your head 85 deg to the right. This will have activated a
 
 Pressing the graph button (above the table) shows you a representation of the entered values and the resulting visual vs actual yaw motion: 
 
-### **Smooth Autorotation**
+### **Linear Autorotation**
 
-Smooth Autorotation gives a linear amplification of your head rotation, beginning at the **"Start at"** value. **"Amplify by"** 100%  means that for every degree head rotation you get one extra degree visual rotation. So, with a "Start at" value of 90 deg, if you turn your head to 100 you get 110 deg visual rotation (10 deg from 90 deg + 10 deg amplification). 200% gives 2 extra degrees for every "real" degree head rotation, and so on. **Please be aware that this non-1:1 motion can cause nausea!** (it does for me). If this is the case for you too, better use Stepwise Autorotation, It is much easier on your stomach.
+Linear Autorotation gives a linear amplification of your head rotation, beginning at the **"Start at"** value. **"Amplify by"** 100%  means that for every degree head rotation you get one extra degree visual rotation. So, with a "Start at" value of 90 deg, if you turn your head to 100 you get 110 deg visual rotation (10 deg from 90 deg + 10 deg amplification). 200% gives 2 extra degrees for every "real" degree head rotation, and so on. **Please be aware that this non-1:1 motion can cause nausea!** (it does for me). If this is the case for you too, better use Stepwise Autorotation, It is much easier on your stomach.
 
 **Changelog for beta2b:**
-- smooth autorotation values are now saved correctly
+- linear autorotation values are now saved correctly
 - fixed extreme amplify values at very first start
-- hold button works now in smooth autorotation
-- manual L/R buttons work now in smooth autorotation
+- hold button works now in linear autorotation
+- manual L/R buttons work now in linear autorotation
 
 (If you update from an earlier version you can just replace XR_APILAYER_NOVENDOR_XRNeckSafer.dll and XRNeckSaferApp.exe with the new versions. Stop Mixed Reality Portal before replacing the .dll)
 
 **Changelog for beta2:**
-- smooth autorotation (linear multiplication for now) Thanks Firdimigdi!
+- linear autorotation (linear multiplication for now) Thanks Firdimigdi!
 - a memory leak fixed
 - work on compatibility with native OpenXR games (MSFS) but not there yet.
 - some UI work
@@ -82,13 +82,13 @@ Smooth Autorotation gives a linear amplification of your head rotation, beginnin
 - If translation is not working correctly reset HOME and ENVIRONMENT in Mixed Reality Portal (thanks Melanor8807).
 - When a rotation offset is activated by XRNS your translational movement dos not account for it yet. 
   Hard to describe but you will notice it when moving around in the cockpit with an activated offset.
-- "Smooth" autorotation might cause nausea for some users! It does for me... So be careful und stop it when you feel uncomfortable!
+- "Linear" autorotation might cause nausea for some users! It does for me... So be careful und stop it when you feel uncomfortable!
 - When you are experiencing FPS loss with XRNS (especially with Oculus HMDs) try to minimize the XRNS App.
 - XRNS works with games that can use OpenComposite (e.g. IL-2 and DCS). Native OpenXR games are not working yet. 
 
 ## **Roadmap:**
  - pitch axis
- - user curves for smooth autorotation 
+ - user curves for linear autorotation 
  - fix for translational movement when rotated
  - UI overhaul
  - make it work with native OpenXR games (MSFS)
@@ -103,7 +103,7 @@ The easiest way to give feedback is to use the XRNS discord server:  https://dis
 ## **Thanks**
 
 The OpenXR API Layer is heavily based on mbucchia's [XR_APILAYER_NOVENDOR_fov_modifier](https://github.com/mbucchia/XR_APILAYER_NOVENDOR_fov_modifier). Thanks for this and his kind help! 
-Thanks to Firdimigdi for his support on smooth autorotation.
+Thanks to Firdimigdi for his support on linear autorotation.
 
 This project uses several third-party libraries, which are used and distributed under their own license terms.
 

@@ -31,9 +31,8 @@ namespace XRNeckSafer
         public int hmdYaw;
 
         public bool lastpressed;
-
         public bool last_h_pressed;
-
+        public string ARText;
         public bool autorot_config_error;
 
         public int min_form_heigh;
@@ -63,9 +62,9 @@ namespace XRNeckSafer
             {
                 ARstepwise.Checked = true;
             }
-            else if (conf.AutoMode == "smooth")
+            else if (conf.AutoMode == "linear")
             {
-                ARsmooth.Checked = true;
+                ARlinear.Checked = true;
             }
             else
             {
@@ -73,10 +72,10 @@ namespace XRNeckSafer
             }
             autorot_changed(new Object(), new EventArgs());
 
-            numericUpDownStartLeft.Value = conf.SmoothLimL;
-            numericUpDownStartRight.Value = conf.SmoothLimR;
-            numericUpDownMultLeft.Value = conf.SmoothMultL;
-            numericUpDownMultRight.Value = conf.SmoothMultR;
+            numericUpDownStartLeft.Value = conf.LinearLimL;
+            numericUpDownStartRight.Value = conf.LinearLimR;
+            numericUpDownMultLeft.Value = conf.LinearMultL;
+            numericUpDownMultRight.Value = conf.LinearMultR;
 
             setMenuCheckmarks();
 
@@ -127,13 +126,13 @@ namespace XRNeckSafer
 
             error_label.Visible = check_autorot_config();
             error_label2.Visible = error_label.Visible;
-            numericUpDownStartLeft.Value = conf.SmoothLimL;
-            numericUpDownStartRight.Value = conf.SmoothLimR;
-            numericUpDownMultLeft.Value = conf.SmoothMultL;
-            numericUpDownMultRight.Value = conf.SmoothMultR;
+            numericUpDownStartLeft.Value = conf.LinearLimL;
+            numericUpDownStartRight.Value = conf.LinearLimR;
+            numericUpDownMultLeft.Value = conf.LinearMultL;
+            numericUpDownMultRight.Value = conf.LinearMultR;
 
-            vr.setSmoothRotationSettings(conf.AutoMode=="smooth", conf.SmoothLimL, conf.SmoothLimR, (float)conf.SmoothMultL/100, (float)conf.SmoothMultR/100);
-
+            vr.setLinearRotationSettings(conf.AutoMode=="linear", conf.LinearLimL, conf.LinearLimR, (float)conf.LinearMultL/100, (float)conf.LinearMultR/100);
+            ARText = "Autorotation";
             loopTimer.Start();
         }
 
@@ -196,13 +195,50 @@ namespace XRNeckSafer
             return pressed;
         }
 
-        private void loopTimer_Tick(object sender, EventArgs e)
+        private void setButtonColor(bool pressed, Button b) 
         {
-            bool reset_pressed = checkButtonPress(SetResetButton, conf.ResetButton);
+            System.Drawing.Color fc = SystemColors.ControlText;
+            System.Drawing.Color bc = SystemColors.Control;
+
+            if (pressed)
+            {
+                fc = System.Drawing.Color.LightGreen;
+                bc = SystemColors.ControlText;
+            }
+
+            if (b.ForeColor != fc)
+            {
+                b.ForeColor = fc;
+                b.BackColor = bc;
+            }
+        }
+        void setLabelColor(bool pressed, Label l)
+        {
+            System.Drawing.Color fc = SystemColors.ControlText;
+            System.Drawing.Color bc = SystemColors.Control;
+
+            if (pressed)
+            {
+                fc = System.Drawing.Color.LightGreen;
+                bc = SystemColors.ControlText;
+            }
+
+            if (l.ForeColor != fc)
+            {
+                l.ForeColor = fc;
+                l.BackColor = bc;
+            }
+        }
+
+    private void loopTimer_Tick(object sender, EventArgs e)
+        {
+            bool reset_pressed = js.IsButtonPressed(conf.ResetButton);
+//            bool reset_pressed = checkButtonPress(SetResetButton, conf.ResetButton);
             bool acc_res_pressed = js.IsButtonPressed(conf.AccuResetButton);
             bool l_pressed = js.IsButtonPressed(conf.LeftButton);
             bool r_pressed = js.IsButtonPressed(conf.RightButton);
-            bool h_pressed = checkButtonPress(SetHoldButton1, conf.HoldButton1);
+            bool h_pressed = js.IsButtonPressed(conf.HoldButton1);
+//            bool h_pressed = checkButtonPress(SetHoldButton1, conf.HoldButton1);
             if (conf.MultipleLRbuttons)
             {
                 l_pressed |= js.IsButtonPressed(conf.LeftButton2);
@@ -217,64 +253,23 @@ namespace XRNeckSafer
                 h_pressed |= js.IsButtonPressed(conf.HoldButton3);
             }
 
+            setButtonColor(l_pressed, SetLeftButton);
+            setLabelColor(l_pressed, LeftLabel);
+            setButtonColor(r_pressed, SetRightButton);
+            setLabelColor(r_pressed, RightLabel);
+            setButtonColor(reset_pressed, SetResetButton);
+            setButtonColor(acc_res_pressed, AccumReset);
+            setButtonColor(h_pressed, SetHoldButton1);
+
             bool pitchlimit = vr.getHmdPitch() - 90 > conf.PitchLimForAutorot;
 
             bool autofrozen = h_pressed || pitchlimit;
 
             if (h_pressed != last_h_pressed)
             {
-                vr.setSmoothHold(h_pressed);
+                vr.setLinearHold(h_pressed);
             }
             last_h_pressed = h_pressed;
-
-            if (l_pressed)
-            {
-                LeftLabel.ForeColor = System.Drawing.Color.LightGreen;
-                LeftLabel.BackColor = SystemColors.ControlText;
-                SetLeftButton.ForeColor = System.Drawing.Color.LightGreen;
-                SetLeftButton.BackColor = SystemColors.ControlText;
-            }
-            else
-            {
-                LeftLabel.ForeColor = SystemColors.ControlText;
-                LeftLabel.BackColor = System.Drawing.Color.Transparent;
-                SetLeftButton.ForeColor = SystemColors.ControlText;
-                SetLeftButton.BackColor = SystemColors.Control;
-            }
-            if (r_pressed)
-            {
-                RightLabel.ForeColor = System.Drawing.Color.LightGreen;
-                RightLabel.BackColor = SystemColors.ControlText;
-                SetRightButton.ForeColor = System.Drawing.Color.LightGreen;
-                SetRightButton.BackColor = SystemColors.ControlText;
-            }
-            else
-            {
-                RightLabel.ForeColor = SystemColors.ControlText;
-                RightLabel.BackColor = System.Drawing.Color.Transparent;
-                SetRightButton.ForeColor = SystemColors.ControlText;
-                SetRightButton.BackColor = SystemColors.Control;
-            }
-            if (reset_pressed)
-            {
-                SetResetButton.ForeColor = System.Drawing.Color.LightGreen;
-                SetResetButton.BackColor = SystemColors.ControlText;
-            }
-            else
-            {
-                SetResetButton.ForeColor = SystemColors.ControlText;
-                SetResetButton.BackColor = SystemColors.Control;
-            }
-            if (acc_res_pressed)
-            {
-                AccumReset.ForeColor = System.Drawing.Color.LightGreen;
-                AccumReset.BackColor = SystemColors.ControlText;
-            }
-            else
-            {
-                AccumReset.ForeColor = SystemColors.ControlText;
-                AccumReset.BackColor = SystemColors.Control;
-            }
 
             trans_offset = new Vector3(0, 0, 0);
 
@@ -338,14 +333,14 @@ namespace XRNeckSafer
                 if (autofrozen)
                 {
 
- ///           xxxxx only when changed!
-                    ARGroup.Text = "Autorotation - on hold";
-                    if (pitchlimit) ARGroup.Text += " (pitch limit)";
-                    else ARGroup.Text += " (by button)";
+                    ///           xxxxx only when changed!
+                    ARText = "Autorotation hold";
+                    if (pitchlimit) ARText += " (pitch lim)";
+                    else ARText +=            " (button)";
                 }
                 else
                 {
-                    ARGroup.Text = "Autorotation";
+                    ARText = "Autorotation";
                     if (conf.AutoMode == "stepwise")
                     {
                         calcAutoRotAndTrans((int)hmdYaw, ref auto_offset_angle, ref auto_trans_offset);
@@ -359,6 +354,10 @@ namespace XRNeckSafer
                         auto_trans_offset.Z = 0;
                     }
                 }
+            }
+            if (ARGroup.Text != ARText)
+            {
+                ARGroup.Text = ARText;
             }
 
             sum_offset_angle = joy_offset_angle + auto_offset_angle;
@@ -792,84 +791,89 @@ namespace XRNeckSafer
             if (AROffButton.Checked)
             {
                 stepwiseGroup.Visible = false;
-                smoothGroup.Visible = false;
+                linearGroup.Visible = false;
                 ARGroup.Height = 45;
                 conf.AutoMode = "off";
                 auto_offset_angle = 0;
             }
-            if (ARsmooth.Checked)
+            if (ARlinear.Checked)
             {
                 stepwiseGroup.Visible = false;
-                smoothGroup.Visible = true;
+                linearGroup.Visible = true;
                 ARGroup.Height = 140;
-                conf.AutoMode = "smooth";
+                conf.AutoMode = "linear";
             }
             if (ARstepwise.Checked)
             {
                 stepwiseGroup.Visible = true;
-                smoothGroup.Visible = false;
+                linearGroup.Visible = false;
                 ARGroup.Height = 217;
                 conf.AutoMode = "stepwise";
             }
             YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
             Height = YawPitchTab.Location.Y+YawPitchTab.Height+60;
-            vr.setSmoothRotationSettings(conf.AutoMode == "smooth", conf.SmoothLimL, conf.SmoothLimR,
-                (float)conf.SmoothMultL / 100, (float)conf.SmoothMultR / 100);
+            vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR,
+                (float)conf.LinearMultL / 100, (float)conf.LinearMultR / 100);
             conf.WriteConfig();
         }
-        private void applySmoothSettings()
+        private void applyLinearSettings()
         {
-            vr.setSmoothRotationSettings(conf.AutoMode == "smooth", conf.SmoothLimL, conf.SmoothLimR,
-               (float)conf.SmoothMultL / 100, (float)conf.SmoothMultR / 100);
+            vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR,
+               (float)conf.LinearMultL / 100, (float)conf.LinearMultR / 100);
             conf.WriteConfig();
         }
 
         private void numericUpDownMultLeft_ValueChanged(object sender, EventArgs e)
         {
-            conf.SmoothMultL = (int)numericUpDownMultLeft.Value;
-            applySmoothSettings();
+            conf.LinearMultL = (int)numericUpDownMultLeft.Value;
+            applyLinearSettings();
         }
 
         private void numericUpDownMultLeft_KeyUp(object sender, KeyEventArgs e)
         {
-            conf.SmoothMultL = (int)numericUpDownMultLeft.Value;
-            applySmoothSettings();
+            conf.LinearMultL = (int)numericUpDownMultLeft.Value;
+            applyLinearSettings();
         }
 
         private void numericUpDownMultRight_ValueChanged(object sender, EventArgs e)
         {
-            conf.SmoothMultR = (int)numericUpDownMultRight.Value;
-            applySmoothSettings();
+            conf.LinearMultR = (int)numericUpDownMultRight.Value;
+            applyLinearSettings();
         }
 
         private void numericUpDownMultRight_KeyUp(object sender, KeyEventArgs e)
         {
-            conf.SmoothMultR = (int)numericUpDownMultRight.Value;
-            applySmoothSettings();
+            conf.LinearMultR = (int)numericUpDownMultRight.Value;
+            applyLinearSettings();
         }
 
         private void numericUpDownStartLeft_ValueChanged(object sender, EventArgs e)
         {
-            conf.SmoothLimL = (int)numericUpDownStartLeft.Value;
-            applySmoothSettings();
+            conf.LinearLimL = (int)numericUpDownStartLeft.Value;
+            applyLinearSettings();
         }
 
         private void numericUpDownStartLeft_KeyUp(object sender, KeyEventArgs e)
         {
-            conf.SmoothLimL = (int)numericUpDownStartLeft.Value;
-            applySmoothSettings();
+            conf.LinearLimL = (int)numericUpDownStartLeft.Value;
+            applyLinearSettings();
         }
 
         private void numericUpDownStartRight_ValueChanged(object sender, EventArgs e)
         {
-            conf.SmoothLimR = (int)numericUpDownStartRight.Value;
-            applySmoothSettings();
+            conf.LinearLimR = (int)numericUpDownStartRight.Value;
+            applyLinearSettings();
         }
 
         private void numericUpDownStartRight_KeyUp(object sender, KeyEventArgs e)
         {
-            conf.SmoothLimR = (int)numericUpDownStartRight.Value;
-            applySmoothSettings();
+            conf.LinearLimR = (int)numericUpDownStartRight.Value;
+            applyLinearSettings();
+        }
+
+        private void U(object sender, EventArgs e)
+        {
+
         }
     }
 }

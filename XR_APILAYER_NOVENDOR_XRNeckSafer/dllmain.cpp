@@ -61,8 +61,8 @@ namespace {
         float rightMultiplier;
         float leftMultiplier;
         bool resetHmdOrientation;
-        bool useSmoothRotation;
-        bool holdSmoothRotation;
+        bool useLinearRotation;
+        bool holdLinearRotation;
         bool hasBeenCentered;
     } shmValues;
 
@@ -215,8 +215,8 @@ namespace {
             shmValues.pitchOffset = buffer->pitchOffset;
             shmValues.longitudinalOffset = buffer->longitudinalOffset;
             shmValues.lateralOffset = buffer->lateralOffset;
-            shmValues.useSmoothRotation = buffer->useSmoothRotation;
-            shmValues.holdSmoothRotation = buffer->holdSmoothRotation;
+            shmValues.useLinearRotation = buffer->useLinearRotation;
+            shmValues.holdLinearRotation = buffer->holdLinearRotation;
             // rotate translational to center orientation
             //trans = {
             //    shmValues.lateralOffset * ccos - shmValues.longitudinalOffset * csin,
@@ -240,14 +240,14 @@ namespace {
             buffer->hmdYawAngle = angles.yaw * 180.f / (float)M_PI;
             buffer->hmdPitchAngle = angles.pitch * 180.f / (float)M_PI;
 
-            if (shmValues.useSmoothRotation) {
+            if (shmValues.useLinearRotation) {
                 shmValues.leftStartAt = buffer->leftStartAt;
                 shmValues.rightStartAt = buffer->rightStartAt;
                 shmValues.leftMultiplier = buffer->leftMultiplier;
                 shmValues.rightMultiplier = buffer->rightMultiplier;
                 //trans = { 0, 0, 0 };
 
-                if (!shmValues.holdSmoothRotation) {
+                if (!shmValues.holdLinearRotation) {
                     bool isright = angles.yaw > 0;
                     float multiplier = isright ? shmValues.rightMultiplier : shmValues.leftMultiplier;
                     int startangle = isright ? shmValues.rightStartAt : shmValues.leftStartAt;

@@ -28,8 +28,8 @@ namespace XRNeckSafer
             public float rightMultiplier;
             public float leftMultiplier;
             public bool resetHmdOrientation;
-            public bool useSmoothRotation;
-            public bool holdSmoothRotation;
+            public bool useLinearRotation;
+            public bool holdLinearRotation;
             public bool hasBeenCentered;
         }
 
@@ -125,9 +125,9 @@ namespace XRNeckSafer
         {
             return shmValues.hmdPitchAngle;
         }
-        public void setSmoothRotationSettings(bool usesmooth, int leftstart, int rightstart, float leftmult, float rightmult)
+        public void setLinearRotationSettings(bool uselinear, int leftstart, int rightstart, float leftmult, float rightmult)
         {
-            shmValues.useSmoothRotation = usesmooth;
+            shmValues.useLinearRotation = uselinear;
             shmValues.leftStartAt = leftstart;
             shmValues.rightStartAt = rightstart;
             shmValues.leftMultiplier = leftmult;
@@ -143,9 +143,9 @@ namespace XRNeckSafer
             accessor.Write<shmVal_s>(0, ref shmValues);
         }
 
-        public void setSmoothHold(bool h)
+        public void setLinearHold(bool h)
         {
-            shmValues.holdSmoothRotation = h;
+            shmValues.holdLinearRotation = h;
             accessor.Write<shmVal_s>(0, ref shmValues);
         }
     }
