@@ -64,14 +64,33 @@ namespace XRNeckSafer
         public ButtonConfig AccuResetButton;
         public ButtonConfig AccuResetButton2;
         public ButtonConfig AccuResetButton3;
+        public ButtonConfig UpButton;
+        public ButtonConfig UpButton2;
+        public ButtonConfig UpButton3;
+        public ButtonConfig DownButton;
+        public ButtonConfig DownButton2;
+        public ButtonConfig DownButton3;
+        public ButtonConfig PitchAccuResetButton;
+        public ButtonConfig PitchAccuResetButton2;
+        public ButtonConfig PitchAccuResetButton3;
+        public ButtonConfig PitchHoldButton1;
+        public ButtonConfig PitchHoldButton2;
+        public ButtonConfig PitchHoldButton3;
         public int Angle;
+        public int UpAngle;
+        public int DownAngle;
         public int TransLR;
         public int TransF;
         public int LinearLimL;
         public int LinearLimR;
         public int LinearMultL;
         public int LinearMultR;
+        public int LinearLimU;
+        public int LinearLimD;
+        public int LinearMultU;
+        public int LinearMultD;
         public bool Additiv;
+        public bool PitchAdditiv;
         public bool StartMinimized;
         public bool MinimizeToTray;
         public bool MultipleLRbuttons;
@@ -79,6 +98,9 @@ namespace XRNeckSafer
         public static string configfilename;
         public string AutoMode;
         public List<int[]> AutoSteps;
+        public string PitchAutoMode;
+        public List<int[]> UpAutoSteps;
+        public List<int[]> DownAutoSteps;
 
 
         public Config()
@@ -98,20 +120,41 @@ namespace XRNeckSafer
             AccuResetButton = new ButtonConfig();
             AccuResetButton2 = new ButtonConfig();
             AccuResetButton3 = new ButtonConfig();
-            Angle = 30;
+            UpButton = new ButtonConfig();
+            UpButton2 = new ButtonConfig();
+            UpButton3 = new ButtonConfig();
+            DownButton = new ButtonConfig();
+            DownButton2 = new ButtonConfig();
+            DownButton3 = new ButtonConfig();
+            PitchAccuResetButton = new ButtonConfig();
+            PitchAccuResetButton2 = new ButtonConfig();
+            PitchAccuResetButton3 = new ButtonConfig();
+            PitchHoldButton1 = new ButtonConfig();
+            PitchHoldButton2 = new ButtonConfig();
+            PitchHoldButton3 = new ButtonConfig();
+            UpAngle = 30;
+            DownAngle = 30;
             TransLR = 0;
             TransF = 0;
             LinearLimL = 95;
             LinearLimR = 95;
             LinearMultL = 120;
             LinearMultR = 120;
+            LinearLimU = 60;
+            LinearLimD = 50;
+            LinearMultU = 120;
+            LinearMultD = 120;
             Additiv = false;
+            PitchAdditiv = false;
             StartMinimized = false;
             MinimizeToTray = false;
             MultipleLRbuttons = false;
             PitchLimForAutorot = 90;
             AutoMode = "Off";
             AutoSteps = new List<int[]>();
+            PitchAutoMode = "Off";
+            UpAutoSteps = new List<int[]>();
+            DownAutoSteps = new List<int[]>();
         }
 
         static public Config ReadConfig()
@@ -139,6 +182,18 @@ namespace XRNeckSafer
                 if (c.AccuResetButton == null) c.AccuResetButton = new ButtonConfig();
                 if (c.AccuResetButton2 == null) c.AccuResetButton2 = new ButtonConfig();
                 if (c.AccuResetButton3 == null) c.AccuResetButton3 = new ButtonConfig();
+                if (c.UpButton == null) c.UpButton = new ButtonConfig();
+                if (c.UpButton2 == null) c.UpButton2 = new ButtonConfig();
+                if (c.UpButton3 == null) c.UpButton3 = new ButtonConfig();
+                if (c.DownButton == null) c.DownButton = new ButtonConfig();
+                if (c.DownButton2 == null) c.DownButton2 = new ButtonConfig();
+                if (c.DownButton3 == null) c.DownButton3 = new ButtonConfig();
+                if (c.PitchAccuResetButton == null) c.PitchAccuResetButton = new ButtonConfig();
+                if (c.PitchAccuResetButton2 == null) c.PitchAccuResetButton2 = new ButtonConfig();
+                if (c.PitchAccuResetButton3 == null) c.PitchAccuResetButton3 = new ButtonConfig();
+                if (c.PitchHoldButton1 == null) c.PitchHoldButton1 = new ButtonConfig();
+                if (c.PitchHoldButton2 == null) c.PitchHoldButton2 = new ButtonConfig();
+                if (c.PitchHoldButton3 == null) c.PitchHoldButton3 = new ButtonConfig();
 
                 if (c.AutoSteps.Count == 0)
                 {
@@ -150,6 +205,21 @@ namespace XRNeckSafer
                     c.AutoSteps.Add(new int[5] { 110, 101, 60, 10, 5 });
                     c.AutoSteps.Add(new int[5] { 120, 111, 70, 10, 5 });
                 }
+                if (c.UpAutoSteps.Count == 0)
+                {
+                    c.UpAutoSteps.Add(new int[3] { 50, 41, 10 });
+                    c.UpAutoSteps.Add(new int[3] { 60, 51, 20 });
+                    c.UpAutoSteps.Add(new int[3] { 70, 61, 30 });
+                    c.UpAutoSteps.Add(new int[3] { 80, 71, 40 });
+                }
+                if (c.DownAutoSteps.Count == 0)
+                {
+                    c.DownAutoSteps.Add(new int[3] { 50, 41, 10 });
+                    c.DownAutoSteps.Add(new int[3] { 60, 51, 20 });
+                    c.DownAutoSteps.Add(new int[3] { 70, 61, 30 });
+                    c.DownAutoSteps.Add(new int[3] { 80, 71, 40 });
+                }
+
                 return c;
             }
             catch (Exception)
@@ -164,6 +234,20 @@ namespace XRNeckSafer
                     conf.AutoSteps.Add(new int[5] { 100, 91, 50, 10, 5 });
                     conf.AutoSteps.Add(new int[5] { 110, 101, 60, 10, 5 });
                     conf.AutoSteps.Add(new int[5] { 120, 111, 70, 10, 5 });
+                }
+                if (conf.UpAutoSteps.Count == 0)
+                {
+                    conf.UpAutoSteps.Add(new int[3] { 50, 41, 10 });
+                    conf.UpAutoSteps.Add(new int[3] { 60, 51, 20 });
+                    conf.UpAutoSteps.Add(new int[3] { 70, 61, 30 });
+                    conf.UpAutoSteps.Add(new int[3] { 80, 71, 40 });
+                }
+                if (conf.DownAutoSteps.Count == 0)
+                {
+                    conf.DownAutoSteps.Add(new int[3] { -50, -41, -10 });
+                    conf.DownAutoSteps.Add(new int[3] { -60, -51, -20 });
+                    conf.DownAutoSteps.Add(new int[3] { -70, -61, -30 });
+                    conf.DownAutoSteps.Add(new int[3] { -80, -71, -40 });
                 }
 
                 conf.WriteConfig();

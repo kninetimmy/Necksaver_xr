@@ -30,9 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -40,6 +37,10 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
             this.stepwiseGroup = new System.Windows.Forms.GroupBox();
             this.error_label2 = new System.Windows.Forms.Label();
             this.error_label = new System.Windows.Forms.Label();
@@ -129,25 +130,8 @@
             this.YawPitchTab = new System.Windows.Forms.TabControl();
             this.YawTab = new System.Windows.Forms.TabPage();
             this.PitchTab = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.pAccumReset = new System.Windows.Forms.Button();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.upNUD = new System.Windows.Forms.NumericUpDown();
-            this.downNUD = new System.Windows.Forms.NumericUpDown();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.pSnapRP = new System.Windows.Forms.RadioButton();
-            this.pAdditivRB = new System.Windows.Forms.RadioButton();
-            this.label31 = new System.Windows.Forms.Label();
-            this.SetUpButton = new System.Windows.Forms.Button();
-            this.SetDownButton = new System.Windows.Forms.Button();
-            this.DownLabel = new System.Windows.Forms.Label();
-            this.UpLabel = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.pARGroup = new System.Windows.Forms.GroupBox();
+            this.pLinearGroup = new System.Windows.Forms.GroupBox();
             this.label29 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
@@ -163,19 +147,43 @@
             this.pARlinear = new System.Windows.Forms.RadioButton();
             this.pARstepwise = new System.Windows.Forms.RadioButton();
             this.pAROffButton = new System.Windows.Forms.RadioButton();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label40 = new System.Windows.Forms.Label();
-            this.label41 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.pStepwiseGroup = new System.Windows.Forms.GroupBox();
+            this.upErrorLabel2 = new System.Windows.Forms.Label();
+            this.upErrorLabel1 = new System.Windows.Forms.Label();
+            this.UpAutorotGridView = new System.Windows.Forms.DataGridView();
+            this.UpAddButton = new System.Windows.Forms.Button();
+            this.UpDelButton = new System.Windows.Forms.Button();
+            this.SetPitchHoldButton = new System.Windows.Forms.Button();
+            this.pManualGroup = new System.Windows.Forms.GroupBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.pAccumReset = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
+            this.upNUD = new System.Windows.Forms.NumericUpDown();
+            this.downNUD = new System.Windows.Forms.NumericUpDown();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.pSnapRP = new System.Windows.Forms.RadioButton();
+            this.pAdditivRB = new System.Windows.Forms.RadioButton();
+            this.label31 = new System.Windows.Forms.Label();
+            this.SetUpButton = new System.Windows.Forms.Button();
+            this.SetDownButton = new System.Windows.Forms.Button();
+            this.DownLabel = new System.Windows.Forms.Label();
+            this.UpLabel = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DownAutorotGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DownAddButton = new System.Windows.Forms.Button();
+            this.DownDelButton = new System.Windows.Forms.Button();
+            this.label32 = new System.Windows.Forms.Label();
+            this.downErrorLabel2 = new System.Windows.Forms.Label();
+            this.downErrorLabel1 = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
             this.stepwiseGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AutorotGridView)).BeginInit();
             this.linearGroup.SuspendLayout();
@@ -194,17 +202,18 @@
             this.YawPitchTab.SuspendLayout();
             this.YawTab.SuspendLayout();
             this.PitchTab.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.upNUD)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.downNUD)).BeginInit();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.pARGroup.SuspendLayout();
+            this.pLinearGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultUp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartUp)).BeginInit();
-            this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.pStepwiseGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.UpAutorotGridView)).BeginInit();
+            this.pManualGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.upNUD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.downNUD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DownAutorotGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // stepwiseGroup
@@ -281,8 +290,8 @@
             // act
             // 
             this.act.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle31.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.act.DefaultCellStyle = dataGridViewCellStyle31;
+            dataGridViewCellStyle34.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.act.DefaultCellStyle = dataGridViewCellStyle34;
             this.act.Frozen = true;
             this.act.HeaderText = "act";
             this.act.MinimumWidth = 6;
@@ -295,8 +304,8 @@
             // deact
             // 
             this.deact.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle32.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deact.DefaultCellStyle = dataGridViewCellStyle32;
+            dataGridViewCellStyle35.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deact.DefaultCellStyle = dataGridViewCellStyle35;
             this.deact.Frozen = true;
             this.deact.HeaderText = "deact";
             this.deact.MinimumWidth = 6;
@@ -309,8 +318,8 @@
             // rot
             // 
             this.rot.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rot.DefaultCellStyle = dataGridViewCellStyle33;
+            dataGridViewCellStyle36.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rot.DefaultCellStyle = dataGridViewCellStyle36;
             this.rot.Frozen = true;
             this.rot.HeaderText = "rot";
             this.rot.MinimumWidth = 6;
@@ -322,8 +331,8 @@
             // 
             // LR
             // 
-            dataGridViewCellStyle34.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LR.DefaultCellStyle = dataGridViewCellStyle34;
+            dataGridViewCellStyle37.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LR.DefaultCellStyle = dataGridViewCellStyle37;
             this.LR.Frozen = true;
             this.LR.HeaderText = "L/R";
             this.LR.MinimumWidth = 6;
@@ -333,8 +342,8 @@
             // 
             // Fwd
             // 
-            dataGridViewCellStyle35.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Fwd.DefaultCellStyle = dataGridViewCellStyle35;
+            dataGridViewCellStyle38.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Fwd.DefaultCellStyle = dataGridViewCellStyle38;
             this.Fwd.Frozen = true;
             this.Fwd.HeaderText = "Fwd";
             this.Fwd.MinimumWidth = 6;
@@ -378,7 +387,7 @@
             this.linearGroup.Controls.Add(this.numericUpDownMultLeft);
             this.linearGroup.Controls.Add(this.numericUpDownStartRight);
             this.linearGroup.Controls.Add(this.numericUpDownStartLeft);
-            this.linearGroup.Location = new System.Drawing.Point(10, 40);
+            this.linearGroup.Location = new System.Drawing.Point(8, 97);
             this.linearGroup.Name = "linearGroup";
             this.linearGroup.Size = new System.Drawing.Size(225, 89);
             this.linearGroup.TabIndex = 57;
@@ -1162,6 +1171,7 @@
             this.YawPitchTab.SelectedIndex = 0;
             this.YawPitchTab.Size = new System.Drawing.Size(268, 386);
             this.YawPitchTab.TabIndex = 57;
+            this.YawPitchTab.SelectedIndexChanged += new System.EventHandler(this.YawPitchTab_SelectedIndexChanged);
             // 
             // YawTab
             // 
@@ -1179,8 +1189,8 @@
             // PitchTab
             // 
             this.PitchTab.BackColor = System.Drawing.Color.Transparent;
-            this.PitchTab.Controls.Add(this.groupBox2);
-            this.PitchTab.Controls.Add(this.groupBox1);
+            this.PitchTab.Controls.Add(this.pARGroup);
+            this.PitchTab.Controls.Add(this.pManualGroup);
             this.PitchTab.Location = new System.Drawing.Point(4, 26);
             this.PitchTab.Name = "PitchTab";
             this.PitchTab.Padding = new System.Windows.Forms.Padding(3);
@@ -1189,31 +1199,378 @@
             this.PitchTab.Text = "Pitch";
             this.PitchTab.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // pARGroup
             // 
-            this.groupBox1.Controls.Add(this.label21);
-            this.groupBox1.Controls.Add(this.label27);
-            this.groupBox1.Controls.Add(this.pAccumReset);
-            this.groupBox1.Controls.Add(this.label19);
-            this.groupBox1.Controls.Add(this.upNUD);
-            this.groupBox1.Controls.Add(this.downNUD);
-            this.groupBox1.Controls.Add(this.label22);
-            this.groupBox1.Controls.Add(this.label28);
-            this.groupBox1.Controls.Add(this.pSnapRP);
-            this.groupBox1.Controls.Add(this.pAdditivRB);
-            this.groupBox1.Controls.Add(this.label31);
-            this.groupBox1.Controls.Add(this.SetUpButton);
-            this.groupBox1.Controls.Add(this.SetDownButton);
-            this.groupBox1.Controls.Add(this.DownLabel);
-            this.groupBox1.Controls.Add(this.UpLabel);
-            this.groupBox1.Controls.Add(this.label26);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(4, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(252, 138);
-            this.groupBox1.TabIndex = 39;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Manual Rotation";
+            this.pARGroup.Controls.Add(this.pARlinear);
+            this.pARGroup.Controls.Add(this.pARstepwise);
+            this.pARGroup.Controls.Add(this.pAROffButton);
+            this.pARGroup.Controls.Add(this.pStepwiseGroup);
+            this.pARGroup.Controls.Add(this.pLinearGroup);
+            this.pARGroup.Controls.Add(this.SetPitchHoldButton);
+            this.pARGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pARGroup.Location = new System.Drawing.Point(5, 152);
+            this.pARGroup.Name = "pARGroup";
+            this.pARGroup.Size = new System.Drawing.Size(251, 181);
+            this.pARGroup.TabIndex = 57;
+            this.pARGroup.TabStop = false;
+            this.pARGroup.Text = "Autorotation";
+            // 
+            // pLinearGroup
+            // 
+            this.pLinearGroup.Controls.Add(this.label29);
+            this.pLinearGroup.Controls.Add(this.label30);
+            this.pLinearGroup.Controls.Add(this.label34);
+            this.pLinearGroup.Controls.Add(this.label35);
+            this.pLinearGroup.Controls.Add(this.label36);
+            this.pLinearGroup.Controls.Add(this.label37);
+            this.pLinearGroup.Controls.Add(this.label38);
+            this.pLinearGroup.Controls.Add(this.label39);
+            this.pLinearGroup.Controls.Add(this.numericUpDownMultDown);
+            this.pLinearGroup.Controls.Add(this.numericUpDownMultUp);
+            this.pLinearGroup.Controls.Add(this.numericUpDownStartDown);
+            this.pLinearGroup.Controls.Add(this.numericUpDownStartUp);
+            this.pLinearGroup.Location = new System.Drawing.Point(104, 40);
+            this.pLinearGroup.Name = "pLinearGroup";
+            this.pLinearGroup.Size = new System.Drawing.Size(225, 89);
+            this.pLinearGroup.TabIndex = 57;
+            this.pLinearGroup.TabStop = false;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label29.Location = new System.Drawing.Point(137, 13);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(61, 15);
+            this.label29.TabIndex = 58;
+            this.label29.Text = "Amplify by";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.Location = new System.Drawing.Point(43, 13);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(45, 15);
+            this.label30.TabIndex = 57;
+            this.label30.Text = "Start at";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label34.Location = new System.Drawing.Point(194, 43);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(18, 15);
+            this.label34.TabIndex = 56;
+            this.label34.Text = "%";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label35.Location = new System.Drawing.Point(93, 43);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(28, 15);
+            this.label35.TabIndex = 55;
+            this.label35.Text = "deg";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label36.Location = new System.Drawing.Point(127, 60);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(16, 13);
+            this.label36.TabIndex = 33;
+            this.label36.Text = "D";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label37.Location = new System.Drawing.Point(29, 60);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(16, 13);
+            this.label37.TabIndex = 32;
+            this.label37.Text = "D";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label38.Location = new System.Drawing.Point(127, 34);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(16, 13);
+            this.label38.TabIndex = 31;
+            this.label38.Text = "U";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label39.Location = new System.Drawing.Point(29, 34);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(16, 13);
+            this.label39.TabIndex = 30;
+            this.label39.Text = "U";
+            // 
+            // numericUpDownMultDown
+            // 
+            this.numericUpDownMultDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMultDown.Location = new System.Drawing.Point(146, 57);
+            this.numericUpDownMultDown.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericUpDownMultDown.Name = "numericUpDownMultDown";
+            this.numericUpDownMultDown.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownMultDown.TabIndex = 29;
+            this.numericUpDownMultDown.Value = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            // 
+            // numericUpDownMultUp
+            // 
+            this.numericUpDownMultUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMultUp.Location = new System.Drawing.Point(146, 31);
+            this.numericUpDownMultUp.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericUpDownMultUp.Name = "numericUpDownMultUp";
+            this.numericUpDownMultUp.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownMultUp.TabIndex = 28;
+            this.numericUpDownMultUp.Value = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            // 
+            // numericUpDownStartDown
+            // 
+            this.numericUpDownStartDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownStartDown.Location = new System.Drawing.Point(47, 57);
+            this.numericUpDownStartDown.Maximum = new decimal(new int[] {
+            180,
+            0,
+            0,
+            0});
+            this.numericUpDownStartDown.Minimum = new decimal(new int[] {
+            180,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownStartDown.Name = "numericUpDownStartDown";
+            this.numericUpDownStartDown.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownStartDown.TabIndex = 27;
+            this.numericUpDownStartDown.Value = new decimal(new int[] {
+            60,
+            0,
+            0,
+            -2147483648});
+            // 
+            // numericUpDownStartUp
+            // 
+            this.numericUpDownStartUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownStartUp.Location = new System.Drawing.Point(47, 31);
+            this.numericUpDownStartUp.Maximum = new decimal(new int[] {
+            180,
+            0,
+            0,
+            0});
+            this.numericUpDownStartUp.Name = "numericUpDownStartUp";
+            this.numericUpDownStartUp.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownStartUp.TabIndex = 26;
+            this.numericUpDownStartUp.Value = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            // 
+            // pARlinear
+            // 
+            this.pARlinear.AutoSize = true;
+            this.pARlinear.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pARlinear.Location = new System.Drawing.Point(85, 18);
+            this.pARlinear.Name = "pARlinear";
+            this.pARlinear.Size = new System.Drawing.Size(60, 17);
+            this.pARlinear.TabIndex = 57;
+            this.pARlinear.Text = "Linear";
+            this.pARlinear.UseVisualStyleBackColor = true;
+            this.pARlinear.CheckedChanged += new System.EventHandler(this.pitchAutorotChanged);
+            // 
+            // pARstepwise
+            // 
+            this.pARstepwise.AutoSize = true;
+            this.pARstepwise.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pARstepwise.Location = new System.Drawing.Point(6, 18);
+            this.pARstepwise.Name = "pARstepwise";
+            this.pARstepwise.Size = new System.Drawing.Size(76, 17);
+            this.pARstepwise.TabIndex = 56;
+            this.pARstepwise.Text = "Stepwise";
+            this.pARstepwise.UseVisualStyleBackColor = true;
+            this.pARstepwise.CheckedChanged += new System.EventHandler(this.pitchAutorotChanged);
+            // 
+            // pAROffButton
+            // 
+            this.pAROffButton.AutoSize = true;
+            this.pAROffButton.Checked = true;
+            this.pAROffButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pAROffButton.Location = new System.Drawing.Point(148, 18);
+            this.pAROffButton.Name = "pAROffButton";
+            this.pAROffButton.Size = new System.Drawing.Size(42, 17);
+            this.pAROffButton.TabIndex = 55;
+            this.pAROffButton.TabStop = true;
+            this.pAROffButton.Text = "Off";
+            this.pAROffButton.UseVisualStyleBackColor = true;
+            this.pAROffButton.CheckedChanged += new System.EventHandler(this.pitchAutorotChanged);
+            // 
+            // pStepwiseGroup
+            // 
+            this.pStepwiseGroup.Controls.Add(this.label43);
+            this.pStepwiseGroup.Controls.Add(this.downErrorLabel2);
+            this.pStepwiseGroup.Controls.Add(this.downErrorLabel1);
+            this.pStepwiseGroup.Controls.Add(this.label32);
+            this.pStepwiseGroup.Controls.Add(this.DownAddButton);
+            this.pStepwiseGroup.Controls.Add(this.DownDelButton);
+            this.pStepwiseGroup.Controls.Add(this.DownAutorotGridView);
+            this.pStepwiseGroup.Controls.Add(this.upErrorLabel2);
+            this.pStepwiseGroup.Controls.Add(this.upErrorLabel1);
+            this.pStepwiseGroup.Controls.Add(this.UpAutorotGridView);
+            this.pStepwiseGroup.Controls.Add(this.UpAddButton);
+            this.pStepwiseGroup.Controls.Add(this.UpDelButton);
+            this.pStepwiseGroup.Location = new System.Drawing.Point(4, 40);
+            this.pStepwiseGroup.Name = "pStepwiseGroup";
+            this.pStepwiseGroup.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.pStepwiseGroup.Size = new System.Drawing.Size(241, 166);
+            this.pStepwiseGroup.TabIndex = 13;
+            this.pStepwiseGroup.TabStop = false;
+            // 
+            // upErrorLabel2
+            // 
+            this.upErrorLabel2.AutoSize = true;
+            this.upErrorLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.upErrorLabel2.ForeColor = System.Drawing.Color.Red;
+            this.upErrorLabel2.Location = new System.Drawing.Point(49, 21);
+            this.upErrorLabel2.Name = "upErrorLabel2";
+            this.upErrorLabel2.Size = new System.Drawing.Size(38, 13);
+            this.upErrorLabel2.TabIndex = 57;
+            this.upErrorLabel2.Text = "value";
+            // 
+            // upErrorLabel1
+            // 
+            this.upErrorLabel1.AutoSize = true;
+            this.upErrorLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.upErrorLabel1.ForeColor = System.Drawing.Color.Red;
+            this.upErrorLabel1.Location = new System.Drawing.Point(49, 9);
+            this.upErrorLabel1.Name = "upErrorLabel1";
+            this.upErrorLabel1.Size = new System.Drawing.Size(45, 13);
+            this.upErrorLabel1.TabIndex = 56;
+            this.upErrorLabel1.Text = "Invalid";
+            // 
+            // UpAutorotGridView
+            // 
+            this.UpAutorotGridView.AllowUserToAddRows = false;
+            this.UpAutorotGridView.AllowUserToDeleteRows = false;
+            this.UpAutorotGridView.AllowUserToResizeColumns = false;
+            this.UpAutorotGridView.AllowUserToResizeRows = false;
+            this.UpAutorotGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.UpAutorotGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3});
+            this.UpAutorotGridView.Location = new System.Drawing.Point(7, 60);
+            this.UpAutorotGridView.Name = "UpAutorotGridView";
+            this.UpAutorotGridView.RowHeadersWidth = 51;
+            this.UpAutorotGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.UpAutorotGridView.Size = new System.Drawing.Size(108, 82);
+            this.UpAutorotGridView.TabIndex = 39;
+            this.UpAutorotGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.UpAutorotGridView_CellValueChanged);
+            this.UpAutorotGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.UpAutorotGridView_RowsAdded);
+            this.UpAutorotGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.UpAutorotGridView_RowsRemoved);
+            // 
+            // UpAddButton
+            // 
+            this.UpAddButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UpAddButton.Location = new System.Drawing.Point(6, 36);
+            this.UpAddButton.Name = "UpAddButton";
+            this.UpAddButton.Size = new System.Drawing.Size(43, 22);
+            this.UpAddButton.TabIndex = 40;
+            this.UpAddButton.Text = "add";
+            this.UpAddButton.UseVisualStyleBackColor = true;
+            this.UpAddButton.Click += new System.EventHandler(this.UpAddButton_Click);
+            // 
+            // UpDelButton
+            // 
+            this.UpDelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UpDelButton.Location = new System.Drawing.Point(50, 36);
+            this.UpDelButton.Name = "UpDelButton";
+            this.UpDelButton.Size = new System.Drawing.Size(43, 22);
+            this.UpDelButton.TabIndex = 41;
+            this.UpDelButton.Text = "del";
+            this.UpDelButton.UseVisualStyleBackColor = true;
+            this.UpDelButton.Click += new System.EventHandler(this.UpDeleteButton_Click);
+            // 
+            // SetPitchHoldButton
+            // 
+            this.SetPitchHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetPitchHoldButton.Location = new System.Drawing.Point(192, 15);
+            this.SetPitchHoldButton.Name = "SetPitchHoldButton";
+            this.SetPitchHoldButton.Size = new System.Drawing.Size(48, 22);
+            this.SetPitchHoldButton.TabIndex = 42;
+            this.SetPitchHoldButton.Text = "Hold";
+            this.SetPitchHoldButton.UseVisualStyleBackColor = true;
+            // 
+            // pManualGroup
+            // 
+            this.pManualGroup.Controls.Add(this.label21);
+            this.pManualGroup.Controls.Add(this.label27);
+            this.pManualGroup.Controls.Add(this.pAccumReset);
+            this.pManualGroup.Controls.Add(this.label19);
+            this.pManualGroup.Controls.Add(this.upNUD);
+            this.pManualGroup.Controls.Add(this.downNUD);
+            this.pManualGroup.Controls.Add(this.label22);
+            this.pManualGroup.Controls.Add(this.label28);
+            this.pManualGroup.Controls.Add(this.pSnapRP);
+            this.pManualGroup.Controls.Add(this.pAdditivRB);
+            this.pManualGroup.Controls.Add(this.label31);
+            this.pManualGroup.Controls.Add(this.SetUpButton);
+            this.pManualGroup.Controls.Add(this.SetDownButton);
+            this.pManualGroup.Controls.Add(this.DownLabel);
+            this.pManualGroup.Controls.Add(this.UpLabel);
+            this.pManualGroup.Controls.Add(this.label26);
+            this.pManualGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pManualGroup.Location = new System.Drawing.Point(4, 3);
+            this.pManualGroup.Name = "pManualGroup";
+            this.pManualGroup.Size = new System.Drawing.Size(252, 138);
+            this.pManualGroup.TabIndex = 39;
+            this.pManualGroup.TabStop = false;
+            this.pManualGroup.Text = "Manual Rotation";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(136, 52);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(23, 15);
+            this.label21.TabIndex = 52;
+            this.label21.Text = "Tilt";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(129, 64);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(37, 15);
+            this.label27.TabIndex = 56;
+            this.label27.Text = "down";
             // 
             // pAccumReset
             // 
@@ -1234,16 +1591,6 @@
             this.label19.Size = new System.Drawing.Size(39, 15);
             this.label19.TabIndex = 53;
             this.label19.Text = "Mode";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(136, 52);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(23, 15);
-            this.label21.TabIndex = 52;
-            this.label21.Text = "Tilt";
             // 
             // upNUD
             // 
@@ -1387,311 +1734,11 @@
             this.label26.TabIndex = 55;
             this.label26.Text = "up";
             // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.Location = new System.Drawing.Point(129, 64);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(37, 15);
-            this.label27.TabIndex = 56;
-            this.label27.Text = "down";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.groupBox3);
-            this.groupBox2.Controls.Add(this.pARlinear);
-            this.groupBox2.Controls.Add(this.pARstepwise);
-            this.groupBox2.Controls.Add(this.pAROffButton);
-            this.groupBox2.Controls.Add(this.groupBox4);
-            this.groupBox2.Controls.Add(this.button7);
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(5, 152);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(251, 126);
-            this.groupBox2.TabIndex = 57;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Autorotation";
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.label29);
-            this.groupBox3.Controls.Add(this.label30);
-            this.groupBox3.Controls.Add(this.label34);
-            this.groupBox3.Controls.Add(this.label35);
-            this.groupBox3.Controls.Add(this.label36);
-            this.groupBox3.Controls.Add(this.label37);
-            this.groupBox3.Controls.Add(this.label38);
-            this.groupBox3.Controls.Add(this.label39);
-            this.groupBox3.Controls.Add(this.numericUpDownMultDown);
-            this.groupBox3.Controls.Add(this.numericUpDownMultUp);
-            this.groupBox3.Controls.Add(this.numericUpDownStartDown);
-            this.groupBox3.Controls.Add(this.numericUpDownStartUp);
-            this.groupBox3.Location = new System.Drawing.Point(10, 40);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(225, 89);
-            this.groupBox3.TabIndex = 57;
-            this.groupBox3.TabStop = false;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label29.Location = new System.Drawing.Point(137, 13);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(61, 15);
-            this.label29.TabIndex = 58;
-            this.label29.Text = "Amplify by";
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label30.Location = new System.Drawing.Point(43, 13);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(45, 15);
-            this.label30.TabIndex = 57;
-            this.label30.Text = "Start at";
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label34.Location = new System.Drawing.Point(194, 43);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(18, 15);
-            this.label34.TabIndex = 56;
-            this.label34.Text = "%";
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label35.Location = new System.Drawing.Point(93, 43);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(28, 15);
-            this.label35.TabIndex = 55;
-            this.label35.Text = "deg";
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label36.Location = new System.Drawing.Point(127, 60);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(16, 13);
-            this.label36.TabIndex = 33;
-            this.label36.Text = "D";
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label37.Location = new System.Drawing.Point(29, 60);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(16, 13);
-            this.label37.TabIndex = 32;
-            this.label37.Text = "D";
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label38.Location = new System.Drawing.Point(127, 34);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(16, 13);
-            this.label38.TabIndex = 31;
-            this.label38.Text = "U";
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label39.Location = new System.Drawing.Point(29, 34);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(16, 13);
-            this.label39.TabIndex = 30;
-            this.label39.Text = "U";
-            // 
-            // numericUpDownMultDown
-            // 
-            this.numericUpDownMultDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownMultDown.Location = new System.Drawing.Point(146, 57);
-            this.numericUpDownMultDown.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.numericUpDownMultDown.Name = "numericUpDownMultDown";
-            this.numericUpDownMultDown.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDownMultDown.TabIndex = 29;
-            this.numericUpDownMultDown.Value = new decimal(new int[] {
-            120,
-            0,
-            0,
-            0});
-            // 
-            // numericUpDownMultUp
-            // 
-            this.numericUpDownMultUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownMultUp.Location = new System.Drawing.Point(146, 31);
-            this.numericUpDownMultUp.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.numericUpDownMultUp.Name = "numericUpDownMultUp";
-            this.numericUpDownMultUp.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDownMultUp.TabIndex = 28;
-            this.numericUpDownMultUp.Value = new decimal(new int[] {
-            120,
-            0,
-            0,
-            0});
-            // 
-            // numericUpDownStartDown
-            // 
-            this.numericUpDownStartDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownStartDown.Location = new System.Drawing.Point(47, 57);
-            this.numericUpDownStartDown.Maximum = new decimal(new int[] {
-            180,
-            0,
-            0,
-            0});
-            this.numericUpDownStartDown.Name = "numericUpDownStartDown";
-            this.numericUpDownStartDown.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDownStartDown.TabIndex = 27;
-            this.numericUpDownStartDown.Value = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
-            // 
-            // numericUpDownStartUp
-            // 
-            this.numericUpDownStartUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownStartUp.Location = new System.Drawing.Point(47, 31);
-            this.numericUpDownStartUp.Maximum = new decimal(new int[] {
-            180,
-            0,
-            0,
-            0});
-            this.numericUpDownStartUp.Name = "numericUpDownStartUp";
-            this.numericUpDownStartUp.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDownStartUp.TabIndex = 26;
-            this.numericUpDownStartUp.Value = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
-            // 
-            // pARlinear
-            // 
-            this.pARlinear.AutoSize = true;
-            this.pARlinear.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pARlinear.Location = new System.Drawing.Point(85, 18);
-            this.pARlinear.Name = "pARlinear";
-            this.pARlinear.Size = new System.Drawing.Size(60, 17);
-            this.pARlinear.TabIndex = 57;
-            this.pARlinear.Text = "Linear";
-            this.pARlinear.UseVisualStyleBackColor = true;
-            // 
-            // pARstepwise
-            // 
-            this.pARstepwise.AutoSize = true;
-            this.pARstepwise.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pARstepwise.Location = new System.Drawing.Point(6, 18);
-            this.pARstepwise.Name = "pARstepwise";
-            this.pARstepwise.Size = new System.Drawing.Size(76, 17);
-            this.pARstepwise.TabIndex = 56;
-            this.pARstepwise.Text = "Stepwise";
-            this.pARstepwise.UseVisualStyleBackColor = true;
-            // 
-            // pAROffButton
-            // 
-            this.pAROffButton.AutoSize = true;
-            this.pAROffButton.Checked = true;
-            this.pAROffButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pAROffButton.Location = new System.Drawing.Point(148, 18);
-            this.pAROffButton.Name = "pAROffButton";
-            this.pAROffButton.Size = new System.Drawing.Size(42, 17);
-            this.pAROffButton.TabIndex = 55;
-            this.pAROffButton.TabStop = true;
-            this.pAROffButton.Text = "Off";
-            this.pAROffButton.UseVisualStyleBackColor = true;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.label40);
-            this.groupBox4.Controls.Add(this.label41);
-            this.groupBox4.Controls.Add(this.button4);
-            this.groupBox4.Controls.Add(this.dataGridView1);
-            this.groupBox4.Controls.Add(this.button5);
-            this.groupBox4.Controls.Add(this.button6);
-            this.groupBox4.Location = new System.Drawing.Point(10, 40);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox4.Size = new System.Drawing.Size(235, 166);
-            this.groupBox4.TabIndex = 13;
-            this.groupBox4.TabStop = false;
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label40.ForeColor = System.Drawing.Color.Red;
-            this.label40.Location = new System.Drawing.Point(129, 29);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(38, 13);
-            this.label40.TabIndex = 57;
-            this.label40.Text = "value";
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label41.ForeColor = System.Drawing.Color.Red;
-            this.label41.Location = new System.Drawing.Point(126, 18);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(45, 13);
-            this.label41.TabIndex = 56;
-            this.label41.Text = "Invalid";
-            // 
-            // button4
-            // 
-            this.button4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button4.BackgroundImage")));
-            this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button4.Location = new System.Drawing.Point(176, 18);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(24, 22);
-            this.button4.TabIndex = 55;
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5});
-            this.dataGridView1.Location = new System.Drawing.Point(31, 43);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView1.Size = new System.Drawing.Size(169, 114);
-            this.dataGridView1.TabIndex = 39;
-            // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle36.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle36;
+            dataGridViewCellStyle39.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle39;
             this.dataGridViewTextBoxColumn1.Frozen = true;
             this.dataGridViewTextBoxColumn1.HeaderText = "act";
             this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
@@ -1704,8 +1751,8 @@
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle37.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle37;
+            dataGridViewCellStyle40.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle40;
             this.dataGridViewTextBoxColumn2.Frozen = true;
             this.dataGridViewTextBoxColumn2.HeaderText = "deact";
             this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
@@ -1718,8 +1765,8 @@
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle38.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle38;
+            dataGridViewCellStyle41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle41;
             this.dataGridViewTextBoxColumn3.Frozen = true;
             this.dataGridViewTextBoxColumn3.HeaderText = "rot";
             this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
@@ -1729,57 +1776,135 @@
             this.dataGridViewTextBoxColumn3.ToolTipText = "Rotation angle";
             this.dataGridViewTextBoxColumn3.Width = 30;
             // 
+            // DownAutorotGridView
+            // 
+            this.DownAutorotGridView.AllowUserToAddRows = false;
+            this.DownAutorotGridView.AllowUserToDeleteRows = false;
+            this.DownAutorotGridView.AllowUserToResizeColumns = false;
+            this.DownAutorotGridView.AllowUserToResizeRows = false;
+            this.DownAutorotGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DownAutorotGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6});
+            this.DownAutorotGridView.Location = new System.Drawing.Point(124, 60);
+            this.DownAutorotGridView.Name = "DownAutorotGridView";
+            this.DownAutorotGridView.RowHeadersWidth = 51;
+            this.DownAutorotGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.DownAutorotGridView.Size = new System.Drawing.Size(108, 82);
+            this.DownAutorotGridView.TabIndex = 58;
+            this.DownAutorotGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DownAutorotGridView_CellValueChanged);
+            this.DownAutorotGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.DownAutorotGridView_RowsAdded);
+            this.DownAutorotGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.DownAutorotGridView_RowsRemoved);
+            // 
             // dataGridViewTextBoxColumn4
             // 
-            dataGridViewCellStyle39.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle39;
+            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle42.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle42;
             this.dataGridViewTextBoxColumn4.Frozen = true;
-            this.dataGridViewTextBoxColumn4.HeaderText = "L/R";
+            this.dataGridViewTextBoxColumn4.HeaderText = "act";
             this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ToolTipText = "Translation Left/Right (<40cm)";
+            this.dataGridViewTextBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn4.ToolTipText = "Activation angle";
             this.dataGridViewTextBoxColumn4.Width = 30;
             // 
             // dataGridViewTextBoxColumn5
             // 
-            dataGridViewCellStyle40.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle40;
+            this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle43.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle43;
             this.dataGridViewTextBoxColumn5.Frozen = true;
-            this.dataGridViewTextBoxColumn5.HeaderText = "Fwd";
+            this.dataGridViewTextBoxColumn5.HeaderText = "deact";
             this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ToolTipText = "Translation to front (< 20cm)";
-            this.dataGridViewTextBoxColumn5.Width = 50;
+            this.dataGridViewTextBoxColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn5.ToolTipText = "Deactivation angle (< act and > previous act)";
+            this.dataGridViewTextBoxColumn5.Width = 30;
             // 
-            // button5
+            // dataGridViewTextBoxColumn6
             // 
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(31, 18);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(43, 22);
-            this.button5.TabIndex = 40;
-            this.button5.Text = "add";
-            this.button5.UseVisualStyleBackColor = true;
+            this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle44.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle44;
+            this.dataGridViewTextBoxColumn6.Frozen = true;
+            this.dataGridViewTextBoxColumn6.HeaderText = "rot";
+            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn6.ToolTipText = "Rotation angle";
+            this.dataGridViewTextBoxColumn6.Width = 30;
             // 
-            // button6
+            // DownAddButton
             // 
-            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(78, 18);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(43, 22);
-            this.button6.TabIndex = 41;
-            this.button6.Text = "del";
-            this.button6.UseVisualStyleBackColor = true;
+            this.DownAddButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DownAddButton.Location = new System.Drawing.Point(123, 36);
+            this.DownAddButton.Name = "DownAddButton";
+            this.DownAddButton.Size = new System.Drawing.Size(43, 22);
+            this.DownAddButton.TabIndex = 59;
+            this.DownAddButton.Text = "add";
+            this.DownAddButton.UseVisualStyleBackColor = true;
+            this.DownAddButton.Click += new System.EventHandler(this.DownAddButton_Click);
             // 
-            // button7
+            // DownDelButton
             // 
-            this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button7.Location = new System.Drawing.Point(192, 15);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(48, 22);
-            this.button7.TabIndex = 42;
-            this.button7.Text = "Hold";
-            this.button7.UseVisualStyleBackColor = true;
+            this.DownDelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DownDelButton.Location = new System.Drawing.Point(167, 36);
+            this.DownDelButton.Name = "DownDelButton";
+            this.DownDelButton.Size = new System.Drawing.Size(43, 22);
+            this.DownDelButton.TabIndex = 60;
+            this.DownDelButton.Text = "del";
+            this.DownDelButton.UseVisualStyleBackColor = true;
+            this.DownDelButton.Click += new System.EventHandler(this.DownDeleteButton_Click);
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label32.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label32.Location = new System.Drawing.Point(7, 15);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(26, 16);
+            this.label32.TabIndex = 61;
+            this.label32.Text = "Up";
+            // 
+            // downErrorLabel2
+            // 
+            this.downErrorLabel2.AutoSize = true;
+            this.downErrorLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.downErrorLabel2.ForeColor = System.Drawing.Color.Red;
+            this.downErrorLabel2.Location = new System.Drawing.Point(177, 21);
+            this.downErrorLabel2.Name = "downErrorLabel2";
+            this.downErrorLabel2.Size = new System.Drawing.Size(38, 13);
+            this.downErrorLabel2.TabIndex = 63;
+            this.downErrorLabel2.Text = "value";
+            // 
+            // downErrorLabel1
+            // 
+            this.downErrorLabel1.AutoSize = true;
+            this.downErrorLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.downErrorLabel1.ForeColor = System.Drawing.Color.Red;
+            this.downErrorLabel1.Location = new System.Drawing.Point(177, 9);
+            this.downErrorLabel1.Name = "downErrorLabel1";
+            this.downErrorLabel1.Size = new System.Drawing.Size(45, 13);
+            this.downErrorLabel1.TabIndex = 62;
+            this.downErrorLabel1.Text = "Invalid";
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label43.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label43.Location = new System.Drawing.Point(123, 15);
+            this.label43.Name = "label43";
+            this.label43.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label43.Size = new System.Drawing.Size(46, 16);
+            this.label43.TabIndex = 64;
+            this.label43.Text = "Down";
             // 
             // MainForm
             // 
@@ -1824,21 +1949,22 @@
             this.YawPitchTab.ResumeLayout(false);
             this.YawTab.ResumeLayout(false);
             this.PitchTab.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.upNUD)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.downNUD)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.pARGroup.ResumeLayout(false);
+            this.pARGroup.PerformLayout();
+            this.pLinearGroup.ResumeLayout(false);
+            this.pLinearGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultUp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartUp)).EndInit();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.pStepwiseGroup.ResumeLayout(false);
+            this.pStepwiseGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.UpAutorotGridView)).EndInit();
+            this.pManualGroup.ResumeLayout(false);
+            this.pManualGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.upNUD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.downNUD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DownAutorotGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1934,7 +2060,7 @@
         private System.Windows.Forms.TabControl YawPitchTab;
         private System.Windows.Forms.TabPage YawTab;
         private System.Windows.Forms.TabPage PitchTab;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox pManualGroup;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Button pAccumReset;
@@ -1951,8 +2077,8 @@
         private System.Windows.Forms.Label DownLabel;
         private System.Windows.Forms.Label UpLabel;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox pARGroup;
+        private System.Windows.Forms.GroupBox pLinearGroup;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label34;
@@ -1968,19 +2094,26 @@
         private System.Windows.Forms.RadioButton pARlinear;
         private System.Windows.Forms.RadioButton pARstepwise;
         private System.Windows.Forms.RadioButton pAROffButton;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label label40;
-        private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.GroupBox pStepwiseGroup;
+        private System.Windows.Forms.Label upErrorLabel2;
+        private System.Windows.Forms.Label upErrorLabel1;
+        private System.Windows.Forms.DataGridView UpAutorotGridView;
+        private System.Windows.Forms.Button UpAddButton;
+        private System.Windows.Forms.Button UpDelButton;
+        private System.Windows.Forms.Button SetPitchHoldButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.Button DownAddButton;
+        private System.Windows.Forms.Button DownDelButton;
+        private System.Windows.Forms.DataGridView DownAutorotGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Label downErrorLabel2;
+        private System.Windows.Forms.Label downErrorLabel1;
+        private System.Windows.Forms.Label label32;
     }
 }
 

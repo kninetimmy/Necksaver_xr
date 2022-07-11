@@ -20,6 +20,10 @@ namespace XRNeckSafer
         public int auto_offset_angle;
         public int sum_offset_angle;
         public int last_offset_angle;
+        public int joy_offset_angle_pitch;
+        public int auto_offset_angle_pitch;
+        public int sum_offset_angle_pitch;
+        public int last_offset_angle_pitch;
         public float last_offset_x;
         public float last_offset_z;
 
@@ -72,6 +76,22 @@ namespace XRNeckSafer
             }
             autorot_changed(new Object(), new EventArgs());
 
+            if (conf.PitchAutoMode == "stepwise")
+            {
+                pARstepwise.Checked = true;
+            }
+            else if (conf.PitchAutoMode == "linear")
+            {
+                pARlinear.Checked = true;
+            }
+            else
+            {
+                pAROffButton.Checked = true;
+            }
+            pitchAutorotChanged(new Object(), new EventArgs());
+            YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
+            Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
+
             numericUpDownStartLeft.Value = conf.LinearLimL;
             numericUpDownStartRight.Value = conf.LinearLimR;
             numericUpDownMultLeft.Value = conf.LinearMultL;
@@ -114,6 +134,58 @@ namespace XRNeckSafer
             AutorotGridView.Columns[4].HeaderCell.Style.Font = DefaultFont;
             AutorotGridView.Columns[4].HeaderCell.Style.ForeColor = System.Drawing.Color.CadetBlue;
             AutorotGridView.Columns[4].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
+            
+            for (int i = 0; i < conf.UpAutoSteps.Count; i++)
+            {
+                string[] r = new string[3]
+                {
+                    conf.UpAutoSteps[i][0].ToString(),
+                    conf.UpAutoSteps[i][1].ToString(),
+                    conf.UpAutoSteps[i][2].ToString(),
+                };
+                UpAutorotGridView.Rows.Add(r);
+            }
+            UpAutorotGridView.EnableHeadersVisualStyles = false;
+            UpAutorotGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Raised;
+            UpAutorotGridView.RowHeadersVisible = false;
+            UpAutorotGridView.Columns[0].HeaderText = @"act";
+            UpAutorotGridView.Columns[0].HeaderCell.Style.Font = DefaultFont;
+            UpAutorotGridView.Columns[0].HeaderCell.Style.ForeColor = System.Drawing.Color.Red;
+            UpAutorotGridView.Columns[0].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
+            UpAutorotGridView.Columns[1].HeaderText = @"de";
+            UpAutorotGridView.Columns[1].HeaderCell.Style.Font = DefaultFont;
+            UpAutorotGridView.Columns[1].HeaderCell.Style.ForeColor = System.Drawing.Color.Green;
+            UpAutorotGridView.Columns[1].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
+            UpAutorotGridView.Columns[2].HeaderText = @"rot";
+            UpAutorotGridView.Columns[2].HeaderCell.Style.Font = DefaultFont;
+            UpAutorotGridView.Columns[2].HeaderCell.Style.ForeColor = System.Drawing.Color.Black;
+            UpAutorotGridView.Columns[2].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
+            
+            for (int i = 0; i < conf.DownAutoSteps.Count; i++)
+            {
+                string[] r = new string[3]
+                {
+                    conf.DownAutoSteps[i][0].ToString(),
+                    conf.DownAutoSteps[i][1].ToString(),
+                    conf.DownAutoSteps[i][2].ToString(),
+                };
+                DownAutorotGridView.Rows.Add(r);
+            }
+            DownAutorotGridView.EnableHeadersVisualStyles = false;
+            DownAutorotGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Raised;
+            DownAutorotGridView.RowHeadersVisible = false;
+            DownAutorotGridView.Columns[0].HeaderText = @"act";
+            DownAutorotGridView.Columns[0].HeaderCell.Style.Font = DefaultFont;
+            DownAutorotGridView.Columns[0].HeaderCell.Style.ForeColor = System.Drawing.Color.Red;
+            DownAutorotGridView.Columns[0].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
+            DownAutorotGridView.Columns[1].HeaderText = @"de";
+            DownAutorotGridView.Columns[1].HeaderCell.Style.Font = DefaultFont;
+            DownAutorotGridView.Columns[1].HeaderCell.Style.ForeColor = System.Drawing.Color.Green;
+            DownAutorotGridView.Columns[1].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
+            DownAutorotGridView.Columns[2].HeaderText = @"rot";
+            DownAutorotGridView.Columns[2].HeaderCell.Style.Font = DefaultFont;
+            DownAutorotGridView.Columns[2].HeaderCell.Style.ForeColor = System.Drawing.Color.Black;
+            DownAutorotGridView.Columns[2].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
 
             setButtonToolTip(SetLeftButton, conf.LeftButton);
             setButtonToolTip(SetRightButton, conf.RightButton);
@@ -126,6 +198,10 @@ namespace XRNeckSafer
 
             error_label.Visible = check_autorot_config();
             error_label2.Visible = error_label.Visible;
+            upErrorLabel1.Visible = check_autorot_config();
+            upErrorLabel2.Visible = upErrorLabel1.Visible;
+            downErrorLabel1.Visible = check_autorot_config();
+            downErrorLabel2.Visible = downErrorLabel1.Visible;
             numericUpDownStartLeft.Value = conf.LinearLimL;
             numericUpDownStartRight.Value = conf.LinearLimR;
             numericUpDownMultLeft.Value = conf.LinearMultL;
@@ -177,22 +253,6 @@ namespace XRNeckSafer
             label16.Enabled = !additivRB.Checked;
             label17.Enabled = !additivRB.Checked;
             conf.WriteConfig();
-        }
-
-        bool checkButtonPress(Button b, ButtonConfig bc)
-        {
-            bool pressed = js.IsButtonPressed(bc);
-            if (pressed)
-            {
-                b.ForeColor = System.Drawing.Color.LightGreen;
-                b.BackColor = SystemColors.ControlText;
-            }
-            else
-            {
-                b.ForeColor = SystemColors.ControlText;
-                b.BackColor = SystemColors.ButtonFace;
-            }
-            return pressed;
         }
 
         private void setButtonColor(bool pressed, Button b) 
@@ -493,6 +553,54 @@ namespace XRNeckSafer
                 AutorotGridView.Rows.Remove(AutorotGridView.Rows[AutorotGridView.RowCount - 1]);
             }
         }
+        private void UpAddButton_Click(object sender, EventArgs e)
+        {
+            int[] i = new int[5];
+            i[0] = conf.UpAutoSteps[conf.UpAutoSteps.Count - 1][0] + 10;
+            i[1] = conf.UpAutoSteps[conf.UpAutoSteps.Count - 1][0] + 1;
+            i[2] = conf.UpAutoSteps[conf.UpAutoSteps.Count - 1][2] + 10;
+            conf.UpAutoSteps.Add(i);
+            string[] s = new string[3]
+            {
+                conf.UpAutoSteps[conf.UpAutoSteps.Count-1][0].ToString(),
+                conf.UpAutoSteps[conf.UpAutoSteps.Count-1][1].ToString(),
+                conf.UpAutoSteps[conf.UpAutoSteps.Count-1][2].ToString(),
+            };
+            UpAutorotGridView.Rows.Add(s);
+        }
+
+        private void UpDeleteButton_Click(object sender, EventArgs e)
+        {
+            if (conf.UpAutoSteps.Count > 1)
+            {
+                conf.UpAutoSteps.RemoveAt(conf.UpAutoSteps.Count - 1);
+                UpAutorotGridView.Rows.Remove(UpAutorotGridView.Rows[UpAutorotGridView.RowCount - 1]);
+            }
+        }
+        private void DownAddButton_Click(object sender, EventArgs e)
+        {
+            int[] i = new int[5];
+            i[0] = conf.DownAutoSteps[conf.DownAutoSteps.Count - 1][0] - 10;
+            i[1] = conf.DownAutoSteps[conf.DownAutoSteps.Count - 1][0] - 1;
+            i[2] = conf.DownAutoSteps[conf.DownAutoSteps.Count - 1][2] - 10;
+            conf.DownAutoSteps.Add(i);
+            string[] s = new string[3]
+            {
+                conf.DownAutoSteps[conf.DownAutoSteps.Count-1][0].ToString(),
+                conf.DownAutoSteps[conf.DownAutoSteps.Count-1][1].ToString(),
+                conf.DownAutoSteps[conf.DownAutoSteps.Count-1][2].ToString(),
+            };
+            DownAutorotGridView.Rows.Add(s);
+        }
+
+        private void DownDeleteButton_Click(object sender, EventArgs e)
+        {
+            if (conf.DownAutoSteps.Count > 1)
+            {
+                conf.DownAutoSteps.RemoveAt(conf.DownAutoSteps.Count - 1);
+                DownAutorotGridView.Rows.Remove(DownAutorotGridView.Rows[DownAutorotGridView.RowCount - 1]);
+            }
+        }
 
         private bool check_autorot_config()
         {
@@ -538,6 +646,90 @@ namespace XRNeckSafer
             return error;
         }
 
+        private bool check_UP_autorot_config()
+        {
+            int val;
+
+            bool error = false;
+
+            for (int col = 0; col < UpAutorotGridView.ColumnCount; col++)
+            {
+                for (int row = 0; row < UpAutorotGridView.RowCount; row++)
+                {
+                    string s = UpAutorotGridView[col, row].Value.ToString();
+                    bool good = int.TryParse(s, out val);
+
+                    if (good)
+                    {
+                        if (val < 0) good = false;
+                        if (row < UpAutorotGridView.RowCount - 1 && col == 0)
+                        {
+                            if (val >= conf.UpAutoSteps[row + 1][1]) good = false;
+                            if (val >= conf.UpAutoSteps[row + 1][0]) good = false;
+                        }
+
+                        if (row > 0 && col == 0 && val <= conf.UpAutoSteps[row - 1][0]) good = false;
+                        if (row > 0 && col == 1 && val <= conf.UpAutoSteps[row - 1][0]) good = false;
+                        if (col == 0 && val <= conf.UpAutoSteps[row][1]) good = false;
+                        if (col == 1 && val >= conf.UpAutoSteps[row][0]) good = false;
+                    }
+
+                    if (good)
+                    {
+                        UpAutorotGridView.Rows[row].Cells[col].Style.BackColor = SystemColors.Control;
+                    }
+                    else
+                    {
+                        UpAutorotGridView.Rows[row].Cells[col].Style.BackColor = System.Drawing.Color.Red;
+                        error = true;
+                    }
+                }
+            }
+            return error;
+        }
+        private bool check_DOWN_autorot_config()
+        {
+            int val;
+
+            bool error = false;
+
+            for (int col = 0; col < DownAutorotGridView.ColumnCount; col++)
+            {
+                for (int row = 0; row < DownAutorotGridView.RowCount; row++)
+                {
+                    string s = DownAutorotGridView[col, row].Value.ToString();
+                    bool good = int.TryParse(s, out val);
+
+                    if (good)
+                    {
+                        if (val > 0) good = false;
+                        if (row > DownAutorotGridView.RowCount - 1 && col == 0)
+                        {
+                            if (val <= conf.DownAutoSteps[row + 1][1]) good = false;
+                            if (val <= conf.DownAutoSteps[row + 1][0]) good = false;
+                        }
+
+                        if (row > 0 && col == 0 && val >= conf.DownAutoSteps[row - 1][0]) good = false;
+                        if (row > 0 && col == 1 && val >= conf.DownAutoSteps[row - 1][0]) good = false;
+                        if (col == 0 && val >= conf.DownAutoSteps[row][1]) good = false;
+                        if (col == 1 && val <= conf.DownAutoSteps[row][0]) good = false;
+                    }
+
+                    if (good)
+                    {
+                        DownAutorotGridView.Rows[row].Cells[col].Style.BackColor = SystemColors.Control;
+                    }
+                    else
+                    {
+                        DownAutorotGridView.Rows[row].Cells[col].Style.BackColor = System.Drawing.Color.Red;
+                        error = true;
+                    }
+                }
+            }
+            return error;
+        }
+
+
         private void AutorotGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             int val;
@@ -558,14 +750,48 @@ namespace XRNeckSafer
             if (gr != null)
                 gr.Graph_ValuesChanged();
         }
+        private void UpAutorotGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int val;
+
+            if (e.RowIndex == -1) return;
+
+            string s = UpAutorotGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
+            bool good = int.TryParse(s, out val);
+
+            if (good)
+            {
+                conf.UpAutoSteps[e.RowIndex][e.ColumnIndex] = val;
+                conf.WriteConfig();
+            }
+
+            upErrorLabel1.Visible = check_UP_autorot_config();
+            upErrorLabel2.Visible = upErrorLabel1.Visible;
+        }
+        private void DownAutorotGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int val;
+
+            if (e.RowIndex == -1) return;
+
+            string s = DownAutorotGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
+            bool good = int.TryParse(s, out val);
+
+            if (good)
+            {
+                conf.DownAutoSteps[e.RowIndex][e.ColumnIndex] = val;
+                conf.WriteConfig();
+            }
+
+            downErrorLabel1.Visible = check_DOWN_autorot_config();
+            downErrorLabel2.Visible = downErrorLabel1.Visible;
+        }
 
         private void AutorotGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
 
-            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height-50);
-            //            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, Size.Height - stepwiseGroup.Location.Y - 111);
-            //            MaximumSize = new System.Drawing.Size(MaximumSize.Width, Math.Max(min_form_heigh, AutorotGridView.RowCount * 22 + 406));
+            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
             conf.WriteConfig();
             if (gr != null)
                 gr.Graph_ValuesChanged();
@@ -575,8 +801,41 @@ namespace XRNeckSafer
         {
             AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
             AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
-            //            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, Size.Height - stepwiseGroup.Location.Y - 111);
-            //            MaximumSize = new System.Drawing.Size(MaximumSize.Width, Math.Max(min_form_heigh, AutorotGridView.RowCount * 22 + 406));
+            conf.WriteConfig();
+            if (gr != null)
+                gr.Graph_ValuesChanged();
+        }
+        private void UpAutorotGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            UpAutorotGridView.Height = UpAutorotGridView.RowCount * 22 + 20;
+
+            UpAutorotGridView.MaximumSize = new System.Drawing.Size(UpAutorotGridView.Width, stepwiseGroup.Height - 60);
+            conf.WriteConfig();
+            if (gr != null)
+                gr.Graph_ValuesChanged();
+        }
+
+        private void UpAutorotGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            UpAutorotGridView.Height = UpAutorotGridView.RowCount * 22 + 20;
+            UpAutorotGridView.MaximumSize = new System.Drawing.Size(UpAutorotGridView.Width, stepwiseGroup.Height - 60);
+            conf.WriteConfig();
+            if (gr != null)
+                gr.Graph_ValuesChanged();
+        }
+        private void DownAutorotGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            DownAutorotGridView.Height = DownAutorotGridView.RowCount * 22 + 20;
+            DownAutorotGridView.MaximumSize = new System.Drawing.Size(DownAutorotGridView.Width, stepwiseGroup.Height - 60);
+            conf.WriteConfig();
+            if (gr != null)
+                gr.Graph_ValuesChanged();
+        }
+
+        private void DownAutorotGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            DownAutorotGridView.Height = DownAutorotGridView.RowCount * 22 + 20;
+            DownAutorotGridView.MaximumSize = new System.Drawing.Size(DownAutorotGridView.Width, stepwiseGroup.Height - 60);
             conf.WriteConfig();
             if (gr != null)
                 gr.Graph_ValuesChanged();
@@ -801,6 +1060,7 @@ namespace XRNeckSafer
                 stepwiseGroup.Visible = false;
                 linearGroup.Visible = true;
                 ARGroup.Height = 140;
+                linearGroup.Location = new System.Drawing.Point(7, 40);
                 conf.AutoMode = "linear";
             }
             if (ARstepwise.Checked)
@@ -808,6 +1068,7 @@ namespace XRNeckSafer
                 stepwiseGroup.Visible = true;
                 linearGroup.Visible = false;
                 ARGroup.Height = 217;
+                stepwiseGroup.Location = new System.Drawing.Point(7, 40);
                 conf.AutoMode = "stepwise";
             }
             YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
@@ -871,9 +1132,51 @@ namespace XRNeckSafer
             applyLinearSettings();
         }
 
-        private void U(object sender, EventArgs e)
+        private void pitchAutorotChanged(object sender, EventArgs e)
         {
+            if (pAROffButton.Checked)
+            {
+                pStepwiseGroup.Visible = false;
+                pLinearGroup.Visible = false;
+                pARGroup.Height = 45;
+                conf.PitchAutoMode = "off";
+                auto_offset_angle_pitch = 0;
+            }
+            if (pARlinear.Checked)
+            {
+                pStepwiseGroup.Visible = false;
+                pLinearGroup.Visible = true;
+                pARGroup.Height = 140;
+                pLinearGroup.Location = new System.Drawing.Point(7, 40);
+                conf.PitchAutoMode = "linear";
+            }
+            if (pARstepwise.Checked)
+            {
+                pStepwiseGroup.Visible = true;
+                pLinearGroup.Visible = false;
+                pARGroup.Height = 220;
+                pStepwiseGroup.Size = new System.Drawing.Size(236, 172);
+                pStepwiseGroup.Location = new System.Drawing.Point(7, 40);
+                conf.PitchAutoMode = "stepwise";
+            }
+            YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
+            Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
+            vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR,
+                (float)conf.LinearMultL / 100, (float)conf.LinearMultR / 100);
+            conf.WriteConfig();
 
+        }
+
+        private void YawPitchTab_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (YawPitchTab.SelectedTab.Text == "Yaw")
+            {
+                YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
+            }
+            else{
+                YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
+            }
+            Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
         }
     }
 }
