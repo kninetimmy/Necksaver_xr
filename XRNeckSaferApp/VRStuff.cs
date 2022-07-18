@@ -150,9 +150,10 @@ namespace XRNeckSafer
             accessor.Write<shmVal_s>(0, ref shmValues);
         }
 
-        public void setOffset(int a, Vector3 trans)
+        public void setOffset(int a, int b, Vector3 trans)
         {
             shmValues.yawOffset = (float)(a * Math.PI / 180);
+            shmValues.pitchOffset = (float)(b * Math.PI / 180);
             shmValues.lateralOffset = trans.X;
             shmValues.longitudinalOffset = trans.Z;
             accessor.Write<shmVal_s>(0, ref shmValues);

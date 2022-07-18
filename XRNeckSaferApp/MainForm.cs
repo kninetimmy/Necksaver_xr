@@ -38,6 +38,8 @@ namespace XRNeckSafer
         public bool last_h_pressed;
         public bool last_hp_pressed;
         public string ARText;
+        public string pARText;
+        public string HMDtext;
         public bool autorot_config_error;
 
         public int min_form_heigh;
@@ -60,6 +62,8 @@ namespace XRNeckSafer
             vr = new VRStuff();
 
             angleNUD.Value = conf.Angle;
+            upNUD.Value = conf.UpAngle;
+            downNUD.Value = conf.DownAngle;
             transFNUP.Value = conf.TransF;
             transLRNUP.Value = conf.TransLR;
             additivRB.Checked = conf.Additiv;
@@ -207,9 +211,16 @@ namespace XRNeckSafer
             numericUpDownStartRight.Value = conf.LinearLimR;
             numericUpDownMultLeft.Value = conf.LinearMultL;
             numericUpDownMultRight.Value = conf.LinearMultR;
+            numericUpDownStartUp.Value = conf.LinearLimU;
+            numericUpDownStartDown.Value = conf.LinearLimD;
+            numericUpDownMultUp.Value = conf.LinearMultU;
+            numericUpDownMultDown.Value = conf.LinearMultD;
 
-            vr.setLinearRotationSettings(conf.AutoMode=="linear", conf.LinearLimL, conf.LinearLimR, (float)conf.LinearMultL/100, (float)conf.LinearMultR/100);
+            vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR, (float)conf.LinearMultL / 100, (float)conf.LinearMultR / 100);
+            vr.setPitchLinearRotationSettings(conf.PitchAutoMode == "linear", conf.LinearLimU, conf.LinearLimD, (float)conf.LinearMultU / 100, (float)conf.LinearMultD / 100);
             ARText = "Autorotation";
+            pARText = "Autorotation";
+            HMDtext = "";
             loopTimer.Start();
         }
 
@@ -241,6 +252,26 @@ namespace XRNeckSafer
         private void angleNUD_KeyUp(object sender, KeyEventArgs e)
         {
             conf.Angle = (int)angleNUD.Value;
+            conf.WriteConfig();
+        }
+        private void upNUD_ValueChanged(object sender, EventArgs e)
+        {
+            conf.UpAngle = (int)upNUD.Value;
+            conf.WriteConfig();
+        }
+        private void upNUD_KeyUp(object sender, KeyEventArgs e)
+        {
+            conf.Angle = (int)upNUD.Value;
+            conf.WriteConfig();
+        }
+        private void downNUD_ValueChanged(object sender, EventArgs e)
+        {
+            conf.DownAngle = (int)downNUD.Value;
+            conf.WriteConfig();
+        }
+        private void downNUD_KeyUp(object sender, KeyEventArgs e)
+        {
+            conf.DownAngle = (int)downNUD.Value;
             conf.WriteConfig();
         }
 
@@ -355,25 +386,33 @@ namespace XRNeckSafer
             vr.updateHmdOrientation();
 
             float hmdYaw = vr.getHmdYaw();
+            float hmdPitch = vr.getHmdPitch();
+
 
             while (hmdYaw < -180) hmdYaw += 360;
             while (hmdYaw > 180) hmdYaw -= 360;
 
             if (vr.HmdWasCentered())
             {
-                HMDYawLabel.Location = new System.Drawing.Point(67, 18);
-                HMDYawLabel.Text = "HMD yaw: " + Math.Round(hmdYaw) + " deg";
+                HMDtext = "HMD yaw: " + Math.Round(hmdYaw) + " deg pitch: " + Math.Round(hmdPitch)+ " deg";
             }
             else
             {
+                HMDtext = "HMD yaw: (not centered in game yet)";
+            }
+
+            if (HMDYawLabel.Text != HMDtext)
+            {
                 HMDYawLabel.Location = new System.Drawing.Point(20, 18);
-                HMDYawLabel.Text = "HMD yaw: (not centered in game yet)";
+                HMDYawLabel.Text = HMDtext;
             }
 
             if (reset_pressed)
             {
                 vr.resetHmdOrientation();
                 joy_offset_angle = 0;
+                vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR, (float)conf.LinearMultL / 100, (float)conf.LinearMultR / 100);
+                vr.setPitchLinearRotationSettings(conf.PitchAutoMode == "linear", conf.LinearLimU, conf.LinearLimD, (float)conf.LinearMultU / 100, (float)conf.LinearMultD / 100);
             }
 
             if (additivRB.Checked)
@@ -440,7 +479,7 @@ namespace XRNeckSafer
                     ///           xxxxx only when changed!
                     ARText = "Autorotation hold";
                     if (pitchlimit) ARText += " (pitch lim)";
-                    else ARText +=            " (button)";
+                    else ARText += " (button)";
                 }
                 else
                 {
@@ -459,26 +498,57 @@ namespace XRNeckSafer
                     }
                 }
             }
+
             if (ARGroup.Text != ARText)
             {
                 ARGroup.Text = ARText;
             }
 
+            if (!pAROffButton.Checked)
+            {
+                if (hp_pressed)
+                {
+                    pARText = "Autorotation hold (button)";
+                }
+                else
+                {
+                    pARText = "Autorotation";
+                    if (conf.PitchAutoMode == "stepwise")
+                    {
+                        calcAutoPitch((int)hmdPitch, ref auto_offset_angle_pitch);
+                    }
+                    else
+                    {
+                        auto_offset_angle_pitch = 0;
+                    }
+                }
+            }
+
+            if (pARGroup.Text != pARText)
+            {
+                pARGroup.Text = pARText;
+            }
+
             sum_offset_angle = joy_offset_angle + auto_offset_angle;
+            sum_offset_angle_pitch = joy_offset_angle_pitch + auto_offset_angle_pitch;
+
             if (Math.Abs(auto_trans_offset.X) > Math.Abs(trans_offset.X)) trans_offset.X = auto_trans_offset.X;
             if (Math.Abs(auto_trans_offset.Z) > Math.Abs(trans_offset.Z)) trans_offset.Z = auto_trans_offset.Z;
 
             if (last_offset_angle != sum_offset_angle
                 || last_offset_x != trans_offset.X
-                || last_offset_z != trans_offset.Z)
+                || last_offset_z != trans_offset.Z
+                || last_offset_angle_pitch != sum_offset_angle_pitch)
             {
-                vr.setOffset(sum_offset_angle, trans_offset);
-                Text = "XRNS (" + sum_offset_angle + " deg)";
+                vr.setOffset(sum_offset_angle, sum_offset_angle_pitch, trans_offset);
+                Text = "XRNS (Y:" + sum_offset_angle + "  P: " + sum_offset_angle_pitch + ")";
             }
 
             lastpressed = l_pressed || r_pressed;
+            lastpitchpressed = u_pressed || d_pressed;
 
             last_offset_angle = sum_offset_angle;
+            last_offset_angle_pitch = sum_offset_angle_pitch;
             last_offset_x = trans_offset.X;
             last_offset_z = trans_offset.Z;
 
@@ -538,6 +608,44 @@ namespace XRNeckSafer
             arot = yawsign * autorot;
             atrans.X = (float)transx / 100.0F * -yawsign;
             atrans.Z = (float)transz / 100.0F;
+        }
+        private void calcAutoPitch(int pitch, ref int arot)
+        {
+            if (pitch > 0)
+            {
+
+
+                int arotsign = (arot > 0) ? 1 : -1;
+                int absarot = arot * arotsign;
+                int autorot = 0;
+
+
+                int act;
+                int deact = 0;
+                int rot;
+
+                for (int i = 0; i < conf.AutoSteps.Count; i++)
+                {
+                    act = conf.UpAutoSteps[i][0];
+                    deact = conf.UpAutoSteps[i][1];
+                    rot = conf.UpAutoSteps[i][2];
+
+                    if (pitch >= act)
+                    {
+                        autorot = rot;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                if ((absarot > autorot) && (pitch >= deact))
+                {
+                    return;
+                }
+                arot = autorot;
+            }
         }
 
         private void transFNUP_ValueChanged(object sender, EventArgs e)

@@ -133,7 +133,7 @@ namespace XRNeckSafer
             PitchHoldButton2 = new ButtonConfig();
             PitchHoldButton3 = new ButtonConfig();
             UpAngle = 30;
-            DownAngle = 30;
+            DownAngle = -30;
             TransLR = 0;
             TransF = 0;
             LinearLimL = 95;
@@ -214,10 +214,10 @@ namespace XRNeckSafer
                 }
                 if (c.DownAutoSteps.Count == 0)
                 {
-                    c.DownAutoSteps.Add(new int[3] { 50, 41, 10 });
-                    c.DownAutoSteps.Add(new int[3] { 60, 51, 20 });
-                    c.DownAutoSteps.Add(new int[3] { 70, 61, 30 });
-                    c.DownAutoSteps.Add(new int[3] { 80, 71, 40 });
+                    c.DownAutoSteps.Add(new int[3] { -50, -41, -10 });
+                    c.DownAutoSteps.Add(new int[3] { -60, -51, -20 });
+                    c.DownAutoSteps.Add(new int[3] { -70, -61, -30 });
+                    c.DownAutoSteps.Add(new int[3] { -80, -71, -40 });
                 }
 
                 return c;
@@ -244,10 +244,10 @@ namespace XRNeckSafer
                 }
                 if (conf.DownAutoSteps.Count == 0)
                 {
-                    conf.DownAutoSteps.Add(new int[3] { -50, -41, -10 });
-                    conf.DownAutoSteps.Add(new int[3] { -60, -51, -20 });
-                    conf.DownAutoSteps.Add(new int[3] { -70, -61, -30 });
-                    conf.DownAutoSteps.Add(new int[3] { -80, -71, -40 });
+                    conf.DownAutoSteps.Add(new int[3] { -50, -41, 10 });
+                    conf.DownAutoSteps.Add(new int[3] { -60, -51, 20 });
+                    conf.DownAutoSteps.Add(new int[3] { -70, -61, 30 });
+                    conf.DownAutoSteps.Add(new int[3] { -80, -71, 40 });
                 }
 
                 conf.WriteConfig();
