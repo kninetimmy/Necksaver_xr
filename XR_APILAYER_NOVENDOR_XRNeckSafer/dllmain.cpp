@@ -56,14 +56,21 @@ namespace {
         float pitchOffset;
         float lateralOffset;
         float longitudinalOffset;
-        int leftStartAt;
-        int rightStartAt;
         float rightMultiplier;
         float leftMultiplier;
+        float upMultiplier;
+        float downMultiplier;
+        int leftStartAt;
+        int rightStartAt;
+        int upStartAt;
+        int downStartAt;
         bool resetHmdOrientation;
         bool useLinearRotation;
+        bool useLineaPitchRotation;
         bool holdLinearRotation;
+        bool holdLinearPitchRotation;
         bool hasBeenCentered;
+ 
     } shmValues;
 
     std::wstring m_memoryName = L"XRNeckSaferSHM";

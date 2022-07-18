@@ -15,7 +15,6 @@ namespace XRNeckSafer
         public Graph gr;
 
 
-
         public int joy_offset_angle;
         public int auto_offset_angle;
         public int sum_offset_angle;
@@ -35,7 +34,9 @@ namespace XRNeckSafer
         public int hmdYaw;
 
         public bool lastpressed;
+        public bool lastpitchpressed;
         public bool last_h_pressed;
+        public bool last_hp_pressed;
         public string ARText;
         public bool autorot_config_error;
 
@@ -293,24 +294,35 @@ namespace XRNeckSafer
     private void loopTimer_Tick(object sender, EventArgs e)
         {
             bool reset_pressed = js.IsButtonPressed(conf.ResetButton);
-//            bool reset_pressed = checkButtonPress(SetResetButton, conf.ResetButton);
             bool acc_res_pressed = js.IsButtonPressed(conf.AccuResetButton);
+            bool pitch_acc_res_pressed = js.IsButtonPressed(conf.PitchAccuResetButton);
             bool l_pressed = js.IsButtonPressed(conf.LeftButton);
             bool r_pressed = js.IsButtonPressed(conf.RightButton);
+            bool u_pressed = js.IsButtonPressed(conf.UpButton);
+            bool d_pressed = js.IsButtonPressed(conf.DownButton);
             bool h_pressed = js.IsButtonPressed(conf.HoldButton1);
-//            bool h_pressed = checkButtonPress(SetHoldButton1, conf.HoldButton1);
+            bool hp_pressed = js.IsButtonPressed(conf.PitchHoldButton1);
+            //            bool h_pressed = checkButtonPress(SetHoldButton1, conf.HoldButton1);
             if (conf.MultipleLRbuttons)
             {
                 l_pressed |= js.IsButtonPressed(conf.LeftButton2);
                 l_pressed |= js.IsButtonPressed(conf.LeftButton3);
                 r_pressed |= js.IsButtonPressed(conf.RightButton2);
                 r_pressed |= js.IsButtonPressed(conf.RightButton3);
+                u_pressed |= js.IsButtonPressed(conf.UpButton2);
+                u_pressed |= js.IsButtonPressed(conf.UpButton3);
+                d_pressed |= js.IsButtonPressed(conf.DownButton2);
+                d_pressed |= js.IsButtonPressed(conf.DownButton3);
                 reset_pressed |= js.IsButtonPressed(conf.ResetButton2);
                 reset_pressed |= js.IsButtonPressed(conf.ResetButton3);
                 acc_res_pressed |= js.IsButtonPressed(conf.AccuResetButton2);
                 acc_res_pressed |= js.IsButtonPressed(conf.AccuResetButton3);
+                pitch_acc_res_pressed |= js.IsButtonPressed(conf.PitchAccuResetButton2);
+                pitch_acc_res_pressed |= js.IsButtonPressed(conf.PitchAccuResetButton3);
                 h_pressed |= js.IsButtonPressed(conf.HoldButton2);
                 h_pressed |= js.IsButtonPressed(conf.HoldButton3);
+                hp_pressed |= js.IsButtonPressed(conf.PitchHoldButton2);
+                hp_pressed |= js.IsButtonPressed(conf.PitchHoldButton3);
             }
 
             setButtonColor(l_pressed, SetLeftButton);
@@ -320,6 +332,7 @@ namespace XRNeckSafer
             setButtonColor(reset_pressed, SetResetButton);
             setButtonColor(acc_res_pressed, AccumReset);
             setButtonColor(h_pressed, SetHoldButton1);
+            setButtonColor(hp_pressed, SetPitchHoldButton);
 
             bool pitchlimit = vr.getHmdPitch() - 90 > conf.PitchLimForAutorot;
 
@@ -330,6 +343,12 @@ namespace XRNeckSafer
                 vr.setLinearHold(h_pressed);
             }
             last_h_pressed = h_pressed;
+
+            if (hp_pressed != last_hp_pressed)
+            {
+                vr.setPitchLinearHold(hp_pressed);
+            }
+            last_hp_pressed = hp_pressed;
 
             trans_offset = new Vector3(0, 0, 0);
 
@@ -385,6 +404,31 @@ namespace XRNeckSafer
                     joy_offset_angle = 0;
                     trans_offset.X = 0;
                     trans_offset.Z = 0;
+                }
+            }
+
+            if (pAdditivRB.Checked)
+            {
+                if (u_pressed && !lastpitchpressed)
+                    joy_offset_angle_pitch -= (int)upNUD.Value;
+                if (d_pressed && !lastpitchpressed)
+                    joy_offset_angle_pitch += (int)downNUD.Value;
+                if (acc_res_pressed)
+                    joy_offset_angle_pitch = 0;
+            }
+            else
+            {
+                if (u_pressed)
+                {
+                    joy_offset_angle_pitch = -(int)upNUD.Value;
+                 }
+                else if (d_pressed)
+                {
+                    joy_offset_angle_pitch = (int)downNUD.Value;
+                 }
+                else
+                {
+                    joy_offset_angle_pitch = 0;
                 }
             }
 
@@ -1177,6 +1221,69 @@ namespace XRNeckSafer
                 YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
             }
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
+        }
+
+        private void SetDownButton_Click(object sender, EventArgs e)
+        {
+            if (conf.MultipleLRbuttons == false)
+            {
+                ButtonForm frm = new ButtonForm(this, "Button for Down Rotation:", conf.DownButton);
+                frm.ShowDialog();
+            }
+            else
+            {
+                MultiButtons frm = new MultiButtons(this, "Down", conf.DownButton, conf.DownButton2, conf.DownButton3);
+                frm.ShowDialog();
+            }
+            setButtonToolTip(SetDownButton, conf.DownButton);
+            setLabelToolTip(DownLabel, conf.DownButton);
+        }
+
+        private void SetUpButton_Click(object sender, EventArgs e)
+        {
+            if (conf.MultipleLRbuttons == false)
+            {
+                ButtonForm frm = new ButtonForm(this, "Button for up Rotation:", conf.UpButton);
+                frm.ShowDialog();
+            }
+            else
+            {
+                MultiButtons frm = new MultiButtons(this, "Down", conf.UpButton, conf.UpButton2, conf.UpButton3);
+                frm.ShowDialog();
+            }
+            setButtonToolTip(SetUpButton, conf.UpButton);
+            setLabelToolTip(UpLabel, conf.UpButton);
+
+        }
+
+        private void pAccumReset_Click(object sender, EventArgs e)
+        {
+            if (conf.MultipleLRbuttons == false)
+            {
+                ButtonForm frm = new ButtonForm(this, "Pitch Accum Reset Button:", conf.PitchAccuResetButton);
+                frm.ShowDialog();
+            }
+            else
+            {
+                MultiButtons frm = new MultiButtons(this, "Accum Reset", conf.PitchAccuResetButton, conf.PitchAccuResetButton2, conf.PitchAccuResetButton3);
+                frm.ShowDialog();
+            }
+            setButtonToolTip(pAccumReset, conf.PitchAccuResetButton);
+        }
+
+        private void SetPitchHoldButton_Click(object sender, EventArgs e)
+        {
+            if (conf.MultipleLRbuttons == false)
+            {
+                ButtonForm frm = new ButtonForm(this, "Pitch Hold Button:", conf.PitchHoldButton1);
+                frm.ShowDialog();
+            }
+            else
+            {
+                MultiButtons frm = new MultiButtons(this, "Hold Button", conf.PitchHoldButton1, conf.PitchHoldButton2, conf.PitchHoldButton3);
+                frm.ShowDialog();
+            }
+            setButtonToolTip(SetPitchHoldButton, conf.PitchHoldButton1);
         }
     }
 }

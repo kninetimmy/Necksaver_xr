@@ -23,13 +23,19 @@ namespace XRNeckSafer
             public float pitchOffset;
             public float lateralOffset;
             public float longitudinalOffset;
-            public int leftStartAt;
-            public int rightStartAt;
             public float rightMultiplier;
             public float leftMultiplier;
+            public float upMultiplier;
+            public float downMultiplier;
+            public int leftStartAt;
+            public int rightStartAt;
+            public int upStartAt;
+            public int downStartAt;
             public bool resetHmdOrientation;
             public bool useLinearRotation;
+            public bool useLineaPitchRotation;
             public bool holdLinearRotation;
+            public bool holdLinearPitchRotation;
             public bool hasBeenCentered;
         }
 
@@ -92,7 +98,7 @@ namespace XRNeckSafer
                     MessageBox.Show("Failed to query API layers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 MessageBox.Show("Failed to initialize OpenXR", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -134,6 +140,15 @@ namespace XRNeckSafer
             shmValues.rightMultiplier = rightmult;
             accessor.Write<shmVal_s>(0, ref shmValues);
         }
+        public void setPitchLinearRotationSettings(bool usepitchlinear, int upstart, int downstart, float upmult, float downmult)
+        {
+            shmValues.useLineaPitchRotation = usepitchlinear;
+            shmValues.upStartAt = upstart;
+            shmValues.downStartAt = downstart;
+            shmValues.upMultiplier = upmult;
+            shmValues.downMultiplier = downmult;
+            accessor.Write<shmVal_s>(0, ref shmValues);
+        }
 
         public void setOffset(int a, Vector3 trans)
         {
@@ -144,6 +159,12 @@ namespace XRNeckSafer
         }
 
         public void setLinearHold(bool h)
+        {
+            shmValues.holdLinearRotation = h;
+            accessor.Write<shmVal_s>(0, ref shmValues);
+        }
+
+        public void setPitchLinearHold(bool h)
         {
             shmValues.holdLinearRotation = h;
             accessor.Write<shmVal_s>(0, ref shmValues);
