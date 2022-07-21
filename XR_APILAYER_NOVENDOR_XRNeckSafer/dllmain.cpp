@@ -44,6 +44,9 @@ namespace {
     XrSpaceLocation lastHmdLocation;
     XrVector3f delta;
     XrVector3f trans;
+
+    XrQuaternionf HmdOrientation;
+
     // float csin, ccos;
 
 
@@ -66,7 +69,7 @@ namespace {
         int downStartAt;
         bool resetHmdOrientation;
         bool useLinearRotation;
-        bool useLineaPitchRotation;
+        bool useLinearPitchRotation;
         bool holdLinearRotation;
         bool holdLinearPitchRotation;
         bool hasBeenCentered;
@@ -82,6 +85,7 @@ namespace {
     XrSession m_Session{ XR_NULL_HANDLE };
 
     float holdYawOffsetValue;
+    float holdPitchOffsetValue;
 
     struct EulerAngles {
         float roll, pitch, yaw;
@@ -224,6 +228,8 @@ namespace {
             shmValues.lateralOffset = buffer->lateralOffset;
             shmValues.useLinearRotation = buffer->useLinearRotation;
             shmValues.holdLinearRotation = buffer->holdLinearRotation;
+            shmValues.useLinearPitchRotation = buffer->useLinearPitchRotation;
+            shmValues.holdLinearPitchRotation = buffer->holdLinearPitchRotation;
             // rotate translational to center orientation
             //trans = {
             //    shmValues.lateralOffset * ccos - shmValues.longitudinalOffset * csin,
@@ -242,6 +248,7 @@ namespace {
             const DirectX::XMVECTOR invertCenterOrientation = DirectX::XMQuaternionConjugate(centerOrientation);
             const DirectX::XMVECTOR substractedOrientation = DirectX::XMQuaternionMultiply(orientation, invertCenterOrientation);
             StoreXrQuaternion(&location.pose.orientation, substractedOrientation);
+            StoreXrQuaternion(&HmdOrientation, substractedOrientation);
 
             EulerAngles angles = ToEulerAngles(location.pose.orientation);
             buffer->hmdYawAngle = angles.yaw * 180.f / (float)M_PI;
@@ -252,7 +259,6 @@ namespace {
                 shmValues.rightStartAt = buffer->rightStartAt;
                 shmValues.leftMultiplier = buffer->leftMultiplier;
                 shmValues.rightMultiplier = buffer->rightMultiplier;
-                //trans = { 0, 0, 0 };
 
                 if (!shmValues.holdLinearRotation) {
                     bool isright = angles.yaw > 0;
@@ -260,12 +266,32 @@ namespace {
                     int startangle = isright ? shmValues.rightStartAt : shmValues.leftStartAt;
                     float startfrom = startangle * (float)M_PI / 180.f;
                     if (abs(angles.yaw) >= startfrom) {
-                        shmValues.yawOffset = shmValues.yawOffset+(abs(angles.yaw) - startfrom) * multiplier * (isright ? 1 : -1);
+                        shmValues.yawOffset = shmValues.yawOffset + (abs(angles.yaw) - startfrom) * multiplier * (isright ? 1 : -1);
                     }
                     holdYawOffsetValue = shmValues.yawOffset;
                 }
                 else {
                     shmValues.yawOffset = holdYawOffsetValue;
+                }
+            }
+            if (shmValues.useLinearPitchRotation) {
+                shmValues.upStartAt = buffer->upStartAt;
+                shmValues.downStartAt = buffer->downStartAt;
+                shmValues.upMultiplier = buffer->upMultiplier;
+                shmValues.downMultiplier = buffer->downMultiplier;
+
+                if (!shmValues.holdLinearPitchRotation) {
+                    bool isup = angles.pitch > 0;
+                    float multiplier = isup ? shmValues.upMultiplier : shmValues.downMultiplier;
+                    int startangle = isup ? shmValues.upStartAt : shmValues.downStartAt;
+                    float startfrom = startangle * (float)M_PI / 180.f;
+                    if (abs(angles.pitch) >= startfrom) {
+                        shmValues.pitchOffset = shmValues.pitchOffset + (abs(angles.pitch) - startfrom) * multiplier * (isup ? 1 : -1);
+                    }
+                    holdPitchOffsetValue = shmValues.pitchOffset;
+                }
+                else {
+                    shmValues.pitchOffset = holdPitchOffsetValue;
                 }
             }
 
@@ -313,23 +339,57 @@ namespace {
         XrVector3f pos = location->pose.position;
 
 
-        if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
+        //if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
 
             location->pose.position = { 0, 0, 0 };
-            StoreXrPose(&location->pose,
-                XMMatrixMultiply(LoadXrPose(location->pose),
-                    DirectX::XMMatrixRotationRollPitchYaw(-shmValues.pitchOffset, -shmValues.yawOffset, 0.f)));
-            location->pose.position = pos - trans;
- //           Log("X: %f", trans.x);
-        }
-        if (baseSpaceIsViewSpace && !spaceIsViewSpace) {
 
-            location->pose.position = { 0, 0, 0 };
-            StoreXrPose(&location->pose,
-                XMMatrixMultiply(LoadXrPose(location->pose),
-                    DirectX::XMMatrixRotationRollPitchYaw(shmValues.pitchOffset, shmValues.yawOffset, 0.f)));
-            location->pose.position = pos - trans;
-        }
+            const DirectX::XMVECTOR qHMD = LoadXrQuaternion(location->pose.orientation);
+            const DirectX::XMVECTOR qYawOffset = DirectX::XMQuaternionRotationRollPitchYaw(0.f, -shmValues.yawOffset, 0.f);
+
+            const DirectX::XMVECTOR qHMDwithYawOffset = DirectX::XMQuaternionMultiply(qHMD, qYawOffset);
+
+            const DirectX::XMVECTOR vPitchAxis = DirectX::XMVector3Rotate({ 0.f,1.f,0.f }, qHMDwithYawOffset); //<-- X=pitch?
+            const DirectX::XMVECTOR qRotatedPitchOffset = DirectX::XMQuaternionRotationAxis(vPitchAxis, -shmValues.pitchOffset);
+
+//            const DirectX::XMVECTOR qHMDwithOffset = DirectX::XMQuaternionMultiply(qHMDwithYawOffset, qRotatedPitchOffset);
+
+            StoreXrQuaternion(&location->pose.orientation, qHMDwithYawOffset);
+
+//           StoreXrQuaternion(
+//               &location->pose.orientation,
+//               DirectX::XMQuaternionMultiply(
+//                   LoadXrQuaternion(location->pose.orientation),
+//                       DirectX::XMQuaternionRotationRollPitchYaw(0.f, -shmValues.yawOffset, 0.f)
+//                   ));
+
+
+                //            StoreXrPose(&location->pose, XMMatrixMultiply(LoadXrPose(location->pose), mat3));
+                //                        StoreXrPose(&location->pose,
+                //                XMMatrixMultiply(LoadXrPose(location->pose),
+                //                    DirectX::XMMatrixRotationRollPitchYaw(0.f, shmValues.hmdYawAngle, 0.f)));
+                //            StoreXrPose(&location->pose,
+                //                XMMatrixMultiply(LoadXrPose(location->pose),
+                //                    DirectX::XMMatrixRotationRollPitchYaw(-shmValues.pitchOffset, shmValues.hmdYawAngle, 0.f)));
+                //            StoreXrPose(&location->pose,
+                //                XMMatrixMultiply(LoadXrPose(location->pose),
+                //                    DirectX::XMMatrixRotationRollPitchYaw(0.f, -shmValues.hmdYawAngle, 0.f)));
+                //            StoreXrPose(&location->pose,
+                //                XMMatrixMultiply(LoadXrPose(location->pose),
+                //                    DirectX::XMMatrixRotationRollPitchYaw(0.f, -shmValues.yawOffset, 0.f)));
+
+                location->pose.position = pos - trans;
+  //      }
+ //       if (baseSpaceIsViewSpace && !spaceIsViewSpace) {
+ //
+ //           location->pose.position = { 0, 0, 0 };
+ //           StoreXrPose(&location->pose,
+ //               XMMatrixMultiply(LoadXrPose(location->pose),
+ //                   DirectX::XMMatrixRotationRollPitchYaw(shmValues.pitchOffset, 0.f, 0.f)));
+ //           StoreXrPose(&location->pose,
+ //               XMMatrixMultiply(LoadXrPose(location->pose),
+ //                   DirectX::XMMatrixRotationRollPitchYaw(0.f, shmValues.yawOffset, 0.f)));
+ //           location->pose.position = pos - trans;
+ //       }
 
         DebugLog("<-- XRNeckSafer_xrLocateSpace %d\n", result);
         return result;

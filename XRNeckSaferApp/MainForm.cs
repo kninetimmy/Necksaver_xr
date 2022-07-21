@@ -360,6 +360,10 @@ namespace XRNeckSafer
             setLabelColor(l_pressed, LeftLabel);
             setButtonColor(r_pressed, SetRightButton);
             setLabelColor(r_pressed, RightLabel);
+            setButtonColor(u_pressed, SetUpButton);
+            setLabelColor(u_pressed, UpLabel);
+            setButtonColor(d_pressed, SetDownButton);
+            setLabelColor(d_pressed, DownLabel);
             setButtonColor(reset_pressed, SetResetButton);
             setButtonColor(acc_res_pressed, AccumReset);
             setButtonColor(h_pressed, SetHoldButton1);
@@ -386,7 +390,7 @@ namespace XRNeckSafer
             vr.updateHmdOrientation();
 
             float hmdYaw = vr.getHmdYaw();
-            float hmdPitch = vr.getHmdPitch();
+            float hmdPitch = -vr.getHmdPitch();
 
 
             while (hmdYaw < -180) hmdYaw += 360;
@@ -394,7 +398,7 @@ namespace XRNeckSafer
 
             if (vr.HmdWasCentered())
             {
-                HMDtext = "HMD yaw: " + Math.Round(hmdYaw) + " deg pitch: " + Math.Round(hmdPitch)+ " deg";
+                HMDtext = "HMD yaw: " + Math.Round(hmdYaw) + " deg   pitch: " + Math.Round(hmdPitch)+ " deg";
             }
             else
             {
@@ -449,9 +453,9 @@ namespace XRNeckSafer
             if (pAdditivRB.Checked)
             {
                 if (u_pressed && !lastpitchpressed)
-                    joy_offset_angle_pitch -= (int)upNUD.Value;
+                    joy_offset_angle_pitch += (int)upNUD.Value;
                 if (d_pressed && !lastpitchpressed)
-                    joy_offset_angle_pitch += (int)downNUD.Value;
+                    joy_offset_angle_pitch -= (int)downNUD.Value;
                 if (acc_res_pressed)
                     joy_offset_angle_pitch = 0;
             }
@@ -459,11 +463,11 @@ namespace XRNeckSafer
             {
                 if (u_pressed)
                 {
-                    joy_offset_angle_pitch = -(int)upNUD.Value;
+                    joy_offset_angle_pitch = (int)upNUD.Value;
                  }
                 else if (d_pressed)
                 {
-                    joy_offset_angle_pitch = (int)downNUD.Value;
+                    joy_offset_angle_pitch = -(int)downNUD.Value;
                  }
                 else
                 {
@@ -475,8 +479,6 @@ namespace XRNeckSafer
             {
                 if (autofrozen)
                 {
-
-                    ///           xxxxx only when changed!
                     ARText = "Autorotation hold";
                     if (pitchlimit) ARText += " (pitch lim)";
                     else ARText += " (button)";
@@ -611,42 +613,45 @@ namespace XRNeckSafer
         }
         private void calcAutoPitch(int pitch, ref int arot)
         {
-            if (pitch > 0)
+            List<int[]> Steps;
+            int abspitch = (pitch > 0) ? pitch : -pitch;
+            int arotsign = (arot > 0) ? 1 : -1;
+            int absarot = arot * arotsign;
+            int autorot = 0;
+            int absdeact = 0;
+
+            int act;
+            int deact = 0;
+            int rot;
+
+            Steps = (pitch > 0) ? conf.UpAutoSteps : conf.DownAutoSteps;
+
+            for (int i = 0; i < conf.UpAutoSteps.Count; i++)
             {
+                act = Steps[i][0];
+                int absact = (act > 0) ? act : -act;
+                deact = Steps[i][1];
+                absdeact = (deact > 0) ? deact : -deact;
+                rot = Steps[i][2];
 
-
-                int arotsign = (arot > 0) ? 1 : -1;
-                int absarot = arot * arotsign;
-                int autorot = 0;
-
-
-                int act;
-                int deact = 0;
-                int rot;
-
-                for (int i = 0; i < conf.AutoSteps.Count; i++)
+                if (abspitch >= absact)
                 {
-                    act = conf.UpAutoSteps[i][0];
-                    deact = conf.UpAutoSteps[i][1];
-                    rot = conf.UpAutoSteps[i][2];
-
-                    if (pitch >= act)
-                    {
-                        autorot = rot;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    autorot = rot;
                 }
-
-                if ((absarot > autorot) && (pitch >= deact))
+                else
                 {
-                    return;
+                    break;
                 }
-                arot = autorot;
             }
+
+            if ((absarot > autorot) && (abspitch >= absdeact))
+            {
+                return;
+            }
+            arot = autorot;
         }
+ 
+        
 
         private void transFNUP_ValueChanged(object sender, EventArgs e)
         {
@@ -1313,8 +1318,8 @@ namespace XRNeckSafer
             }
             YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
-            vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR,
-                (float)conf.LinearMultL / 100, (float)conf.LinearMultR / 100);
+            vr.setPitchLinearRotationSettings(conf.PitchAutoMode == "linear", conf.LinearLimU, conf.LinearLimD,
+                (float)conf.LinearMultU / 100, (float)conf.LinearMultD / 100);
             conf.WriteConfig();
 
         }

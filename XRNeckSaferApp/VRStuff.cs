@@ -33,7 +33,7 @@ namespace XRNeckSafer
             public int downStartAt;
             public bool resetHmdOrientation;
             public bool useLinearRotation;
-            public bool useLineaPitchRotation;
+            public bool useLinearPitchRotation;
             public bool holdLinearRotation;
             public bool holdLinearPitchRotation;
             public bool hasBeenCentered;
@@ -142,7 +142,7 @@ namespace XRNeckSafer
         }
         public void setPitchLinearRotationSettings(bool usepitchlinear, int upstart, int downstart, float upmult, float downmult)
         {
-            shmValues.useLineaPitchRotation = usepitchlinear;
+            shmValues.useLinearPitchRotation = usepitchlinear;
             shmValues.upStartAt = upstart;
             shmValues.downStartAt = downstart;
             shmValues.upMultiplier = upmult;
@@ -153,7 +153,7 @@ namespace XRNeckSafer
         public void setOffset(int a, int b, Vector3 trans)
         {
             shmValues.yawOffset = (float)(a * Math.PI / 180);
-            shmValues.pitchOffset = (float)(b * Math.PI / 180);
+            shmValues.pitchOffset = (float)(-b * Math.PI / 180);
             shmValues.lateralOffset = trans.X;
             shmValues.longitudinalOffset = trans.Z;
             accessor.Write<shmVal_s>(0, ref shmValues);
