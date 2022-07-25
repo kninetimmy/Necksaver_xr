@@ -13,7 +13,7 @@ It adds an angular offset to the current viewing angle by pressing a joystick bu
 ## **How to use it:**
 
 Simply choose the two joystick/HOTAS buttons you want to use for left and right offset and the required rotation angle and set the Center button as shown on the app UI.
-When in the game, press the assigned reset button to calibrate.
+When in the game, press the assigned center button to calibrate.
 Thats it. 
 
 
