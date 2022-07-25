@@ -12,7 +12,7 @@ It adds an angular offset to the current viewing angle by pressing a joystick bu
  
 ## **How to use it:**
 
-Simply choose the two joystick/HOTAS buttons you want to use for left and right offset and the required rotation angle and set the Reset button as shown on the app.
+Simply choose the two joystick/HOTAS buttons you want to use for left and right offset and the required rotation angle and set the Center button as shown on the app UI.
 When in the game, press the assigned reset button to calibrate.
 Thats it. 
 
@@ -22,7 +22,7 @@ If you prefer adding up the offset angle with every button click, select the "Ac
 If you want to move your head position a few centimeters when using snap view (e.g. to look around your seat) use the "Translation" feature.
 
 Enable one of the "Autorotation" features to automatically activate the offset when turning your head over defined activation angles. No joystick buttons required.
-This can be done in several steps or continuous (smooth). To temporarily inhibit autorotation use the Hold buttons.
+This can be done in several steps or continuously (smooth). To temporarily inhibit autorotation use the Hold buttons.
 
 ### **Stepwise Autorotation**
 
