@@ -132,6 +132,7 @@ namespace XRNeckSafer
             PitchHoldButton1 = new ButtonConfig();
             PitchHoldButton2 = new ButtonConfig();
             PitchHoldButton3 = new ButtonConfig();
+            Angle = 30;
             UpAngle = 30;
             DownAngle = -30;
             TransLR = 0;

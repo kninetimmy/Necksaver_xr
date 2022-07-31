@@ -30,17 +30,17 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
             this.stepwiseGroup = new System.Windows.Forms.GroupBox();
             this.error_label2 = new System.Windows.Forms.Label();
             this.error_label = new System.Windows.Forms.Label();
@@ -290,8 +290,8 @@
             // act
             // 
             this.act.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.act.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.act.DefaultCellStyle = dataGridViewCellStyle12;
             this.act.Frozen = true;
             this.act.HeaderText = "act";
             this.act.MinimumWidth = 6;
@@ -304,8 +304,8 @@
             // deact
             // 
             this.deact.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deact.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deact.DefaultCellStyle = dataGridViewCellStyle13;
             this.deact.Frozen = true;
             this.deact.HeaderText = "deact";
             this.deact.MinimumWidth = 6;
@@ -318,8 +318,8 @@
             // rot
             // 
             this.rot.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rot.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rot.DefaultCellStyle = dataGridViewCellStyle14;
             this.rot.Frozen = true;
             this.rot.HeaderText = "rot";
             this.rot.MinimumWidth = 6;
@@ -331,8 +331,8 @@
             // 
             // LR
             // 
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LR.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LR.DefaultCellStyle = dataGridViewCellStyle15;
             this.LR.Frozen = true;
             this.LR.HeaderText = "L/R";
             this.LR.MinimumWidth = 6;
@@ -342,8 +342,8 @@
             // 
             // Fwd
             // 
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Fwd.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Fwd.DefaultCellStyle = dataGridViewCellStyle16;
             this.Fwd.Frozen = true;
             this.Fwd.HeaderText = "Fwd";
             this.Fwd.MinimumWidth = 6;
@@ -556,7 +556,7 @@
             // SetHoldButton1
             // 
             this.SetHoldButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetHoldButton1.Location = new System.Drawing.Point(192, 15);
+            this.SetHoldButton1.Location = new System.Drawing.Point(196, 15);
             this.SetHoldButton1.Name = "SetHoldButton1";
             this.SetHoldButton1.Size = new System.Drawing.Size(48, 22);
             this.SetHoldButton1.TabIndex = 42;
@@ -1127,11 +1127,11 @@
             // 
             this.ARlinear.AutoSize = true;
             this.ARlinear.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ARlinear.Location = new System.Drawing.Point(85, 18);
+            this.ARlinear.Location = new System.Drawing.Point(84, 18);
             this.ARlinear.Name = "ARlinear";
-            this.ARlinear.Size = new System.Drawing.Size(60, 17);
+            this.ARlinear.Size = new System.Drawing.Size(67, 17);
             this.ARlinear.TabIndex = 57;
-            this.ARlinear.Text = "Linear";
+            this.ARlinear.Text = "Smooth";
             this.ARlinear.UseVisualStyleBackColor = true;
             this.ARlinear.CheckedChanged += new System.EventHandler(this.autorot_changed);
             // 
@@ -1152,7 +1152,7 @@
             this.AROffButton.AutoSize = true;
             this.AROffButton.Checked = true;
             this.AROffButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AROffButton.Location = new System.Drawing.Point(148, 18);
+            this.AROffButton.Location = new System.Drawing.Point(152, 18);
             this.AROffButton.Name = "AROffButton";
             this.AROffButton.Size = new System.Drawing.Size(42, 17);
             this.AROffButton.TabIndex = 55;
@@ -1219,11 +1219,11 @@
             // 
             this.pARlinear.AutoSize = true;
             this.pARlinear.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pARlinear.Location = new System.Drawing.Point(85, 18);
+            this.pARlinear.Location = new System.Drawing.Point(84, 18);
             this.pARlinear.Name = "pARlinear";
-            this.pARlinear.Size = new System.Drawing.Size(60, 17);
+            this.pARlinear.Size = new System.Drawing.Size(67, 17);
             this.pARlinear.TabIndex = 57;
-            this.pARlinear.Text = "Linear";
+            this.pARlinear.Text = "Smooth";
             this.pARlinear.UseVisualStyleBackColor = true;
             this.pARlinear.CheckedChanged += new System.EventHandler(this.pitchAutorotChanged);
             // 
@@ -1244,7 +1244,7 @@
             this.pAROffButton.AutoSize = true;
             this.pAROffButton.Checked = true;
             this.pAROffButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pAROffButton.Location = new System.Drawing.Point(148, 18);
+            this.pAROffButton.Location = new System.Drawing.Point(152, 18);
             this.pAROffButton.Name = "pAROffButton";
             this.pAROffButton.Size = new System.Drawing.Size(42, 17);
             this.pAROffButton.TabIndex = 55;
@@ -1365,8 +1365,8 @@
             // dataGridViewTextBoxColumn4
             // 
             this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle17;
             this.dataGridViewTextBoxColumn4.Frozen = true;
             this.dataGridViewTextBoxColumn4.HeaderText = "act";
             this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
@@ -1379,8 +1379,8 @@
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle18;
             this.dataGridViewTextBoxColumn5.Frozen = true;
             this.dataGridViewTextBoxColumn5.HeaderText = "deact";
             this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
@@ -1393,8 +1393,8 @@
             // dataGridViewTextBoxColumn6
             // 
             this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle19;
             this.dataGridViewTextBoxColumn6.Frozen = true;
             this.dataGridViewTextBoxColumn6.HeaderText = "rot";
             this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
@@ -1450,8 +1450,8 @@
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle20;
             this.dataGridViewTextBoxColumn1.Frozen = true;
             this.dataGridViewTextBoxColumn1.HeaderText = "act";
             this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
@@ -1464,8 +1464,8 @@
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle21;
             this.dataGridViewTextBoxColumn2.Frozen = true;
             this.dataGridViewTextBoxColumn2.HeaderText = "deact";
             this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
@@ -1478,8 +1478,8 @@
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle22;
             this.dataGridViewTextBoxColumn3.Frozen = true;
             this.dataGridViewTextBoxColumn3.HeaderText = "rot";
             this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
@@ -1691,7 +1691,7 @@
             // SetPitchHoldButton
             // 
             this.SetPitchHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetPitchHoldButton.Location = new System.Drawing.Point(192, 15);
+            this.SetPitchHoldButton.Location = new System.Drawing.Point(196, 15);
             this.SetPitchHoldButton.Name = "SetPitchHoldButton";
             this.SetPitchHoldButton.Size = new System.Drawing.Size(48, 22);
             this.SetPitchHoldButton.TabIndex = 42;

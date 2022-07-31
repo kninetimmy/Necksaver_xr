@@ -337,51 +337,33 @@ namespace {
 
         // save current location
         XrVector3f pos = location->pose.position;
+        DirectX::XMVECTOR vPitchAxis = { 1.f,0.f,0.f };
 
 
-        //if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
+        if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
 
+            // we want to rotate around the center of the head
             location->pose.position = { 0, 0, 0 };
 
+            // set yaw offset first, than rotate pitch around the hmd yaw + yaw offset lateral (x) axis
             const DirectX::XMVECTOR qHMD = LoadXrQuaternion(location->pose.orientation);
             const DirectX::XMVECTOR qYawOffset = DirectX::XMQuaternionRotationRollPitchYaw(0.f, -shmValues.yawOffset, 0.f);
-
             const DirectX::XMVECTOR qHMDwithYawOffset = DirectX::XMQuaternionMultiply(qHMD, qYawOffset);
-
-            const DirectX::XMVECTOR vPitchAxis = DirectX::XMVector3Rotate({ 0.f,1.f,0.f }, qHMDwithYawOffset); //<-- X=pitch?
+            if (DirectX::XMVector4Length(qHMDwithYawOffset).m128_f32[0] != 0) {
+                vPitchAxis = DirectX::XMVector3Rotate(vPitchAxis, qHMDwithYawOffset);
+            }
             const DirectX::XMVECTOR qRotatedPitchOffset = DirectX::XMQuaternionRotationAxis(vPitchAxis, -shmValues.pitchOffset);
+            const DirectX::XMVECTOR qHMDwithOffset = DirectX::XMQuaternionMultiply(qHMDwithYawOffset, qRotatedPitchOffset);
 
-//            const DirectX::XMVECTOR qHMDwithOffset = DirectX::XMQuaternionMultiply(qHMDwithYawOffset, qRotatedPitchOffset);
+            StoreXrQuaternion(&location->pose.orientation, qHMDwithOffset);
+            location->pose.position = pos - trans;
+        }
+        if (baseSpaceIsViewSpace && !spaceIsViewSpace) {
+ 
+            location->pose.position = { 0, 0, 0 };
 
-            StoreXrQuaternion(&location->pose.orientation, qHMDwithYawOffset);
+ //           rotate pitch around the hmd yaw + yaw offset lateral (x) axis, then set yaw offset 
 
-//           StoreXrQuaternion(
-//               &location->pose.orientation,
-//               DirectX::XMQuaternionMultiply(
-//                   LoadXrQuaternion(location->pose.orientation),
-//                       DirectX::XMQuaternionRotationRollPitchYaw(0.f, -shmValues.yawOffset, 0.f)
-//                   ));
-
-
-                //            StoreXrPose(&location->pose, XMMatrixMultiply(LoadXrPose(location->pose), mat3));
-                //                        StoreXrPose(&location->pose,
-                //                XMMatrixMultiply(LoadXrPose(location->pose),
-                //                    DirectX::XMMatrixRotationRollPitchYaw(0.f, shmValues.hmdYawAngle, 0.f)));
-                //            StoreXrPose(&location->pose,
-                //                XMMatrixMultiply(LoadXrPose(location->pose),
-                //                    DirectX::XMMatrixRotationRollPitchYaw(-shmValues.pitchOffset, shmValues.hmdYawAngle, 0.f)));
-                //            StoreXrPose(&location->pose,
-                //                XMMatrixMultiply(LoadXrPose(location->pose),
-                //                    DirectX::XMMatrixRotationRollPitchYaw(0.f, -shmValues.hmdYawAngle, 0.f)));
-                //            StoreXrPose(&location->pose,
-                //                XMMatrixMultiply(LoadXrPose(location->pose),
-                //                    DirectX::XMMatrixRotationRollPitchYaw(0.f, -shmValues.yawOffset, 0.f)));
-
-                location->pose.position = pos - trans;
-  //      }
- //       if (baseSpaceIsViewSpace && !spaceIsViewSpace) {
- //
- //           location->pose.position = { 0, 0, 0 };
  //           StoreXrPose(&location->pose,
  //               XMMatrixMultiply(LoadXrPose(location->pose),
  //                   DirectX::XMMatrixRotationRollPitchYaw(shmValues.pitchOffset, 0.f, 0.f)));
@@ -389,7 +371,7 @@ namespace {
  //               XMMatrixMultiply(LoadXrPose(location->pose),
  //                   DirectX::XMMatrixRotationRollPitchYaw(0.f, shmValues.yawOffset, 0.f)));
  //           location->pose.position = pos - trans;
- //       }
+        }
 
         DebugLog("<-- XRNeckSafer_xrLocateSpace %d\n", result);
         return result;
@@ -408,7 +390,7 @@ namespace {
         // Call the chain to perform the actual operation.
         const XrResult result = nextXrLocateViews(session, viewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views);
 
-        // requested NOT for VIEW space: someone is actually asking for the views in a LOCAL/STAGE space
+//        // requested NOT for VIEW space: someone is actually asking for the views in a LOCAL/STAGE space
 //        if (!isViewSpace.count(viewLocateInfo->space)) {
 //
 //            // get already rotated head pose

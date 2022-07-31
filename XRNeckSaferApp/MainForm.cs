@@ -455,7 +455,7 @@ namespace XRNeckSafer
                 if (u_pressed && !lastpitchpressed)
                     joy_offset_angle_pitch += (int)upNUD.Value;
                 if (d_pressed && !lastpitchpressed)
-                    joy_offset_angle_pitch -= (int)downNUD.Value;
+                    joy_offset_angle_pitch += (int)downNUD.Value;
                 if (acc_res_pressed)
                     joy_offset_angle_pitch = 0;
             }
@@ -467,7 +467,7 @@ namespace XRNeckSafer
                  }
                 else if (d_pressed)
                 {
-                    joy_offset_angle_pitch = -(int)downNUD.Value;
+                    joy_offset_angle_pitch = (int)downNUD.Value;
                  }
                 else
                 {
@@ -614,6 +614,7 @@ namespace XRNeckSafer
         private void calcAutoPitch(int pitch, ref int arot)
         {
             List<int[]> Steps;
+            int pitchsign = (pitch > 0) ? 1 : -1;
             int abspitch = (pitch > 0) ? pitch : -pitch;
             int arotsign = (arot > 0) ? 1 : -1;
             int absarot = arot * arotsign;
@@ -648,7 +649,8 @@ namespace XRNeckSafer
             {
                 return;
             }
-            arot = autorot;
+
+            arot = autorot* pitchsign;
         }
  
         
