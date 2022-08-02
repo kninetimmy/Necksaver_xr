@@ -284,7 +284,7 @@ namespace {
                     bool isup = angles.pitch > 0;
                     float multiplier = isup ? shmValues.upMultiplier : shmValues.downMultiplier;
                     int startangle = isup ? shmValues.upStartAt : shmValues.downStartAt;
-                    float startfrom = startangle * (float)M_PI / 180.f;
+                    float startfrom = abs(startangle * (float)M_PI / 180.f);
                     if (abs(angles.pitch) >= startfrom) {
                         shmValues.pitchOffset = shmValues.pitchOffset + (abs(angles.pitch) - startfrom) * multiplier * (isup ? 1 : -1);
                     }

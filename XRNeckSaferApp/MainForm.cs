@@ -139,7 +139,7 @@ namespace XRNeckSafer
             AutorotGridView.Columns[4].HeaderCell.Style.Font = DefaultFont;
             AutorotGridView.Columns[4].HeaderCell.Style.ForeColor = System.Drawing.Color.CadetBlue;
             AutorotGridView.Columns[4].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
-            
+
             for (int i = 0; i < conf.UpAutoSteps.Count; i++)
             {
                 string[] r = new string[3]
@@ -165,7 +165,7 @@ namespace XRNeckSafer
             UpAutorotGridView.Columns[2].HeaderCell.Style.Font = DefaultFont;
             UpAutorotGridView.Columns[2].HeaderCell.Style.ForeColor = System.Drawing.Color.Black;
             UpAutorotGridView.Columns[2].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
-            
+
             for (int i = 0; i < conf.DownAutoSteps.Count; i++)
             {
                 string[] r = new string[3]
@@ -287,7 +287,7 @@ namespace XRNeckSafer
             conf.WriteConfig();
         }
 
-        private void setButtonColor(bool pressed, Button b) 
+        private void setButtonColor(bool pressed, Button b)
         {
             System.Drawing.Color fc = SystemColors.ControlText;
             System.Drawing.Color bc = SystemColors.Control;
@@ -322,7 +322,7 @@ namespace XRNeckSafer
             }
         }
 
-    private void loopTimer_Tick(object sender, EventArgs e)
+        private void loopTimer_Tick(object sender, EventArgs e)
         {
             bool reset_pressed = js.IsButtonPressed(conf.ResetButton);
             bool acc_res_pressed = js.IsButtonPressed(conf.AccuResetButton);
@@ -398,7 +398,7 @@ namespace XRNeckSafer
 
             if (vr.HmdWasCentered())
             {
-                HMDtext = "HMD yaw: " + Math.Round(hmdYaw) + " deg   pitch: " + Math.Round(hmdPitch)+ " deg";
+                HMDtext = "HMD yaw: " + Math.Round(hmdYaw) + " deg   pitch: " + Math.Round(hmdPitch) + " deg";
             }
             else
             {
@@ -464,11 +464,11 @@ namespace XRNeckSafer
                 if (u_pressed)
                 {
                     joy_offset_angle_pitch = (int)upNUD.Value;
-                 }
+                }
                 else if (d_pressed)
                 {
                     joy_offset_angle_pitch = (int)downNUD.Value;
-                 }
+                }
                 else
                 {
                     joy_offset_angle_pitch = 0;
@@ -650,10 +650,10 @@ namespace XRNeckSafer
                 return;
             }
 
-            arot = autorot* pitchsign;
+            arot = autorot * pitchsign;
         }
- 
-        
+
+
 
         private void transFNUP_ValueChanged(object sender, EventArgs e)
         {
@@ -1091,7 +1091,7 @@ namespace XRNeckSafer
         void sizeChanged()
         {
             VersionLabel.Location = new System.Drawing.Point(VersionLabel.Location.X, Size.Height - 56);
-         }
+        }
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
             sizeChanged();
@@ -1231,7 +1231,7 @@ namespace XRNeckSafer
                 conf.AutoMode = "stepwise";
             }
             YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
-            Height = YawPitchTab.Location.Y+YawPitchTab.Height+60;
+            Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
             vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR,
                 (float)conf.LinearMultL / 100, (float)conf.LinearMultR / 100);
             conf.WriteConfig();
@@ -1291,6 +1291,53 @@ namespace XRNeckSafer
             applyLinearSettings();
         }
 
+        private void numericUpDownStartUp_ValueChanged(object sender, EventArgs e)
+        {
+            conf.LinearLimU = (int)numericUpDownStartUp.Value;
+            applyLinearSettings();
+        }
+
+        private void numericUpDownStartDown_ValueChanged(object sender, EventArgs e)
+        {
+            conf.LinearLimD = (int)numericUpDownStartDown.Value;
+            applyLinearSettings();
+        }
+
+        private void numericUpDownMultUp_ValueChanged(object sender, EventArgs e)
+        {
+            conf.LinearMultU = (int)numericUpDownMultUp.Value;
+            applyLinearSettings();
+        }
+
+        private void numericUpDownMultDown_ValueChanged(object sender, EventArgs e)
+        {
+            conf.LinearMultD = (int)numericUpDownMultDown.Value;
+            applyLinearSettings();
+        }
+
+        private void numericUpDownStartUp_KeyUp(object sender, KeyEventArgs e)
+        {
+            conf.LinearLimU = (int)numericUpDownStartUp.Value;
+            applyLinearSettings();
+        }
+        private void numericUpDownStartDown_KeyUp(object sender, KeyEventArgs e)
+        {
+            conf.LinearLimD = (int)numericUpDownStartDown.Value;
+            applyLinearSettings();
+        }
+
+        private void numericUpDownMultUp_KeyUp(object sender, KeyEventArgs e)
+        {
+            conf.LinearMultU = (int)numericUpDownMultUp.Value;
+            applyLinearSettings();
+        }
+
+        private void numericUpDownMultDown_KeyUp(object sender, KeyEventArgs e)
+        {
+            conf.LinearMultD = (int)numericUpDownMultDown.Value;
+            applyLinearSettings();
+        }
+
         private void pitchAutorotChanged(object sender, EventArgs e)
         {
             if (pAROffButton.Checked)
@@ -1332,7 +1379,8 @@ namespace XRNeckSafer
             {
                 YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
             }
-            else{
+            else
+            {
                 YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
             }
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;

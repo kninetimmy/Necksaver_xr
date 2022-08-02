@@ -141,8 +141,8 @@ namespace XRNeckSafer
             LinearLimR = 95;
             LinearMultL = 120;
             LinearMultR = 120;
-            LinearLimU = 60;
-            LinearLimD = 50;
+            LinearLimU = 45;
+            LinearLimD = -30;
             LinearMultU = 120;
             LinearMultD = 120;
             Additiv = false;
