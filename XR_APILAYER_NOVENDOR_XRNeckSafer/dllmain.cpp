@@ -44,6 +44,10 @@ namespace {
     XrSpaceLocation lastHmdLocation;
     XrVector3f delta;
     XrVector3f trans;
+
+    XrQuaternionf HmdOrientation;
+    DirectX::XMVECTOR qYawOffset;
+
     // float csin, ccos;
 
 
@@ -56,14 +60,21 @@ namespace {
         float pitchOffset;
         float lateralOffset;
         float longitudinalOffset;
-        int leftStartAt;
-        int rightStartAt;
         float rightMultiplier;
         float leftMultiplier;
+        float upMultiplier;
+        float downMultiplier;
+        int leftStartAt;
+        int rightStartAt;
+        int upStartAt;
+        int downStartAt;
         bool resetHmdOrientation;
-        bool useSmoothRotation;
-        bool holdSmoothRotation;
+        bool useLinearRotation;
+        bool useLinearPitchRotation;
+        bool holdLinearRotation;
+        bool holdLinearPitchRotation;
         bool hasBeenCentered;
+ 
     } shmValues;
 
     std::wstring m_memoryName = L"XRNeckSaferSHM";
@@ -75,6 +86,7 @@ namespace {
     XrSession m_Session{ XR_NULL_HANDLE };
 
     float holdYawOffsetValue;
+    float holdPitchOffsetValue;
 
     struct EulerAngles {
         float roll, pitch, yaw;
@@ -190,10 +202,6 @@ namespace {
         const XrResult result2 = nextXrLocateSpace(m_ViewSpace, m_LocalSpace, frameEndInfo->displayTime, &location);
         DebugLog("XrLocateSpace for HMD %d\n", result2);
 
-        //HMD moved since last update
-    //    delta = location.pose.position - lastHmdLocation.pose.position;
-    //    lastHmdLocation.pose.position = location.pose.position;
-
         if (location.locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT) {
 
             // center button pressed? -> current orientation gets center orientation
@@ -203,9 +211,6 @@ namespace {
                 buffer->resetHmdOrientation = false;
                 shmValues.hasBeenCentered = true;
                 buffer->hasBeenCentered = shmValues.hasBeenCentered;
-                // centerAngles = ToEulerAngles(centerHmdLocation.pose.orientation);
-                // csin = sinf(centerAngles.yaw);
-                // ccos = cosf(centerAngles.yaw);
             }
 
             // refuse to do anything before centering
@@ -215,14 +220,11 @@ namespace {
             shmValues.pitchOffset = buffer->pitchOffset;
             shmValues.longitudinalOffset = buffer->longitudinalOffset;
             shmValues.lateralOffset = buffer->lateralOffset;
-            shmValues.useSmoothRotation = buffer->useSmoothRotation;
-            shmValues.holdSmoothRotation = buffer->holdSmoothRotation;
-            // rotate translational to center orientation
-            //trans = {
-            //    shmValues.lateralOffset * ccos - shmValues.longitudinalOffset * csin,
-            //    0,
-            //    shmValues.lateralOffset * csin + shmValues.longitudinalOffset * ccos
-            //};
+            shmValues.useLinearRotation = buffer->useLinearRotation;
+            shmValues.holdLinearRotation = buffer->holdLinearRotation;
+            shmValues.useLinearPitchRotation = buffer->useLinearPitchRotation;
+            shmValues.holdLinearPitchRotation = buffer->holdLinearPitchRotation;
+
             trans = {
                 shmValues.lateralOffset ,
                 0,
@@ -235,25 +237,25 @@ namespace {
             const DirectX::XMVECTOR invertCenterOrientation = DirectX::XMQuaternionConjugate(centerOrientation);
             const DirectX::XMVECTOR substractedOrientation = DirectX::XMQuaternionMultiply(orientation, invertCenterOrientation);
             StoreXrQuaternion(&location.pose.orientation, substractedOrientation);
+            StoreXrQuaternion(&HmdOrientation, substractedOrientation);
 
             EulerAngles angles = ToEulerAngles(location.pose.orientation);
             buffer->hmdYawAngle = angles.yaw * 180.f / (float)M_PI;
             buffer->hmdPitchAngle = angles.pitch * 180.f / (float)M_PI;
 
-            if (shmValues.useSmoothRotation) {
+            if (shmValues.useLinearRotation) {
                 shmValues.leftStartAt = buffer->leftStartAt;
                 shmValues.rightStartAt = buffer->rightStartAt;
                 shmValues.leftMultiplier = buffer->leftMultiplier;
                 shmValues.rightMultiplier = buffer->rightMultiplier;
-                //trans = { 0, 0, 0 };
 
-                if (!shmValues.holdSmoothRotation) {
+                if (!shmValues.holdLinearRotation) {
                     bool isright = angles.yaw > 0;
                     float multiplier = isright ? shmValues.rightMultiplier : shmValues.leftMultiplier;
                     int startangle = isright ? shmValues.rightStartAt : shmValues.leftStartAt;
                     float startfrom = startangle * (float)M_PI / 180.f;
                     if (abs(angles.yaw) >= startfrom) {
-                        shmValues.yawOffset = shmValues.yawOffset+(abs(angles.yaw) - startfrom) * multiplier * (isright ? 1 : -1);
+                        shmValues.yawOffset = shmValues.yawOffset + (abs(angles.yaw) - startfrom) * multiplier * (isright ? 1 : -1);
                     }
                     holdYawOffsetValue = shmValues.yawOffset;
                 }
@@ -261,6 +263,29 @@ namespace {
                     shmValues.yawOffset = holdYawOffsetValue;
                 }
             }
+            if (shmValues.useLinearPitchRotation) {
+                shmValues.upStartAt = buffer->upStartAt;
+                shmValues.downStartAt = buffer->downStartAt;
+                shmValues.upMultiplier = buffer->upMultiplier;
+                shmValues.downMultiplier = buffer->downMultiplier;
+
+                if (!shmValues.holdLinearPitchRotation) {
+                    bool isup = angles.pitch > 0;
+                    float multiplier = isup ? shmValues.upMultiplier : shmValues.downMultiplier;
+                    int startangle = isup ? shmValues.upStartAt : shmValues.downStartAt;
+                    float startfrom = abs(startangle * (float)M_PI / 180.f);
+                    if (abs(angles.pitch) >= startfrom) {
+                        shmValues.pitchOffset = shmValues.pitchOffset + (abs(angles.pitch) - startfrom) * multiplier * (isup ? 1 : -1);
+                    }
+                    holdPitchOffsetValue = shmValues.pitchOffset;
+                }
+                else {
+                    shmValues.pitchOffset = holdPitchOffsetValue;
+                }
+            }
+
+            // save yaw offset as quaternion for later use
+            qYawOffset = DirectX::XMQuaternionRotationRollPitchYaw(0.f, -shmValues.yawOffset, 0.f);
 
         }
         DebugLog("<-- XRNeckSafer_xrEndFrame %d\n", result);
@@ -302,28 +327,49 @@ namespace {
         bool spaceIsViewSpace = isViewSpace.count(space);
         bool baseSpaceIsViewSpace = isViewSpace.count(baseSpace);
 
-        // save current location
-        XrVector3f pos = location->pose.position;
+        if (shmValues.yawOffset != 0 || shmValues.pitchOffset != 0) {
+            // save current location
+            XrVector3f pos = location->pose.position;
+            DirectX::XMVECTOR vPitchAxis = { 1.f,0.f,0.f };
 
 
-        if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
+            if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
 
-            location->pose.position = { 0, 0, 0 };
-            StoreXrPose(&location->pose,
-                XMMatrixMultiply(LoadXrPose(location->pose),
-                    DirectX::XMMatrixRotationRollPitchYaw(-shmValues.pitchOffset, -shmValues.yawOffset, 0.f)));
-            location->pose.position = pos - trans;
- //           Log("X: %f", trans.x);
+                // we want to rotate around the center of the head
+                location->pose.position = { 0, 0, 0 };
+
+                // set yaw offset first, than rotate pitch around the hmd yaw + yaw offset lateral (x) axis
+                const DirectX::XMVECTOR qHMD = LoadXrQuaternion(location->pose.orientation);
+                const DirectX::XMVECTOR qHMDwithYawOffset = DirectX::XMQuaternionMultiply(qHMD, qYawOffset);
+                if (DirectX::XMVector4Length(qHMDwithYawOffset).m128_f32[0] != 0) {
+                    vPitchAxis = DirectX::XMVector3Rotate(vPitchAxis, qHMDwithYawOffset);
+                }
+                const DirectX::XMVECTOR qRotatedPitchOffset = DirectX::XMQuaternionRotationAxis(vPitchAxis, -shmValues.pitchOffset);
+                const DirectX::XMVECTOR qHMDwithOffset = DirectX::XMQuaternionMultiply(qHMDwithYawOffset, qRotatedPitchOffset);
+
+                StoreXrQuaternion(&location->pose.orientation, qHMDwithOffset);
+
+                StoreXrVector3(&pos, DirectX::XMVector3Rotate(LoadXrVector3(pos), qYawOffset));
+                location->pose.position = pos - trans;
+            }
+
+
+            if (baseSpaceIsViewSpace && !spaceIsViewSpace) {
+
+                //          location->pose.position = { 0, 0, 0 };
+
+                //           rotate pitch around the hmd yaw + yaw offset lateral (x) axis, then set yaw offset 
+
+                //           StoreXrPose(&location->pose,
+                //               XMMatrixMultiply(LoadXrPose(location->pose),
+                //                   DirectX::XMMatrixRotationRollPitchYaw(shmValues.pitchOffset, 0.f, 0.f)));
+                //           StoreXrPose(&location->pose,
+                //               XMMatrixMultiply(LoadXrPose(location->pose),
+                //                   DirectX::XMMatrixRotationRollPitchYaw(0.f, shmValues.yawOffset, 0.f)));
+                //           location->pose.position = pos - trans;
+            }
+
         }
-        if (baseSpaceIsViewSpace && !spaceIsViewSpace) {
-
-            location->pose.position = { 0, 0, 0 };
-            StoreXrPose(&location->pose,
-                XMMatrixMultiply(LoadXrPose(location->pose),
-                    DirectX::XMMatrixRotationRollPitchYaw(shmValues.pitchOffset, shmValues.yawOffset, 0.f)));
-            location->pose.position = pos - trans;
-        }
-
         DebugLog("<-- XRNeckSafer_xrLocateSpace %d\n", result);
         return result;
     }
@@ -341,7 +387,7 @@ namespace {
         // Call the chain to perform the actual operation.
         const XrResult result = nextXrLocateViews(session, viewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views);
 
-        // requested NOT for VIEW space: someone is actually asking for the views in a LOCAL/STAGE space
+//        // requested NOT for VIEW space: someone is actually asking for the views in a LOCAL/STAGE space
 //        if (!isViewSpace.count(viewLocateInfo->space)) {
 //
 //            // get already rotated head pose

@@ -15,11 +15,14 @@ namespace XRNeckSafer
         public Graph gr;
 
 
-
         public int joy_offset_angle;
         public int auto_offset_angle;
         public int sum_offset_angle;
         public int last_offset_angle;
+        public int joy_offset_angle_pitch;
+        public int auto_offset_angle_pitch;
+        public int sum_offset_angle_pitch;
+        public int last_offset_angle_pitch;
         public float last_offset_x;
         public float last_offset_z;
 
@@ -31,12 +34,14 @@ namespace XRNeckSafer
         public int hmdYaw;
 
         public bool lastpressed;
-
+        public bool lastpitchpressed;
         public bool last_h_pressed;
-
+        public bool last_hp_pressed;
+        public string ARText;
+        public string pARText;
+        public string HMDtext;
         public bool autorot_config_error;
 
-        public int min_form_heigh;
 
         public MainForm()
         {
@@ -45,7 +50,6 @@ namespace XRNeckSafer
 
             InitializeComponent();
 
-            min_form_heigh = Height;
             notifyIcon.ContextMenuStrip = contextMenuStrip;
             this.showToolStripMenuItem.Click += showToolStripMenuItem_Click;
             this.exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
@@ -56,6 +60,8 @@ namespace XRNeckSafer
             vr = new VRStuff();
 
             angleNUD.Value = conf.Angle;
+            upNUD.Value = conf.UpAngle;
+            downNUD.Value = conf.DownAngle;
             transFNUP.Value = conf.TransF;
             transLRNUP.Value = conf.TransLR;
             additivRB.Checked = conf.Additiv;
@@ -63,20 +69,36 @@ namespace XRNeckSafer
             {
                 ARstepwise.Checked = true;
             }
-            else if (conf.AutoMode == "smooth")
+            else if (conf.AutoMode == "linear")
             {
-                ARsmooth.Checked = true;
+                ARlinear.Checked = true;
             }
             else
             {
                 AROffButton.Checked = true;
             }
-            autorot_changed(new Object(), new EventArgs());
 
-            numericUpDownStartLeft.Value = conf.SmoothLimL;
-            numericUpDownStartRight.Value = conf.SmoothLimR;
-            numericUpDownMultLeft.Value = conf.SmoothMultL;
-            numericUpDownMultRight.Value = conf.SmoothMultR;
+            if (conf.PitchAutoMode == "stepwise")
+            {
+                pARstepwise.Checked = true;
+            }
+            else if (conf.PitchAutoMode == "linear")
+            {
+                pARlinear.Checked = true;
+            }
+            else
+            {
+                pAROffButton.Checked = true;
+            }
+            pitchAutorotChanged(new Object(), new EventArgs());
+            autorot_changed(new Object(), new EventArgs());
+            YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
+            Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
+
+            numericUpDownStartLeft.Value = conf.LinearLimL;
+            numericUpDownStartRight.Value = conf.LinearLimR;
+            numericUpDownMultLeft.Value = conf.LinearMultL;
+            numericUpDownMultRight.Value = conf.LinearMultR;
 
             setMenuCheckmarks();
 
@@ -116,6 +138,58 @@ namespace XRNeckSafer
             AutorotGridView.Columns[4].HeaderCell.Style.ForeColor = System.Drawing.Color.CadetBlue;
             AutorotGridView.Columns[4].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
 
+            for (int i = 0; i < conf.UpAutoSteps.Count; i++)
+            {
+                string[] r = new string[3]
+                {
+                    conf.UpAutoSteps[i][0].ToString(),
+                    conf.UpAutoSteps[i][1].ToString(),
+                    conf.UpAutoSteps[i][2].ToString(),
+                };
+                UpAutorotGridView.Rows.Add(r);
+            }
+            UpAutorotGridView.EnableHeadersVisualStyles = false;
+            UpAutorotGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Raised;
+            UpAutorotGridView.RowHeadersVisible = false;
+            UpAutorotGridView.Columns[0].HeaderText = @"act";
+            UpAutorotGridView.Columns[0].HeaderCell.Style.Font = DefaultFont;
+            UpAutorotGridView.Columns[0].HeaderCell.Style.ForeColor = System.Drawing.Color.Red;
+            UpAutorotGridView.Columns[0].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
+            UpAutorotGridView.Columns[1].HeaderText = @"de";
+            UpAutorotGridView.Columns[1].HeaderCell.Style.Font = DefaultFont;
+            UpAutorotGridView.Columns[1].HeaderCell.Style.ForeColor = System.Drawing.Color.Green;
+            UpAutorotGridView.Columns[1].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
+            UpAutorotGridView.Columns[2].HeaderText = @"rot";
+            UpAutorotGridView.Columns[2].HeaderCell.Style.Font = DefaultFont;
+            UpAutorotGridView.Columns[2].HeaderCell.Style.ForeColor = System.Drawing.Color.Black;
+            UpAutorotGridView.Columns[2].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
+
+            for (int i = 0; i < conf.DownAutoSteps.Count; i++)
+            {
+                string[] r = new string[3]
+                {
+                    conf.DownAutoSteps[i][0].ToString(),
+                    conf.DownAutoSteps[i][1].ToString(),
+                    conf.DownAutoSteps[i][2].ToString(),
+                };
+                DownAutorotGridView.Rows.Add(r);
+            }
+            DownAutorotGridView.EnableHeadersVisualStyles = false;
+            DownAutorotGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Raised;
+            DownAutorotGridView.RowHeadersVisible = false;
+            DownAutorotGridView.Columns[0].HeaderText = @"act";
+            DownAutorotGridView.Columns[0].HeaderCell.Style.Font = DefaultFont;
+            DownAutorotGridView.Columns[0].HeaderCell.Style.ForeColor = System.Drawing.Color.Red;
+            DownAutorotGridView.Columns[0].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
+            DownAutorotGridView.Columns[1].HeaderText = @"de";
+            DownAutorotGridView.Columns[1].HeaderCell.Style.Font = DefaultFont;
+            DownAutorotGridView.Columns[1].HeaderCell.Style.ForeColor = System.Drawing.Color.Green;
+            DownAutorotGridView.Columns[1].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
+            DownAutorotGridView.Columns[2].HeaderText = @"rot";
+            DownAutorotGridView.Columns[2].HeaderCell.Style.Font = DefaultFont;
+            DownAutorotGridView.Columns[2].HeaderCell.Style.ForeColor = System.Drawing.Color.Black;
+            DownAutorotGridView.Columns[2].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
+
             setButtonToolTip(SetLeftButton, conf.LeftButton);
             setButtonToolTip(SetRightButton, conf.RightButton);
             setButtonToolTip(SetResetButton, conf.ResetButton);
@@ -127,13 +201,24 @@ namespace XRNeckSafer
 
             error_label.Visible = check_autorot_config();
             error_label2.Visible = error_label.Visible;
-            numericUpDownStartLeft.Value = conf.SmoothLimL;
-            numericUpDownStartRight.Value = conf.SmoothLimR;
-            numericUpDownMultLeft.Value = conf.SmoothMultL;
-            numericUpDownMultRight.Value = conf.SmoothMultR;
+            upErrorLabel1.Visible = check_autorot_config();
+            upErrorLabel2.Visible = upErrorLabel1.Visible;
+            downErrorLabel1.Visible = check_autorot_config();
+            downErrorLabel2.Visible = downErrorLabel1.Visible;
+            numericUpDownStartLeft.Value = conf.LinearLimL;
+            numericUpDownStartRight.Value = conf.LinearLimR;
+            numericUpDownMultLeft.Value = conf.LinearMultL;
+            numericUpDownMultRight.Value = conf.LinearMultR;
+            numericUpDownStartUp.Value = conf.LinearLimU;
+            numericUpDownStartDown.Value = conf.LinearLimD;
+            numericUpDownMultUp.Value = conf.LinearMultU;
+            numericUpDownMultDown.Value = conf.LinearMultD;
 
-            vr.setSmoothRotationSettings(conf.AutoMode=="smooth", conf.SmoothLimL, conf.SmoothLimR, (float)conf.SmoothMultL/100, (float)conf.SmoothMultR/100);
-
+            vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR, conf.LinearMultL, conf.LinearMultR);
+            vr.setPitchLinearRotationSettings(conf.PitchAutoMode == "linear", conf.LinearLimU, conf.LinearLimD, conf.LinearMultU, conf.LinearMultD);
+            ARText = "Autorotation";
+            pARText = "Autorotation";
+            HMDtext = "";
             loopTimer.Start();
         }
 
@@ -167,6 +252,26 @@ namespace XRNeckSafer
             conf.Angle = (int)angleNUD.Value;
             conf.WriteConfig();
         }
+        private void upNUD_ValueChanged(object sender, EventArgs e)
+        {
+            conf.UpAngle = (int)upNUD.Value;
+            conf.WriteConfig();
+        }
+        private void upNUD_KeyUp(object sender, KeyEventArgs e)
+        {
+            conf.Angle = (int)upNUD.Value;
+            conf.WriteConfig();
+        }
+        private void downNUD_ValueChanged(object sender, EventArgs e)
+        {
+            conf.DownAngle = (int)downNUD.Value;
+            conf.WriteConfig();
+        }
+        private void downNUD_KeyUp(object sender, KeyEventArgs e)
+        {
+            conf.DownAngle = (int)downNUD.Value;
+            conf.WriteConfig();
+        }
 
         private void additivRB_CheckedChanged(object sender, EventArgs e)
         {
@@ -180,42 +285,87 @@ namespace XRNeckSafer
             conf.WriteConfig();
         }
 
-        bool checkButtonPress(Button b, ButtonConfig bc)
+        private void setButtonColor(bool pressed, Button b)
         {
-            bool pressed = js.IsButtonPressed(bc);
+            System.Drawing.Color fc = SystemColors.ControlText;
+            System.Drawing.Color bc = SystemColors.Control;
+
             if (pressed)
             {
-                b.ForeColor = System.Drawing.Color.LightGreen;
-                b.BackColor = SystemColors.ControlText;
+                fc = System.Drawing.Color.LightGreen;
+                bc = SystemColors.ControlText;
             }
-            else
+
+            if (b.ForeColor != fc)
             {
-                b.ForeColor = SystemColors.ControlText;
-                b.BackColor = SystemColors.ButtonFace;
+                b.ForeColor = fc;
+                b.BackColor = bc;
             }
-            return pressed;
+        }
+        void setLabelColor(bool pressed, Label l)
+        {
+            System.Drawing.Color fc = SystemColors.ControlText;
+            System.Drawing.Color bc = SystemColors.Control;
+
+            if (pressed)
+            {
+                fc = System.Drawing.Color.LightGreen;
+                bc = SystemColors.ControlText;
+            }
+
+            if (l.ForeColor != fc)
+            {
+                l.ForeColor = fc;
+                l.BackColor = bc;
+            }
         }
 
         private void loopTimer_Tick(object sender, EventArgs e)
         {
-            bool reset_pressed = checkButtonPress(SetResetButton, conf.ResetButton);
+            bool reset_pressed = js.IsButtonPressed(conf.ResetButton);
             bool acc_res_pressed = js.IsButtonPressed(conf.AccuResetButton);
+            bool pitch_acc_res_pressed = js.IsButtonPressed(conf.PitchAccuResetButton);
             bool l_pressed = js.IsButtonPressed(conf.LeftButton);
             bool r_pressed = js.IsButtonPressed(conf.RightButton);
-            bool h_pressed = checkButtonPress(SetHoldButton1, conf.HoldButton1);
+            bool u_pressed = js.IsButtonPressed(conf.UpButton);
+            bool d_pressed = js.IsButtonPressed(conf.DownButton);
+            bool h_pressed = js.IsButtonPressed(conf.HoldButton1);
+            bool hp_pressed = js.IsButtonPressed(conf.PitchHoldButton1);
+            //            bool h_pressed = checkButtonPress(SetHoldButton1, conf.HoldButton1);
             if (conf.MultipleLRbuttons)
             {
                 l_pressed |= js.IsButtonPressed(conf.LeftButton2);
                 l_pressed |= js.IsButtonPressed(conf.LeftButton3);
                 r_pressed |= js.IsButtonPressed(conf.RightButton2);
                 r_pressed |= js.IsButtonPressed(conf.RightButton3);
+                u_pressed |= js.IsButtonPressed(conf.UpButton2);
+                u_pressed |= js.IsButtonPressed(conf.UpButton3);
+                d_pressed |= js.IsButtonPressed(conf.DownButton2);
+                d_pressed |= js.IsButtonPressed(conf.DownButton3);
                 reset_pressed |= js.IsButtonPressed(conf.ResetButton2);
                 reset_pressed |= js.IsButtonPressed(conf.ResetButton3);
                 acc_res_pressed |= js.IsButtonPressed(conf.AccuResetButton2);
                 acc_res_pressed |= js.IsButtonPressed(conf.AccuResetButton3);
+                pitch_acc_res_pressed |= js.IsButtonPressed(conf.PitchAccuResetButton2);
+                pitch_acc_res_pressed |= js.IsButtonPressed(conf.PitchAccuResetButton3);
                 h_pressed |= js.IsButtonPressed(conf.HoldButton2);
                 h_pressed |= js.IsButtonPressed(conf.HoldButton3);
+                hp_pressed |= js.IsButtonPressed(conf.PitchHoldButton2);
+                hp_pressed |= js.IsButtonPressed(conf.PitchHoldButton3);
             }
+
+            setButtonColor(l_pressed, SetLeftButton);
+            setLabelColor(l_pressed, LeftLabel);
+            setButtonColor(r_pressed, SetRightButton);
+            setLabelColor(r_pressed, RightLabel);
+            setButtonColor(u_pressed, SetUpButton);
+            setLabelColor(u_pressed, UpLabel);
+            setButtonColor(d_pressed, SetDownButton);
+            setLabelColor(d_pressed, DownLabel);
+            setButtonColor(reset_pressed, SetResetButton);
+            setButtonColor(acc_res_pressed, AccumReset);
+            setButtonColor(h_pressed, SetHoldButton1);
+            setButtonColor(hp_pressed, SetPitchHoldButton);
 
             bool pitchlimit = vr.getHmdPitch() - 90 > conf.PitchLimForAutorot;
 
@@ -223,83 +373,55 @@ namespace XRNeckSafer
 
             if (h_pressed != last_h_pressed)
             {
-                vr.setSmoothHold(h_pressed);
+                vr.setLinearHold(h_pressed);
             }
             last_h_pressed = h_pressed;
 
-            if (l_pressed)
+            if (hp_pressed != last_hp_pressed)
             {
-                LeftLabel.ForeColor = System.Drawing.Color.LightGreen;
-                LeftLabel.BackColor = SystemColors.ControlText;
-                SetLeftButton.ForeColor = System.Drawing.Color.LightGreen;
-                SetLeftButton.BackColor = SystemColors.ControlText;
+                vr.setPitchLinearHold(hp_pressed);
             }
-            else
-            {
-                LeftLabel.ForeColor = SystemColors.ControlText;
-                LeftLabel.BackColor = SystemColors.Control;
-                SetLeftButton.ForeColor = SystemColors.ControlText;
-                SetLeftButton.BackColor = SystemColors.Control;
-            }
-            if (r_pressed)
-            {
-                RightLabel.ForeColor = System.Drawing.Color.LightGreen;
-                RightLabel.BackColor = SystemColors.ControlText;
-                SetRightButton.ForeColor = System.Drawing.Color.LightGreen;
-                SetRightButton.BackColor = SystemColors.ControlText;
-            }
-            else
-            {
-                RightLabel.ForeColor = SystemColors.ControlText;
-                RightLabel.BackColor = SystemColors.Control;
-                SetRightButton.ForeColor = SystemColors.ControlText;
-                SetRightButton.BackColor = SystemColors.Control;
-            }
-            if (reset_pressed)
-            {
-                SetResetButton.ForeColor = System.Drawing.Color.LightGreen;
-                SetResetButton.BackColor = SystemColors.ControlText;
-            }
-            else
-            {
-                SetResetButton.ForeColor = SystemColors.ControlText;
-                SetResetButton.BackColor = SystemColors.Control;
-            }
-            if (acc_res_pressed)
-            {
-                AccumReset.ForeColor = System.Drawing.Color.LightGreen;
-                AccumReset.BackColor = SystemColors.ControlText;
-            }
-            else
-            {
-                AccumReset.ForeColor = SystemColors.ControlText;
-                AccumReset.BackColor = SystemColors.Control;
-            }
+            last_hp_pressed = hp_pressed;
 
             trans_offset = new Vector3(0, 0, 0);
 
             vr.updateHmdOrientation();
 
             float hmdYaw = vr.getHmdYaw();
+            float hmdPitch = -vr.getHmdPitch();
+
 
             while (hmdYaw < -180) hmdYaw += 360;
             while (hmdYaw > 180) hmdYaw -= 360;
 
             if (vr.HmdWasCentered())
             {
-                HMDYawLabel.Location = new System.Drawing.Point(67, 18);
-                HMDYawLabel.Text = "HMD yaw: " + Math.Round(hmdYaw) + " deg";
+                if (!conf.DisableGUIOutput)
+                {
+                    HMDtext = "HMD yaw: " + Math.Round(hmdYaw) + " deg   pitch: " + Math.Round(hmdPitch) + " deg";
+                }
+                else
+                {
+                    HMDtext = "     (HMD angle output disabled)";
+                }
             }
             else
             {
+                HMDtext = "HMD yaw: (not centered in game yet)";
+            }
+
+            if ((HMDYawLabel.Text != HMDtext))
+            {
                 HMDYawLabel.Location = new System.Drawing.Point(20, 18);
-                HMDYawLabel.Text = "HMD yaw: (not centered in game yet)";
+                HMDYawLabel.Text = HMDtext;
             }
 
             if (reset_pressed)
             {
                 vr.resetHmdOrientation();
                 joy_offset_angle = 0;
+                vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR, conf.LinearMultL, conf.LinearMultR);
+                vr.setPitchLinearRotationSettings(conf.PitchAutoMode == "linear", conf.LinearLimU, conf.LinearLimD, conf.LinearMultU, conf.LinearMultD);
             }
 
             if (additivRB.Checked)
@@ -333,17 +455,42 @@ namespace XRNeckSafer
                 }
             }
 
+            if (pAdditivRB.Checked)
+            {
+                if (u_pressed && !lastpitchpressed)
+                    joy_offset_angle_pitch += (int)upNUD.Value;
+                if (d_pressed && !lastpitchpressed)
+                    joy_offset_angle_pitch += (int)downNUD.Value;
+                if (acc_res_pressed)
+                    joy_offset_angle_pitch = 0;
+            }
+            else
+            {
+                if (u_pressed)
+                {
+                    joy_offset_angle_pitch = (int)upNUD.Value;
+                }
+                else if (d_pressed)
+                {
+                    joy_offset_angle_pitch = (int)-downNUD.Value;
+                }
+                else
+                {
+                    joy_offset_angle_pitch = 0;
+                }
+            }
+
             if (!AROffButton.Checked)
             {
                 if (autofrozen)
                 {
-                    AutorotLabel.Text = "Autorotation - on hold";
-                    if (pitchlimit) AutorotLabel.Text += " (pitch limit)";
-                    else AutorotLabel.Text += " (by button)";
+                    ARText = "Autorotation hold";
+                    if (pitchlimit) ARText += " (pitch lim)";
+                    else ARText += " (button)";
                 }
                 else
                 {
-                    AutorotLabel.Text = "Autorotation";
+                    ARText = "Autorotation";
                     if (conf.AutoMode == "stepwise")
                     {
                         calcAutoRotAndTrans((int)hmdYaw, ref auto_offset_angle, ref auto_trans_offset);
@@ -359,21 +506,59 @@ namespace XRNeckSafer
                 }
             }
 
+            if (ARGroup.Text != ARText)
+            {
+                ARGroup.Text = ARText;
+            }
+
+            if (!pAROffButton.Checked)
+            {
+                if (hp_pressed)
+                {
+                    pARText = "Autorotation hold (button)";
+                }
+                else
+                {
+                    pARText = "Autorotation";
+                    if (conf.PitchAutoMode == "stepwise")
+                    {
+                        calcAutoPitch((int)hmdPitch, ref auto_offset_angle_pitch);
+                    }
+                    else
+                    {
+                        auto_offset_angle_pitch = 0;
+                    }
+                }
+            }
+
+            if (pARGroup.Text != pARText)
+            {
+                pARGroup.Text = pARText;
+            }
+
             sum_offset_angle = joy_offset_angle + auto_offset_angle;
+            sum_offset_angle_pitch = joy_offset_angle_pitch + auto_offset_angle_pitch;
+
             if (Math.Abs(auto_trans_offset.X) > Math.Abs(trans_offset.X)) trans_offset.X = auto_trans_offset.X;
             if (Math.Abs(auto_trans_offset.Z) > Math.Abs(trans_offset.Z)) trans_offset.Z = auto_trans_offset.Z;
 
             if (last_offset_angle != sum_offset_angle
                 || last_offset_x != trans_offset.X
-                || last_offset_z != trans_offset.Z)
+                || last_offset_z != trans_offset.Z
+                || last_offset_angle_pitch != sum_offset_angle_pitch)
             {
-                vr.setOffset(sum_offset_angle, trans_offset);
-                Text = "XRNS (" + sum_offset_angle + " deg)";
+                vr.setOffset(sum_offset_angle, sum_offset_angle_pitch, trans_offset);
+                if (!conf.DisableGUIOutput)
+                {
+                    Text = "XRNS (Y:" + sum_offset_angle + "  P: " + sum_offset_angle_pitch + ")";
+                }
             }
 
             lastpressed = l_pressed || r_pressed;
+            lastpitchpressed = u_pressed || d_pressed;
 
             last_offset_angle = sum_offset_angle;
+            last_offset_angle_pitch = sum_offset_angle_pitch;
             last_offset_x = trans_offset.X;
             last_offset_z = trans_offset.Z;
 
@@ -434,6 +619,44 @@ namespace XRNeckSafer
             atrans.X = (float)transx / 100.0F * -yawsign;
             atrans.Z = (float)transz / 100.0F;
         }
+        private void calcAutoPitch(int pitch, ref int arot)
+        {
+            List<int[]> Steps;
+            int pitchsign = (pitch > 0) ? 1 : -1;
+            int abspitch = (pitch > 0) ? pitch : -pitch;
+            int autorot = 0;
+
+            int act;
+            int deact = 0;
+            int rot;
+
+            Steps = (pitch > 0) ? conf.UpAutoSteps : conf.DownAutoSteps;
+
+            for (int i = 0; i < conf.UpAutoSteps.Count; i++)
+            {
+                act = Steps[i][0];
+                deact = Steps[i][1];
+                 rot = Steps[i][2];
+
+                if (abspitch >= act)
+                {
+                    autorot = rot;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if ((arot > autorot) && (abspitch >= deact))
+            {
+                return;
+            }
+
+            arot = autorot * pitchsign;
+        }
+
+
 
         private void transFNUP_ValueChanged(object sender, EventArgs e)
         {
@@ -492,6 +715,54 @@ namespace XRNeckSafer
                 AutorotGridView.Rows.Remove(AutorotGridView.Rows[AutorotGridView.RowCount - 1]);
             }
         }
+        private void UpAddButton_Click(object sender, EventArgs e)
+        {
+            int[] i = new int[5];
+            i[0] = conf.UpAutoSteps[conf.UpAutoSteps.Count - 1][0] + 10;
+            i[1] = conf.UpAutoSteps[conf.UpAutoSteps.Count - 1][0] + 1;
+            i[2] = conf.UpAutoSteps[conf.UpAutoSteps.Count - 1][2] + 10;
+            conf.UpAutoSteps.Add(i);
+            string[] s = new string[3]
+            {
+                conf.UpAutoSteps[conf.UpAutoSteps.Count-1][0].ToString(),
+                conf.UpAutoSteps[conf.UpAutoSteps.Count-1][1].ToString(),
+                conf.UpAutoSteps[conf.UpAutoSteps.Count-1][2].ToString(),
+            };
+            UpAutorotGridView.Rows.Add(s);
+        }
+
+        private void UpDeleteButton_Click(object sender, EventArgs e)
+        {
+            if (conf.UpAutoSteps.Count > 1)
+            {
+                conf.UpAutoSteps.RemoveAt(conf.UpAutoSteps.Count - 1);
+                UpAutorotGridView.Rows.Remove(UpAutorotGridView.Rows[UpAutorotGridView.RowCount - 1]);
+            }
+        }
+        private void DownAddButton_Click(object sender, EventArgs e)
+        {
+            int[] i = new int[5];
+            i[0] = conf.DownAutoSteps[conf.DownAutoSteps.Count - 1][0] - 10;
+            i[1] = conf.DownAutoSteps[conf.DownAutoSteps.Count - 1][0] - 1;
+            i[2] = conf.DownAutoSteps[conf.DownAutoSteps.Count - 1][2] - 10;
+            conf.DownAutoSteps.Add(i);
+            string[] s = new string[3]
+            {
+                conf.DownAutoSteps[conf.DownAutoSteps.Count-1][0].ToString(),
+                conf.DownAutoSteps[conf.DownAutoSteps.Count-1][1].ToString(),
+                conf.DownAutoSteps[conf.DownAutoSteps.Count-1][2].ToString(),
+            };
+            DownAutorotGridView.Rows.Add(s);
+        }
+
+        private void DownDeleteButton_Click(object sender, EventArgs e)
+        {
+            if (conf.DownAutoSteps.Count > 1)
+            {
+                conf.DownAutoSteps.RemoveAt(conf.DownAutoSteps.Count - 1);
+                DownAutorotGridView.Rows.Remove(DownAutorotGridView.Rows[DownAutorotGridView.RowCount - 1]);
+            }
+        }
 
         private bool check_autorot_config()
         {
@@ -537,6 +808,90 @@ namespace XRNeckSafer
             return error;
         }
 
+        private bool check_UP_autorot_config()
+        {
+            int val;
+
+            bool error = false;
+
+            for (int col = 0; col < UpAutorotGridView.ColumnCount; col++)
+            {
+                for (int row = 0; row < UpAutorotGridView.RowCount; row++)
+                {
+                    string s = UpAutorotGridView[col, row].Value.ToString();
+                    bool good = int.TryParse(s, out val);
+
+                    if (good)
+                    {
+                        if (val < 0) good = false;
+                        if (row < UpAutorotGridView.RowCount - 1 && col == 0)
+                        {
+                            if (val >= conf.UpAutoSteps[row + 1][1]) good = false;
+                            if (val >= conf.UpAutoSteps[row + 1][0]) good = false;
+                        }
+
+                        if (row > 0 && col == 0 && val <= conf.UpAutoSteps[row - 1][0]) good = false;
+                        if (row > 0 && col == 1 && val <= conf.UpAutoSteps[row - 1][0]) good = false;
+                        if (col == 0 && val <= conf.UpAutoSteps[row][1]) good = false;
+                        if (col == 1 && val >= conf.UpAutoSteps[row][0]) good = false;
+                    }
+
+                    if (good)
+                    {
+                        UpAutorotGridView.Rows[row].Cells[col].Style.BackColor = SystemColors.Control;
+                    }
+                    else
+                    {
+                        UpAutorotGridView.Rows[row].Cells[col].Style.BackColor = System.Drawing.Color.Red;
+                        error = true;
+                    }
+                }
+            }
+            return error;
+        }
+        private bool check_DOWN_autorot_config()
+        {
+            int val;
+
+            bool error = false;
+
+            for (int col = 0; col < DownAutorotGridView.ColumnCount; col++)
+            {
+                for (int row = 0; row < DownAutorotGridView.RowCount; row++)
+                {
+                    string s = DownAutorotGridView[col, row].Value.ToString();
+                    bool good = int.TryParse(s, out val);
+
+                    if (good)
+                    {
+                        if (val > 0) good = false;
+                        if (row > DownAutorotGridView.RowCount - 1 && col == 0)
+                        {
+                            if (val <= conf.DownAutoSteps[row + 1][1]) good = false;
+                            if (val <= conf.DownAutoSteps[row + 1][0]) good = false;
+                        }
+
+                        if (row > 0 && col == 0 && val >= conf.DownAutoSteps[row - 1][0]) good = false;
+                        if (row > 0 && col == 1 && val >= conf.DownAutoSteps[row - 1][0]) good = false;
+                        if (col == 0 && val >= conf.DownAutoSteps[row][1]) good = false;
+                        if (col == 1 && val <= conf.DownAutoSteps[row][0]) good = false;
+                    }
+
+                    if (good)
+                    {
+                        DownAutorotGridView.Rows[row].Cells[col].Style.BackColor = SystemColors.Control;
+                    }
+                    else
+                    {
+                        DownAutorotGridView.Rows[row].Cells[col].Style.BackColor = System.Drawing.Color.Red;
+                        error = true;
+                    }
+                }
+            }
+            return error;
+        }
+
+
         private void AutorotGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             int val;
@@ -557,14 +912,47 @@ namespace XRNeckSafer
             if (gr != null)
                 gr.Graph_ValuesChanged();
         }
+        private void UpAutorotGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int val;
+
+            if (e.RowIndex == -1) return;
+
+            string s = UpAutorotGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
+            bool good = int.TryParse(s, out val);
+
+            if (good)
+            {
+                conf.UpAutoSteps[e.RowIndex][e.ColumnIndex] = val;
+                conf.WriteConfig();
+            }
+
+            upErrorLabel1.Visible = check_UP_autorot_config();
+            upErrorLabel2.Visible = upErrorLabel1.Visible;
+        }
+        private void DownAutorotGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int val;
+
+            if (e.RowIndex == -1) return;
+
+            string s = DownAutorotGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
+            bool good = int.TryParse(s, out val);
+
+            if (good)
+            {
+                conf.DownAutoSteps[e.RowIndex][e.ColumnIndex] = val;
+                conf.WriteConfig();
+            }
+
+            downErrorLabel1.Visible = check_DOWN_autorot_config();
+            downErrorLabel2.Visible = downErrorLabel1.Visible;
+        }
 
         private void AutorotGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
-
-            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height-50);
-            //            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, Size.Height - stepwiseGroup.Location.Y - 111);
-            //            MaximumSize = new System.Drawing.Size(MaximumSize.Width, Math.Max(min_form_heigh, AutorotGridView.RowCount * 22 + 406));
+            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
             conf.WriteConfig();
             if (gr != null)
                 gr.Graph_ValuesChanged();
@@ -574,8 +962,41 @@ namespace XRNeckSafer
         {
             AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
             AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
-            //            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, Size.Height - stepwiseGroup.Location.Y - 111);
-            //            MaximumSize = new System.Drawing.Size(MaximumSize.Width, Math.Max(min_form_heigh, AutorotGridView.RowCount * 22 + 406));
+            conf.WriteConfig();
+            if (gr != null)
+                gr.Graph_ValuesChanged();
+        }
+        private void UpAutorotGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            UpAutorotGridView.Height = UpAutorotGridView.RowCount * 22 + 20;
+
+            UpAutorotGridView.MaximumSize = new System.Drawing.Size(UpAutorotGridView.Width, stepwiseGroup.Height - 60);
+            conf.WriteConfig();
+            if (gr != null)
+                gr.Graph_ValuesChanged();
+        }
+
+        private void UpAutorotGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            UpAutorotGridView.Height = UpAutorotGridView.RowCount * 22 + 20;
+            UpAutorotGridView.MaximumSize = new System.Drawing.Size(UpAutorotGridView.Width, stepwiseGroup.Height - 60);
+            conf.WriteConfig();
+            if (gr != null)
+                gr.Graph_ValuesChanged();
+        }
+        private void DownAutorotGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            DownAutorotGridView.Height = DownAutorotGridView.RowCount * 22 + 20;
+            DownAutorotGridView.MaximumSize = new System.Drawing.Size(DownAutorotGridView.Width, stepwiseGroup.Height - 60);
+            conf.WriteConfig();
+            if (gr != null)
+                gr.Graph_ValuesChanged();
+        }
+
+        private void DownAutorotGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            DownAutorotGridView.Height = DownAutorotGridView.RowCount * 22 + 20;
+            DownAutorotGridView.MaximumSize = new System.Drawing.Size(DownAutorotGridView.Width, stepwiseGroup.Height - 60);
             conf.WriteConfig();
             if (gr != null)
                 gr.Graph_ValuesChanged();
@@ -672,7 +1093,34 @@ namespace XRNeckSafer
         void sizeChanged()
         {
             VersionLabel.Location = new System.Drawing.Point(VersionLabel.Location.X, Size.Height - 56);
-         }
+            if (YawPitchTab.SelectedTab.Text == "Yaw")
+            {
+                if (conf.AutoMode == "stepwise")
+                {
+                    ARGroup.Height = Height - 384;
+                    YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
+                    stepwiseGroup.Height = ARGroup.Height - 50;
+                    AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
+                    AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
+
+                }
+            }
+            else 
+            {
+                if (conf.PitchAutoMode == "stepwise")
+                {
+                    pARGroup.Height = Height - 384;
+                    YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
+                    pStepwiseGroup.Height = pARGroup.Height - 48;
+                    DownAutorotGridView.Height = DownAutorotGridView.RowCount * 22 + 20;
+                    DownAutorotGridView.MaximumSize = new System.Drawing.Size(DownAutorotGridView.Width, pStepwiseGroup.Height - 60);
+                    UpAutorotGridView.Height = UpAutorotGridView.RowCount * 22 + 20;
+                    UpAutorotGridView.MaximumSize = new System.Drawing.Size(UpAutorotGridView.Width, pStepwiseGroup.Height - 60);
+
+                }
+            }
+
+        }
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
             sizeChanged();
@@ -726,9 +1174,11 @@ namespace XRNeckSafer
 
         private void setMenuCheckmarks()
         {
-            if (conf.StartMinimized) startMinimzedToolStripMenuItem.Checked = true;
-            if (conf.MinimizeToTray) minimizeToTrayToolStripMenuItem.Checked = true;
-            if (conf.MultipleLRbuttons) MultipleLRButtonsToolStripMenuItem.Checked = true;
+            startMinimzedToolStripMenuItem.Checked = conf.StartMinimized;
+            minimizeToTrayToolStripMenuItem.Checked = conf.MinimizeToTray;
+            MultipleLRButtonsToolStripMenuItem.Checked = conf.MultipleLRbuttons;
+            disableAllGUIOutputToolStripMenuItem.Checked = conf.DisableGUIOutput;
+            disableJoystickAutoReconnectToolStripMenuItem.Checked = conf.DisableJoystickReconnect;
 
             ToolStripMenuItem item = (ToolStripMenuItem)PitchLimToolStripMenuItem.DropDownItems[conf.PitchLimForAutorot / 10 - 1];
             item.Checked = true;
@@ -738,6 +1188,10 @@ namespace XRNeckSafer
         {
             conf.StartMinimized = false;
             conf.MinimizeToTray = false;
+            conf.PitchLimForAutorot = 90;
+            conf.DisableGUIOutput = false;
+            conf.DisableJoystickReconnect = false;
+            conf.MultipleLRbuttons = false;
             conf.WriteConfig();
             setMenuCheckmarks();
         }
@@ -776,13 +1230,16 @@ namespace XRNeckSafer
         {
             List<String> LayerNames = vr.ListApiLayers();
 
-            string message = "";
-            string title = "OpenXR API Layers";
-            foreach (string name in LayerNames)
+            if (LayerNames[0] != "Error")
             {
-                message = message + "\n" + name;
+                string message = "";
+                string title = "OpenXR API Layers";
+                foreach (string name in LayerNames)
+                {
+                    message = message + "\n" + name;
+                }
+                MessageBox.Show(message, title);
             }
-            MessageBox.Show(message, title);
         }
 
         private void autorot_changed(object sender, EventArgs e)
@@ -790,83 +1247,263 @@ namespace XRNeckSafer
             if (AROffButton.Checked)
             {
                 stepwiseGroup.Visible = false;
-                smoothGroup.Visible = false;
+                linearGroup.Visible = false;
                 ARGroup.Height = 45;
                 conf.AutoMode = "off";
                 auto_offset_angle = 0;
             }
-            if (ARsmooth.Checked)
+            if (ARlinear.Checked)
             {
                 stepwiseGroup.Visible = false;
-                smoothGroup.Visible = true;
+                linearGroup.Visible = true;
                 ARGroup.Height = 140;
-                conf.AutoMode = "smooth";
+                linearGroup.Location = new System.Drawing.Point(7, 40);
+                conf.AutoMode = "linear";
             }
             if (ARstepwise.Checked)
             {
                 stepwiseGroup.Visible = true;
-                smoothGroup.Visible = false;
-                ARGroup.Height = 217;
+                linearGroup.Visible = false;
+                ARGroup.Height = 247;
+                stepwiseGroup.Location = new System.Drawing.Point(7, 40);
                 conf.AutoMode = "stepwise";
             }
-            Height = ARGroup.Location.Y + ARGroup.Height + 60;
-            vr.setSmoothRotationSettings(conf.AutoMode == "smooth", conf.SmoothLimL, conf.SmoothLimR,
-                (float)conf.SmoothMultL / 100, (float)conf.SmoothMultR / 100);
+            YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
+            Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
+            vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR,
+                conf.LinearMultL, conf.LinearMultR);
             conf.WriteConfig();
         }
-        private void applySmoothSettings()
+        private void applyLinearSettings()
         {
-            vr.setSmoothRotationSettings(conf.AutoMode == "smooth", conf.SmoothLimL, conf.SmoothLimR,
-               (float)conf.SmoothMultL / 100, (float)conf.SmoothMultR / 100);
+            vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR,
+               conf.LinearMultL, conf.LinearMultR);
             conf.WriteConfig();
         }
 
         private void numericUpDownMultLeft_ValueChanged(object sender, EventArgs e)
         {
-            conf.SmoothMultL = (int)numericUpDownMultLeft.Value;
-            applySmoothSettings();
+            conf.LinearMultL = (int)numericUpDownMultLeft.Value;
+            applyLinearSettings();
         }
 
         private void numericUpDownMultLeft_KeyUp(object sender, KeyEventArgs e)
         {
-            conf.SmoothMultL = (int)numericUpDownMultLeft.Value;
-            applySmoothSettings();
+            conf.LinearMultL = (int)numericUpDownMultLeft.Value;
+            applyLinearSettings();
         }
 
         private void numericUpDownMultRight_ValueChanged(object sender, EventArgs e)
         {
-            conf.SmoothMultR = (int)numericUpDownMultRight.Value;
-            applySmoothSettings();
+            conf.LinearMultR = (int)numericUpDownMultRight.Value;
+            applyLinearSettings();
         }
 
         private void numericUpDownMultRight_KeyUp(object sender, KeyEventArgs e)
         {
-            conf.SmoothMultR = (int)numericUpDownMultRight.Value;
-            applySmoothSettings();
+            conf.LinearMultR = (int)numericUpDownMultRight.Value;
+            applyLinearSettings();
         }
 
         private void numericUpDownStartLeft_ValueChanged(object sender, EventArgs e)
         {
-            conf.SmoothLimL = (int)numericUpDownStartLeft.Value;
-            applySmoothSettings();
+            conf.LinearLimL = (int)numericUpDownStartLeft.Value;
+            applyLinearSettings();
         }
 
         private void numericUpDownStartLeft_KeyUp(object sender, KeyEventArgs e)
         {
-            conf.SmoothLimL = (int)numericUpDownStartLeft.Value;
-            applySmoothSettings();
+            conf.LinearLimL = (int)numericUpDownStartLeft.Value;
+            applyLinearSettings();
         }
 
         private void numericUpDownStartRight_ValueChanged(object sender, EventArgs e)
         {
-            conf.SmoothLimR = (int)numericUpDownStartRight.Value;
-            applySmoothSettings();
+            conf.LinearLimR = (int)numericUpDownStartRight.Value;
+            applyLinearSettings();
         }
 
         private void numericUpDownStartRight_KeyUp(object sender, KeyEventArgs e)
         {
-            conf.SmoothLimR = (int)numericUpDownStartRight.Value;
-            applySmoothSettings();
+            conf.LinearLimR = (int)numericUpDownStartRight.Value;
+            applyLinearSettings();
+        }
+
+        private void numericUpDownStartUp_ValueChanged(object sender, EventArgs e)
+        {
+            conf.LinearLimU = (int)numericUpDownStartUp.Value;
+            applyLinearSettings();
+        }
+
+        private void numericUpDownStartDown_ValueChanged(object sender, EventArgs e)
+        {
+            conf.LinearLimD = (int)numericUpDownStartDown.Value;
+            applyLinearSettings();
+        }
+
+        private void numericUpDownMultUp_ValueChanged(object sender, EventArgs e)
+        {
+            conf.LinearMultU = (int)numericUpDownMultUp.Value;
+            applyLinearSettings();
+        }
+
+        private void numericUpDownMultDown_ValueChanged(object sender, EventArgs e)
+        {
+            conf.LinearMultD = (int)numericUpDownMultDown.Value;
+            applyLinearSettings();
+        }
+
+        private void numericUpDownStartUp_KeyUp(object sender, KeyEventArgs e)
+        {
+            conf.LinearLimU = (int)numericUpDownStartUp.Value;
+            applyLinearSettings();
+        }
+        private void numericUpDownStartDown_KeyUp(object sender, KeyEventArgs e)
+        {
+            conf.LinearLimD = (int)numericUpDownStartDown.Value;
+            applyLinearSettings();
+        }
+
+        private void numericUpDownMultUp_KeyUp(object sender, KeyEventArgs e)
+        {
+            conf.LinearMultU = (int)numericUpDownMultUp.Value;
+            applyLinearSettings();
+        }
+
+        private void numericUpDownMultDown_KeyUp(object sender, KeyEventArgs e)
+        {
+            conf.LinearMultD = (int)numericUpDownMultDown.Value;
+            applyLinearSettings();
+        }
+
+        private void pitchAutorotChanged(object sender, EventArgs e)
+        {
+            if (pAROffButton.Checked)
+            {
+                pStepwiseGroup.Visible = false;
+                pLinearGroup.Visible = false;
+                pARGroup.Height = 45;
+                conf.PitchAutoMode = "off";
+                auto_offset_angle_pitch = 0;
+            }
+            if (pARlinear.Checked)
+            {
+                pStepwiseGroup.Visible = false;
+                pLinearGroup.Visible = true;
+                pARGroup.Height = 140;
+                pLinearGroup.Location = new System.Drawing.Point(7, 40);
+                conf.PitchAutoMode = "linear";
+            }
+            if (pARstepwise.Checked)
+            {
+                pStepwiseGroup.Visible = true;
+                pLinearGroup.Visible = false;
+                pARGroup.Height = 220;
+                pStepwiseGroup.Size = new System.Drawing.Size(236, 172);
+                pStepwiseGroup.Location = new System.Drawing.Point(7, 40);
+                conf.PitchAutoMode = "stepwise";
+            }
+            YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
+            Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
+            vr.setPitchLinearRotationSettings(conf.PitchAutoMode == "linear", 
+                conf.LinearLimU, conf.LinearLimD,
+                conf.LinearMultU, conf.LinearMultD);
+            conf.WriteConfig();
+
+        }
+
+        private void YawPitchTab_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (YawPitchTab.SelectedTab.Text == "Yaw")
+            {
+                YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
+            }
+            else
+            {
+                YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
+            }
+            Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
+        }
+
+        private void SetDownButton_Click(object sender, EventArgs e)
+        {
+            if (conf.MultipleLRbuttons == false)
+            {
+                ButtonForm frm = new ButtonForm(this, "Button for Down Rotation:", conf.DownButton);
+                frm.ShowDialog();
+            }
+            else
+            {
+                MultiButtons frm = new MultiButtons(this, "Down", conf.DownButton, conf.DownButton2, conf.DownButton3);
+                frm.ShowDialog();
+            }
+            setButtonToolTip(SetDownButton, conf.DownButton);
+            setLabelToolTip(DownLabel, conf.DownButton);
+        }
+
+        private void SetUpButton_Click(object sender, EventArgs e)
+        {
+            if (conf.MultipleLRbuttons == false)
+            {
+                ButtonForm frm = new ButtonForm(this, "Button for up Rotation:", conf.UpButton);
+                frm.ShowDialog();
+            }
+            else
+            {
+                MultiButtons frm = new MultiButtons(this, "Down", conf.UpButton, conf.UpButton2, conf.UpButton3);
+                frm.ShowDialog();
+            }
+            setButtonToolTip(SetUpButton, conf.UpButton);
+            setLabelToolTip(UpLabel, conf.UpButton);
+
+        }
+
+        private void pAccumReset_Click(object sender, EventArgs e)
+        {
+            if (conf.MultipleLRbuttons == false)
+            {
+                ButtonForm frm = new ButtonForm(this, "Pitch Accum Reset Button:", conf.PitchAccuResetButton);
+                frm.ShowDialog();
+            }
+            else
+            {
+                MultiButtons frm = new MultiButtons(this, "Accum Reset", conf.PitchAccuResetButton, conf.PitchAccuResetButton2, conf.PitchAccuResetButton3);
+                frm.ShowDialog();
+            }
+            setButtonToolTip(pAccumReset, conf.PitchAccuResetButton);
+        }
+
+        private void SetPitchHoldButton_Click(object sender, EventArgs e)
+        {
+            if (conf.MultipleLRbuttons == false)
+            {
+                ButtonForm frm = new ButtonForm(this, "Pitch Hold Button:", conf.PitchHoldButton1);
+                frm.ShowDialog();
+            }
+            else
+            {
+                MultiButtons frm = new MultiButtons(this, "Hold Button", conf.PitchHoldButton1, conf.PitchHoldButton2, conf.PitchHoldButton3);
+                frm.ShowDialog();
+            }
+            setButtonToolTip(SetPitchHoldButton, conf.PitchHoldButton1);
+        }
+
+        private void disableAllGUIOutputToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
+        {
+            conf.DisableGUIOutput = disableAllGUIOutputToolStripMenuItem.Checked;
+            if (conf.DisableGUIOutput)
+            {
+                HMDYawLabel.Text = "     (HMD angle output disabled)";
+                Text = "XRNS";
+            }
+            conf.WriteConfig();
+        }
+
+        private void disableJoystickAutoReconnectToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
+        {
+            conf.DisableJoystickReconnect = disableAllGUIOutputToolStripMenuItem.Checked;
+            conf.WriteConfig();
+            js.disableAutoReconnect = conf.DisableJoystickReconnect;
         }
     }
 }

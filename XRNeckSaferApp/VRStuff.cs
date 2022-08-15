@@ -23,13 +23,19 @@ namespace XRNeckSafer
             public float pitchOffset;
             public float lateralOffset;
             public float longitudinalOffset;
-            public int leftStartAt;
-            public int rightStartAt;
             public float rightMultiplier;
             public float leftMultiplier;
+            public float upMultiplier;
+            public float downMultiplier;
+            public int leftStartAt;
+            public int rightStartAt;
+            public int upStartAt;
+            public int downStartAt;
             public bool resetHmdOrientation;
-            public bool useSmoothRotation;
-            public bool holdSmoothRotation;
+            public bool useLinearRotation;
+            public bool useLinearPitchRotation;
+            public bool holdLinearRotation;
+            public bool holdLinearPitchRotation;
             public bool hasBeenCentered;
         }
 
@@ -44,13 +50,15 @@ namespace XRNeckSafer
 
         public unsafe List<String> ListApiLayers()
         {
+            // taken from OpenXR toolkit without knowing what I'm doing
             List<String> LayerNameList = new List<String>();
+            AssemblyName assemblyName = new AssemblyName();
 
             AppDomain dom = AppDomain.CreateDomain("temporaryXr");
             try
             {
                 // Load the OpenXR package into a temporary app domain. This is so make sure that the registry is read everytime when looking for implicit API layer.
-                AssemblyName assemblyName = new AssemblyName();
+
                 assemblyName.CodeBase = typeof(XR).Assembly.Location;
                 Assembly assembly = dom.Load(assemblyName);
                 Type localXR = assembly.GetType("Silk.NET.OpenXR.XR");
@@ -81,7 +89,6 @@ namespace XRNeckSafer
                             }
                         }
                     }
-
                     if (!found)
                     {
                         LayerNameList.Add("\n--> XRNeckSafer API Layer NOT active! <--");
@@ -89,12 +96,18 @@ namespace XRNeckSafer
                 }
                 else
                 {
-                    MessageBox.Show("Failed to query API layers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Unable to query API layers\nUse OpenXR developer tools to \nverify layer installation", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LayerNameList.Clear();
+                    LayerNameList.Add("Error");
                 }
             }
             catch (Exception e)
             {
-                MessageBox.Show("Failed to initialize OpenXR", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string a = e.ToString();
+
+                MessageBox.Show("Unable to query API layers\nUse OpenXR developer tools to \nverify layer installation\n\n"+a, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LayerNameList.Clear();
+                LayerNameList.Add("Error");
             }
             finally
             {
@@ -125,27 +138,43 @@ namespace XRNeckSafer
         {
             return shmValues.hmdPitchAngle;
         }
-        public void setSmoothRotationSettings(bool usesmooth, int leftstart, int rightstart, float leftmult, float rightmult)
+        public void setLinearRotationSettings(bool uselinear, int leftstart, int rightstart, int leftmult, int rightmult)
         {
-            shmValues.useSmoothRotation = usesmooth;
+            shmValues.useLinearRotation = uselinear;
             shmValues.leftStartAt = leftstart;
             shmValues.rightStartAt = rightstart;
-            shmValues.leftMultiplier = leftmult;
-            shmValues.rightMultiplier = rightmult;
+            shmValues.leftMultiplier = (float)leftmult / 100f; 
+            shmValues.rightMultiplier = (float)rightmult / 100f;
+            accessor.Write<shmVal_s>(0, ref shmValues);
+        }
+        public void setPitchLinearRotationSettings(bool usepitchlinear, int upstart, int downstart, int upmult, int downmult)
+        {
+            shmValues.useLinearPitchRotation = usepitchlinear;
+            shmValues.upStartAt = upstart;
+            shmValues.downStartAt = downstart;
+            shmValues.upMultiplier = (float)upmult / 100f;
+            shmValues.downMultiplier = (float)downmult / 100f;
             accessor.Write<shmVal_s>(0, ref shmValues);
         }
 
-        public void setOffset(int a, Vector3 trans)
+        public void setOffset(int a, int b, Vector3 trans)
         {
             shmValues.yawOffset = (float)(a * Math.PI / 180);
+            shmValues.pitchOffset = (float)(-b * Math.PI / 180);
             shmValues.lateralOffset = trans.X;
             shmValues.longitudinalOffset = trans.Z;
             accessor.Write<shmVal_s>(0, ref shmValues);
         }
 
-        public void setSmoothHold(bool h)
+        public void setLinearHold(bool h)
         {
-            shmValues.holdSmoothRotation = h;
+            shmValues.holdLinearRotation = h;
+            accessor.Write<shmVal_s>(0, ref shmValues);
+        }
+
+        public void setPitchLinearHold(bool h)
+        {
+            shmValues.holdLinearRotation = h;
             accessor.Write<shmVal_s>(0, ref shmValues);
         }
     }
