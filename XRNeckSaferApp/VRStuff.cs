@@ -50,13 +50,15 @@ namespace XRNeckSafer
 
         public unsafe List<String> ListApiLayers()
         {
+            // taken from OpenXR toolkit without knowing what I'm doing
             List<String> LayerNameList = new List<String>();
+            AssemblyName assemblyName = new AssemblyName();
 
             AppDomain dom = AppDomain.CreateDomain("temporaryXr");
             try
             {
                 // Load the OpenXR package into a temporary app domain. This is so make sure that the registry is read everytime when looking for implicit API layer.
-                AssemblyName assemblyName = new AssemblyName();
+
                 assemblyName.CodeBase = typeof(XR).Assembly.Location;
                 Assembly assembly = dom.Load(assemblyName);
                 Type localXR = assembly.GetType("Silk.NET.OpenXR.XR");
@@ -87,7 +89,6 @@ namespace XRNeckSafer
                             }
                         }
                     }
-
                     if (!found)
                     {
                         LayerNameList.Add("\n--> XRNeckSafer API Layer NOT active! <--");
@@ -95,12 +96,18 @@ namespace XRNeckSafer
                 }
                 else
                 {
-                    MessageBox.Show("Failed to query API layers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Unable to query API layers\nUse OpenXR developer tools to \nverify layer installation", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LayerNameList.Clear();
+                    LayerNameList.Add("Error");
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                MessageBox.Show("Failed to initialize OpenXR", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string a = e.ToString();
+
+                MessageBox.Show(a+"Unable to query API layers\nUse OpenXR developer tools to \nverify layer installation", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LayerNameList.Clear();
+                LayerNameList.Add("Error");
             }
             finally
             {
@@ -131,22 +138,22 @@ namespace XRNeckSafer
         {
             return shmValues.hmdPitchAngle;
         }
-        public void setLinearRotationSettings(bool uselinear, int leftstart, int rightstart, float leftmult, float rightmult)
+        public void setLinearRotationSettings(bool uselinear, int leftstart, int rightstart, int leftmult, int rightmult)
         {
             shmValues.useLinearRotation = uselinear;
             shmValues.leftStartAt = leftstart;
             shmValues.rightStartAt = rightstart;
-            shmValues.leftMultiplier = leftmult;
-            shmValues.rightMultiplier = rightmult;
+            shmValues.leftMultiplier = (float)leftmult / 100f; 
+            shmValues.rightMultiplier = (float)rightmult / 100f;
             accessor.Write<shmVal_s>(0, ref shmValues);
         }
-        public void setPitchLinearRotationSettings(bool usepitchlinear, int upstart, int downstart, float upmult, float downmult)
+        public void setPitchLinearRotationSettings(bool usepitchlinear, int upstart, int downstart, int upmult, int downmult)
         {
             shmValues.useLinearPitchRotation = usepitchlinear;
             shmValues.upStartAt = upstart;
             shmValues.downStartAt = downstart;
-            shmValues.upMultiplier = upmult;
-            shmValues.downMultiplier = downmult;
+            shmValues.upMultiplier = (float)upmult / 100f;
+            shmValues.downMultiplier = (float)downmult / 100f;
             accessor.Write<shmVal_s>(0, ref shmValues);
         }
 

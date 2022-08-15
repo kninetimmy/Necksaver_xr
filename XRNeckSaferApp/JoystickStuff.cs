@@ -25,9 +25,11 @@ namespace XRNeckSafer
 
         public List<bool[]> LastButtons;
         public List<int[]> LastPOVs;
+        public bool disableAutoReconnect;
 
         public JoystickStuff()
         {
+            disableAutoReconnect = false;
             DInput = new DirectInput();
             GetJoysticks();
         }
@@ -137,47 +139,30 @@ namespace XRNeckSafer
             }
             try
             {
-                //                bool isCurrentlyAttached = DInput.IsDeviceAttached(ll[j].InstanceGuid);
-//                if (DInput.IsDeviceAttached(ll[j].InstanceGuid))
+                JoystickState State = Sticks[j].Stick.GetCurrentState();
+                if ((p == -1) && (b == -1)) return false;
+
+                if (p == -1)
                 {
-//                    if (!Sticks[j].Attached) // Joystick reaquired?
-//                    {
-//                        GetJoysticks();
-//                        j = IndexFromGuid(JoystickGUID);
-//                        if (j == -1) return false;
-//                    }
-
-                    JoystickState State = Sticks[j].Stick.GetCurrentState();
-                    if ((p == -1) && (b == -1)) return false;
-
-                    if (p == -1)
-                    {
-                        return State.Buttons[b - 1];
-                    }
-                    else
-                    {
-                        if (State.PointOfViewControllers[p] == -1) return false;
-                        if (use8wayhat)
-                            return State.PointOfViewControllers[p] == b;
-
-                        return (Math.Abs(State.PointOfViewControllers[p] - b) < 5000) || (State.PointOfViewControllers[p] == 31500 && b == 0);
-                    }
+                    return State.Buttons[b - 1];
                 }
-//                else
-//                {
-//                    Sticks[j].Attached = false;
-//                    return false;
-//                }
+                else
+                {
+                    if (State.PointOfViewControllers[p] == -1) return false;
+                    if (use8wayhat)
+                    {
+                        return State.PointOfViewControllers[p] == b;
+                    }
+                    return (Math.Abs(State.PointOfViewControllers[p] - b) < 5000) || (State.PointOfViewControllers[p] == 31500 && b == 0);
+                }
             }
             catch (Exception)
             {
-                if (DInput.IsDeviceAttached(ll[j].InstanceGuid))
-                {
- //                   if (!Sticks[j].Attached) // Joystick reaquired?
+                if (!disableAutoReconnect)
+                    if (DInput.IsDeviceAttached(ll[j].InstanceGuid))
                     {
                         GetJoysticks();
                     }
-                }
                 return false;
             }
         }

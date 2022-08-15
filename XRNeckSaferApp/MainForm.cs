@@ -212,12 +212,12 @@ namespace XRNeckSafer
             numericUpDownMultLeft.Value = conf.LinearMultL;
             numericUpDownMultRight.Value = conf.LinearMultR;
             numericUpDownStartUp.Value = conf.LinearLimU;
-            numericUpDownStartDown.Value = -Math.Abs(conf.LinearLimD);
+            numericUpDownStartDown.Value = conf.LinearLimD;
             numericUpDownMultUp.Value = conf.LinearMultU;
             numericUpDownMultDown.Value = conf.LinearMultD;
 
-            vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR, (float)conf.LinearMultL / 100, (float)conf.LinearMultR / 100);
-            vr.setPitchLinearRotationSettings(conf.PitchAutoMode == "linear", conf.LinearLimU, conf.LinearLimD, (float)conf.LinearMultU / 100, (float)conf.LinearMultD / 100);
+            vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR, conf.LinearMultL, conf.LinearMultR);
+            vr.setPitchLinearRotationSettings(conf.PitchAutoMode == "linear", conf.LinearLimU, conf.LinearLimD, conf.LinearMultU, conf.LinearMultD);
             ARText = "Autorotation";
             pARText = "Autorotation";
             HMDtext = "";
@@ -398,14 +398,21 @@ namespace XRNeckSafer
 
             if (vr.HmdWasCentered())
             {
-                HMDtext = "HMD yaw: " + Math.Round(hmdYaw) + " deg   pitch: " + Math.Round(hmdPitch) + " deg";
+                if (!conf.DisableGUIOutput)
+                {
+                    HMDtext = "HMD yaw: " + Math.Round(hmdYaw) + " deg   pitch: " + Math.Round(hmdPitch) + " deg";
+                }
+                else
+                {
+                    HMDtext = "     (HMD angle output disabled)";
+                }
             }
             else
             {
                 HMDtext = "HMD yaw: (not centered in game yet)";
             }
 
-            if (HMDYawLabel.Text != HMDtext)
+            if ((HMDYawLabel.Text != HMDtext))
             {
                 HMDYawLabel.Location = new System.Drawing.Point(20, 18);
                 HMDYawLabel.Text = HMDtext;
@@ -415,8 +422,8 @@ namespace XRNeckSafer
             {
                 vr.resetHmdOrientation();
                 joy_offset_angle = 0;
-                vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR, (float)conf.LinearMultL / 100, (float)conf.LinearMultR / 100);
-                vr.setPitchLinearRotationSettings(conf.PitchAutoMode == "linear", conf.LinearLimU, conf.LinearLimD, (float)conf.LinearMultU / 100, (float)conf.LinearMultD / 100);
+                vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR, conf.LinearMultL, conf.LinearMultR);
+                vr.setPitchLinearRotationSettings(conf.PitchAutoMode == "linear", conf.LinearLimU, conf.LinearLimD, conf.LinearMultU, conf.LinearMultD);
             }
 
             if (additivRB.Checked)
@@ -467,7 +474,7 @@ namespace XRNeckSafer
                 }
                 else if (d_pressed)
                 {
-                    joy_offset_angle_pitch = (int)downNUD.Value;
+                    joy_offset_angle_pitch = (int)-downNUD.Value;
                 }
                 else
                 {
@@ -543,7 +550,10 @@ namespace XRNeckSafer
                 || last_offset_angle_pitch != sum_offset_angle_pitch)
             {
                 vr.setOffset(sum_offset_angle, sum_offset_angle_pitch, trans_offset);
-                Text = "XRNS (Y:" + sum_offset_angle + "  P: " + sum_offset_angle_pitch + ")";
+                if (!conf.DisableGUIOutput)
+                {
+                    Text = "XRNS (Y:" + sum_offset_angle + "  P: " + sum_offset_angle_pitch + ")";
+                }
             }
 
             lastpressed = l_pressed || r_pressed;
@@ -616,10 +626,7 @@ namespace XRNeckSafer
             List<int[]> Steps;
             int pitchsign = (pitch > 0) ? 1 : -1;
             int abspitch = (pitch > 0) ? pitch : -pitch;
-            int arotsign = (arot > 0) ? 1 : -1;
-            int absarot = arot * arotsign;
             int autorot = 0;
-            int absdeact = 0;
 
             int act;
             int deact = 0;
@@ -630,12 +637,10 @@ namespace XRNeckSafer
             for (int i = 0; i < conf.UpAutoSteps.Count; i++)
             {
                 act = Steps[i][0];
-                int absact = (act > 0) ? act : -act;
                 deact = Steps[i][1];
-                absdeact = (deact > 0) ? deact : -deact;
-                rot = Steps[i][2];
+                 rot = Steps[i][2];
 
-                if (abspitch >= absact)
+                if (abspitch >= act)
                 {
                     autorot = rot;
                 }
@@ -645,7 +650,7 @@ namespace XRNeckSafer
                 }
             }
 
-            if ((absarot > autorot) && (abspitch >= absdeact))
+            if ((arot > autorot) && (abspitch >= deact))
             {
                 return;
             }
@@ -949,7 +954,6 @@ namespace XRNeckSafer
         private void AutorotGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
-
             AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
             conf.WriteConfig();
             if (gr != null)
@@ -1091,6 +1095,33 @@ namespace XRNeckSafer
         void sizeChanged()
         {
             VersionLabel.Location = new System.Drawing.Point(VersionLabel.Location.X, Size.Height - 56);
+            if (YawPitchTab.SelectedTab.Text == "Yaw")
+            {
+                if (conf.AutoMode == "stepwise")
+                {
+                    ARGroup.Height = Height - 384;
+                    YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
+                    stepwiseGroup.Height = ARGroup.Height - 50;
+                    AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
+                    AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
+
+                }
+            }
+            else 
+            {
+                if (conf.PitchAutoMode == "stepwise")
+                {
+                    pARGroup.Height = Height - 384;
+                    YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
+                    pStepwiseGroup.Height = pARGroup.Height - 48;
+                    DownAutorotGridView.Height = DownAutorotGridView.RowCount * 22 + 20;
+                    DownAutorotGridView.MaximumSize = new System.Drawing.Size(DownAutorotGridView.Width, pStepwiseGroup.Height - 60);
+                    UpAutorotGridView.Height = UpAutorotGridView.RowCount * 22 + 20;
+                    UpAutorotGridView.MaximumSize = new System.Drawing.Size(UpAutorotGridView.Width, pStepwiseGroup.Height - 60);
+
+                }
+            }
+
         }
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
@@ -1145,9 +1176,11 @@ namespace XRNeckSafer
 
         private void setMenuCheckmarks()
         {
-            if (conf.StartMinimized) startMinimzedToolStripMenuItem.Checked = true;
-            if (conf.MinimizeToTray) minimizeToTrayToolStripMenuItem.Checked = true;
-            if (conf.MultipleLRbuttons) MultipleLRButtonsToolStripMenuItem.Checked = true;
+            startMinimzedToolStripMenuItem.Checked = conf.StartMinimized;
+            minimizeToTrayToolStripMenuItem.Checked = conf.MinimizeToTray;
+            MultipleLRButtonsToolStripMenuItem.Checked = conf.MultipleLRbuttons;
+            disableAllGUIOutputToolStripMenuItem.Checked = conf.DisableGUIOutput;
+            disableJoystickAutoReconnectToolStripMenuItem.Checked = conf.DisableJoystickReconnect;
 
             ToolStripMenuItem item = (ToolStripMenuItem)PitchLimToolStripMenuItem.DropDownItems[conf.PitchLimForAutorot / 10 - 1];
             item.Checked = true;
@@ -1157,6 +1190,10 @@ namespace XRNeckSafer
         {
             conf.StartMinimized = false;
             conf.MinimizeToTray = false;
+            conf.PitchLimForAutorot = 90;
+            conf.DisableGUIOutput = false;
+            conf.DisableJoystickReconnect = false;
+            conf.MultipleLRbuttons = false;
             conf.WriteConfig();
             setMenuCheckmarks();
         }
@@ -1195,13 +1232,16 @@ namespace XRNeckSafer
         {
             List<String> LayerNames = vr.ListApiLayers();
 
-            string message = "";
-            string title = "OpenXR API Layers";
-            foreach (string name in LayerNames)
+            if (LayerNames[0] != "Error")
             {
-                message = message + "\n" + name;
+                string message = "";
+                string title = "OpenXR API Layers";
+                foreach (string name in LayerNames)
+                {
+                    message = message + "\n" + name;
+                }
+                MessageBox.Show(message, title);
             }
-            MessageBox.Show(message, title);
         }
 
         private void autorot_changed(object sender, EventArgs e)
@@ -1233,13 +1273,13 @@ namespace XRNeckSafer
             YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
             vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR,
-                (float)conf.LinearMultL / 100, (float)conf.LinearMultR / 100);
+                conf.LinearMultL, conf.LinearMultR);
             conf.WriteConfig();
         }
         private void applyLinearSettings()
         {
             vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR,
-               (float)conf.LinearMultL / 100, (float)conf.LinearMultR / 100);
+               conf.LinearMultL, conf.LinearMultR);
             conf.WriteConfig();
         }
 
@@ -1367,8 +1407,9 @@ namespace XRNeckSafer
             }
             YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
-            vr.setPitchLinearRotationSettings(conf.PitchAutoMode == "linear", conf.LinearLimU, conf.LinearLimD,
-                (float)conf.LinearMultU / 100, (float)conf.LinearMultD / 100);
+            vr.setPitchLinearRotationSettings(conf.PitchAutoMode == "linear", 
+                conf.LinearLimU, conf.LinearLimD,
+                conf.LinearMultU, conf.LinearMultD);
             conf.WriteConfig();
 
         }
@@ -1447,6 +1488,24 @@ namespace XRNeckSafer
                 frm.ShowDialog();
             }
             setButtonToolTip(SetPitchHoldButton, conf.PitchHoldButton1);
+        }
+
+        private void disableAllGUIOutputToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
+        {
+            conf.DisableGUIOutput = disableAllGUIOutputToolStripMenuItem.Checked;
+            if (conf.DisableGUIOutput)
+            {
+                HMDYawLabel.Text = "     (HMD angle output disabled)";
+                Text = "XRNS";
+            }
+            conf.WriteConfig();
+        }
+
+        private void disableJoystickAutoReconnectToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
+        {
+            conf.DisableJoystickReconnect = disableAllGUIOutputToolStripMenuItem.Checked;
+            conf.WriteConfig();
+            js.disableAutoReconnect = conf.DisableJoystickReconnect;
         }
     }
 }

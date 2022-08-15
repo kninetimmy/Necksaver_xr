@@ -94,6 +94,8 @@ namespace XRNeckSafer
         public bool StartMinimized;
         public bool MinimizeToTray;
         public bool MultipleLRbuttons;
+        public bool DisableGUIOutput;
+        public bool DisableJoystickReconnect;
         public int PitchLimForAutorot;
         public static string configfilename;
         public string AutoMode;
@@ -134,7 +136,7 @@ namespace XRNeckSafer
             PitchHoldButton3 = new ButtonConfig();
             Angle = 30;
             UpAngle = 30;
-            DownAngle = -30;
+            DownAngle = 30;
             TransLR = 0;
             TransF = 0;
             LinearLimL = 95;
@@ -142,7 +144,7 @@ namespace XRNeckSafer
             LinearMultL = 120;
             LinearMultR = 120;
             LinearLimU = 45;
-            LinearLimD = -30;
+            LinearLimD = 30;
             LinearMultU = 120;
             LinearMultD = 120;
             Additiv = false;
@@ -150,6 +152,8 @@ namespace XRNeckSafer
             StartMinimized = false;
             MinimizeToTray = false;
             MultipleLRbuttons = false;
+            DisableGUIOutput = false;
+            DisableJoystickReconnect = false;
             PitchLimForAutorot = 90;
             AutoMode = "Off";
             AutoSteps = new List<int[]>();
@@ -215,10 +219,10 @@ namespace XRNeckSafer
                 }
                 if (c.DownAutoSteps.Count == 0)
                 {
-                    c.DownAutoSteps.Add(new int[3] { -50, -41, -10 });
-                    c.DownAutoSteps.Add(new int[3] { -60, -51, -20 });
-                    c.DownAutoSteps.Add(new int[3] { -70, -61, -30 });
-                    c.DownAutoSteps.Add(new int[3] { -80, -71, -40 });
+                    c.DownAutoSteps.Add(new int[3] { 50, 41, 10 });
+                    c.DownAutoSteps.Add(new int[3] { 60, 51, 20 });
+                    c.DownAutoSteps.Add(new int[3] { 70, 61, 30 });
+                    c.DownAutoSteps.Add(new int[3] { 80, 71, 40 });
                 }
 
                 return c;
@@ -245,10 +249,10 @@ namespace XRNeckSafer
                 }
                 if (conf.DownAutoSteps.Count == 0)
                 {
-                    conf.DownAutoSteps.Add(new int[3] { -50, -41, 10 });
-                    conf.DownAutoSteps.Add(new int[3] { -60, -51, 20 });
-                    conf.DownAutoSteps.Add(new int[3] { -70, -61, 30 });
-                    conf.DownAutoSteps.Add(new int[3] { -80, -71, 40 });
+                    conf.DownAutoSteps.Add(new int[3] { 50, 41, 10 });
+                    conf.DownAutoSteps.Add(new int[3] { 60, 51, 20 });
+                    conf.DownAutoSteps.Add(new int[3] { 70, 61, 30 });
+                    conf.DownAutoSteps.Add(new int[3] { 80, 71, 40 });
                 }
 
                 conf.WriteConfig();
