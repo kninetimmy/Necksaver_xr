@@ -105,7 +105,7 @@ namespace XRNeckSafer
             {
                 string a = e.ToString();
 
-                MessageBox.Show(a+"Unable to query API layers\nUse OpenXR developer tools to \nverify layer installation", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Unable to query API layers\nUse OpenXR developer tools to \nverify layer installation\n\n"+a, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LayerNameList.Clear();
                 LayerNameList.Add("Error");
             }

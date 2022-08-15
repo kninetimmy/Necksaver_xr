@@ -46,11 +46,16 @@ Smooth Autorotation gives a linear amplification of your head rotation, beginnin
 - pitch axis added
 - translation when rotated fixed 
 - GUI optimization
-- options to disable GUI output and joystick auto reconnect to eliminate any possible causes of stutter 
-- list of OpenXR API layers reintroduced
+- options to disable GUI output and joystick auto reconnect to eliminate possible causes of stutter 
+- list of OpenXR API layers reenabled
 
-If you update from an earlier version you can just replace XR_APILAYER_NOVENDOR_XRNeckSafer.dll and XRNeckSaferApp.exe with the new versions. Stop Mixed Reality Portal before replacing the .dll.
-**But please delete your old config file (XRNeckSafer.cfg) and reconfigure XRNS from scratch.**
+If you update from an earlier version there is no need to run the INSTALL script again. Just replace all files (including the XR_APILAYER_NOVENDOR_XRNeckSafer.dll in your %Program Files\OpenXRApiLayer\ folder) with the new versions. 
+
+Stop Mixed Reality Portal before replacing the XR_APILAYER_NOVENDOR_XRNeckSafer.dll.
+
+**You should delete your old config file (XRNeckSafer.cfg) and reconfigure XRNS from scratch though.**
+
+
 
 **Changelog for beta2b:**
 - linear autorotation values are now saved correctly
@@ -114,4 +119,4 @@ Thanks for you help and patience guys!
 Cheers,
  J2_NobiWan
 
-### Download link: [XRNeckSaferBeta2b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3.zip)
+### Download link: [XRNeckSaferBeta3.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3.zip)

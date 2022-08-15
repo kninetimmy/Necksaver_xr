@@ -42,7 +42,6 @@ namespace XRNeckSafer
         public string HMDtext;
         public bool autorot_config_error;
 
-        public int min_form_heigh;
 
         public MainForm()
         {
@@ -51,7 +50,6 @@ namespace XRNeckSafer
 
             InitializeComponent();
 
-            min_form_heigh = Height;
             notifyIcon.ContextMenuStrip = contextMenuStrip;
             this.showToolStripMenuItem.Click += showToolStripMenuItem_Click;
             this.exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
@@ -79,7 +77,6 @@ namespace XRNeckSafer
             {
                 AROffButton.Checked = true;
             }
-            autorot_changed(new Object(), new EventArgs());
 
             if (conf.PitchAutoMode == "stepwise")
             {
@@ -94,6 +91,7 @@ namespace XRNeckSafer
                 pAROffButton.Checked = true;
             }
             pitchAutorotChanged(new Object(), new EventArgs());
+            autorot_changed(new Object(), new EventArgs());
             YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
 
@@ -1266,7 +1264,7 @@ namespace XRNeckSafer
             {
                 stepwiseGroup.Visible = true;
                 linearGroup.Visible = false;
-                ARGroup.Height = 217;
+                ARGroup.Height = 247;
                 stepwiseGroup.Location = new System.Drawing.Point(7, 40);
                 conf.AutoMode = "stepwise";
             }
