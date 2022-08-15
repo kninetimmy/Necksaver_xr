@@ -212,7 +212,7 @@ namespace XRNeckSafer
             numericUpDownMultLeft.Value = conf.LinearMultL;
             numericUpDownMultRight.Value = conf.LinearMultR;
             numericUpDownStartUp.Value = conf.LinearLimU;
-            numericUpDownStartDown.Value = conf.LinearLimD;
+            numericUpDownStartDown.Value = -Math.Abs(conf.LinearLimD);
             numericUpDownMultUp.Value = conf.LinearMultU;
             numericUpDownMultDown.Value = conf.LinearMultD;
 

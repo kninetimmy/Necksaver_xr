@@ -202,8 +202,8 @@ namespace {
         DebugLog("XrLocateSpace for HMD %d\n", result2);
 
         //HMD moved since last update
-    //    delta = location.pose.position - lastHmdLocation.pose.position;
-    //    lastHmdLocation.pose.position = location.pose.position;
+        delta = location.pose.position - lastHmdLocation.pose.position;
+        lastHmdLocation.pose.position = location.pose.position;
 
         if (location.locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT) {
 
