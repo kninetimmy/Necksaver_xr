@@ -114,7 +114,7 @@ Thanks to 65th Haack and 453 Jihadi Daddy for testing!
 
 This project uses several third-party libraries, which are used and distributed under their own license terms.
 
-Thanks for you help and patience guys!
+Thanks for your help and patience guys!
 
 Cheers,
  J2_NobiWan
