@@ -7,7 +7,7 @@
 XRNeckSafer tries to help virtual pilots flying in VR to not break their neck while trying to check their six.
 It adds an angular offset to the current viewing angle by pressing a joystick button. Currently working with IL2 and DCS with the **OpenXR** version of [**OpenComposite**](https://gitlab.com/znixian/OpenOVR/-/tree/openxr/).
 
-<img src="https://gitlab.com/NobiWan/xrnecksafer/-/raw/master/Assets/XRNS1.JPG">  <img src="https://gitlab.com/NobiWan/xrnecksafer/-/raw/master/Assets/XRNS2.JPG">
+<img src="https://gitlab.com/NobiWan/xrnecksafer/-/raw/master/Assets/XRNS1.JPG">  <img src="https://gitlab.com/NobiWan/xrnecksafer/-/raw/master/Assets/XRNS2.JPG"><img src="https://gitlab.com/NobiWan/xrnecksafer/-/raw/master/Assets/XRNS3.JPG">
  <img src="https://gitlab.com/NobiWan/vrnecksafer/-/raw/master/VRNeckSafer/Release/VRNSv209b.JPG"> 
  
 ## **How to use it:**
@@ -83,7 +83,7 @@ Stop Mixed Reality Portal before replacing the XR_APILAYER_NOVENDOR_XRNeckSafer.
 4. Start/Restart Mixed-Reality-Portal 
 5. Start XRNeckSaferApp.exe in the main folder and go to OpenXR in the Menu on top. Select "Show active OpenXR API Layers". 
    This should list all the active Layers and should now include "XR_APILAYER_NOVENDOR_XRNeckSafer"
-   If XRNS is unable to query the API layers (this happens on sme systems) start OpenXR Developer Tools and check on system status that the XR_APILAYER_NOVENDOR_XRNeckSafer API Layer was installed correctly. 
+   If XRNS is unable to query the API layers (this happens on some systems) start OpenXR Developer Tools and check on system status that the XR_APILAYER_NOVENDOR_XRNeckSafer API Layer was installed correctly. 
 6. If this works you can configure XRNeckSafer similar to VRNeckSafer.
 7. Once in game press the combined Game/XRNS center button.
 
