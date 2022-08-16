@@ -1,6 +1,6 @@
 
 
-### Download link: [XRNeckSaferBeta3.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3.zip)
+### Download link: [XRNeckSaferBeta3.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3b.zip)
 
 # **Description**
 
@@ -42,6 +42,9 @@ Pressing the graph button (above the table) shows you a representation of the en
 
 Smooth Autorotation gives a linear amplification of your head rotation, beginning at the **"Start at"** value. **"Amplify by"** 100%  means that for every degree head rotation you get one extra degree visual rotation. So, with a "Start at" value of 90 deg, if you turn your head to 100 you get 110 deg visual rotation (10 deg from 90 deg + 10 deg amplification). 200% gives 2 extra degrees for every "real" degree head rotation, and so on. **Please be aware that this non-1:1 motion can cause nausea!** (it does for me). If this is the case for you too, better use Stepwise Autorotation, It is much easier on your stomach.
 
+**Changelog for beta3b:**
+- fix for stepwise down values not editable
+
 **Changelog for beta3:**
 - pitch axis added
 - translation when rotated fixed 
@@ -74,7 +77,7 @@ Stop Mixed Reality Portal before replacing the XR_APILAYER_NOVENDOR_XRNeckSafer.
 
 ## **Installation:**
 
-0. Download [XRNeckSaferBeta3.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3.zip)
+0. Download [XRNeckSaferBeta3.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3b.zip)
 1. Create a folder and unzip XRNeckSaferBeta3.zip into it.
 2. Stop Mixed-Reality-Portal and copy the OpenXrApiLayer folder to %ProgramFiles% (e.g. C:\Program Files\OpenXrApiLayer) 
    You will need admin rights to put it there. The rest of the files in the .zip including the .exe can stay out of the %ProgramFiles% folder. 
@@ -119,4 +122,4 @@ Thanks for your help and patience guys!
 Cheers,
  J2_NobiWan
 
-### Download link: [XRNeckSaferBeta3.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3.zip)
+### Download link: [XRNeckSaferBeta3.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3b.zip)
