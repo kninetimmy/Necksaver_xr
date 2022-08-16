@@ -864,17 +864,17 @@ namespace XRNeckSafer
 
                     if (good)
                     {
-                        if (val > 0) good = false;
-                        if (row > DownAutorotGridView.RowCount - 1 && col == 0)
+                        if (val < 0) good = false;
+                        if (row < DownAutorotGridView.RowCount - 1 && col == 0)
                         {
-                            if (val <= conf.DownAutoSteps[row + 1][1]) good = false;
-                            if (val <= conf.DownAutoSteps[row + 1][0]) good = false;
+                            if (val >= conf.DownAutoSteps[row + 1][1]) good = false;
+                            if (val >= conf.DownAutoSteps[row + 1][0]) good = false;
                         }
 
-                        if (row > 0 && col == 0 && val >= conf.DownAutoSteps[row - 1][0]) good = false;
-                        if (row > 0 && col == 1 && val >= conf.DownAutoSteps[row - 1][0]) good = false;
-                        if (col == 0 && val >= conf.DownAutoSteps[row][1]) good = false;
-                        if (col == 1 && val <= conf.DownAutoSteps[row][0]) good = false;
+                        if (row > 0 && col == 0 && val <= conf.DownAutoSteps[row - 1][0]) good = false;
+                        if (row > 0 && col == 1 && val <= conf.DownAutoSteps[row - 1][0]) good = false;
+                        if (col == 0 && val <= conf.DownAutoSteps[row][1]) good = false;
+                        if (col == 1 && val >= conf.DownAutoSteps[row][0]) good = false;
                     }
 
                     if (good)
