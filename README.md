@@ -1,6 +1,6 @@
 
 
-### Download link: [XRNeckSaferBeta3.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3b.zip)
+### Download link: [XRNeckSaferBeta3b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3b.zip)
 
 # **Description**
 
@@ -77,7 +77,7 @@ Stop Mixed Reality Portal before replacing the XR_APILAYER_NOVENDOR_XRNeckSafer.
 
 ## **Installation:**
 
-0. Download [XRNeckSaferBeta3.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3b.zip)
+0. Download [XRNeckSaferBeta3b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3b.zip)
 1. Create a folder and unzip XRNeckSaferBeta3.zip into it.
 2. Stop Mixed-Reality-Portal and copy the OpenXrApiLayer folder to %ProgramFiles% (e.g. C:\Program Files\OpenXrApiLayer) 
    You will need admin rights to put it there. The rest of the files in the .zip including the .exe can stay out of the %ProgramFiles% folder. 
@@ -122,4 +122,4 @@ Thanks for your help and patience guys!
 Cheers,
  J2_NobiWan
 
-### Download link: [XRNeckSaferBeta3.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3b.zip)
+### Download link: [XRNeckSaferBeta3b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3b.zip)
