@@ -79,11 +79,11 @@ Stop Mixed Reality Portal before replacing the XR_APILAYER_NOVENDOR_XRNeckSafer.
 
 0. Download [XRNeckSaferBeta3b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3b.zip)
 1. Create a folder and unzip XRNeckSaferBeta3.zip into it.
-2. Stop Mixed-Reality-Portal and copy the OpenXrApiLayer folder to %ProgramFiles% (e.g. C:\Program Files\OpenXrApiLayer) 
+2. Stop OpenXR Runtime (Mixed-Reality-Portal for Reverb G2) and copy the OpenXrApiLayer folder to %ProgramFiles% (e.g. C:\Program Files\OpenXrApiLayer) 
    You will need admin rights to put it there. The rest of the files in the .zip including the .exe can stay out of the %ProgramFiles% folder. 
 3. Go to the %ProgramFiles%\OpenXrApiLayer folder and run "Install-XR_APILAYER_NOVENDOR_XRNeckSafer.ps1" as a PowerShell script 
    (right click on it and select "Execute with PowerShell"). This will install the API Layer.
-4. Start/Restart Mixed-Reality-Portal 
+4. Start/Restart OpenXR Runtime (Mixed-Reality-Portal) 
 5. Start XRNeckSaferApp.exe in the main folder and go to OpenXR in the Menu on top. Select "Show active OpenXR API Layers". 
    This should list all the active Layers and should now include "XR_APILAYER_NOVENDOR_XRNeckSafer"
    If XRNS is unable to query the API layers (this happens on some systems) start OpenXR Developer Tools and check on system status that the XR_APILAYER_NOVENDOR_XRNeckSafer API Layer was installed correctly. 
@@ -92,7 +92,7 @@ Stop Mixed Reality Portal before replacing the XR_APILAYER_NOVENDOR_XRNeckSafer.
 
 ## **Known issues:**
 
-- If translation is not working correctly reset HOME and ENVIRONMENT in Mixed Reality Portal (thanks Melanor8807).
+- If translation is not working correctly reset the OpenXR setup (reset HOME and ENVIRONMENT in Mixed Reality Portal, thanks Melanor8807).
 - "Smooth" autorotation might cause nausea for some users! It does for me... So be careful und stop it when you feel uncomfortable!
 - When you are experiencing FPS loss with XRNS try to minimize the XRNS App and/or disable angle output for the GUI and disable joystick auto reconnect under options.
 - XRNS works with games that can use OpenComposite (e.g. IL-2 and DCS). Native OpenXR games are not working yet. 
