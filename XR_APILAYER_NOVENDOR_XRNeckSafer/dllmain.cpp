@@ -37,6 +37,7 @@ namespace {
     PFN_xrEndFrame nextXrEndFrame = nullptr;
 
     std::set<XrSpace> isViewSpace;
+    std::set<XrSpace> isStageSpace;
 
     PFN_xrCreateReferenceSpace nextXrCreateReferenceSpace = nullptr;
 
@@ -83,6 +84,7 @@ namespace {
 
     XrSpace m_LocalSpace{ XR_NULL_HANDLE };
     XrSpace m_ViewSpace{ XR_NULL_HANDLE };
+    XrSpace m_StageSpace{ XR_NULL_HANDLE };
     XrSession m_Session{ XR_NULL_HANDLE };
 
     float holdYawOffsetValue;
@@ -142,10 +144,10 @@ namespace {
     {
 
 #ifdef _DEBUG
-//        va_list va;
-//        va_start(va, fmt);
-//        InternalLog(fmt, va);
-//        va_end(va);
+        va_list va;
+        va_start(va, fmt);
+        InternalLog(fmt, va);
+        va_end(va);
 #endif
     }
 
@@ -170,6 +172,9 @@ namespace {
         const XrResult resV = nextXrCreateReferenceSpace(*session, &referenceSpaceCreateInfo, &m_ViewSpace);
         isViewSpace.insert(m_ViewSpace);
         DebugLog("VIEW space: %d\n", m_ViewSpace);
+        referenceSpaceCreateInfo.referenceSpaceType = XR_REFERENCE_SPACE_TYPE_STAGE;
+        const XrResult resS = nextXrCreateReferenceSpace(*session, &referenceSpaceCreateInfo, &m_StageSpace);
+        DebugLog("STAGE space: %d\n", m_StageSpace);
 
         lastHmdLocation.type = XR_TYPE_SPACE_LOCATION;
         lastHmdLocation.next = nullptr;
@@ -263,6 +268,7 @@ namespace {
                     shmValues.yawOffset = holdYawOffsetValue;
                 }
             }
+
             if (shmValues.useLinearPitchRotation) {
                 shmValues.upStartAt = buffer->upStartAt;
                 shmValues.downStartAt = buffer->downStartAt;
@@ -270,12 +276,12 @@ namespace {
                 shmValues.downMultiplier = buffer->downMultiplier;
 
                 if (!shmValues.holdLinearPitchRotation) {
-                    bool isup = angles.pitch > 0;
+                    bool isup = angles.pitch < 0;
                     float multiplier = isup ? shmValues.upMultiplier : shmValues.downMultiplier;
                     int startangle = isup ? shmValues.upStartAt : shmValues.downStartAt;
                     float startfrom = abs(startangle * (float)M_PI / 180.f);
                     if (abs(angles.pitch) >= startfrom) {
-                        shmValues.pitchOffset = shmValues.pitchOffset + (abs(angles.pitch) - startfrom) * multiplier * (isup ? 1 : -1);
+                        shmValues.pitchOffset = shmValues.pitchOffset + (abs(angles.pitch) - startfrom) * multiplier * (isup ? -1 : 1);
                     }
                     holdPitchOffsetValue = shmValues.pitchOffset;
                 }
@@ -306,6 +312,14 @@ namespace {
         // keep record of all the VIEW spaces of the app
         if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_VIEW) {
             isViewSpace.insert(*space);
+            DebugLog("VIEW: %d\n", *space);
+        }
+        if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_LOCAL) {
+            DebugLog("LOCAL: %d\n", *space);
+        }
+        if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_STAGE) {
+            DebugLog("STAGE: %d\n", *space);
+            isStageSpace.insert(*space);
         }
 
         DebugLog("<-- XRNeckSafer_xrCreateReferenceSpace %d\n", result);
@@ -326,12 +340,21 @@ namespace {
 
         bool spaceIsViewSpace = isViewSpace.count(space);
         bool baseSpaceIsViewSpace = isViewSpace.count(baseSpace);
+        bool baseSpaceIsStageSpace = isStageSpace.count(baseSpace); // IL2: true, DCS: false
+
+        DebugLog("space: %d  bspace: %d\n", space, baseSpace);
 
         if (shmValues.yawOffset != 0 || shmValues.pitchOffset != 0) {
             // save current location
             XrVector3f pos = location->pose.position;
-            DirectX::XMVECTOR vPitchAxis = { 1.f,0.f,0.f };
 
+            // centerHmdLocation was sampled in LOCAL space 
+            // when LocateSpace is requested for STAGE basespace we need to compensate the position
+            if (baseSpaceIsStageSpace) {
+                pos = pos - centerHmdLocation.pose.position;
+            }
+
+            DirectX::XMVECTOR vPitchAxis = { 1.f,0.f,0.f };
 
             if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
 
@@ -350,6 +373,11 @@ namespace {
                 StoreXrQuaternion(&location->pose.orientation, qHMDwithOffset);
 
                 StoreXrVector3(&pos, DirectX::XMVector3Rotate(LoadXrVector3(pos), qYawOffset));
+
+                if (baseSpaceIsStageSpace) {
+                    pos = pos + centerHmdLocation.pose.position;
+                }
+
                 location->pose.position = pos - trans;
             }
 

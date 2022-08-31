@@ -50,6 +50,7 @@ namespace XRNeckSafer
 
             InitializeComponent();
 
+            VersionLabel.Text = "beta3c";
             notifyIcon.ContextMenuStrip = contextMenuStrip;
             this.showToolStripMenuItem.Click += showToolStripMenuItem_Click;
             this.exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
@@ -578,8 +579,7 @@ namespace XRNeckSafer
         {
             int yawsign = (yaw > 0) ? 1 : -1;
             int absyaw = yaw * yawsign;
-            int arotsign = (arot > 0) ? 1 : -1;
-            int absarot = arot * arotsign;
+            int absarot = (arot > 0) ? arot : -arot;
             int autorot = 0;
             int transx = 0;
             int transz = 0;
@@ -625,6 +625,7 @@ namespace XRNeckSafer
             int pitchsign = (pitch > 0) ? 1 : -1;
             int abspitch = (pitch > 0) ? pitch : -pitch;
             int autorot = 0;
+            int absarot = (arot > 0) ? arot : -arot;
 
             int act;
             int deact = 0;
@@ -632,11 +633,11 @@ namespace XRNeckSafer
 
             Steps = (pitch > 0) ? conf.UpAutoSteps : conf.DownAutoSteps;
 
-            for (int i = 0; i < conf.UpAutoSteps.Count; i++)
+            for (int i = 0; i < Steps.Count; i++)
             {
                 act = Steps[i][0];
                 deact = Steps[i][1];
-                 rot = Steps[i][2];
+                rot = Steps[i][2];
 
                 if (abspitch >= act)
                 {
@@ -648,7 +649,7 @@ namespace XRNeckSafer
                 }
             }
 
-            if ((arot > autorot) && (abspitch >= deact))
+            if ((absarot > autorot) && (abspitch >= deact))
             {
                 return;
             }
@@ -1276,8 +1277,8 @@ namespace XRNeckSafer
         }
         private void applyLinearSettings()
         {
-            vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR,
-               conf.LinearMultL, conf.LinearMultR);
+            vr.setLinearRotationSettings(conf.AutoMode == "linear", conf.LinearLimL, conf.LinearLimR, conf.LinearMultL, conf.LinearMultR);
+            vr.setPitchLinearRotationSettings(conf.PitchAutoMode == "linear", conf.LinearLimU, conf.LinearLimD, conf.LinearMultU, conf.LinearMultD);
             conf.WriteConfig();
         }
 
