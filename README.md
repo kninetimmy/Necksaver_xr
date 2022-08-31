@@ -99,7 +99,7 @@ Stop Mixed Reality Portal before replacing the XR_APILAYER_NOVENDOR_XRNeckSafer.
 
 - If you are unable to start XRNeckSaferApp.exe it could be your AntiVirus SW preventing it running. In that case you could exclude your XRNS directory from the AV scan. 
   Make sure however that there really is no virus involved!
-- Another solution that worked for some is to include the line <loadFromRemoteSources enabled="true" /> into XRNeckSaferApp.exe.config inside the <runtime> tag.
+- Another solution that worked for some is to include the line `<loadFromRemoteSources enabled="true" />` into XRNeckSaferApp.exe.config inside the `<runtime>` tag.
 
 ## **Known issues:**
 
