@@ -42,7 +42,7 @@ Pressing the graph button (above the table) shows you a representation of the en
 
 Smooth Autorotation gives a linear amplification of your head rotation, beginning at the **"Start at"** value. **"Amplify by"** 100%  means that for every degree head rotation you get one extra degree visual rotation. So, with a "Start at" value of 90 deg, if you turn your head to 100 you get 110 deg visual rotation (10 deg from 90 deg + 10 deg amplification). 200% gives 2 extra degrees for every "real" degree head rotation, and so on. **Please be aware that this non-1:1 motion can cause nausea!** (it does for me). If this is the case for you too, better use Stepwise Autorotation, It is much easier on your stomach.
 
-**Changelog for beta3c:
+**Changelog for beta3c:**
 - fixes for smooth pitch axis (change of values not recognised and U/D mixup)
 - fixes for stepwise pitch axis (down table)
 - fix for possible off center yaw rotation (IL2)
