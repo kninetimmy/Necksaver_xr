@@ -8,10 +8,22 @@
       <![CDATA[Installed OR (WIXNETFX4RELEASEINSTALLED >= "#461808")]]>
     </Condition>
     <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="DesktopFolder" Name="Desktop" />
       <Directory Id="ProgramFilesFolder" Name="PFiles">
         <Directory Id="INSTALLDIR" Name="XRNeckSafer">
           <Component Id="XRNeckSaferComponent" Guid="C981E08D-9CCE-4BB5-A566-BA6DD6454E9B">
-            <File Id="XRNECKSAFERAPP.EXE" Name="XRNeckSaferApp.exe" Source="..\XRNeckSaferApp\bin\Release\XRNeckSaferApp.exe" />
+            <File Id="XRNECKSAFERAPP.EXE" Name="XRNeckSaferApp.exe" Source="..\XRNeckSaferApp\bin\Release\XRNeckSaferApp.exe">
+              <Shortcut Id="DesktopShortcut"
+                  Directory="DesktopFolder"
+                  Name="XRNeckSaferApp"
+                  Description="XRNeckSaferApp application"
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"
+                  Icon="XRNeckSaferApp.exe"
+                  IconIndex="0"
+                  Advertise="yes" >
+                <Icon Id="XRNeckSaferApp.exe" SourceFile="..\XRNeckSaferApp\bin\Release\XRNeckSaferApp.exe" />
+              </Shortcut>
+            </File>
             <File Id="MICROSOFT.BCL.ASYNCINTERFACES.DLL" Name="Microsoft.Bcl.AsyncInterfaces.dll" Source="..\XRNeckSaferApp\bin\Release\Microsoft.Bcl.AsyncInterfaces.dll" />
             <File Id="MICROSOFT.BCL.HASHCODE.DLL" Name="Microsoft.Bcl.HashCode.dll" Source="..\XRNeckSaferApp\bin\Release\Microsoft.Bcl.HashCode.dll" />
             <File Id="MICROSOFT.DOTNET.PLATFORMABSTRACTIONS.DLL" Name="Microsoft.DotNet.PlatformAbstractions.dll" Source="..\XRNeckSaferApp\bin\Release\Microsoft.DotNet.PlatformAbstractions.dll" />
