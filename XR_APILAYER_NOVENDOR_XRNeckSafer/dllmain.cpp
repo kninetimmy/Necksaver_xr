@@ -230,11 +230,6 @@ namespace {
             shmValues.useLinearPitchRotation = buffer->useLinearPitchRotation;
             shmValues.holdLinearPitchRotation = buffer->holdLinearPitchRotation;
 
-            trans = {
-                shmValues.lateralOffset ,
-                0,
-                shmValues.longitudinalOffset
-            };
 
             //substract center orientation from current orientation to get corrected relative HMD orientation
             const DirectX::XMVECTOR orientation = LoadXrQuaternion(location.pose.orientation);
@@ -267,6 +262,11 @@ namespace {
                 else {
                     shmValues.yawOffset = holdYawOffsetValue;
                 }
+
+                trans = { 0 , 0, 0 };
+            }
+            else {
+                trans = { shmValues.lateralOffset , 0, shmValues.longitudinalOffset };
             }
 
             if (shmValues.useLinearPitchRotation) {

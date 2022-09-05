@@ -743,9 +743,9 @@ namespace XRNeckSafer
         private void DownAddButton_Click(object sender, EventArgs e)
         {
             int[] i = new int[5];
-            i[0] = conf.DownAutoSteps[conf.DownAutoSteps.Count - 1][0] - 10;
-            i[1] = conf.DownAutoSteps[conf.DownAutoSteps.Count - 1][0] - 1;
-            i[2] = conf.DownAutoSteps[conf.DownAutoSteps.Count - 1][2] - 10;
+            i[0] = conf.DownAutoSteps[conf.DownAutoSteps.Count - 1][0] + 10;
+            i[1] = conf.DownAutoSteps[conf.DownAutoSteps.Count - 1][0] + 1;
+            i[2] = conf.DownAutoSteps[conf.DownAutoSteps.Count - 1][2] + 10;
             conf.DownAutoSteps.Add(i);
             string[] s = new string[3]
             {
