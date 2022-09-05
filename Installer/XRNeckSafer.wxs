@@ -32,28 +32,7 @@
             <File Id="SYSTEM.THREADING.TASKS.EXTENSIONS.DLL" Name="System.Threading.Tasks.Extensions.dll" Source="..\XRNeckSaferApp\bin\Release\System.Threading.Tasks.Extensions.dll" />
             <File Id="SYSTEM.VALUETUPLE.DLL" Name="System.ValueTuple.dll" Source="..\XRNeckSaferApp\bin\Release\System.ValueTuple.dll" />
             <File Id="ULTZ.BCL.HALF.DLL" Name="Ultz.Bcl.Half.dll" Source="..\XRNeckSaferApp\bin\Release\Ultz.Bcl.Half.dll" />
-            <File Id="SHARPDX.DIRECTINPUT.PDB" Name="SharpDX.DirectInput.pdb" Source="..\XRNeckSaferApp\bin\Release\SharpDX.DirectInput.pdb" />
-            <File Id="SHARPDX.MATHEMATICS.PDB" Name="SharpDX.Mathematics.pdb" Source="..\XRNeckSaferApp\bin\Release\SharpDX.Mathematics.pdb" />
-            <File Id="SHARPDX.PDB" Name="SharpDX.pdb" Source="..\XRNeckSaferApp\bin\Release\SharpDX.pdb" />
             <File Id="XRNECKSAFERAPP.EXE.CONFIG" Name="XRNeckSaferApp.exe.config" Source="..\XRNeckSaferApp\bin\Release\XRNeckSaferApp.exe.config" />
-            <File Id="MICROSOFT.BCL.ASYNCINTERFACES.XML" Name="Microsoft.Bcl.AsyncInterfaces.xml" Source="..\XRNeckSaferApp\bin\Release\Microsoft.Bcl.AsyncInterfaces.xml" />
-            <File Id="MICROSOFT.BCL.HASHCODE.XML" Name="Microsoft.Bcl.HashCode.xml" Source="..\XRNeckSaferApp\bin\Release\Microsoft.Bcl.HashCode.xml" />
-            <File Id="MICROSOFT.DOTNET.PLATFORMABSTRACTIONS.XML" Name="Microsoft.DotNet.PlatformAbstractions.xml" Source="..\XRNeckSaferApp\bin\Release\Microsoft.DotNet.PlatformAbstractions.xml" />
-            <File Id="MICROSOFT.EXTENSIONS.DEPENDENCYMODEL.XML" Name="Microsoft.Extensions.DependencyModel.xml" Source="..\XRNeckSaferApp\bin\Release\Microsoft.Extensions.DependencyModel.xml" />
-            <File Id="NEWTONSOFT.JSON.XML" Name="Newtonsoft.Json.xml" Source="..\XRNeckSaferApp\bin\Release\Newtonsoft.Json.xml" />
-            <File Id="SHARPDX.DIRECTINPUT.XML" Name="SharpDX.DirectInput.xml" Source="..\XRNeckSaferApp\bin\Release\SharpDX.DirectInput.xml" />
-            <File Id="SHARPDX.MATHEMATICS.XML" Name="SharpDX.Mathematics.xml" Source="..\XRNeckSaferApp\bin\Release\SharpDX.Mathematics.xml" />
-            <File Id="SILK.NET.CORE.XML" Name="Silk.NET.Core.xml" Source="..\XRNeckSaferApp\bin\Release\Silk.NET.Core.xml" />
-            <File Id="SILK.NET.MATHS.XML" Name="Silk.NET.Maths.xml" Source="..\XRNeckSaferApp\bin\Release\Silk.NET.Maths.xml" />
-            <File Id="SILK.NET.OPENXR.XML" Name="Silk.NET.OpenXR.xml" Source="..\XRNeckSaferApp\bin\Release\Silk.NET.OpenXR.xml" />
-            <File Id="SYSTEM.BUFFERS.XML" Name="System.Buffers.xml" Source="..\XRNeckSaferApp\bin\Release\System.Buffers.xml" />
-            <File Id="SYSTEM.MEMORY.XML" Name="System.Memory.xml" Source="..\XRNeckSaferApp\bin\Release\System.Memory.xml" />
-            <File Id="SYSTEM.NUMERICS.VECTORS.XML" Name="System.Numerics.Vectors.xml" Source="..\XRNeckSaferApp\bin\Release\System.Numerics.Vectors.xml" />
-            <File Id="SYSTEM.RUNTIME.COMPILERSERVICES.UNSAFE.XML" Name="System.Runtime.CompilerServices.Unsafe.xml" Source="..\XRNeckSaferApp\bin\Release\System.Runtime.CompilerServices.Unsafe.xml" />
-            <File Id="SYSTEM.TEXT.ENCODINGS.WEB.XML" Name="System.Text.Encodings.Web.xml" Source="..\XRNeckSaferApp\bin\Release\System.Text.Encodings.Web.xml" />
-            <File Id="SYSTEM.TEXT.JSON.XML" Name="System.Text.Json.xml" Source="..\XRNeckSaferApp\bin\Release\System.Text.Json.xml" />
-            <File Id="SYSTEM.THREADING.TASKS.EXTENSIONS.XML" Name="System.Threading.Tasks.Extensions.xml" Source="..\XRNeckSaferApp\bin\Release\System.Threading.Tasks.Extensions.xml" />
-            <File Id="SYSTEM.VALUETUPLE.XML" Name="System.ValueTuple.xml" Source="..\XRNeckSaferApp\bin\Release\System.ValueTuple.xml" />
           </Component>
         </Directory>
       </Directory>
