@@ -1163,5 +1163,10 @@
         <Binary Id="repairic" SourceFile="Binary\repairic.ibd" />
         <Binary Id="Up" SourceFile="Binary\Up.ibd" />
         <Media Id="1" Cabinet="sample.cab" EmbedCab="yes" />
+        <Feature Id="XRNeckSaferProductFeature">
+            <ComponentRef Id="XRNeckSaferComponent" />
+            <ComponentRef Id="OpenXrApiLayerComponent" />
+            <ComponentRef Id="RegistryEntries" />
+        </Feature>
     </Product>
 </Wix>
