@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
   <Product Id="AFDEC970-44FC-497D-BB61-1CEEEEA21272" Name="XRNeckSafer" Language="1033" Version="0.0.0.1" Manufacturer="WixEdit" UpgradeCode="4C0C8660-B2A0-4862-8590-8352F6B36FFC" Codepage="1252">
     <Package Description="XRNeckSafer installer" Platform="x64" Comments="XRNeckSafer installer" InstallerVersion="200" Compressed="yes" SummaryCodepage="1252" Languages="1033" />
+    <PropertyRef Id='WIXNETFX4RELEASEINSTALLED'/>
+    <Condition Message='This setup requires the .NET Framework 4.7.2 (or greater) to be installed.'>
+      <![CDATA[Installed OR (WIXNETFX4RELEASEINSTALLED >= "#461808")]]>
+    </Condition>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder" Name="PFiles">
-        <Directory Id="XRNeckSafer" Name="XRNeckSafer">
+        <Directory Id="INSTALLDIR" Name="XRNeckSafer">
           <Component Id="XRNeckSaferComponent" Guid="C981E08D-9CCE-4BB5-A566-BA6DD6454E9B">
             <File Id="XRNECKSAFERAPP.EXE" Name="XRNeckSaferApp.exe" Source="..\XRNeckSaferApp\bin\Release\XRNeckSaferApp.exe" />
             <File Id="MICROSOFT.BCL.ASYNCINTERFACES.DLL" Name="Microsoft.Bcl.AsyncInterfaces.dll" Source="..\XRNeckSaferApp\bin\Release\Microsoft.Bcl.AsyncInterfaces.dll" />
