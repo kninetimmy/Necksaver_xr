@@ -171,6 +171,10 @@ namespace XRNeckSafer
                 if (args.Length > 1)
                     configfilename = @".\" + args[1];
 
+                if (!File.Exists(configfilename))
+                {
+                    return CreateDefaultConfig();
+                }
                 Config c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configfilename));
                 if (c.LeftButton   == null) c.LeftButton    = new ButtonConfig();
                 if (c.LeftButton2  == null) c.LeftButton2   = new ButtonConfig();
@@ -229,35 +233,39 @@ namespace XRNeckSafer
             }
             catch (Exception)
             {
-                Config conf = new Config();
-                if (conf.AutoSteps.Count == 0)
-                {
-                    conf.AutoSteps.Add(new int[5] { 60, 51, 10, 0, 0 });
-                    conf.AutoSteps.Add(new int[5] { 70, 61, 20, 5, 1 });
-                    conf.AutoSteps.Add(new int[5] { 80, 71, 30, 7, 3 });
-                    conf.AutoSteps.Add(new int[5] { 90, 81, 40, 10, 5 });
-                    conf.AutoSteps.Add(new int[5] { 100, 91, 50, 10, 5 });
-                    conf.AutoSteps.Add(new int[5] { 110, 101, 60, 10, 5 });
-                    conf.AutoSteps.Add(new int[5] { 120, 111, 70, 10, 5 });
-                }
-                if (conf.UpAutoSteps.Count == 0)
-                {
-                    conf.UpAutoSteps.Add(new int[3] { 50, 41, 10 });
-                    conf.UpAutoSteps.Add(new int[3] { 60, 51, 20 });
-                    conf.UpAutoSteps.Add(new int[3] { 70, 61, 30 });
-                    conf.UpAutoSteps.Add(new int[3] { 80, 71, 40 });
-                }
-                if (conf.DownAutoSteps.Count == 0)
-                {
-                    conf.DownAutoSteps.Add(new int[3] { 50, 41, 10 });
-                    conf.DownAutoSteps.Add(new int[3] { 60, 51, 20 });
-                    conf.DownAutoSteps.Add(new int[3] { 70, 61, 30 });
-                    conf.DownAutoSteps.Add(new int[3] { 80, 71, 40 });
-                }
-
-                conf.WriteConfig();
-                return conf;
+                return CreateDefaultConfig();
             }
+        }
+
+        private static Config CreateDefaultConfig()
+        {
+            Config conf = new Config();
+            if (conf.AutoSteps.Count == 0)
+            {
+                conf.AutoSteps.Add(new int[5] { 60, 51, 10, 0, 0 });
+                conf.AutoSteps.Add(new int[5] { 70, 61, 20, 5, 1 });
+                conf.AutoSteps.Add(new int[5] { 80, 71, 30, 7, 3 });
+                conf.AutoSteps.Add(new int[5] { 90, 81, 40, 10, 5 });
+                conf.AutoSteps.Add(new int[5] { 100, 91, 50, 10, 5 });
+                conf.AutoSteps.Add(new int[5] { 110, 101, 60, 10, 5 });
+                conf.AutoSteps.Add(new int[5] { 120, 111, 70, 10, 5 });
+            }
+            if (conf.UpAutoSteps.Count == 0)
+            {
+                conf.UpAutoSteps.Add(new int[3] { 50, 41, 10 });
+                conf.UpAutoSteps.Add(new int[3] { 60, 51, 20 });
+                conf.UpAutoSteps.Add(new int[3] { 70, 61, 30 });
+                conf.UpAutoSteps.Add(new int[3] { 80, 71, 40 });
+            }
+            if (conf.DownAutoSteps.Count == 0)
+            {
+                conf.DownAutoSteps.Add(new int[3] { 50, 41, 10 });
+                conf.DownAutoSteps.Add(new int[3] { 60, 51, 20 });
+                conf.DownAutoSteps.Add(new int[3] { 70, 61, 30 });
+                conf.DownAutoSteps.Add(new int[3] { 80, 71, 40 });
+            }
+            conf.WriteConfig();
+            return conf;
         }
 
         public void WriteConfig()
