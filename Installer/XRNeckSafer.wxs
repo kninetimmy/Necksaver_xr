@@ -470,19 +470,19 @@
                 </Control>
             </Dialog>
             <Dialog Id="MaintenanceTypeDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
-                <Control Id="ChangeLabel" Type="Text" X="105" Y="65" Width="100" Height="10" TabSkip="no">
+                <!--<Control Id="ChangeLabel" Type="Text" X="105" Y="65" Width="100" Height="10" TabSkip="no">
                     <Text>[DlgTitleFont]&amp;Modify</Text>
-                </Control>
-                <Control Id="ChangeButton" Type="PushButton" X="50" Y="65" Width="38" Height="38" ToolTip="Modify Installation" Default="yes" Icon="yes" FixedSize="yes" IconSize="32" Text="[CustomSetupIcon]">
+                </Control>-->
+                <!--<Control Id="ChangeButton" Type="PushButton" X="50" Y="65" Width="38" Height="38" ToolTip="Modify Installation" Default="yes" Icon="yes" FixedSize="yes" IconSize="32" Text="[CustomSetupIcon]">
                     <Publish Property="InstallMode" Value="Change"><![CDATA[1]]></Publish>
                     <Publish Property="Progress1" Value="Changing"><![CDATA[1]]></Publish>
                     <Publish Property="Progress2" Value="changes"><![CDATA[1]]></Publish>
                     <Publish Event="NewDialog" Value="CustomizeDlg"><![CDATA[1]]></Publish>
-                </Control>
-                <Control Id="RepairLabel" Type="Text" X="105" Y="114" Width="100" Height="10" TabSkip="no">
+                </Control>-->
+                <Control Id="RepairLabel" Type="Text" X="105" Y="82" Width="100" Height="10" TabSkip="no">
                     <Text>[DlgTitleFont]Re&amp;pair</Text>
                 </Control>
-                <Control Id="RepairButton" Type="PushButton" X="50" Y="114" Width="38" Height="38" ToolTip="Repair Installation" Icon="yes" FixedSize="yes" IconSize="32" Text="[RepairIcon]">
+                <Control Id="RepairButton" Type="PushButton" X="50" Y="82" Width="38" Height="38" ToolTip="Repair Installation" Icon="yes" FixedSize="yes" IconSize="32" Text="[RepairIcon]">
                     <Publish Property="InstallMode" Value="Repair"><![CDATA[1]]></Publish>
                     <Publish Property="Progress1" Value="Repairing"><![CDATA[1]]></Publish>
                     <Publish Property="Progress2" Value="repaires"><![CDATA[1]]></Publish>
@@ -511,15 +511,15 @@
                     <Text>Select the operation you wish to perform.</Text>
                 </Control>
                 <Control Id="Title" Type="Text" X="15" Y="6" Width="240" Height="15" Transparent="yes" NoPrefix="yes">
-                    <Text>[DlgTitleFont]Modify, Repair or Remove installation</Text>
+                    <Text>[DlgTitleFont]Repair or Remove installation</Text>
                 </Control>
-                <Control Id="ChangeText" Type="Text" X="105" Y="78" Width="230" Height="20">
+                <!--<Control Id="ChangeText" Type="Text" X="105" Y="78" Width="230" Height="20">
                     <Text>Allows users to change the way features are installed.</Text>
-                </Control>
+                </Control>-->
                 <Control Id="RemoveText" Type="Text" X="105" Y="176" Width="230" Height="20">
                     <Text>Removes [ProductName] from your computer.</Text>
                 </Control>
-                <Control Id="RepairText" Type="Text" X="105" Y="127" Width="230" Height="30">
+                <Control Id="RepairText" Type="Text" X="105" Y="98" Width="230" Height="30">
                     <Text>Repairs errors in the most recent installation state - fixes missing or corrupt files, shortcuts and registry entries.</Text>
                 </Control>
             </Dialog>
@@ -707,7 +707,7 @@
                     <Publish Event="NewDialog" Value="AdminInstallPointDlg"><![CDATA[InstallMode = "Server Image"]]></Publish>
                     <Publish Event="NewDialog" Value="CustomizeDlg"><![CDATA[InstallMode = "Custom" OR InstallMode = "Change"]]></Publish>
                     <Publish Event="NewDialog" Value="MaintenanceTypeDlg"><![CDATA[InstallMode = "Repair"]]></Publish>
-                    <Publish Event="NewDialog" Value="SetupTypeDlg"><![CDATA[InstallMode = "Typical" OR InstallMode = "Complete"]]></Publish>
+                    <Publish Event="NewDialog" Value="WelcomeDlg"><![CDATA[InstallMode = "Typical" OR InstallMode = "Complete"]]></Publish>
                 </Control>
                 <Control Id="Text" Type="Text" X="25" Y="70" Width="320" Height="20">
                     <Text>Click Install to begin the installation.  If you want to review or change any of your installation settings, click Back.  Click Cancel to exit the wizard.</Text>
