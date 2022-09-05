@@ -71,7 +71,7 @@
             <Dialog Id="AdminWelcomeDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
                 <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="[ButtonText_Next]">
                     <Publish Property="InstallMode" Value="Server Image"><![CDATA[1]]></Publish>
-                    <Publish Event="NewDialog" Value="AdminRegistrationDlg"><![CDATA[1]]></Publish>
+                    <Publish Event="NewDialog" Value="VerifyReadyDlg"><![CDATA[1]]></Publish>
                 </Control>
                 <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="[ButtonText_Cancel]">
                     <Publish Event="SpawnDialog" Value="CancelDlg"><![CDATA[1]]></Publish>
@@ -789,7 +789,7 @@
             </Dialog>
             <Dialog Id="WelcomeDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
                 <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="[ButtonText_Next]">
-                    <Publish Event="NewDialog" Value="LicenseAgreementDlg"><![CDATA[1]]></Publish>
+                    <Publish Event="NewDialog" Value="VerifyReadyDlg"><![CDATA[1]]></Publish>
                 </Control>
                 <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="[ButtonText_Cancel]">
                     <Publish Event="SpawnDialog" Value="CancelDlg"><![CDATA[1]]></Publish>
