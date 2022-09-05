@@ -166,7 +166,7 @@ namespace XRNeckSafer
         {
             try
             {
-                configfilename = @".\XRNeckSafer.cfg";
+                configfilename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "XRNeckSafer", "XRNeckSafer.cfg");
                 string[] args = Environment.GetCommandLineArgs();
                 if (args.Length > 1)
                     configfilename = @".\" + args[1];
@@ -262,6 +262,11 @@ namespace XRNeckSafer
 
         public void WriteConfig()
         {
+            var directory = Path.GetDirectoryName(configfilename);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
             File.WriteAllText(configfilename, JsonConvert.SerializeObject(this, Formatting.Indented));
         }
     }
