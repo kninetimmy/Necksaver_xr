@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product Id="AFDEC970-44FC-497D-BB61-1CEEEEA21272" Name="XRNeckSafer" Language="1033" Version="0.0.0.1" Manufacturer="WixEdit" UpgradeCode="4C0C8660-B2A0-4862-8590-8352F6B36FFC">
+        <Package Description="XRNeckSafer installer" Platform="x64" Comments="XRNeckSafer installer" InstallerVersion="200" Compressed="yes" />
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFiles64Folder" Name="PFiles">
+                <Directory Id="XRNeckSafer" Name="XRNeckSafer">
+                    <Component Id="XRNeckSaferComponent" Guid="C981E08D-9CCE-4BB5-A566-BA6DD6454E9B" Win64="yes">
+                        <File Id="MICROSOFT.BCL.ASYNCINTERFACES.DLL" Name="Microsoft.Bcl.AsyncInterfaces.dll" Source="..\XRNeckSaferApp\bin\Release\Microsoft.Bcl.AsyncInterfaces.dll" />
+                        <File Id="MICROSOFT.BCL.ASYNCINTERFACES.XML" Name="Microsoft.Bcl.AsyncInterfaces.xml" Source="..\XRNeckSaferApp\bin\Release\Microsoft.Bcl.AsyncInterfaces.xml" />
+                        <File Id="MICROSOFT.BCL.HASHCODE.DLL" Name="Microsoft.Bcl.HashCode.dll" Source="..\XRNeckSaferApp\bin\Release\Microsoft.Bcl.HashCode.dll" />
+                        <File Id="MICROSOFT.BCL.HASHCODE.XML" Name="Microsoft.Bcl.HashCode.xml" Source="..\XRNeckSaferApp\bin\Release\Microsoft.Bcl.HashCode.xml" />
+                        <File Id="MICROSOFT.DOTNET.PLATFORMABSTRACTIONS.DLL" Name="Microsoft.DotNet.PlatformAbstractions.dll" Source="..\XRNeckSaferApp\bin\Release\Microsoft.DotNet.PlatformAbstractions.dll" />
+                        <File Id="MICROSOFT.DOTNET.PLATFORMABSTRACTIONS.XML" Name="Microsoft.DotNet.PlatformAbstractions.xml" Source="..\XRNeckSaferApp\bin\Release\Microsoft.DotNet.PlatformAbstractions.xml" />
+                        <File Id="MICROSOFT.EXTENSIONS.DEPENDENCYMODEL.DLL" Name="Microsoft.Extensions.DependencyModel.dll" Source="..\XRNeckSaferApp\bin\Release\Microsoft.Extensions.DependencyModel.dll" />
+                        <File Id="MICROSOFT.EXTENSIONS.DEPENDENCYMODEL.XML" Name="Microsoft.Extensions.DependencyModel.xml" Source="..\XRNeckSaferApp\bin\Release\Microsoft.Extensions.DependencyModel.xml" />
+                        <File Id="NEWTONSOFT.JSON.DLL" Name="Newtonsoft.Json.dll" Source="..\XRNeckSaferApp\bin\Release\Newtonsoft.Json.dll" />
+                        <File Id="NEWTONSOFT.JSON.XML" Name="Newtonsoft.Json.xml" Source="..\XRNeckSaferApp\bin\Release\Newtonsoft.Json.xml" />
+                        <File Id="SHARPDX.DIRECTINPUT.DLL" Name="SharpDX.DirectInput.dll" Source="..\XRNeckSaferApp\bin\Release\SharpDX.DirectInput.dll" />
+                        <File Id="SHARPDX.DIRECTINPUT.PDB" Name="SharpDX.DirectInput.pdb" Source="..\XRNeckSaferApp\bin\Release\SharpDX.DirectInput.pdb" />
+                        <File Id="SHARPDX.DIRECTINPUT.XML" Name="SharpDX.DirectInput.xml" Source="..\XRNeckSaferApp\bin\Release\SharpDX.DirectInput.xml" />
+                        <File Id="SHARPDX.DLL" Name="SharpDX.dll" Source="..\XRNeckSaferApp\bin\Release\SharpDX.dll" />
+                        <File Id="SHARPDX.MATHEMATICS.DLL" Name="SharpDX.Mathematics.dll" Source="..\XRNeckSaferApp\bin\Release\SharpDX.Mathematics.dll" />
+                        <File Id="SHARPDX.MATHEMATICS.PDB" Name="SharpDX.Mathematics.pdb" Source="..\XRNeckSaferApp\bin\Release\SharpDX.Mathematics.pdb" />
+                        <File Id="SHARPDX.MATHEMATICS.XML" Name="SharpDX.Mathematics.xml" Source="..\XRNeckSaferApp\bin\Release\SharpDX.Mathematics.xml" />
+                        <File Id="SHARPDX.PDB" Name="SharpDX.pdb" Source="..\XRNeckSaferApp\bin\Release\SharpDX.pdb" />
+                        <File Id="SILK.NET.CORE.DLL" Name="Silk.NET.Core.dll" Source="..\XRNeckSaferApp\bin\Release\Silk.NET.Core.dll" />
+                        <File Id="SILK.NET.CORE.XML" Name="Silk.NET.Core.xml" Source="..\XRNeckSaferApp\bin\Release\Silk.NET.Core.xml" />
+                        <File Id="SILK.NET.MATHS.DLL" Name="Silk.NET.Maths.dll" Source="..\XRNeckSaferApp\bin\Release\Silk.NET.Maths.dll" />
+                        <File Id="SILK.NET.MATHS.XML" Name="Silk.NET.Maths.xml" Source="..\XRNeckSaferApp\bin\Release\Silk.NET.Maths.xml" />
+                        <File Id="SILK.NET.OPENXR.DLL" Name="Silk.NET.OpenXR.dll" Source="..\XRNeckSaferApp\bin\Release\Silk.NET.OpenXR.dll" />
+                        <File Id="SILK.NET.OPENXR.XML" Name="Silk.NET.OpenXR.xml" Source="..\XRNeckSaferApp\bin\Release\Silk.NET.OpenXR.xml" />
+                        <File Id="SYSTEM.BUFFERS.DLL" Name="System.Buffers.dll" Source="..\XRNeckSaferApp\bin\Release\System.Buffers.dll" />
+                        <File Id="SYSTEM.BUFFERS.XML" Name="System.Buffers.xml" Source="..\XRNeckSaferApp\bin\Release\System.Buffers.xml" />
+                        <File Id="SYSTEM.MEMORY.DLL" Name="System.Memory.dll" Source="..\XRNeckSaferApp\bin\Release\System.Memory.dll" />
+                        <File Id="SYSTEM.MEMORY.XML" Name="System.Memory.xml" Source="..\XRNeckSaferApp\bin\Release\System.Memory.xml" />
+                        <File Id="SYSTEM.NUMERICS.VECTORS.DLL" Name="System.Numerics.Vectors.dll" Source="..\XRNeckSaferApp\bin\Release\System.Numerics.Vectors.dll" />
+                        <File Id="SYSTEM.NUMERICS.VECTORS.XML" Name="System.Numerics.Vectors.xml" Source="..\XRNeckSaferApp\bin\Release\System.Numerics.Vectors.xml" />
+                        <File Id="SYSTEM.RUNTIME.COMPILERSERVICES.UNSAFE.DLL" Name="System.Runtime.CompilerServices.Unsafe.dll" Source="..\XRNeckSaferApp\bin\Release\System.Runtime.CompilerServices.Unsafe.dll" />
+                        <File Id="SYSTEM.RUNTIME.COMPILERSERVICES.UNSAFE.XML" Name="System.Runtime.CompilerServices.Unsafe.xml" Source="..\XRNeckSaferApp\bin\Release\System.Runtime.CompilerServices.Unsafe.xml" />
+                        <File Id="SYSTEM.TEXT.ENCODINGS.WEB.DLL" Name="System.Text.Encodings.Web.dll" Source="..\XRNeckSaferApp\bin\Release\System.Text.Encodings.Web.dll" />
+                        <File Id="SYSTEM.TEXT.ENCODINGS.WEB.XML" Name="System.Text.Encodings.Web.xml" Source="..\XRNeckSaferApp\bin\Release\System.Text.Encodings.Web.xml" />
+                        <File Id="SYSTEM.TEXT.JSON.DLL" Name="System.Text.Json.dll" Source="..\XRNeckSaferApp\bin\Release\System.Text.Json.dll" />
+                        <File Id="SYSTEM.TEXT.JSON.XML" Name="System.Text.Json.xml" Source="..\XRNeckSaferApp\bin\Release\System.Text.Json.xml" />
+                        <File Id="SYSTEM.THREADING.TASKS.EXTENSIONS.DLL" Name="System.Threading.Tasks.Extensions.dll" Source="..\XRNeckSaferApp\bin\Release\System.Threading.Tasks.Extensions.dll" />
+                        <File Id="SYSTEM.THREADING.TASKS.EXTENSIONS.XML" Name="System.Threading.Tasks.Extensions.xml" Source="..\XRNeckSaferApp\bin\Release\System.Threading.Tasks.Extensions.xml" />
+                        <File Id="SYSTEM.VALUETUPLE.DLL" Name="System.ValueTuple.dll" Source="..\XRNeckSaferApp\bin\Release\System.ValueTuple.dll" />
+                        <File Id="SYSTEM.VALUETUPLE.XML" Name="System.ValueTuple.xml" Source="..\XRNeckSaferApp\bin\Release\System.ValueTuple.xml" />
+                        <File Id="ULTZ.BCL.HALF.DLL" Name="Ultz.Bcl.Half.dll" Source="..\XRNeckSaferApp\bin\Release\Ultz.Bcl.Half.dll" />
+                        <File Id="XRNECKSAFERAPP.EXE" Name="XRNeckSaferApp.exe" Source="..\XRNeckSaferApp\bin\Release\XRNeckSaferApp.exe" />
+                        <File Id="XRNECKSAFERAPP.EXE.CONFIG" Name="XRNeckSaferApp.exe.config" Source="..\XRNeckSaferApp\bin\Release\XRNeckSaferApp.exe.config" />
+                    </Component>
+                    <Component Id="RegistryEntries" Guid="E4A0C20F-4E75-43B0-A0A0-A5A4D01FA54E" Win64="yes">
+                        <RegistryKey Root="HKLM" Key="Software\Khronos\OpenXR\1\ApiLayers\Implicit" Action="createAndRemoveOnUninstall">
+                            <RegistryValue Type="integer" Name="[ProgramFiles64Folder]OpenXrApiLayer\XR_APILAYER_NOVENDOR_XRNeckSafer.json" Value="0" KeyPath="yes" />
+                            <RegistryValue Type="string" Value="Default Value" />
+                        </RegistryKey>
+                    </Component>
+                </Directory>
+                <Directory Id="OpenXrApiLayer" Name="OpenXrApiLayer">
+                    <Component Id="OpenXrApiLayerComponent" Guid="69A13BC7-A585-4803-A232-442A6D664365" Win64="yes">
+                        <File Id="XR_APILAYER_NOVENDOR_XRNECKSAFER.DLL" Name="XR_APILAYER_NOVENDOR_XRNeckSafer.dll" Source="..\x64\Release\XR_APILAYER_NOVENDOR_XRNeckSafer.dll" />
+                        <File Id="XR_APILAYER_NOVENDOR_XRNECKSAFER.JSON" Name="XR_APILAYER_NOVENDOR_XRNeckSafer.json" Source="..\x64\Release\XR_APILAYER_NOVENDOR_XRNeckSafer.json" />
+                    </Component>
+                </Directory>
+            </Directory>
+        </Directory>
+        <Feature Id="XRNeckSaferProductFeature" Title="XRNeckSafer" Level="1">
+            <ComponentRef Id="XRNeckSaferComponent" />
+            <ComponentRef Id="OpenXrApiLayerComponent" />
+            <ComponentRef Id="RegistryEntries" />
+        </Feature>
+        <UI />
+        <Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />
+    </Product>
+</Wix>
