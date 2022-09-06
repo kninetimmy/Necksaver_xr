@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" InitialTargets="EnsureWixToolsetInstalled" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask TaskName="GetAssemblyInformation.GetAssemblyProductVersion" AssemblyFile="BuildTasks\GetAssemblyInformation.dll" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -36,6 +37,17 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
   <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
+  </Target>
+  <Target Name="BeforeBuild">
+    <GetAssemblyProductVersion AssemblyPath="..\XRNeckSaferApp\bin\$(Configuration)\XRNeckSaferApp.exe">
+      <Output TaskParameter="AssemblyProductVersion" PropertyName="AssemblyProductVersion" />
+    </GetAssemblyProductVersion>
+    <PropertyGroup>
+      <DefineConstants>AssemblyProductVersion=$(AssemblyProductVersion)</DefineConstants>
+    </PropertyGroup>
+  </Target>
+  <Target Name="AfterBuild">
+	<Exec Command='if $(ConfigurationName) == Release COPY "$(TargetPath)" "$(SolutionDir)Assets\$(TargetName)-$(AssemblyProductVersion)$(TargetExt)" /Y' />
   </Target>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.

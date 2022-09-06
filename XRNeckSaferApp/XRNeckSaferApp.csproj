@@ -229,6 +229,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="openxr_loader.dll" />
     <Content Include="XRNS.ico" />
     <None Include="Graph.png" />
   </ItemGroup>

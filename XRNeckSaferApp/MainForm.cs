@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace XRNeckSafer
@@ -50,7 +51,7 @@ namespace XRNeckSafer
 
             InitializeComponent();
 
-            VersionLabel.Text = "beta3c";
+            VersionLabel.Text = GetAssemblyProductVersion();
             notifyIcon.ContextMenuStrip = contextMenuStrip;
             this.showToolStripMenuItem.Click += showToolStripMenuItem_Click;
             this.exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
@@ -231,6 +232,11 @@ namespace XRNeckSafer
                 Text += "   +   " + js.NameFromGuid(bc.ModJoystickGUID) + ": " + bc.ModButton;
             }
             toolTip1.SetToolTip(b, Text);
+        }
+
+        private static string GetAssemblyProductVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
         }
 
         private void setLabelToolTip(Label l, ButtonConfig bc)

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
-  <Product Id="AFDEC970-44FC-497D-BB61-1CEEEEA21272" Name="XRNeckSafer" Language="1033" Version="0.0.0.1" Manufacturer="WixEdit" UpgradeCode="4C0C8660-B2A0-4862-8590-8352F6B36FFC" Codepage="1252">
-    <Package Description="XRNeckSafer installer" Platform="x64" Comments="XRNeckSafer installer" InstallerVersion="200" Compressed="yes" SummaryCodepage="1252" Languages="1033" />
+  <?define wizardDialogTitle="[ProductName] ($(var.AssemblyProductVersion)) [Setup]"?>
+  <Product Id="AFDEC970-44FC-497D-BB61-1CEEEEA21272" Name="XRNeckSafer" Language="1033" Version="!(bind.fileVersion.XRNECKSAFERAPP.EXE)" Manufacturer="J2_NobiWan &amp; Nikoz" UpgradeCode="4C0C8660-B2A0-4862-8590-8352F6B36FFC" Codepage="1252">
+    <Package Description="XRNeckSafer installer ($(var.AssemblyProductVersion))" Platform="x64" Comments="XRNeckSafer installer ($(var.AssemblyProductVersion))" InstallerVersion="200" Compressed="yes" SummaryCodepage="1252" Languages="1033" />
     <PropertyRef Id='WIXNETFX4RELEASEINSTALLED'/>
     <Condition Message='This setup requires the .NET Framework 4.7.2 (or greater) to be installed.'>
       <![CDATA[Installed OR (WIXNETFX4RELEASEINSTALLED >= "#461808")]]>
@@ -44,19 +45,19 @@
             <File Id="SYSTEM.THREADING.TASKS.EXTENSIONS.DLL" Name="System.Threading.Tasks.Extensions.dll" Source="..\XRNeckSaferApp\bin\Release\System.Threading.Tasks.Extensions.dll" />
             <File Id="SYSTEM.VALUETUPLE.DLL" Name="System.ValueTuple.dll" Source="..\XRNeckSaferApp\bin\Release\System.ValueTuple.dll" />
             <File Id="ULTZ.BCL.HALF.DLL" Name="Ultz.Bcl.Half.dll" Source="..\XRNeckSaferApp\bin\Release\Ultz.Bcl.Half.dll" />
-            <File Id="OPENXR_LOADER.DLL" Name="openxr_loader.dll" Source="..\XRNeckSaferApp\bin\Release\openxr_loader.dll" />
+            <File Id="OPENXR_LOADER.DLL" Name="openxr_loader.dll" Source="..\XRNeckSaferApp\openxr_loader.dll" />
             <File Id="XRNECKSAFERAPP.EXE.CONFIG" Name="XRNeckSaferApp.exe.config" Source="..\XRNeckSaferApp\bin\Release\XRNeckSaferApp.exe.config" />
           </Component>
         </Directory>
       </Directory>
+      <Component Id="RegistryEntries" Guid="*" Win64="yes">
+        <RegistryKey Root="HKLM" Key="Software\Khronos\OpenXR\1\ApiLayers\Implicit">
+          <RegistryValue Type="integer" Name="[ProgramFiles64Folder]OpenXrApiLayer\XR_APILAYER_NOVENDOR_XRNeckSafer.json" Value="0" KeyPath="yes" />
+          <RegistryValue Type="string" Value="Default Value" />
+        </RegistryKey>
+      </Component>
       <Directory Id="ProgramFiles64Folder" Name="ProgFiles">
         <Directory Id="OpenXrApiLayer" Name="OpenXrApiLayer">
-          <Component Id="RegistryEntries" Guid="E4A0C20F-4E75-43B0-A0A0-A5A4D01FA54E" Win64="yes">
-            <RegistryKey Root="HKLM" Key="Software\Khronos\OpenXR\1\ApiLayers\Implicit" Action="createAndRemoveOnUninstall">
-              <RegistryValue Type="integer" Name="[ProgramFiles64Folder]OpenXrApiLayer\XR_APILAYER_NOVENDOR_XRNeckSafer.json" Value="0" KeyPath="yes" />
-              <RegistryValue Type="string" Value="Default Value" />
-            </RegistryKey>
-          </Component>
           <Component Id="OpenXrApiLayerComponent" Guid="69A13BC7-A585-4803-A232-442A6D664365" Win64="yes">
             <File Id="XR_APILAYER_NOVENDOR_XRNECKSAFER.DLL" Name="XR_APILAYER_NOVENDOR_XRNeckSafer.dll" Source="..\x64\Release\XR_APILAYER_NOVENDOR_XRNeckSafer.dll" />
             <File Id="XR_APILAYER_NOVENDOR_XRNECKSAFER.JSON" Name="XR_APILAYER_NOVENDOR_XRNeckSafer.json" Source="..\x64\Release\XR_APILAYER_NOVENDOR_XRNeckSafer.json" />
@@ -67,7 +68,7 @@
     <UI>
       <Property Id="ErrorDialog"><![CDATA[ErrorDlg]]></Property>
       <Property Id="DefaultUIFont"><![CDATA[DlgFont8]]></Property>
-      <Dialog Id="AdminWelcomeDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="AdminWelcomeDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="[ButtonText_Next]">
           <Publish Property="InstallMode" Value="Server Image"><![CDATA[1]]></Publish>
           <Publish Event="NewDialog" Value="VerifyReadyDlg"><![CDATA[1]]></Publish>
@@ -85,7 +86,7 @@
           <Text>{\VerdanaBold13}Welcome to the [ProductName] [Wizard]</Text>
         </Control>
       </Dialog>
-      <Dialog Id="ExitDialog" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="ExitDialog" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="Finish" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="[ButtonText_Finish]">
           <Publish Event="EndDialog" Value="Return"><![CDATA[1]]></Publish>
         </Control>
@@ -100,7 +101,7 @@
           <Text>{\VerdanaBold13}Completing the [ProductName] [Wizard]</Text>
         </Control>
       </Dialog>
-      <Dialog Id="FatalError" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="FatalError" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="Finish" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="[ButtonText_Finish]">
           <Publish Event="EndDialog" Value="Exit"><![CDATA[1]]></Publish>
         </Control>
@@ -118,7 +119,7 @@
           <Text>Click the Finish button to exit the [Wizard].</Text>
         </Control>
       </Dialog>
-      <Dialog Id="PrepareDlg" Width="370" Height="270" Title="[ProductName] [Setup]" Modeless="yes">
+      <Dialog Id="PrepareDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" Modeless="yes">
         <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="[ButtonText_Cancel]">
           <Publish Event="SpawnDialog" Value="CancelDlg"><![CDATA[1]]></Publish>
         </Control>
@@ -139,7 +140,7 @@
           <Subscribe Event="ActionText" Attribute="Text" />
         </Control>
       </Dialog>
-      <Dialog Id="ProgressDlg" Width="370" Height="270" Title="[ProductName] [Setup]" Modeless="yes">
+      <Dialog Id="ProgressDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" Modeless="yes">
         <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="[ButtonText_Cancel]">
           <Publish Event="SpawnDialog" Value="CancelDlg"><![CDATA[1]]></Publish>
         </Control>
@@ -162,7 +163,7 @@
         </Control>
         <Control Id="StatusLabel" Type="Text" X="35" Y="100" Width="35" Height="10" Text="Status:" />
       </Dialog>
-      <Dialog Id="UserExit" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="UserExit" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="Finish" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="[ButtonText_Finish]">
           <Publish Event="EndDialog" Value="Exit"><![CDATA[1]]></Publish>
         </Control>
@@ -180,7 +181,7 @@
           <Text>Click the Finish button to exit the [Wizard].</Text>
         </Control>
       </Dialog>
-      <Dialog Id="AdminBrowseDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="AdminBrowseDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="PathEdit" Type="PathEdit" X="84" Y="202" Width="261" Height="17" Property="TARGETDIR" />
         <Control Id="OK" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Text="[ButtonText_OK]">
           <Publish Event="SetTargetPath" Value="TARGETDIR"><![CDATA[1]]></Publish>
@@ -212,7 +213,7 @@
           <Text>[DlgTitleFont]Change current destination folder</Text>
         </Control>
       </Dialog>
-      <Dialog Id="AdminInstallPointDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="AdminInstallPointDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="Text" Type="Text" X="25" Y="80" Width="320" Height="10" TabSkip="no">
           <Text>&amp;Enter a new network location or click Browse to browse to one.</Text>
         </Control>
@@ -240,7 +241,7 @@
           <Text>[DlgTitleFont]Network Location</Text>
         </Control>
       </Dialog>
-      <Dialog Id="AdminRegistrationDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="AdminRegistrationDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="OrganizationLabel" Type="Text" X="45" Y="71" Width="285" Height="30" TabSkip="no">
           <Text>&amp;Please enter the name of your organization in the box below.  This will be used as default company name for subsequent installations of [ProductName]:</Text>
         </Control>
@@ -269,7 +270,7 @@
           <Text>[DlgTitleFont]Company Information</Text>
         </Control>
       </Dialog>
-      <Dialog Id="BrowseDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="BrowseDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="PathEdit" Type="PathEdit" X="84" Y="202" Width="261" Height="18" Property="_BrowseProperty" Indirect="yes" />
         <Control Id="OK" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Text="[ButtonText_OK]">
           <Publish Event="SetTargetPath" Value="[_BrowseProperty]"><![CDATA[1]]></Publish>
@@ -301,7 +302,7 @@
           <Text>[DlgTitleFont]Change current destination folder</Text>
         </Control>
       </Dialog>
-      <Dialog Id="CancelDlg" Y="10" Width="260" Height="85" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="CancelDlg" Y="10" Width="260" Height="85" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="No" Type="PushButton" X="132" Y="57" Width="56" Height="17" Default="yes" Cancel="yes" Text="[ButtonText_No]">
           <Publish Event="EndDialog" Value="Return"><![CDATA[1]]></Publish>
         </Control>
@@ -313,7 +314,7 @@
         </Control>
         <Control Id="Icon" Type="Icon" X="15" Y="15" Width="24" Height="24" ToolTip="Information icon" FixedSize="yes" IconSize="32" Text="[InfoIcon]" />
       </Dialog>
-      <Dialog Id="CustomizeDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes" TrackDiskSpace="yes">
+      <Dialog Id="CustomizeDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes" TrackDiskSpace="yes">
         <Control Id="Tree" Type="SelectionTree" X="25" Y="85" Width="175" Height="95" Property="_BrowseProperty" Sunken="yes" TabSkip="no" Text="Tree of selections" />
         <Control Id="Browse" Type="PushButton" X="304" Y="200" Width="56" Height="17" Text="[ButtonText_Browse]">
           <Publish Event="SelectionBrowse" Value="BrowseDlg"><![CDATA[1]]></Publish>
@@ -371,7 +372,7 @@
           <Condition Action="hide"><![CDATA[Installed]]></Condition>
         </Control>
       </Dialog>
-      <Dialog Id="DiskCostDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="DiskCostDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="OK" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="[ButtonText_OK]">
           <Publish Event="EndDialog" Value="Return"><![CDATA[1]]></Publish>
         </Control>
@@ -416,7 +417,7 @@
           <Publish Event="EndDialog" Value="ErrorRetry"><![CDATA[1]]></Publish>
         </Control>
       </Dialog>
-      <Dialog Id="FilesInUse" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes" KeepModeless="yes">
+      <Dialog Id="FilesInUse" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes" KeepModeless="yes">
         <Control Id="Retry" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="[ButtonText_Retry]">
           <Publish Event="EndDialog" Value="Retry"><![CDATA[1]]></Publish>
         </Control>
@@ -468,7 +469,7 @@
           <Text>[DlgTitleFont]End-User License Agreement</Text>
         </Control>
       </Dialog>
-      <Dialog Id="MaintenanceTypeDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="MaintenanceTypeDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <!--<Control Id="ChangeLabel" Type="Text" X="105" Y="65" Width="100" Height="10" TabSkip="no">
                     <Text>[DlgTitleFont]&amp;Modify</Text>
                 </Control>-->
@@ -522,7 +523,7 @@
           <Text>Repairs errors in the most recent installation state - fixes missing or corrupt files, shortcuts and registry entries.</Text>
         </Control>
       </Dialog>
-      <Dialog Id="MaintenanceWelcomeDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="MaintenanceWelcomeDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="[ButtonText_Next]">
           <Publish Event="SpawnWaitDialog" Value="WaitForCostingDlg"><![CDATA[CostingComplete = 1]]></Publish>
           <Publish Event="NewDialog" Value="MaintenanceTypeDlg"><![CDATA[1]]></Publish>
@@ -540,7 +541,7 @@
           <Text>{\VerdanaBold13}Welcome to the [ProductName] [Wizard]</Text>
         </Control>
       </Dialog>
-      <Dialog Id="OutOfDiskDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="OutOfDiskDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="OK" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="[ButtonText_OK]">
           <Publish Event="EndDialog" Value="Return"><![CDATA[1]]></Publish>
         </Control>
@@ -560,7 +561,7 @@
           <Text>{120}{70}{70}{70}{70}</Text>
         </Control>
       </Dialog>
-      <Dialog Id="OutOfRbDiskDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="OutOfRbDiskDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="No" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="[ButtonText_No]">
           <Publish Event="EndDialog" Value="Return"><![CDATA[1]]></Publish>
         </Control>
@@ -587,7 +588,7 @@
           <Text>Alternatively, you may choose to disable the installer's rollback functionality.  This allows the installer to restore your computer's original state should the installation be interrupted in any way.  Click Yes if you wish to take the risk to disable rollback.</Text>
         </Control>
       </Dialog>
-      <Dialog Id="ResumeDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="ResumeDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="Install" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="[ButtonText_Install]">
           <Publish Event="SpawnWaitDialog" Value="WaitForCostingDlg"><![CDATA[CostingComplete = 1]]></Publish>
           <Publish Event="EndDialog" Value="Return"><![CDATA[OutOfDiskSpace <> 1]]></Publish>
@@ -609,7 +610,7 @@
           <Text>{\VerdanaBold13}Resuming the [ProductName] [Wizard]</Text>
         </Control>
       </Dialog>
-      <Dialog Id="SetupTypeDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="SetupTypeDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="TypicalLabel" Type="Text" X="105" Y="65" Width="100" Height="10" TabSkip="no">
           <Text>[DlgTitleFont]&amp;Typical</Text>
         </Control>
@@ -660,7 +661,7 @@
           <Text>Installs the most common program features. Recommended for most users.</Text>
         </Control>
       </Dialog>
-      <Dialog Id="UserRegistrationDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="UserRegistrationDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="NameLabel" Type="Text" X="45" Y="73" Width="100" Height="15" TabSkip="no" Text="&amp;User Name:" />
         <Control Id="NameEdit" Type="Edit" X="45" Y="85" Width="220" Height="18" Property="USERNAME" Text="{80}" />
         <Control Id="OrganizationLabel" Type="Text" X="45" Y="110" Width="100" Height="15" TabSkip="no" Text="&amp;Organization:" />
@@ -690,7 +691,7 @@
           <Text>[DlgTitleFont]Customer Information</Text>
         </Control>
       </Dialog>
-      <Dialog Id="VerifyReadyDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes" TrackDiskSpace="yes">
+      <Dialog Id="VerifyReadyDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes" TrackDiskSpace="yes">
         <Control Id="Install" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="[ButtonText_Install]">
           <Publish Event="EndDialog" Value="Return"><![CDATA[OutOfDiskSpace <> 1]]></Publish>
           <Publish Event="SpawnDialog" Value="OutOfRbDiskDlg"><![CDATA[OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST="P" OR NOT PROMPTROLLBACKCOST)]]></Publish>
@@ -720,7 +721,7 @@
           <Text>[DlgTitleFont]Ready to Install</Text>
         </Control>
       </Dialog>
-      <Dialog Id="VerifyRemoveDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes" TrackDiskSpace="yes">
+      <Dialog Id="VerifyRemoveDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes" TrackDiskSpace="yes">
         <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Default="yes" Text="[ButtonText_Back]">
           <Publish Event="NewDialog" Value="MaintenanceTypeDlg"><![CDATA[1]]></Publish>
         </Control>
@@ -748,7 +749,7 @@
           <Text>[DlgTitleFont]Remove [ProductName]</Text>
         </Control>
       </Dialog>
-      <Dialog Id="VerifyRepairDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes" TrackDiskSpace="yes">
+      <Dialog Id="VerifyRepairDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes" TrackDiskSpace="yes">
         <Control Id="Repair" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="[ButtonText_Repair]">
           <Publish Event="ReinstallMode" Value="ecmus"><![CDATA[OutOfDiskSpace <> 1]]></Publish>
           <Publish Event="Reinstall" Value="All"><![CDATA[OutOfDiskSpace <> 1]]></Publish>
@@ -777,7 +778,7 @@
           <Text>[DlgTitleFont]Repair [ProductName]</Text>
         </Control>
       </Dialog>
-      <Dialog Id="WaitForCostingDlg" Y="10" Width="260" Height="85" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="WaitForCostingDlg" Y="10" Width="260" Height="85" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="Return" Type="PushButton" X="102" Y="57" Width="56" Height="17" Default="yes" Cancel="yes" Text="[ButtonText_Return]">
           <Publish Event="EndDialog" Value="Exit"><![CDATA[1]]></Publish>
         </Control>
@@ -786,7 +787,7 @@
         </Control>
         <Control Id="Icon" Type="Icon" X="15" Y="15" Width="24" Height="24" ToolTip="Exclamation icon" FixedSize="yes" IconSize="32" Text="[ExclamationIcon]" />
       </Dialog>
-      <Dialog Id="WelcomeDlg" Width="370" Height="270" Title="[ProductName] [Setup]" NoMinimize="yes">
+      <Dialog Id="WelcomeDlg" Width="370" Height="270" Title="$(var.wizardDialogTitle)" NoMinimize="yes">
         <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="[ButtonText_Next]">
           <Publish Event="NewDialog" Value="VerifyReadyDlg"><![CDATA[1]]></Publish>
         </Control>
@@ -797,7 +798,7 @@
         <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Disabled="yes" Text="[ButtonText_Back]" />
         <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="374" Height="0" />
         <Control Id="Description" Type="Text" X="135" Y="70" Width="220" Height="30" Transparent="yes" NoPrefix="yes">
-          <Text>The [Wizard] will install [ProductName] on your computer.  Click Next to continue or Cancel to exit the [Wizard].</Text>
+          <Text>The [Wizard] will install [ProductName] ($(var.AssemblyProductVersion)) on your computer.  Click Next to continue or Cancel to exit the [Wizard].</Text>
         </Control>
         <Control Id="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Transparent="yes" NoPrefix="yes">
           <Text>{\VerdanaBold13}Welcome to the [ProductName] [Wizard]</Text>
