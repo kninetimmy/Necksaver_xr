@@ -47,7 +47,7 @@
     </PropertyGroup>
   </Target>
   <Target Name="AfterBuild">
-	<Exec Command='MOVE /Y "$(TargetPath)" "$(TargetDir)$(TargetName)-$(AssemblyProductVersion)$(TargetExt)"' />
+	<Exec Command='if $(ConfigurationName) == Release COPY "$(TargetPath)" "$(SolutionDir)Assets\$(TargetName)-$(AssemblyProductVersion)$(TargetExt)" /Y' />
   </Target>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
