@@ -50,14 +50,14 @@
           </Component>
         </Directory>
       </Directory>
+      <Component Id="RegistryEntries" Guid="*" Win64="yes">
+        <RegistryKey Root="HKLM" Key="Software\Khronos\OpenXR\1\ApiLayers\Implicit">
+          <RegistryValue Type="integer" Name="[ProgramFiles64Folder]OpenXrApiLayer\XR_APILAYER_NOVENDOR_XRNeckSafer.json" Value="0" KeyPath="yes" />
+          <RegistryValue Type="string" Value="Default Value" />
+        </RegistryKey>
+      </Component>
       <Directory Id="ProgramFiles64Folder" Name="ProgFiles">
         <Directory Id="OpenXrApiLayer" Name="OpenXrApiLayer">
-          <Component Id="RegistryEntries" Guid="*" Win64="yes">
-            <RegistryKey Root="HKLM" Key="Software\Khronos\OpenXR\1\ApiLayers\Implicit" Action="createAndRemoveOnUninstall">
-              <RegistryValue Type="integer" Name="[ProgramFiles64Folder]OpenXrApiLayer\XR_APILAYER_NOVENDOR_XRNeckSafer.json" Value="0" KeyPath="yes" />
-              <RegistryValue Type="string" Value="Default Value" />
-            </RegistryKey>
-          </Component>
           <Component Id="OpenXrApiLayerComponent" Guid="69A13BC7-A585-4803-A232-442A6D664365" Win64="yes">
             <File Id="XR_APILAYER_NOVENDOR_XRNECKSAFER.DLL" Name="XR_APILAYER_NOVENDOR_XRNeckSafer.dll" Source="..\x64\Release\XR_APILAYER_NOVENDOR_XRNeckSafer.dll" />
             <File Id="XR_APILAYER_NOVENDOR_XRNECKSAFER.JSON" Name="XR_APILAYER_NOVENDOR_XRNeckSafer.json" Source="..\x64\Release\XR_APILAYER_NOVENDOR_XRNeckSafer.json" />
