@@ -52,6 +52,7 @@ namespace XRNeckSafer
             InitializeComponent();
 
             VersionLabel.Text = GetAssemblyProductVersion();
+            KeyInterceptor.KeyPressed += OnKeyPressed;
             notifyIcon.ContextMenuStrip = contextMenuStrip;
             this.showToolStripMenuItem.Click += showToolStripMenuItem_Click;
             this.exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
@@ -222,6 +223,37 @@ namespace XRNeckSafer
             pARText = "Autorotation";
             HMDtext = "";
             loopTimer.Start();
+        }
+
+        private void OnKeyPressed(Keys key)
+        {
+            if (ActiveForm != null)
+            {
+                return;
+            }
+            if (!js.IsButtonPressed(conf.LeftButton) && !js.IsButtonPressed(conf.RightButton))
+            {
+                return;
+            }
+            switch (key)
+            {
+                case Keys.Up:
+                    transFNUP.Value++;
+                    transFNUP_ValueChanged(transFNUP, new EventArgs());
+                    break;
+                case Keys.Down:
+                    transFNUP.Value--;
+                    transFNUP_ValueChanged(transFNUP, new EventArgs());
+                    break;
+                case Keys.Right:
+                    transLRNUP.Value++;
+                    transLRNUP_ValueChanged(transLRNUP, new EventArgs());
+                    break;
+                case Keys.Left:
+                    transLRNUP.Value--;
+                    transLRNUP_ValueChanged(transLRNUP, new EventArgs());
+                    break;
+            }
         }
 
         public void setButtonToolTip(Button b, ButtonConfig bc)
