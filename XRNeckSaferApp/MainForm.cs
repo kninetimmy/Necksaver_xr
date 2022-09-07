@@ -239,19 +239,19 @@ namespace XRNeckSafer
             {
                 case Keys.Up:
                     transFNUP.Value++;
-                    transFNUP_ValueChanged(transFNUP, new EventArgs());
+                    SetTransOffsetF(transFNUP.Value);
                     break;
                 case Keys.Down:
                     transFNUP.Value--;
-                    transFNUP_ValueChanged(transFNUP, new EventArgs());
+                    SetTransOffsetF(transFNUP.Value);
                     break;
                 case Keys.Right:
                     transLRNUP.Value++;
-                    transLRNUP_ValueChanged(transLRNUP, new EventArgs());
+                    SetTransOffsetLR(transLRNUP.Value);
                     break;
                 case Keys.Left:
                     transLRNUP.Value--;
-                    transLRNUP_ValueChanged(transLRNUP, new EventArgs());
+                    SetTransOffsetLR(transLRNUP.Value);
                     break;
             }
         }
@@ -694,37 +694,40 @@ namespace XRNeckSafer
 
             arot = autorot * pitchsign;
         }
+        
+        private void SetTransOffsetF(decimal value)
+        {
+            conf.TransF = (int)value;
+            trans_offset_F = (float)value / 100F;
+            conf.WriteConfig();
+        }
 
-
+        private void SetTransOffsetLR(decimal value)
+        {
+            conf.TransLR = (int)value;
+            trans_offset_LR = (float)value / 100F;
+            conf.WriteConfig();
+        }
 
         private void transFNUP_ValueChanged(object sender, EventArgs e)
         {
-            conf.TransF = (int)transFNUP.Value;
-            trans_offset_F = (float)transFNUP.Value / 100F;
-            conf.WriteConfig();
+            SetTransOffsetF(transFNUP.Value);
         }
+
         private void transFNUP_KeyUp(object sender, KeyEventArgs e)
         {
-            conf.TransF = (int)transFNUP.Value;
-            trans_offset_F = (float)transFNUP.Value / 100F;
-            conf.WriteConfig();
+            SetTransOffsetF(transFNUP.Value);
         }
 
         private void transLRNUP_ValueChanged(object sender, EventArgs e)
         {
-            conf.TransLR = (int)transLRNUP.Value;
-            trans_offset_LR = (float)transLRNUP.Value / 100F;
-            conf.WriteConfig();
+            SetTransOffsetLR(transLRNUP.Value);
         }
 
         private void transLRNUP_KeyUp(object sender, KeyEventArgs e)
         {
-            conf.TransLR = (int)transLRNUP.Value;
-            trans_offset_LR = (float)transLRNUP.Value / 100F;
-            conf.WriteConfig();
+            SetTransOffsetLR(transLRNUP.Value);
         }
-
-
 
         private void AddButton_Click(object sender, EventArgs e)
         {

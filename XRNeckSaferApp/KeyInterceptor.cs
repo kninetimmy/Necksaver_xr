@@ -56,7 +56,6 @@ namespace XRNeckSafer
             {
                 var vkCode = Marshal.ReadInt32(lParam);
                 KeyPressed?.Invoke((Keys)vkCode);
-                // Console.WriteLine((Keys)vkCode);
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
