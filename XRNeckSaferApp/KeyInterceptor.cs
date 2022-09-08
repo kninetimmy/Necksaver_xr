@@ -13,8 +13,8 @@ namespace XRNeckSafer
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101;
-        private static readonly IntPtr WM_KEYDOWN_POINER = (IntPtr)WM_KEYDOWN;
-        private static readonly IntPtr WM_KEYUP_POINER = (IntPtr)WM_KEYUP;
+        private static readonly IntPtr WM_KEYDOWN_POINTER = (IntPtr)WM_KEYDOWN;
+        private static readonly IntPtr WM_KEYUP_POINTER = (IntPtr)WM_KEYUP;
         private static readonly HashSet<Keys> _pressedKeys = new HashSet<Keys>();
 
         private delegate IntPtr LowLevelKeyboardHandler(int nCode, IntPtr wParam, IntPtr lParam);
@@ -64,8 +64,8 @@ namespace XRNeckSafer
 
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            var keyDown = wParam == WM_KEYDOWN_POINER;
-            var keyUp = wParam == WM_KEYUP_POINER;
+            var keyDown = wParam == WM_KEYDOWN_POINTER;
+            var keyUp = wParam == WM_KEYUP_POINTER;
             if (nCode >= 0 && (keyDown || keyUp))
             {
                 var key = (Keys)Marshal.ReadInt32(lParam);
