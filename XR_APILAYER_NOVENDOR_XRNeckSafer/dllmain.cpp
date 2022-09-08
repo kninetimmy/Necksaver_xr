@@ -79,7 +79,12 @@ namespace {
     } shmValues;
 
     std::wstring m_memoryName = L"XRNeckSaferSHM";
+    std::wstring m_memoryNameDebN = L"XRNeckSaferDebNSHM";
+    std::wstring m_memoryNameDebV = L"XRNeckSaferDebVSHM";
+
     HANDLE m_shmHandler = 0;
+    HANDLE m_shmHandlerN = 0;
+    HANDLE m_shmHandlerV = 0;
     shmVal_s* buffer;
 
     XrSpace m_LocalSpace{ XR_NULL_HANDLE };
@@ -94,8 +99,32 @@ namespace {
         float roll, pitch, yaw;
     };
 
-    void toMonitor() {
+    char debNames[20][20];
+    char debValues[20][20];
+    char* bufferN;
+    char* bufferV;
 
+    void insertDeb(char* n, char* v) {
+        int i;
+        for (i = 0; i < 20; i++) {
+            if (strcmp(debNames[i], n) == 0) {
+                strcpy(debValues[i], v);
+                return;
+            }
+        }
+        strcpy(debNames[i], v);
+        strcpy(debValues[i], v);
+
+    }
+
+    void toMonitor(std::string name, auto f) {
+        char n[20];
+        char v[20];
+        name.copy(n, sizeof n);
+        std::to_string(f).copy(v,sizeof v);
+        insertDeb(n, v);
+        std::memcpy(bufferN, n, sizeof n);
+        std::memcpy(bufferV, v, sizeof v);
     }
 
     EulerAngles ToEulerAngles(XrQuaternionf q) {
@@ -246,6 +275,8 @@ namespace {
             EulerAngles angles = ToEulerAngles(location.pose.orientation);
             buffer->hmdYawAngle = angles.yaw * 180.f / (float)M_PI;
             buffer->hmdPitchAngle = angles.pitch * 180.f / (float)M_PI;
+
+            toMonitor("angles.yaw", angles.yaw);
 
             if (shmValues.useLinearRotation) {
                 shmValues.leftStartAt = buffer->leftStartAt;
@@ -648,6 +679,57 @@ extern "C" {
         }
 
 
+       if (m_shmHandler) {
+           buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
+           if (NULL != buffer) {
+               Log("XRNeckSafer shared memory ready\n");
+               buffer->hasBeenCentered = false;
+           }
+           else {
+               Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
+           }
+       }
+       else {
+           Log("Couldn't create XRNeckSafer shared memory\n");
+       }
+
+#ifdef _DEBUG
+       if (m_shmHandlerN) {
+           Log("XRNeckSafer shared debug memory found\n");
+       }
+       else {
+           m_shmHandlerN = CreateFileMapping(
+               INVALID_HANDLE_VALUE,
+               NULL,
+               PAGE_READWRITE,
+               0,
+               sizeof(debNames),
+               m_memoryName.c_str());
+           m_shmHandlerV = CreateFileMapping(
+               INVALID_HANDLE_VALUE,
+               NULL,
+               PAGE_READWRITE,
+               0,
+               sizeof(debValues),
+               m_memoryName.c_str());
+
+           Log("XRNeckSafer shared debug memory created\n");
+       }
+
+       if (m_shmHandlerN) {
+           bufferN = (char*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(debNames));
+           bufferV = (char*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(debValues));
+           if (NULL != bufferN) {
+               Log("XRNeckSafer shared debug memory ready\n");
+           }
+           else {
+               Log("Cannot map XRNeckSafer shared debug memory: null buffer.\n");
+           }
+       }
+       else {
+           Log("Couldn't create XRNeckSafer shared debug memory\n");
+       }
+#endif
 
         DebugLog("<-- XRNeckSafer_xrNegotiateLoaderApiLayerInterface\n");
 

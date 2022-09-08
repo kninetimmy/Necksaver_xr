@@ -46,7 +46,7 @@
             <File Id="NEWTONSOFT.JSON.DLL" Name="Newtonsoft.Json.dll" Source="..\XRNeckSaferApp\bin\Release\Newtonsoft.Json.dll" />
             <File Id="SHARPDX.DIRECTINPUT.DLL" Name="SharpDX.DirectInput.dll" Source="..\XRNeckSaferApp\bin\Release\SharpDX.DirectInput.dll" />
             <File Id="SHARPDX.DLL" Name="SharpDX.dll" Source="..\XRNeckSaferApp\bin\Release\SharpDX.dll" />
-            <File Id="SHARPDX.MATHEMATICS.DLL" Name="SharpDX.Mathematics.dll" Source="..\XRNeckSaferApp\bin\Release\SharpDX.Mathematics.dll" />p
+            <File Id="SHARPDX.MATHEMATICS.DLL" Name="SharpDX.Mathematics.dll" Source="..\XRNeckSaferApp\bin\Release\SharpDX.Mathematics.dll" />
             <File Id="SILK.NET.CORE.DLL" Name="Silk.NET.Core.dll" Source="..\XRNeckSaferApp\bin\Release\Silk.NET.Core.dll" />
             <File Id="SILK.NET.MATHS.DLL" Name="Silk.NET.Maths.dll" Source="..\XRNeckSaferApp\bin\Release\Silk.NET.Maths.dll" />
             <File Id="SILK.NET.OPENXR.DLL" Name="Silk.NET.OpenXR.dll" Source="..\XRNeckSaferApp\bin\Release\Silk.NET.OpenXR.dll" />

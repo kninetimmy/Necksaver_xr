@@ -15,7 +15,13 @@ namespace SHM_Monitor
     {
         MemoryMappedFile shm;
         MemoryMappedViewAccessor accessor;
+        MemoryMappedFile shmN;
+        MemoryMappedViewAccessor accessorN;
+        MemoryMappedFile shmV;
+        MemoryMappedViewAccessor accessorV;
         public shmVal_s shmValues;
+        public char[,] debNames;
+        public char[,] debValues;
 
         public struct shmVal_s
         {
@@ -69,6 +75,7 @@ namespace SHM_Monitor
             InitializeComponent();
             string shmName = "XRNeckSaferSHM";
             int shmSize = 80;
+
             shm = MemoryMappedFile.CreateOrOpen(shmName, shmSize);
             accessor = shm.CreateViewAccessor();
 
