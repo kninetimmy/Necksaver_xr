@@ -149,6 +149,7 @@
       <DependentUpon>ButtonForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Config.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Graph.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,6 +157,7 @@
       <DependentUpon>Graph.cs</DependentUpon>
     </Compile>
     <Compile Include="JoystickStuff.cs" />
+    <Compile Include="KeyInterceptor.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

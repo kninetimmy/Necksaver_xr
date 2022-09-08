@@ -10,7 +10,7 @@ namespace XRNeckSafer
         public JoyBut jb;
         private ButtonConfig butconf;
 
-        public ButtonForm(MainForm f, String titel, ButtonConfig bc)
+        public ButtonForm(MainForm f, string title, ButtonConfig bc)
         {
             butconf = bc;
             mf = f;
@@ -18,7 +18,7 @@ namespace XRNeckSafer
             StartPosition = FormStartPosition.Manual;
             Top = mf.Top;
             Left = mf.Right - 10;
-            Text = titel;
+            Text = title;
             mf.js.GetJoysticks();
 
             UseModifierCheckBox.Checked = butconf.UseModifier;

@@ -23,7 +23,9 @@ namespace XRNeckSafer
                 // main application entry point
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+                KeyInterceptor.SetHook();
                 Application.Run(new MainForm());
+                KeyInterceptor.RemoveHook();
 
                 mutex.ReleaseMutex();
             }
