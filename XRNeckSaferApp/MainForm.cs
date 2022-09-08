@@ -225,37 +225,36 @@ namespace XRNeckSafer
             loopTimer.Start();
         }
 
-        private void OnKeyPressed(Keys[] keysPressed)
+        private void OnKeyPressed(Keys[] pressedKeys)
         {
             if (!js.IsButtonPressed(conf.LeftButton) && !js.IsButtonPressed(conf.RightButton))
             {
                 return;
             }
 
-            // hardcode check of a single key press for now, can add modifier later 
-            if (keysPressed.Length != 1)
+            if (KeyInterceptor.CheckPressed(pressedKeys, Keys.Up))
             {
+                transFNUP.Value++;
+                SetTransOffsetF(transFNUP.Value);
                 return;
             }
-            var key = keysPressed[0];
-            switch (key)
+            if (KeyInterceptor.CheckPressed(pressedKeys, Keys.Down))
             {
-                case Keys.Up:
-                    transFNUP.Value++;
-                    SetTransOffsetF(transFNUP.Value);
-                    break;
-                case Keys.Down:
-                    transFNUP.Value--;
-                    SetTransOffsetF(transFNUP.Value);
-                    break;
-                case Keys.Right:
-                    transLRNUP.Value++;
-                    SetTransOffsetLR(transLRNUP.Value);
-                    break;
-                case Keys.Left:
-                    transLRNUP.Value--;
-                    SetTransOffsetLR(transLRNUP.Value);
-                    break;
+                transFNUP.Value--;
+                SetTransOffsetF(transFNUP.Value);
+                return;
+            }
+            if (KeyInterceptor.CheckPressed(pressedKeys, Keys.Right))
+            {
+                transLRNUP.Value++;
+                SetTransOffsetLR(transLRNUP.Value);
+                return;
+            }
+            if (KeyInterceptor.CheckPressed(pressedKeys, Keys.Left))
+            {
+                transLRNUP.Value--;
+                SetTransOffsetLR(transLRNUP.Value);
+                return;
             }
         }
 

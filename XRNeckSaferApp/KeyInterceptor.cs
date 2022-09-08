@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
@@ -14,7 +15,7 @@ namespace XRNeckSafer
         private const int WM_KEYUP = 0x0101;
         private static readonly IntPtr WM_KEYDOWN_POINER = (IntPtr)WM_KEYDOWN;
         private static readonly IntPtr WM_KEYUP_POINER = (IntPtr)WM_KEYUP;
-        private static readonly List<Keys> _pressedKeys = new List<Keys>();
+        private static readonly HashSet<Keys> _pressedKeys = new HashSet<Keys>();
 
         private delegate IntPtr LowLevelKeyboardHandler(int nCode, IntPtr wParam, IntPtr lParam);
 
@@ -32,6 +33,25 @@ namespace XRNeckSafer
         {
             UnsubscribeAllKeyPressedHandlers();
             UnhookWindowsHookEx(_hookID);
+        }
+
+        public static bool CheckPressed(params Keys[] keysToCheck)
+        {
+            return CheckPressed(_pressedKeys, keysToCheck);
+        }
+
+        public static bool CheckPressed(IEnumerable<Keys> pressedKeys, params Keys[] keysToCheck)
+        {
+            if (keysToCheck.Length == 0)
+            {
+                return false;
+            }
+            var distinctKeys = keysToCheck.Distinct();
+            if (pressedKeys.Count() != distinctKeys.Count())
+            {
+                return false;
+            }
+            return distinctKeys.All(k => pressedKeys.Contains(k));
         }
 
         private static void UnsubscribeAllKeyPressedHandlers()
@@ -65,13 +85,13 @@ namespace XRNeckSafer
                 var key = (Keys)Marshal.ReadInt32(lParam);
                 lock (_pressedKeys)
                 {
-                    if (keyDown && !_pressedKeys.Contains(key))
+                    if (keyDown)
                     {
                         _pressedKeys.Add(key);
                     }
-                    if (keyUp && _pressedKeys.Contains(key))
+                    if (keyUp)
                     {
-                        _pressedKeys.RemoveAll(k => k == key);
+                        _pressedKeys.Remove(key);
                     }
                 }
                 // LogPressedKeys(_pressedKeys);
@@ -81,20 +101,20 @@ namespace XRNeckSafer
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
 
-        //private static void LogPressedKeys(List<Keys> keys)
+        //private static void LogPressedKeys(HashSet<Keys> keys)
         //{
         //    if (keys.Count == 0)
         //    {
         //        return;
         //    }
         //    var builder = new StringBuilder();
-        //    for (var i = 0; i < keys.Count; i++)
+        //    foreach(var key in keys)
         //    {
-        //        if (i > 0)
+        //        if (builder.Length > 0)
         //        {
         //            builder.Append("+");
         //        }
-        //        builder.Append(keys[i]);
+        //        builder.Append(key);
         //    }
         //    Console.WriteLine(builder.ToString());
         //}
