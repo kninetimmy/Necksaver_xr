@@ -227,10 +227,6 @@ namespace XRNeckSafer
 
         private void OnKeyPressed(Keys[] keysPressed)
         {
-            if (ActiveForm != null)
-            {
-                return;
-            }
             if (!js.IsButtonPressed(conf.LeftButton) && !js.IsButtonPressed(conf.RightButton))
             {
                 return;
