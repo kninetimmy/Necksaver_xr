@@ -232,25 +232,25 @@ namespace XRNeckSafer
                 return;
             }
 
-            if (KeyInterceptor.CheckPressed(pressedKeys, Keys.Up))
+            if (pressedKeys.CheckMatch(Keys.Up))
             {
                 transFNUP.Value++;
                 SetTransOffsetF(transFNUP.Value);
                 return;
             }
-            if (KeyInterceptor.CheckPressed(pressedKeys, Keys.Down))
+            if (pressedKeys.CheckMatch(Keys.Down))
             {
                 transFNUP.Value--;
                 SetTransOffsetF(transFNUP.Value);
                 return;
             }
-            if (KeyInterceptor.CheckPressed(pressedKeys, Keys.Right))
+            if (pressedKeys.CheckMatch(Keys.Right))
             {
                 transLRNUP.Value++;
                 SetTransOffsetLR(transLRNUP.Value);
                 return;
             }
-            if (KeyInterceptor.CheckPressed(pressedKeys, Keys.Left))
+            if (pressedKeys.CheckMatch(Keys.Left))
             {
                 transLRNUP.Value--;
                 SetTransOffsetLR(transLRNUP.Value);

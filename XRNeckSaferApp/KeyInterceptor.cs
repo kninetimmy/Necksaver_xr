@@ -37,21 +37,7 @@ namespace XRNeckSafer
 
         public static bool CheckPressed(params Keys[] keysToCheck)
         {
-            return CheckPressed(_pressedKeys, keysToCheck);
-        }
-
-        public static bool CheckPressed(IEnumerable<Keys> pressedKeys, params Keys[] keysToCheck)
-        {
-            if (keysToCheck.Length == 0)
-            {
-                return false;
-            }
-            var distinctKeys = keysToCheck.Distinct();
-            if (pressedKeys.Count() != distinctKeys.Count())
-            {
-                return false;
-            }
-            return distinctKeys.All(k => pressedKeys.Contains(k));
+            return _pressedKeys.CheckMatch(keysToCheck);
         }
 
         private static void UnsubscribeAllKeyPressedHandlers()
