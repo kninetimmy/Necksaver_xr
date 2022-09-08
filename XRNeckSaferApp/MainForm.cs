@@ -225,7 +225,7 @@ namespace XRNeckSafer
             loopTimer.Start();
         }
 
-        private void OnKeyPressed(Keys key)
+        private void OnKeyPressed(Keys[] keysPressed)
         {
             if (ActiveForm != null)
             {
@@ -235,6 +235,13 @@ namespace XRNeckSafer
             {
                 return;
             }
+
+            // hardcode check of a single key press for now, can add modifier later 
+            if (keysPressed.Length != 1)
+            {
+                return;
+            }
+            var key = keysPressed[0];
             switch (key)
             {
                 case Keys.Up:

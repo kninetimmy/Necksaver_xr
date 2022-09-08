@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 
 namespace XRNeckSafer
@@ -9,10 +11,14 @@ namespace XRNeckSafer
     {
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
-        
+        private const int WM_KEYUP = 0x0101;
+        private static readonly IntPtr WM_KEYDOWN_POINER = (IntPtr)WM_KEYDOWN;
+        private static readonly IntPtr WM_KEYUP_POINER = (IntPtr)WM_KEYUP;
+        private static readonly List<Keys> _pressedKeys = new List<Keys>();
+
         private delegate IntPtr LowLevelKeyboardHandler(int nCode, IntPtr wParam, IntPtr lParam);
 
-        public static event Action<Keys> KeyPressed;
+        public static event Action<Keys[]> KeyPressed;
 
         private static LowLevelKeyboardHandler _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
@@ -34,7 +40,7 @@ namespace XRNeckSafer
             {
                 foreach (var invokerDelegate in KeyPressed.GetInvocationList())
                 {
-                    KeyPressed -= (invokerDelegate as Action<Keys>);
+                    KeyPressed -= (invokerDelegate as Action<Keys[]>);
                 }
             }
         }
@@ -52,13 +58,46 @@ namespace XRNeckSafer
 
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
+            var keyDown = wParam == WM_KEYDOWN_POINER;
+            var keyUp = wParam == WM_KEYUP_POINER;
+            if (nCode >= 0 && (keyDown || keyUp))
             {
-                var vkCode = Marshal.ReadInt32(lParam);
-                KeyPressed?.Invoke((Keys)vkCode);
+                var key = (Keys)Marshal.ReadInt32(lParam);
+                lock (_pressedKeys)
+                {
+                    if (keyDown && !_pressedKeys.Contains(key))
+                    {
+                        _pressedKeys.Add(key);
+                    }
+                    if (keyUp && _pressedKeys.Contains(key))
+                    {
+                        _pressedKeys.RemoveAll(k => k == key);
+                    }
+                }
+                // LogPressedKeys(_pressedKeys);
+                KeyPressed?.Invoke(_pressedKeys.ToArray());
+                
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
+
+        //private static void LogPressedKeys(List<Keys> keys)
+        //{
+        //    if (keys.Count == 0)
+        //    {
+        //        return;
+        //    }
+        //    var builder = new StringBuilder();
+        //    for (var i = 0; i < keys.Count; i++)
+        //    {
+        //        if (i > 0)
+        //        {
+        //            builder.Append("+");
+        //        }
+        //        builder.Append(keys[i]);
+        //    }
+        //    Console.WriteLine(builder.ToString());
+        //}
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardHandler lpfn, IntPtr hMod, uint dwThreadId);
