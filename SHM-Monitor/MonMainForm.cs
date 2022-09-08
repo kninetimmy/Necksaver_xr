@@ -80,33 +80,63 @@ namespace SHM_Monitor
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("hmdYawAngle" + shmValues.hmdYawAngle + Environment.NewLine);
-            sb.Append("hmdPitchAngle" + shmValues.hmdPitchAngle + Environment.NewLine);
-            sb.Append("yawOffset" + shmValues.yawOffset + Environment.NewLine);
-            sb.Append("pitchOffset" + shmValues.pitchOffset + Environment.NewLine);
-            sb.Append("lateralOffset" + shmValues.lateralOffset + Environment.NewLine);
-            sb.Append("longitudinalOffset" + shmValues.longitudinalOffset + Environment.NewLine);
-            sb.Append("rightMultiplier" + shmValues.rightMultiplier + Environment.NewLine);
-            sb.Append("leftMultiplier" + shmValues.leftMultiplier + Environment.NewLine);
-            sb.Append("upMultiplier" + shmValues.upMultiplier + Environment.NewLine);
-            sb.Append("downMultiplier" + shmValues.downMultiplier + Environment.NewLine);
-            sb.Append("leftStartAt" + shmValues.leftStartAt + Environment.NewLine);
-            sb.Append("rightStartAt" + shmValues.rightStartAt + Environment.NewLine);
-            sb.Append("upStartAt" + shmValues.upStartAt + Environment.NewLine);
-            sb.Append("downStartAt" + shmValues.downStartAt + Environment.NewLine);
-            sb.Append("resetHmdOrientation" + shmValues.resetHmdOrientation + Environment.NewLine);
-            sb.Append("useLinearRotation" + shmValues.useLinearRotation + Environment.NewLine);
-            sb.Append("useLinearPitchRotation" + shmValues.useLinearPitchRotation + Environment.NewLine);
-            sb.Append("holdLinearRotation" + shmValues.holdLinearRotation + Environment.NewLine);
-            sb.Append("holdLinearPitchRotation" + shmValues.holdLinearPitchRotation + Environment.NewLine);
-            sb.Append("hasBeenCentered" + shmValues.hasBeenCentered + Environment.NewLine);
+            sb.Append(generateLine("hmdYawAngle" , shmValues.hmdYawAngle.ToString()));
+            sb.Append(generateLine("hmdPitchAngle" , shmValues.hmdPitchAngle.ToString()));
+            sb.Append(generateLine("yawOffset" , shmValues.yawOffset.ToString()));
+            sb.Append(generateLine("pitchOffset" , shmValues.pitchOffset.ToString()));
+            sb.Append(generateLine("lateralOffset" , shmValues.lateralOffset.ToString()));
+            sb.Append(generateLine("longitudinalOffset" , shmValues.longitudinalOffset.ToString()));
+            sb.Append(generateLine("rightMultiplier" , shmValues.rightMultiplier.ToString()));
+            sb.Append(generateLine("leftMultiplier" , shmValues.leftMultiplier.ToString()));
+            sb.Append(generateLine("upMultiplier" , shmValues.upMultiplier.ToString()));
+            sb.Append(generateLine("downMultiplier" , shmValues.downMultiplier.ToString()));
+            sb.Append(generateLine("leftStartAt" , shmValues.leftStartAt.ToString()));
+            sb.Append(generateLine("rightStartAt" , shmValues.rightStartAt.ToString()));
+            sb.Append(generateLine("upStartAt" , shmValues.upStartAt.ToString()));
+            sb.Append(generateLine("downStartAt" , shmValues.downStartAt.ToString()));
+            sb.Append(generateLine("resetHmdOrientation" , shmValues.resetHmdOrientation.ToString()));
+            sb.Append(generateLine("useLinearRotation" , shmValues.useLinearRotation.ToString()));
+            sb.Append(generateLine("useLinearPitchRotation" , shmValues.useLinearPitchRotation.ToString()));
+            sb.Append(generateLine("holdLinearRotation" , shmValues.holdLinearRotation.ToString()));
+            sb.Append(generateLine("holdLinearPitchRotation" , shmValues.holdLinearPitchRotation.ToString()));
+            sb.Append(generateLine("hasBeenCentered" , shmValues.hasBeenCentered.ToString()));
+
+            OutputTextBox.Text = sb.ToString();
         }
 
         public string generateLine(string s, string v)
         {
-            string line = "";
-
+            string line = String.Format("{0,-30} {1,-20}", s, v)+ Environment.NewLine;
             return line;
+        }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            generateOutput();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            generateOutput();
+        }
+
+        private void AutoCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (AutoCheckBox.Checked)
+            {
+                timer1.Interval = (int)updateInterval.Value;
+                timer1.Enabled = true;
+            }
+            else
+            {
+                timer1.Enabled = false;
+            }
+
+        }
+
+        private void updateInterval_ValueChanged(object sender, EventArgs e)
+        {
+            timer1.Interval = (int)updateInterval.Value;
         }
     }
 }

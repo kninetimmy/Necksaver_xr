@@ -94,6 +94,10 @@ namespace {
         float roll, pitch, yaw;
     };
 
+    void toMonitor() {
+
+    }
+
     EulerAngles ToEulerAngles(XrQuaternionf q) {
         EulerAngles angles;
 

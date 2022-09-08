@@ -32,11 +32,11 @@
             this.OutputTextBox = new System.Windows.Forms.RichTextBox();
             this.updateButton = new System.Windows.Forms.Button();
             this.AutoCheckBox = new System.Windows.Forms.CheckBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.updateInterval = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.updateInterval)).BeginInit();
             this.SuspendLayout();
             // 
             // OutputTextBox
@@ -57,6 +57,7 @@
             this.updateButton.TabIndex = 1;
             this.updateButton.Text = "update";
             this.updateButton.UseVisualStyleBackColor = true;
+            this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
             // 
             // AutoCheckBox
             // 
@@ -67,18 +68,25 @@
             this.AutoCheckBox.TabIndex = 2;
             this.AutoCheckBox.Text = "auto update";
             this.AutoCheckBox.UseVisualStyleBackColor = true;
+            this.AutoCheckBox.CheckedChanged += new System.EventHandler(this.AutoCheckBox_CheckedChanged);
             // 
-            // numericUpDown1
+            // updateInterval
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(249, 8);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDown1.TabIndex = 3;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.updateInterval.Location = new System.Drawing.Point(249, 8);
+            this.updateInterval.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.updateInterval.Name = "updateInterval";
+            this.updateInterval.Size = new System.Drawing.Size(51, 20);
+            this.updateInterval.TabIndex = 3;
+            this.updateInterval.Value = new decimal(new int[] {
             100,
             0,
             0,
             0});
+            this.updateInterval.ValueChanged += new System.EventHandler(this.updateInterval_ValueChanged);
             // 
             // label1
             // 
@@ -98,6 +106,10 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "ms";
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // SHMMonForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -105,14 +117,14 @@
             this.ClientSize = new System.Drawing.Size(509, 621);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.updateInterval);
             this.Controls.Add(this.AutoCheckBox);
             this.Controls.Add(this.updateButton);
             this.Controls.Add(this.OutputTextBox);
             this.DoubleBuffered = true;
             this.Name = "SHMMonForm";
             this.Text = "XRNS SHM Monitor";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.updateInterval)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -123,7 +135,7 @@
         private System.Windows.Forms.RichTextBox OutputTextBox;
         private System.Windows.Forms.Button updateButton;
         private System.Windows.Forms.CheckBox AutoCheckBox;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown updateInterval;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Timer timer1;
