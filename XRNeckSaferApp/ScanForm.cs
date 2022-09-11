@@ -62,7 +62,7 @@ namespace XRNeckSafer
 
         private void OnCancelButtonClick(object sender, EventArgs e)
         {
-            _scanner.Cancel();
+            _scanner.Stop();
             Close();
         }
 

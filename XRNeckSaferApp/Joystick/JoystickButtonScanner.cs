@@ -45,12 +45,13 @@ namespace XRNeckSafer
             }
             if (_pressedButtons.Any())
             {
+                Stop();
                 OnScanningComplete?.Invoke(_pressedButtons.Values.ToList());
                 _pressedButtons.Clear();
             }
         }
 
-        public void Cancel()
+        public void Stop()
         {
             _scanTimer.Stop();
         }
