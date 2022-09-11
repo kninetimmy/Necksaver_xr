@@ -78,14 +78,19 @@ namespace {
  
     } shmValues;
 
+#define MAXMONVAL 20
+    struct monEntry_s {
+        char name[20];
+        char value[20];
+    } shmMon[MAXMONVAL];
+
     std::wstring m_memoryName = L"XRNeckSaferSHM";
-    std::wstring m_memoryNameDebN = L"XRNeckSaferDebNSHM";
-    std::wstring m_memoryNameDebV = L"XRNeckSaferDebVSHM";
+    std::wstring m_memoryNameDeb = L"XRNeckSaferDebSHM";
 
     HANDLE m_shmHandler = 0;
-    HANDLE m_shmHandlerN = 0;
-    HANDLE m_shmHandlerV = 0;
+    HANDLE m_shmHandlerDeb = 0;
     shmVal_s* buffer;
+    monEntry_s* bufferDeb;
 
     XrSpace m_LocalSpace{ XR_NULL_HANDLE };
     XrSpace m_ViewSpace{ XR_NULL_HANDLE };
@@ -104,28 +109,31 @@ namespace {
     char* bufferN;
     char* bufferV;
 
-    void insertDeb(char* n, char* v) {
+    void initMon() {
+        for (int i = 0; i < MAXMONVAL; i++) {
+            strcpy(shmMon[i].name, "#");
+            strcpy(shmMon[i].value, "#");
+        }
+    }
+
+    auto toMonitor = [](auto v) {
+#ifdef _DEBUG
+#define VARNAME(name) (#name)
         int i;
-        for (i = 0; i < 20; i++) {
-            if (strcmp(debNames[i], n) == 0) {
-                strcpy(debValues[i], v);
+        for (i = 0; i < MAXMONVAL; i++) {
+            if (VARNAME(v) == std::string(shmMon[i].name)) {
+                strcpy(shmMon[i].value, &(std::to_string(v)[0]));
+                return;
+            }
+            if ("#" == std::string(shmMon[i].name)) {
+                strcpy(shmMon[i].name, VARNAME(v));
+                strcpy(shmMon[i].value, &(std::to_string(v)[0]));
                 return;
             }
         }
-        strcpy(debNames[i], v);
-        strcpy(debValues[i], v);
+#endif
+    };
 
-    }
-
-    void toMonitor(std::string name, auto f) {
-        char n[20];
-        char v[20];
-        name.copy(n, sizeof n);
-        std::to_string(f).copy(v,sizeof v);
-        insertDeb(n, v);
-        std::memcpy(bufferN, n, sizeof n);
-        std::memcpy(bufferV, v, sizeof v);
-    }
 
     EulerAngles ToEulerAngles(XrQuaternionf q) {
         EulerAngles angles;
@@ -276,7 +284,7 @@ namespace {
             buffer->hmdYawAngle = angles.yaw * 180.f / (float)M_PI;
             buffer->hmdPitchAngle = angles.pitch * 180.f / (float)M_PI;
 
-            toMonitor("angles.yaw", angles.yaw);
+            toMonitor(angles.yaw);
 
             if (shmValues.useLinearRotation) {
                 shmValues.leftStartAt = buffer->leftStartAt;
@@ -694,31 +702,22 @@ extern "C" {
        }
 
 #ifdef _DEBUG
-       if (m_shmHandlerN) {
+       if (m_shmHandlerDeb) {
            Log("XRNeckSafer shared debug memory found\n");
        }
        else {
-           m_shmHandlerN = CreateFileMapping(
+           m_shmHandlerDeb = CreateFileMapping(
                INVALID_HANDLE_VALUE,
                NULL,
                PAGE_READWRITE,
                0,
-               sizeof(debNames),
-               m_memoryName.c_str());
-           m_shmHandlerV = CreateFileMapping(
-               INVALID_HANDLE_VALUE,
-               NULL,
-               PAGE_READWRITE,
-               0,
-               sizeof(debValues),
-               m_memoryName.c_str());
-
+               sizeof(shmMon),
+               m_memoryNameDeb.c_str());
            Log("XRNeckSafer shared debug memory created\n");
        }
 
-       if (m_shmHandlerN) {
-           bufferN = (char*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(debNames));
-           bufferV = (char*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(debValues));
+       if (m_shmHandlerDeb) {
+           bufferDeb = (monEntry_s*)MapViewOfFile(m_shmHandlerDeb, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmMon));
            if (NULL != bufferN) {
                Log("XRNeckSafer shared debug memory ready\n");
            }
