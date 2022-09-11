@@ -3,9 +3,9 @@
     public class JoyBut
     {
         private string _id;
-        private int _joyIndex;
-        private int _button;
-        private int _pov;
+        private int _joyIndex = -1;
+        private int _button = -1;
+        private int _pov = -1;
 
         public int JoyIndex
         {
@@ -45,21 +45,14 @@
             return _id;
         }
 
-        private JoyBut()
+        public JoyBut()
         {
-
-        }
-
-        public static JoyBut CreateEmpty()
-        {
-            return new JoyBut { JoyIndex = -1, Button = -1, POV = -1 };
+            _id = GenerateId();
         }
 
         private string GenerateId()
         {
             return $"{JoyIndex}-{Button}-{POV}";
         }
-
-
     }
 }

@@ -196,10 +196,12 @@ namespace XRNeckSafer
                 {
                     if (State.Buttons[k] != _lastButtons[i][k])
                     {
-                        var joyBut = JoyBut.CreateEmpty();
-                        joyBut.JoyIndex = i;
-                        joyBut.Button = k;
-                        joyBut.POV = -1;
+                        var joyBut = new JoyBut
+                        {
+                            JoyIndex = i,
+                            Button = k,
+                            POV = -1
+                        };
                         if (result == null)
                         {
                             result = new List<JoyBut>();
@@ -211,10 +213,12 @@ namespace XRNeckSafer
                 {
                     if (State.PointOfViewControllers[k] != _lastPOVs[i][k])
                     {
-                        var joyBut = JoyBut.CreateEmpty();
-                        joyBut.JoyIndex = i;
-                        joyBut.Button = State.PointOfViewControllers[k];
-                        joyBut.POV = k;
+                        var joyBut = new JoyBut
+                        {
+                            JoyIndex = i,
+                            Button = State.PointOfViewControllers[k],
+                            POV = k
+                        };
                         if (result == null)
                         {
                             result = new List<JoyBut>();

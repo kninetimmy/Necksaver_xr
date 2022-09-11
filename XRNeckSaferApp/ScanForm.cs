@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows.Forms;
 
 namespace XRNeckSafer
@@ -29,13 +30,13 @@ namespace XRNeckSafer
             InitializeComponent();
             _scanner = new JoystickButtonScanner(maxPressedButtonsCount);
             _scanner.OnScanningComplete += OnButtonScanned;
-            _scanner.OnCurrentlyPressedChanged += OnCurrentlyPressedChanged;
+            _scanner.OnCurrentlyPressedChanged += ChangePressedButtonsLabel;
         }
 
-        private void OnCurrentlyPressedChanged(List<JoyBut> buttons)
+        private void ChangePressedButtonsLabel(List<JoyBut> buttons)
         {
-            var builder = new System.Text.StringBuilder();
-            foreach(var button in buttons)
+            var builder = new StringBuilder();
+            foreach (var button in buttons)
             {
                 if (builder.Length > 0)
                 {
