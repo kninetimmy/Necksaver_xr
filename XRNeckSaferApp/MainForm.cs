@@ -1025,13 +1025,17 @@ namespace XRNeckSafer
         {
             if (Config.Instance.MultipleLRbuttons == false)
             {
-                ButtonForm frm = new ButtonForm(Top, Right, "Button for Left Rotation:", Config.Instance.LeftButton);
-                frm.ShowDialog();
+                using (var frm = new ButtonForm(Top, Right, "Button for Left Rotation:", Config.Instance.LeftButton))
+                {
+                    frm.ShowDialog();
+                }
             }
             else
             {
-                MultiButtons frm = new MultiButtons(Top, Right, "Left", Config.Instance.LeftButton, Config.Instance.LeftButton2, Config.Instance.LeftButton3);
-                frm.ShowDialog();
+                using (var frm = new MultiButtons(Top, Right, "Left", Config.Instance.LeftButton, Config.Instance.LeftButton2, Config.Instance.LeftButton3))
+                {
+                    frm.ShowDialog();
+                }
             }
             setButtonToolTip(SetLeftButton, Config.Instance.LeftButton);
             setLabelToolTip(LeftLabel, Config.Instance.LeftButton);
@@ -1041,13 +1045,17 @@ namespace XRNeckSafer
         {
             if (Config.Instance.MultipleLRbuttons == false)
             {
-                ButtonForm frm = new ButtonForm(Top, Right, "Button for Right Rotation:", Config.Instance.RightButton);
-                frm.ShowDialog();
+                using (var frm = new ButtonForm(Top, Right, "Button for Right Rotation:", Config.Instance.RightButton))
+                {
+                    frm.ShowDialog();
+                }
             }
             else
             {
-                MultiButtons frm = new MultiButtons(Top, Right, "Right", Config.Instance.RightButton, Config.Instance.RightButton2, Config.Instance.RightButton3);
-                frm.ShowDialog();
+                using (var frm = new MultiButtons(Top, Right, "Right", Config.Instance.RightButton, Config.Instance.RightButton2, Config.Instance.RightButton3))
+                {
+                    frm.ShowDialog();
+                }
             }
             setButtonToolTip(SetRightButton, Config.Instance.RightButton);
             setLabelToolTip(RightLabel, Config.Instance.RightButton);
@@ -1058,26 +1066,35 @@ namespace XRNeckSafer
 
             if (Config.Instance.MultipleLRbuttons == false)
             {
-                ButtonForm frm = new ButtonForm(Top, Right, "Reset Button:", Config.Instance.ResetButton);
-                frm.ShowDialog();
+                using (var frm = new ButtonForm(Top, Right, "Reset Button:", Config.Instance.ResetButton))
+                {
+                    frm.ShowDialog();
+                }
             }
             else
             {
-                MultiButtons frm = new MultiButtons(Top, Right, "Reset", Config.Instance.ResetButton, Config.Instance.ResetButton2, Config.Instance.ResetButton3);
-                frm.ShowDialog();
+                using (var frm = new MultiButtons(Top, Right, "Reset", Config.Instance.ResetButton, Config.Instance.ResetButton2, Config.Instance.ResetButton3))
+                {
+                    frm.ShowDialog();
+                }
             }
         }
+
         private void AccumReset_Click(object sender, EventArgs e)
         {
             if (Config.Instance.MultipleLRbuttons == false)
             {
-                ButtonForm frm = new ButtonForm(Top, Right, "Accum Reset Button:", Config.Instance.AccuResetButton);
-                frm.ShowDialog();
+                using (var frm = new ButtonForm(Top, Right, "Accum Reset Button:", Config.Instance.AccuResetButton))
+                {
+                    frm.ShowDialog();
+                }
             }
             else
             {
-                MultiButtons frm = new MultiButtons(Top, Right, "Accum Reset", Config.Instance.AccuResetButton, Config.Instance.AccuResetButton2, Config.Instance.AccuResetButton3);
-                frm.ShowDialog();
+                using (var frm = new MultiButtons(Top, Right, "Accum Reset", Config.Instance.AccuResetButton, Config.Instance.AccuResetButton2, Config.Instance.AccuResetButton3))
+                {
+                    frm.ShowDialog();
+                }
             }
             setButtonToolTip(AccumReset, Config.Instance.AccuResetButton);
         }
@@ -1086,13 +1103,17 @@ namespace XRNeckSafer
         {
             if (Config.Instance.MultipleLRbuttons == false)
             {
-                ButtonForm frm = new ButtonForm(Top, Right, "Hold Button:", Config.Instance.HoldButton1);
-                frm.ShowDialog();
+                using (var frm = new ButtonForm(Top, Right, "Hold Button:", Config.Instance.HoldButton1))
+                {
+                    frm.ShowDialog();
+                }
             }
             else
             {
-                MultiButtons frm = new MultiButtons(Top, Right, "Hold Button", Config.Instance.HoldButton1, Config.Instance.HoldButton2, Config.Instance.HoldButton3);
-                frm.ShowDialog();
+                using (var frm = new MultiButtons(Top, Right, "Hold Button", Config.Instance.HoldButton1, Config.Instance.HoldButton2, Config.Instance.HoldButton3))
+                {
+                    frm.ShowDialog();
+                }
             }
             setButtonToolTip(SetHoldButton1, Config.Instance.HoldButton1);
         }
@@ -1240,12 +1261,11 @@ namespace XRNeckSafer
             if (LayerNames[0] != "Error")
             {
                 string message = "";
-                string title = "OpenXR API Layers";
                 foreach (string name in LayerNames)
                 {
                     message = message + "\n" + name;
                 }
-                MessageBox.Show(message, title);
+                MessageBox.Show(message, "OpenXR API Layers");
             }
         }
 
@@ -1436,13 +1456,17 @@ namespace XRNeckSafer
         {
             if (Config.Instance.MultipleLRbuttons == false)
             {
-                ButtonForm frm = new ButtonForm(Top, Right, "Button for Down Rotation:", Config.Instance.DownButton);
-                frm.ShowDialog();
+                using (var frm = new ButtonForm(Top, Right, "Button for Down Rotation:", Config.Instance.DownButton))
+                {
+                    frm.ShowDialog();
+                }
             }
             else
             {
-                MultiButtons frm = new MultiButtons(Top, Right, "Down", Config.Instance.DownButton, Config.Instance.DownButton2, Config.Instance.DownButton3);
-                frm.ShowDialog();
+                using (var frm = new MultiButtons(Top, Right, "Down", Config.Instance.DownButton, Config.Instance.DownButton2, Config.Instance.DownButton3))
+                {
+                    frm.ShowDialog();
+                }
             }
             setButtonToolTip(SetDownButton, Config.Instance.DownButton);
             setLabelToolTip(DownLabel, Config.Instance.DownButton);
@@ -1452,13 +1476,17 @@ namespace XRNeckSafer
         {
             if (Config.Instance.MultipleLRbuttons == false)
             {
-                ButtonForm frm = new ButtonForm(Top, Right, "Button for up Rotation:", Config.Instance.UpButton);
-                frm.ShowDialog();
+                using (var frm = new ButtonForm(Top, Right, "Button for up Rotation:", Config.Instance.UpButton))
+                {
+                    frm.ShowDialog();
+                }
             }
             else
             {
-                MultiButtons frm = new MultiButtons(Top, Right, "Down", Config.Instance.UpButton, Config.Instance.UpButton2, Config.Instance.UpButton3);
-                frm.ShowDialog();
+                using (var frm = new MultiButtons(Top, Right, "Down", Config.Instance.UpButton, Config.Instance.UpButton2, Config.Instance.UpButton3))
+                {
+                    frm.ShowDialog();
+                }
             }
             setButtonToolTip(SetUpButton, Config.Instance.UpButton);
             setLabelToolTip(UpLabel, Config.Instance.UpButton);
@@ -1469,13 +1497,17 @@ namespace XRNeckSafer
         {
             if (Config.Instance.MultipleLRbuttons == false)
             {
-                ButtonForm frm = new ButtonForm(Top, Right, "Pitch Accum Reset Button:", Config.Instance.PitchAccuResetButton);
-                frm.ShowDialog();
+                using (var frm = new ButtonForm(Top, Right, "Pitch Accum Reset Button:", Config.Instance.PitchAccuResetButton))
+                {
+                    frm.ShowDialog();
+                }
             }
             else
             {
-                MultiButtons frm = new MultiButtons(Top, Right, "Accum Reset", Config.Instance.PitchAccuResetButton, Config.Instance.PitchAccuResetButton2, Config.Instance.PitchAccuResetButton3);
-                frm.ShowDialog();
+                using (var frm = new MultiButtons(Top, Right, "Accum Reset", Config.Instance.PitchAccuResetButton, Config.Instance.PitchAccuResetButton2, Config.Instance.PitchAccuResetButton3))
+                {
+                    frm.ShowDialog();
+                }
             }
             setButtonToolTip(pAccumReset, Config.Instance.PitchAccuResetButton);
         }
@@ -1484,13 +1516,17 @@ namespace XRNeckSafer
         {
             if (Config.Instance.MultipleLRbuttons == false)
             {
-                ButtonForm frm = new ButtonForm(Top, Right, "Pitch Hold Button:", Config.Instance.PitchHoldButton1);
-                frm.ShowDialog();
+                using (var frm = new ButtonForm(Top, Right, "Pitch Hold Button:", Config.Instance.PitchHoldButton1))
+                {
+                    frm.ShowDialog();
+                }
             }
             else
             {
-                MultiButtons frm = new MultiButtons(Top, Right, "Hold Button", Config.Instance.PitchHoldButton1, Config.Instance.PitchHoldButton2, Config.Instance.PitchHoldButton3);
-                frm.ShowDialog();
+                using (var frm = new MultiButtons(Top, Right, "Hold Button", Config.Instance.PitchHoldButton1, Config.Instance.PitchHoldButton2, Config.Instance.PitchHoldButton3))
+                {
+                    frm.ShowDialog();
+                }
             }
             setButtonToolTip(SetPitchHoldButton, Config.Instance.PitchHoldButton1);
         }

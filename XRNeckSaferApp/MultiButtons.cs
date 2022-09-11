@@ -41,21 +41,27 @@ namespace XRNeckSafer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ButtonForm frm = new ButtonForm(_mainFormTop, _mainFormRight, "Button for" + _sideText + " Rotation:", _bconf1);
-            frm.ShowDialog();
-            setButtonToolTip(button1, _bconf1); 
+            using (var frm = new ButtonForm(_mainFormTop, _mainFormRight, "Button for" + _sideText + " Rotation:", _bconf1))
+            {
+                frm.ShowDialog();
+            }
+            setButtonToolTip(button1, _bconf1);
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            ButtonForm frm = new ButtonForm(_mainFormTop, _mainFormRight, "Button for" + _sideText + " Rotation:", _bconf2);
-            frm.ShowDialog();
+            using (var frm = new ButtonForm(_mainFormTop, _mainFormRight, "Button for" + _sideText + " Rotation:", _bconf2))
+            {
+                frm.ShowDialog();
+            }
             setButtonToolTip(button2, _bconf2);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            ButtonForm frm = new ButtonForm(_mainFormTop, _mainFormRight, "Button for" + _sideText + " Rotation:", _bconf3);
-            frm.ShowDialog();
+            using (var frm = new ButtonForm(_mainFormTop, _mainFormRight, "Button for" + _sideText + " Rotation:", _bconf3))
+            {
+                frm.ShowDialog();
+            }
             setButtonToolTip(button3, _bconf3);
         }
 
