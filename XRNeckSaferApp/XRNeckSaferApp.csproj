@@ -156,7 +156,11 @@
     <Compile Include="Graph.Designer.cs">
       <DependentUpon>Graph.cs</DependentUpon>
     </Compile>
-    <Compile Include="JoystickStuff.cs" />
+    <Compile Include="Joystick\JoystickButtonScanner.cs" />
+    <Compile Include="Joystick\JoyBut.cs" />
+    <Compile Include="Joystick\JoystickButton.cs" />
+    <Compile Include="Joystick\JoystickStuff.cs" />
+    <Compile Include="Joystick\StickItem.cs" />
     <Compile Include="KeyInterceptor.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

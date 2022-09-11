@@ -5,20 +5,7 @@
         /// <summary>
         /// Erforderliche Designervariable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Verwendete Ressourcen bereinigen.
-        /// </summary>
-        /// <param name="disposing">True, wenn verwaltete Ressourcen gelöscht werden sollen; andernfalls False.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        private System.ComponentModel.IContainer _components = null;
 
         #region Vom Windows Form-Designer generierter Code
 
@@ -28,7 +15,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this._components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -70,7 +57,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.loopTimer = new System.Windows.Forms.Timer(this.components);
+            this.loopTimer = new System.Windows.Forms.Timer(this._components);
             this.HMDYawBox = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -97,7 +84,7 @@
             this.SetRightButton = new System.Windows.Forms.Button();
             this.RightLabel = new System.Windows.Forms.Label();
             this.LeftLabel = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this._components);
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.advancedConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startMinimzedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -122,8 +109,8 @@
             this.aPILayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableAPILayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listApiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this._components);
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this._components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ARGroup = new System.Windows.Forms.GroupBox();
@@ -733,8 +720,7 @@
             this.transFNUP.Name = "transFNUP";
             this.transFNUP.Size = new System.Drawing.Size(44, 20);
             this.transFNUP.TabIndex = 26;
-            this.transFNUP.ValueChanged += new System.EventHandler(this.transFNUP_ValueChanged);
-            this.transFNUP.KeyUp += new System.Windows.Forms.KeyEventHandler(this.transFNUP_KeyUp);
+            this.transFNUP.ValueChanged += new System.EventHandler(this.OnYawForwardTranslationChanged);
             // 
             // label24
             // 
@@ -763,8 +749,7 @@
             0,
             0,
             0});
-            this.angleNUD.ValueChanged += new System.EventHandler(this.angleNUD_ValueChanged);
-            this.angleNUD.KeyUp += new System.Windows.Forms.KeyEventHandler(this.angleNUD_KeyUp);
+            this.angleNUD.ValueChanged += new System.EventHandler(this.OnYawRotationAngleChanged);
             // 
             // transLRNUP
             // 
@@ -778,8 +763,7 @@
             this.transLRNUP.Name = "transLRNUP";
             this.transLRNUP.Size = new System.Drawing.Size(44, 20);
             this.transLRNUP.TabIndex = 25;
-            this.transLRNUP.ValueChanged += new System.EventHandler(this.transLRNUP_ValueChanged);
-            this.transLRNUP.KeyUp += new System.Windows.Forms.KeyEventHandler(this.transLRNUP_KeyUp);
+            this.transLRNUP.ValueChanged += new System.EventHandler(this.OnYawLeftRightTranslationChanged);
             // 
             // label8
             // 
@@ -1813,8 +1797,7 @@
             0,
             0,
             0});
-            this.upNUD.ValueChanged += new System.EventHandler(this.upNUD_ValueChanged);
-            this.upNUD.KeyUp += new System.Windows.Forms.KeyEventHandler(this.upNUD_KeyUp);
+            this.upNUD.ValueChanged += new System.EventHandler(this.OnPitchTiltUpRotationChanged);
             // 
             // downNUD
             // 
@@ -1833,8 +1816,7 @@
             0,
             0,
             0});
-            this.downNUD.ValueChanged += new System.EventHandler(this.downNUD_ValueChanged);
-            this.downNUD.KeyUp += new System.Windows.Forms.KeyEventHandler(this.downNUD_KeyUp);
+            this.downNUD.ValueChanged += new System.EventHandler(this.OnPitchTiltDownRotationChanged);
             // 
             // label22
             // 

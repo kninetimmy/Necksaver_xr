@@ -1,34 +1,32 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace XRNeckSafer
 {
     public partial class ButtonForm : Form
     {
-        private MainForm mf;
-        private ScanForm sf;
-        public JoyBut jb;
-        private ButtonConfig butconf;
+        private readonly ButtonConfig _buttonConfig;
 
-        public ButtonForm(MainForm f, string title, ButtonConfig bc)
+        public ButtonForm(int mainFormTop, int mainFormRight, string title, ButtonConfig bc)
         {
-            butconf = bc;
-            mf = f;
+            _buttonConfig = bc;
             InitializeComponent();
             StartPosition = FormStartPosition.Manual;
-            Top = mf.Top;
-            Left = mf.Right - 10;
+            Top = mainFormTop;
+            Left = mainFormRight - 10;
             Text = title;
-            mf.js.GetJoysticks();
+            JoystickStuff.Instance.ReloadJoysticks();
 
-            UseModifierCheckBox.Checked = butconf.UseModifier;
-            InvertcheckBox.Checked = butconf.Invert;
-            toggleCheckBox.Checked = butconf.Toggle;
-            Use8WayHatCheckBox.Checked = butconf.Use8WayHat;
+            UseModifierCheckBox.Checked = _buttonConfig.UseModifier;
+            InvertcheckBox.Checked = _buttonConfig.Invert;
+            toggleCheckBox.Checked = _buttonConfig.Toggle;
+            Use8WayHatCheckBox.Checked = _buttonConfig.Use8WayHat;
 
             FillComboBoxes();
         }
-        void FillComboBoxes()
+
+        private void FillComboBoxes()
         {
             MainDeviceComboBox.Items.Clear();
             MainDeviceComboBox.Items.Add("none");
@@ -40,35 +38,38 @@ namespace XRNeckSafer
             ModifierButtonComboBox.Items.Add("none");
 
 
-            for (int i = 0; i < mf.js.ll.Count; i++)
+            for (int i = 0; i < JoystickStuff.Instance.GetDevicesCount(); i++)
             {
-                MainDeviceComboBox.Items.Add(mf.js.ll[i].InstanceName);
-                ModifierDeviceComboBox.Items.Add(mf.js.ll[i].InstanceName);
+                var device = JoystickStuff.Instance.GetDeviceByIndex(i);
+                MainDeviceComboBox.Items.Add(device.InstanceName);
+                ModifierDeviceComboBox.Items.Add(device.InstanceName);
             }
 
-            int Index = mf.js.IndexFromGuid(butconf.JoystickGUID);
+            int Index = JoystickStuff.Instance.IndexFromGuid(_buttonConfig.JoystickGUID);
             MainDeviceComboBox.SelectedIndex = Index + 1;
             FillButtonComboBox(Index, MainButtonComboBox);
 
-            Index = mf.js.IndexFromGuid(butconf.ModJoystickGUID);
+            Index = JoystickStuff.Instance.IndexFromGuid(_buttonConfig.ModJoystickGUID);
             ModifierDeviceComboBox.SelectedIndex = Index + 1;
             FillButtonComboBox(Index, ModifierButtonComboBox);
-            ModifierButtonComboBox.Text = butconf.ModButton;
+            ModifierButtonComboBox.Text = _buttonConfig.ModButton;
 
-            MainButtonComboBox.Text = butconf.Button;
+            MainButtonComboBox.Text = _buttonConfig.Button;
         }
-        void FillButtonComboBox(int joyIndex, ComboBox cb)
+
+        private void FillButtonComboBox(int joyIndex, ComboBox cb)
         {
             cb.Items.Clear();
             cb.Items.Add("none");
             if (joyIndex == -1) return;
-            for (int i = 0; i < mf.js.Sticks[joyIndex].Stick.Capabilities.ButtonCount; i++)
+            var stickItem = JoystickStuff.Instance.GetStickItemByIndex(joyIndex);
+            for (int i = 0; i < stickItem.Stick.Capabilities.ButtonCount; i++)
             {
                 cb.Items.Add("But: " + (i + 1));
             }
-            for (int i = 0; i < mf.js.Sticks[joyIndex].Stick.Capabilities.PovCount; i++)
+            for (int i = 0; i < stickItem.Stick.Capabilities.PovCount; i++)
             {
-                if (butconf.Use8WayHat)
+                if (_buttonConfig.Use8WayHat)
                 {
                     for (int j = 0; j < 360; j += 45)
                     {
@@ -86,81 +87,75 @@ namespace XRNeckSafer
 
         }
 
-        private void MainScanButton_Click(object sender, EventArgs e)
+        private void OnMainScanButtonClick(object sender, EventArgs e)
         {
-            sf = new ScanForm(this);
-            sf.StartPosition = FormStartPosition.Manual;
-            sf.Top = Top + 10;
-            sf.Left = Left;
-
-            mf.js.InitScan();
-            scanTimer.Start();
-            sf.ShowDialog();
-
-            MainDeviceComboBox.Text = MainDeviceComboBox.Items[jb.joyIndex + 1].ToString();
-            FillButtonComboBox(jb.joyIndex, MainButtonComboBox);
-            if (jb.pov == -1)
+            var buttons = ScanForm.ShowForm(FormStartPosition.Manual, Top + 10, Left, 2);
+            if (buttons == null || !buttons.Any())
             {
-                MainButtonComboBox.Text = MainButtonComboBox.Items[jb.btn + 1].ToString();
+                return;
+            }
+            var modifierButton = buttons.Count > 1 ? buttons[0] : null;
+            var mainButton = buttons.Count > 1 ? buttons[1] : buttons[0];
+            if (modifierButton != null)
+            {
+                ProcessModifierButton(modifierButton);
+                UseModifierCheckBox.Checked = true;
             }
             else
             {
-                if (butconf.Use8WayHat)
+                UseModifierCheckBox.Checked = false;
+            }
+            ProcessMainButton(mainButton);
+        }
+
+        private void ProcessMainButton(JoyBut joyBut)
+        {
+            MainDeviceComboBox.Text = MainDeviceComboBox.Items[joyBut.JoyIndex + 1].ToString();
+            FillButtonComboBox(joyBut.JoyIndex, MainButtonComboBox);
+            if (joyBut.POV == -1)
+            {
+                MainButtonComboBox.Text = MainButtonComboBox.Items[joyBut.Button + 1].ToString();
+            }
+            else
+            {
+                var stickItem = JoystickStuff.Instance.GetStickItemByIndex(joyBut.JoyIndex);
+                if (_buttonConfig.Use8WayHat)
                 {
                     int butindex =
-                        mf.js.Sticks[jb.joyIndex].Stick.Capabilities.ButtonCount
-                        + jb.pov * 8
-                        + jb.btn / 4500
+                        stickItem.Stick.Capabilities.ButtonCount
+                        + joyBut.POV * 8
+                        + joyBut.Button / 4500
                         + 1;
                     MainButtonComboBox.Text = MainButtonComboBox.Items[butindex].ToString();
                 }
                 else
                 {
                     int butindex =
-                        mf.js.Sticks[jb.joyIndex].Stick.Capabilities.ButtonCount
-                        + jb.pov * 4
-                        + jb.btn / 9000
+                        stickItem.Stick.Capabilities.ButtonCount
+                        + joyBut.POV * 4
+                        + joyBut.Button / 9000
                         + 1;
                     MainButtonComboBox.Text = MainButtonComboBox.Items[butindex].ToString();
                 }
             }
         }
 
-        private void ModifierScanButton_Click(object sender, EventArgs e)
+        private void ProcessModifierButton(JoyBut joyBut)
         {
-            sf = new ScanForm(this);
-            sf.StartPosition = FormStartPosition.Manual;
-            sf.Top = Top + 10;
-            sf.Left = Left;
-
-            mf.js.InitScan();
-            scanTimer.Start();
-            sf.ShowDialog();
-
-            ModifierDeviceComboBox.Text = ModifierDeviceComboBox.Items[jb.joyIndex + 1].ToString();
-            FillButtonComboBox(jb.joyIndex, ModifierButtonComboBox);
-            if (jb.pov == -1)
+            ModifierDeviceComboBox.Text = ModifierDeviceComboBox.Items[joyBut.JoyIndex + 1].ToString();
+            FillButtonComboBox(joyBut.JoyIndex, ModifierButtonComboBox);
+            if (joyBut.POV == -1)
             {
-                ModifierButtonComboBox.Text = ModifierButtonComboBox.Items[jb.btn + 1].ToString();
+                ModifierButtonComboBox.Text = ModifierButtonComboBox.Items[joyBut.Button + 1].ToString();
             }
             else
             {
                 int butindex =
-                    mf.js.Sticks[jb.joyIndex].Stick.Capabilities.ButtonCount
-                    + jb.pov * 4
-                    + jb.btn / 9000
+                    JoystickStuff.Instance.GetStickItemByIndex(joyBut.JoyIndex).Stick.Capabilities.ButtonCount
+                    + joyBut.POV * 4
+                    + joyBut.Button / 9000
                     + 1;
                 ModifierButtonComboBox.Text = ModifierButtonComboBox.Items[butindex].ToString();
-            }
-        }
-
-        private void ScanTimerLoop(object sender, EventArgs e)
-        {
-            jb = mf.js.ScanJoysticks();
-            if (jb.joyIndex != -1)
-            {
-                scanTimer.Stop();
-                sf.Close();
             }
         }
 
@@ -177,36 +172,34 @@ namespace XRNeckSafer
             label3.Enabled = UseModifierCheckBox.Checked;
             ModifierDeviceComboBox.Enabled = UseModifierCheckBox.Checked;
             ModifierButtonComboBox.Enabled = UseModifierCheckBox.Checked;
-            ModifierScanButton.Enabled = UseModifierCheckBox.Checked;
         }
 
         private void OKButton_Click(object sender, EventArgs e)
         {
             if (MainDeviceComboBox.SelectedIndex == 0)
-                butconf.JoystickGUID = "none";
+                _buttonConfig.JoystickGUID = "none";
             else
-                butconf.JoystickGUID = mf.js.ll[MainDeviceComboBox.SelectedIndex - 1].InstanceGuid.ToString();
-            butconf.Button = MainButtonComboBox.Text;
+                _buttonConfig.JoystickGUID = JoystickStuff.Instance.GetDeviceByIndex(MainDeviceComboBox.SelectedIndex - 1).InstanceGuid.ToString();
+            _buttonConfig.Button = MainButtonComboBox.Text;
 
             if (ModifierDeviceComboBox.SelectedIndex == 0)
-                butconf.ModJoystickGUID = "none";
+                _buttonConfig.ModJoystickGUID = "none";
             else
-                butconf.ModJoystickGUID = mf.js.ll[ModifierDeviceComboBox.SelectedIndex - 1].InstanceGuid.ToString();
+                _buttonConfig.ModJoystickGUID = JoystickStuff.Instance.GetDeviceByIndex(ModifierDeviceComboBox.SelectedIndex - 1).InstanceGuid.ToString();
 
-            butconf.ModButton = ModifierButtonComboBox.Text;
-            butconf.UseModifier = UseModifierCheckBox.Checked;
-            butconf.Invert = InvertcheckBox.Checked;
-            butconf.Toggle = toggleCheckBox.Checked;
-            butconf.Use8WayHat = Use8WayHatCheckBox.Checked;
+            _buttonConfig.ModButton = ModifierButtonComboBox.Text;
+            _buttonConfig.UseModifier = UseModifierCheckBox.Checked;
+            _buttonConfig.Invert = InvertcheckBox.Checked;
+            _buttonConfig.Toggle = toggleCheckBox.Checked;
+            _buttonConfig.Use8WayHat = Use8WayHatCheckBox.Checked;
 
-            mf.conf.WriteConfig();
-
+            Config.Instance.WriteConfig();
             Close();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            mf.conf = Config.ReadConfig();
+            Config.ReloadConfig();
             Close();
         }
 
@@ -224,7 +217,7 @@ namespace XRNeckSafer
 
         private void Use8WayHatCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            butconf.Use8WayHat = Use8WayHatCheckBox.Checked;
+            _buttonConfig.Use8WayHat = Use8WayHatCheckBox.Checked;
             FillComboBoxes();
         }
     }

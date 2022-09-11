@@ -1,58 +1,58 @@
 ﻿using SharpDX;
+using Silk.NET.Core.Native;
+using Silk.NET.OpenXR;
 using System;
 using System.Collections.Generic;
 using System.IO.MemoryMappedFiles;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Silk.NET.Core.Native;
-using Silk.NET.OpenXR;
+
 namespace XRNeckSafer
 {
-    public class VRStuff
+    public struct SharedMemoryData
     {
-        MemoryMappedFile shm;
-        MemoryMappedViewAccessor accessor;
-        public shmVal_s shmValues;
+        public float hmdYawAngle;
+        public float hmdPitchAngle;
+        public float yawOffset;
+        public float pitchOffset;
+        public float lateralOffset;
+        public float longitudinalOffset;
+        public float rightMultiplier;
+        public float leftMultiplier;
+        public float upMultiplier;
+        public float downMultiplier;
+        public int leftStartAt;
+        public int rightStartAt;
+        public int upStartAt;
+        public int downStartAt;
+        public bool resetHmdOrientation;
+        public bool useLinearRotation;
+        public bool useLinearPitchRotation;
+        public bool holdLinearRotation;
+        public bool holdLinearPitchRotation;
+        public bool hasBeenCentered;
+    }
 
-        public struct shmVal_s
-        {
-            public float hmdYawAngle;
-            public float hmdPitchAngle;
-            public float yawOffset;
-            public float pitchOffset;
-            public float lateralOffset;
-            public float longitudinalOffset;
-            public float rightMultiplier;
-            public float leftMultiplier;
-            public float upMultiplier;
-            public float downMultiplier;
-            public int leftStartAt;
-            public int rightStartAt;
-            public int upStartAt;
-            public int downStartAt;
-            public bool resetHmdOrientation;
-            public bool useLinearRotation;
-            public bool useLinearPitchRotation;
-            public bool holdLinearRotation;
-            public bool holdLinearPitchRotation;
-            public bool hasBeenCentered;
-        }
+    public class VRStuff : IDisposable
+    {
+        private const string XRNECKSAFER_LAYER_NAME = "XR_APILAYER_NOVENDOR_XRNeckSafer";
+        private const string SHARED_MEMORY_FILE_NAME = "XRNeckSaferSHM";
+        private const int SHARED_MEMORY_FILE_SIZE = 80;
+        private readonly MemoryMappedFile _sharedMemoryMappedFile;
+        private MemoryMappedViewAccessor _memoryAccessor;
+        private SharedMemoryData _sharedMemoryData;
 
         public VRStuff()
         {
-            string shmName = "XRNeckSaferSHM";
-            int shmSize = 80;
-            shm = MemoryMappedFile.CreateOrOpen(shmName, shmSize);
-            accessor = shm.CreateViewAccessor();
-
+            _sharedMemoryMappedFile = MemoryMappedFile.CreateOrOpen(SHARED_MEMORY_FILE_NAME, SHARED_MEMORY_FILE_SIZE);
+            _memoryAccessor = _sharedMemoryMappedFile.CreateViewAccessor();
         }
 
-        public unsafe List<String> ListApiLayers()
+        public unsafe List<string> ListApiLayers()
         {
             // taken from OpenXR toolkit without knowing what I'm doing
-            List<String> LayerNameList = new List<String>();
-            AssemblyName assemblyName = new AssemblyName();
+            var LayerNameList = new List<string>();
+            var assemblyName = new AssemblyName();
 
             AppDomain dom = AppDomain.CreateDomain("temporaryXr");
             try
@@ -81,12 +81,9 @@ namespace XRNeckSafer
                     {
                         fixed (void* nptr = layers[i].LayerName)
                         {
-                            string layerName = SilkMarshal.PtrToString(new System.IntPtr(nptr));
+                            string layerName = SilkMarshal.PtrToString(new IntPtr(nptr));
                             LayerNameList.Add(layerName);
-                            if (layerName == "XR_APILAYER_NOVENDOR_XRNeckSafer")
-                            {
-                                found = true;
-                            }
+                            found = layerName.Equals(XRNECKSAFER_LAYER_NAME, StringComparison.Ordinal);
                         }
                     }
                     if (!found)
@@ -105,7 +102,7 @@ namespace XRNeckSafer
             {
                 string a = e.ToString();
 
-                MessageBox.Show("Unable to query API layers\nUse OpenXR developer tools to \nverify layer installation\n\n"+a, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Unable to query API layers\nUse OpenXR developer tools to \nverify layer installation\n\n" + a, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LayerNameList.Clear();
                 LayerNameList.Add("Error");
             }
@@ -116,66 +113,81 @@ namespace XRNeckSafer
             return LayerNameList;
 
         }
-        public void resetHmdOrientation()
+
+        public void ResetHmdOrientation()
         {
-            shmValues.resetHmdOrientation = true;
-            accessor.Write<shmVal_s>(0, ref shmValues);
+            _sharedMemoryData.resetHmdOrientation = true;
+            _memoryAccessor.Write(0, ref _sharedMemoryData);
         }
-        public void updateHmdOrientation()
+
+        public void UpdateHmdOrientation()
         {
-            accessor.Read<shmVal_s>(0, out shmValues);
+            _memoryAccessor.Read(0, out _sharedMemoryData);
         }
 
         public bool HmdWasCentered()
         {
-            return shmValues.hasBeenCentered;
-        }
-        public float getHmdYaw()
-        {
-            return shmValues.hmdYawAngle;
-        }
-        public float getHmdPitch()
-        {
-            return shmValues.hmdPitchAngle;
-        }
-        public void setLinearRotationSettings(bool uselinear, int leftstart, int rightstart, int leftmult, int rightmult)
-        {
-            shmValues.useLinearRotation = uselinear;
-            shmValues.leftStartAt = leftstart;
-            shmValues.rightStartAt = rightstart;
-            shmValues.leftMultiplier = (float)leftmult / 100f; 
-            shmValues.rightMultiplier = (float)rightmult / 100f;
-            accessor.Write<shmVal_s>(0, ref shmValues);
-        }
-        public void setPitchLinearRotationSettings(bool usepitchlinear, int upstart, int downstart, int upmult, int downmult)
-        {
-            shmValues.useLinearPitchRotation = usepitchlinear;
-            shmValues.upStartAt = upstart;
-            shmValues.downStartAt = downstart;
-            shmValues.upMultiplier = (float)upmult / 100f;
-            shmValues.downMultiplier = (float)downmult / 100f;
-            accessor.Write<shmVal_s>(0, ref shmValues);
+            return _sharedMemoryData.hasBeenCentered;
         }
 
-        public void setOffset(int a, int b, Vector3 trans)
+        public float GetHmdYaw()
         {
-            shmValues.yawOffset = (float)(a * Math.PI / 180);
-            shmValues.pitchOffset = (float)(-b * Math.PI / 180);
-            shmValues.lateralOffset = trans.X;
-            shmValues.longitudinalOffset = trans.Z;
-            accessor.Write<shmVal_s>(0, ref shmValues);
+            return _sharedMemoryData.hmdYawAngle;
         }
 
-        public void setLinearHold(bool h)
+        public float GetHmdPitch()
         {
-            shmValues.holdLinearRotation = h;
-            accessor.Write<shmVal_s>(0, ref shmValues);
+            return _sharedMemoryData.hmdPitchAngle;
         }
 
-        public void setPitchLinearHold(bool h)
+        public void SetLinearRotationSettings(bool uselinear, int leftstart, int rightstart, int leftmult, int rightmult)
         {
-            shmValues.holdLinearRotation = h;
-            accessor.Write<shmVal_s>(0, ref shmValues);
+            _sharedMemoryData.useLinearRotation = uselinear;
+            _sharedMemoryData.leftStartAt = leftstart;
+            _sharedMemoryData.rightStartAt = rightstart;
+            _sharedMemoryData.leftMultiplier = leftmult / 100f;
+            _sharedMemoryData.rightMultiplier = rightmult / 100f;
+            _memoryAccessor.Write(0, ref _sharedMemoryData);
+        }
+        public void SetPitchLinearRotationSettings(bool usepitchlinear, int upstart, int downstart, int upmult, int downmult)
+        {
+            _sharedMemoryData.useLinearPitchRotation = usepitchlinear;
+            _sharedMemoryData.upStartAt = upstart;
+            _sharedMemoryData.downStartAt = downstart;
+            _sharedMemoryData.upMultiplier = upmult / 100f;
+            _sharedMemoryData.downMultiplier = downmult / 100f;
+            _memoryAccessor.Write(0, ref _sharedMemoryData);
+        }
+
+        public void SetOffset(int a, int b, Vector3 trans)
+        {
+            _sharedMemoryData.yawOffset = (float)(a * Math.PI / 180);
+            _sharedMemoryData.pitchOffset = (float)(-b * Math.PI / 180);
+            _sharedMemoryData.lateralOffset = trans.X;
+            _sharedMemoryData.longitudinalOffset = trans.Z;
+            _memoryAccessor.Write(0, ref _sharedMemoryData);
+        }
+
+        public void SetLinearHold(bool h)
+        {
+            _sharedMemoryData.holdLinearRotation = h;
+            _memoryAccessor.Write(0, ref _sharedMemoryData);
+        }
+
+        public void SetPitchLinearHold(bool h)
+        {
+            _sharedMemoryData.holdLinearRotation = h;
+            _memoryAccessor.Write(0, ref _sharedMemoryData);
+        }
+
+        public void Dispose()
+        {
+            if (_memoryAccessor != null)
+            {
+                _memoryAccessor.Dispose();
+                _memoryAccessor = null;
+                _sharedMemoryMappedFile?.Dispose();
+            }
         }
     }
 }

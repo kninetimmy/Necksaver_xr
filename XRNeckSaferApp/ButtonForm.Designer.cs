@@ -29,20 +29,17 @@ namespace XRNeckSafer
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.MainScanButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.MainButtonComboBox = new System.Windows.Forms.ComboBox();
             this.MainDeviceComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.ModifierScanButton = new System.Windows.Forms.Button();
             this.ModifierButtonComboBox = new System.Windows.Forms.ComboBox();
             this.ModifierDeviceComboBox = new System.Windows.Forms.ComboBox();
             this.OKButton = new System.Windows.Forms.Button();
             this.BFCancelButton = new System.Windows.Forms.Button();
             this.ClearButton = new System.Windows.Forms.Button();
-            this.scanTimer = new System.Windows.Forms.Timer(this.components);
             this.UseModifierCheckBox = new System.Windows.Forms.CheckBox();
             this.InvertcheckBox = new System.Windows.Forms.CheckBox();
             this.toggleCheckBox = new System.Windows.Forms.CheckBox();
@@ -53,11 +50,11 @@ namespace XRNeckSafer
             // 
             this.MainScanButton.Location = new System.Drawing.Point(247, 26);
             this.MainScanButton.Name = "MainScanButton";
-            this.MainScanButton.Size = new System.Drawing.Size(51, 23);
+            this.MainScanButton.Size = new System.Drawing.Size(51, 50);
             this.MainScanButton.TabIndex = 0;
             this.MainScanButton.Text = "Scan";
             this.MainScanButton.UseVisualStyleBackColor = true;
-            this.MainScanButton.Click += new System.EventHandler(this.MainScanButton_Click);
+            this.MainScanButton.Click += new System.EventHandler(this.OnMainScanButtonClick);
             // 
             // label2
             // 
@@ -109,17 +106,6 @@ namespace XRNeckSafer
             this.label3.Size = new System.Drawing.Size(44, 13);
             this.label3.TabIndex = 12;
             this.label3.Text = "Modifier";
-            // 
-            // ModifierScanButton
-            // 
-            this.ModifierScanButton.Enabled = false;
-            this.ModifierScanButton.Location = new System.Drawing.Point(247, 54);
-            this.ModifierScanButton.Name = "ModifierScanButton";
-            this.ModifierScanButton.Size = new System.Drawing.Size(51, 23);
-            this.ModifierScanButton.TabIndex = 11;
-            this.ModifierScanButton.Text = "Scan";
-            this.ModifierScanButton.UseVisualStyleBackColor = true;
-            this.ModifierScanButton.Click += new System.EventHandler(this.ModifierScanButton_Click);
             // 
             // ModifierButtonComboBox
             // 
@@ -176,10 +162,6 @@ namespace XRNeckSafer
             this.ClearButton.UseVisualStyleBackColor = true;
             this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
-            // scanTimer
-            // 
-            this.scanTimer.Tick += new System.EventHandler(this.ScanTimerLoop);
-            // 
             // UseModifierCheckBox
             // 
             this.UseModifierCheckBox.AutoSize = true;
@@ -235,7 +217,6 @@ namespace XRNeckSafer
             this.Controls.Add(this.BFCancelButton);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.ModifierScanButton);
             this.Controls.Add(this.ModifierButtonComboBox);
             this.Controls.Add(this.ModifierDeviceComboBox);
             this.Controls.Add(this.MainScanButton);
@@ -257,11 +238,10 @@ namespace XRNeckSafer
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button ModifierScanButton;
+        // private System.Windows.Forms.Button ModifierScanButton;
         private System.Windows.Forms.Button OKButton;
         private System.Windows.Forms.Button BFCancelButton;
         private System.Windows.Forms.Button ClearButton;
-        public System.Windows.Forms.Timer scanTimer;
         public System.Windows.Forms.ComboBox MainButtonComboBox;
         public System.Windows.Forms.ComboBox MainDeviceComboBox;
         public System.Windows.Forms.ComboBox ModifierButtonComboBox;

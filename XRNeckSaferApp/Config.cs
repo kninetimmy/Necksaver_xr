@@ -31,18 +31,19 @@ namespace XRNeckSafer
             togglestate = false;
             laststate = false;
         }
-        public ButtonConfig copyButtonConfig(ButtonConfig b)
-        {
-            b.JoystickGUID = string.Copy(JoystickGUID);
-            b.Button = string.Copy(Button);
-            b.ModJoystickGUID = string.Copy(ModJoystickGUID);
-            b.ModButton = string.Copy(ModButton);
-            b.UseModifier = UseModifier;
-            b.Use8WayHat = Use8WayHat;
-            b.Invert = Invert;
-            b.Toggle = Toggle;
 
-            return b;
+        public ButtonConfig CopyConfig(ButtonConfig buttonConfig)
+        {
+            buttonConfig.JoystickGUID = string.Copy(JoystickGUID);
+            buttonConfig.Button = string.Copy(Button);
+            buttonConfig.ModJoystickGUID = string.Copy(ModJoystickGUID);
+            buttonConfig.ModButton = string.Copy(ModButton);
+            buttonConfig.UseModifier = UseModifier;
+            buttonConfig.Use8WayHat = Use8WayHat;
+            buttonConfig.Invert = Invert;
+            buttonConfig.Toggle = Toggle;
+
+            return buttonConfig;
         }
 
     }
@@ -105,7 +106,7 @@ namespace XRNeckSafer
         public List<int[]> DownAutoSteps;
 
 
-        public Config()
+        private Config()
         {
             LeftButton = new ButtonConfig();
             LeftButton2 = new ButtonConfig();
@@ -162,7 +163,27 @@ namespace XRNeckSafer
             DownAutoSteps = new List<int[]>();
         }
 
-        static public Config ReadConfig()
+        private static Config _instance;
+
+        public static Config Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = ReadConfig();
+                }
+                return _instance;
+            }
+        }
+
+        public static Config ReloadConfig()
+        {
+            _instance = null;
+            return Instance;
+        }
+
+        private static Config ReadConfig()
         {
             try
             {
@@ -176,18 +197,18 @@ namespace XRNeckSafer
                     return CreateDefaultConfig();
                 }
                 Config c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configfilename));
-                if (c.LeftButton   == null) c.LeftButton    = new ButtonConfig();
-                if (c.LeftButton2  == null) c.LeftButton2   = new ButtonConfig();
-                if (c.LeftButton3  == null) c.LeftButton3   = new ButtonConfig();
-                if (c.RightButton  == null) c.RightButton   = new ButtonConfig();
-                if (c.RightButton2 == null) c.RightButton2  = new ButtonConfig();
-                if (c.RightButton3 == null) c.RightButton3  = new ButtonConfig();
-                if (c.ResetButton  == null) c.ResetButton   = new ButtonConfig();
-                if (c.ResetButton2 == null) c.ResetButton2  = new ButtonConfig();
-                if (c.ResetButton3 == null) c.ResetButton3  = new ButtonConfig();
-                if (c.HoldButton1  == null) c.HoldButton1   = new ButtonConfig();
-                if (c.HoldButton2  == null) c.HoldButton2   = new ButtonConfig();
-                if (c.HoldButton3  == null) c.HoldButton3   = new ButtonConfig();
+                if (c.LeftButton == null) c.LeftButton = new ButtonConfig();
+                if (c.LeftButton2 == null) c.LeftButton2 = new ButtonConfig();
+                if (c.LeftButton3 == null) c.LeftButton3 = new ButtonConfig();
+                if (c.RightButton == null) c.RightButton = new ButtonConfig();
+                if (c.RightButton2 == null) c.RightButton2 = new ButtonConfig();
+                if (c.RightButton3 == null) c.RightButton3 = new ButtonConfig();
+                if (c.ResetButton == null) c.ResetButton = new ButtonConfig();
+                if (c.ResetButton2 == null) c.ResetButton2 = new ButtonConfig();
+                if (c.ResetButton3 == null) c.ResetButton3 = new ButtonConfig();
+                if (c.HoldButton1 == null) c.HoldButton1 = new ButtonConfig();
+                if (c.HoldButton2 == null) c.HoldButton2 = new ButtonConfig();
+                if (c.HoldButton3 == null) c.HoldButton3 = new ButtonConfig();
                 if (c.AccuResetButton == null) c.AccuResetButton = new ButtonConfig();
                 if (c.AccuResetButton2 == null) c.AccuResetButton2 = new ButtonConfig();
                 if (c.AccuResetButton3 == null) c.AccuResetButton3 = new ButtonConfig();
