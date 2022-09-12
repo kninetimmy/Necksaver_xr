@@ -13,15 +13,14 @@ namespace SHM_Monitor
 {
     public partial class SHMMonForm : Form
     {
+        const int MAXMONVAL = 20;
+
         MemoryMappedFile shm;
         MemoryMappedViewAccessor accessor;
-        MemoryMappedFile shmN;
-        MemoryMappedViewAccessor accessorN;
-        MemoryMappedFile shmV;
-        MemoryMappedViewAccessor accessorV;
+        MemoryMappedFile shmDeb;
+        MemoryMappedViewAccessor accessorDeb;
         public shmVal_s shmValues;
-        public char[,] debNames;
-        public char[,] debValues;
+        public byte[] shmDebValues= new byte[MAXMONVAL*2*20];
 
         public struct shmVal_s
         {
@@ -79,11 +78,17 @@ namespace SHM_Monitor
             shm = MemoryMappedFile.CreateOrOpen(shmName, shmSize);
             accessor = shm.CreateViewAccessor();
 
+            string shmNameDeb = "XRNeckSaferDebSHM";
+            int shmSizeDeb = 2*20*MAXMONVAL;
+
+            shmDeb = MemoryMappedFile.CreateOrOpen(shmNameDeb, shmSizeDeb);
+            accessor = shm.CreateViewAccessor();
         }
 
         public void generateOutput()
         {
             accessor.Read<shmVal_s>(0, out shmValues);
+            accessor.ReadArray<byte>(0, shmDebValues,0,MAXMONVAL*2*20);
 
             StringBuilder sb = new StringBuilder();
 
@@ -107,6 +112,8 @@ namespace SHM_Monitor
             sb.Append(generateLine("holdLinearRotation" , shmValues.holdLinearRotation.ToString()));
             sb.Append(generateLine("holdLinearPitchRotation" , shmValues.holdLinearPitchRotation.ToString()));
             sb.Append(generateLine("hasBeenCentered" , shmValues.hasBeenCentered.ToString()));
+            sb.Append("-----------------------"+Environment.NewLine);
+            sb.Append(System.Text.Encoding.ASCII.GetString(shmDebValues));
 
             OutputTextBox.Text = sb.ToString();
         }

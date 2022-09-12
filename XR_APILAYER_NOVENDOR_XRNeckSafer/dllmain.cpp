@@ -18,6 +18,8 @@
 #include "math.h"
 #include <set>
 
+#define MAXMONVAL 20
+
 namespace {
     using namespace xr::math;
 
@@ -78,19 +80,14 @@ namespace {
  
     } shmValues;
 
-#define MAXMONVAL 20
-    struct monEntry_s {
-        char name[20];
-        char value[20];
-    } shmMon[MAXMONVAL];
-
     std::wstring m_memoryName = L"XRNeckSaferSHM";
     std::wstring m_memoryNameDeb = L"XRNeckSaferDebSHM";
 
     HANDLE m_shmHandler = 0;
     HANDLE m_shmHandlerDeb = 0;
     shmVal_s* buffer;
-    monEntry_s* bufferDeb;
+
+    char* bufferDeb;
 
     XrSpace m_LocalSpace{ XR_NULL_HANDLE };
     XrSpace m_ViewSpace{ XR_NULL_HANDLE };
@@ -104,30 +101,25 @@ namespace {
         float roll, pitch, yaw;
     };
 
-    char debNames[20][20];
-    char debValues[20][20];
-    char* bufferN;
-    char* bufferV;
-
     void initMon() {
         for (int i = 0; i < MAXMONVAL; i++) {
-            strcpy(shmMon[i].name, "#");
-            strcpy(shmMon[i].value, "#");
+            bufferDeb[i * 40] = '#';
+            bufferDeb[i * 40+20] = '#';
         }
     }
 
-    auto toMonitor = [](auto v) {
+    auto toMonitor = [](char* name, auto v) {
 #ifdef _DEBUG
 #define VARNAME(name) (#name)
         int i;
         for (i = 0; i < MAXMONVAL; i++) {
-            if (VARNAME(v) == std::string(shmMon[i].name)) {
-                strcpy(shmMon[i].value, &(std::to_string(v)[0]));
+            if (strcmp(name, &bufferDeb[i*40]) == 0) {
+                strcpy(&bufferDeb[i * 40+20], &(std::to_string(v)[0]));
                 return;
             }
-            if ("#" == std::string(shmMon[i].name)) {
-                strcpy(shmMon[i].name, VARNAME(v));
-                strcpy(shmMon[i].value, &(std::to_string(v)[0]));
+            if ('#' == bufferDeb[i * 40]) {
+                strcpy(&bufferDeb[i * 40], name);
+                strcpy(&bufferDeb[i * 40 + 20], &(std::to_string(v)[0]));
                 return;
             }
         }
@@ -284,7 +276,7 @@ namespace {
             buffer->hmdYawAngle = angles.yaw * 180.f / (float)M_PI;
             buffer->hmdPitchAngle = angles.pitch * 180.f / (float)M_PI;
 
-            toMonitor(angles.yaw);
+            toMonitor((char *)"angles.yaw",angles.yaw);
 
             if (shmValues.useLinearRotation) {
                 shmValues.leftStartAt = buffer->leftStartAt;
@@ -711,15 +703,16 @@ extern "C" {
                NULL,
                PAGE_READWRITE,
                0,
-               sizeof(shmMon),
+               40* MAXMONVAL,
                m_memoryNameDeb.c_str());
            Log("XRNeckSafer shared debug memory created\n");
        }
 
        if (m_shmHandlerDeb) {
-           bufferDeb = (monEntry_s*)MapViewOfFile(m_shmHandlerDeb, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmMon));
-           if (NULL != bufferN) {
+           bufferDeb = (char*)MapViewOfFile(m_shmHandlerDeb, FILE_MAP_ALL_ACCESS, 0, 0, MAXMONVAL*40);
+           if (NULL != bufferDeb) {
                Log("XRNeckSafer shared debug memory ready\n");
+               initMon();
            }
            else {
                Log("Cannot map XRNeckSafer shared debug memory: null buffer.\n");
