@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace XRNeckSafer
@@ -11,7 +12,7 @@ namespace XRNeckSafer
         [STAThread]
         static void Main()
         {
-            using (var mutex = new System.Threading.Mutex(false, "saebamini.com SingletonApp"))
+            using (var mutex = new Mutex(false, "XRNeckSafer singleton application"))
             {
                 bool isAnotherInstanceOpen = !mutex.WaitOne(TimeSpan.Zero);
                 if (isAnotherInstanceOpen)
@@ -26,7 +27,6 @@ namespace XRNeckSafer
                 KeyInterceptor.SetHook();
                 Application.Run(new MainForm());
                 KeyInterceptor.RemoveHook();
-
                 mutex.ReleaseMutex();
             }
 

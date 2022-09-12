@@ -6,12 +6,10 @@ namespace XRNeckSafer
 {
     public partial class Graph : Form
     {
-        private MainForm mf;
-
         private int x1, y1, x2, y2, step;
         public int hmd, rot;
         Bitmap bm1, bm2;
-        Graphics gr;
+        Graphics _graphics;
         float grx, gry;
         float borderL, borderT;
         Pen redPen;
@@ -24,27 +22,26 @@ namespace XRNeckSafer
         Font myFont;
         Brush myBrush;
 
-        public Graph(MainForm f)
+        public Graph(int mainFormTop, int mainFormRight)
         {
-            mf = f;
             StartPosition = FormStartPosition.Manual;
-            Top = mf.Top;
-            Left = mf.Right - 10;
+            Top = mainFormTop;
+            Left = mainFormRight - 10;
 
-            redPen = new Pen(System.Drawing.Color.Red, 2);
-            greenPen = new Pen(System.Drawing.Color.Green, 2);
-            bluePen = new Pen(System.Drawing.Color.Blue, 2);
-            blue2Pen = new Pen(System.Drawing.Color.CadetBlue, 2);
-            blackPen = new Pen(System.Drawing.Color.Black, 1);
-            dashedPen = new Pen(System.Drawing.Color.Black, 1);
+            redPen = new Pen(Color.Red, 2);
+            greenPen = new Pen(Color.Green, 2);
+            bluePen = new Pen(Color.Blue, 2);
+            blue2Pen = new Pen(Color.CadetBlue, 2);
+            blackPen = new Pen(Color.Black, 1);
+            dashedPen = new Pen(Color.Black, 1);
             dashedPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-            myFont = new System.Drawing.Font("Arial", 11);
-            myBrush = new SolidBrush(System.Drawing.Color.Black);
+            myFont = new Font("Arial", 11);
+            myBrush = new SolidBrush(Color.Black);
             borderL = 30;
             borderT = 2;
 
             InitializeComponent();
-            black2Pen = new Pen(System.Drawing.Color.Black, 2);
+            black2Pen = new Pen(Color.Black, 2);
             DrawBitmap1();
             DrawBitmap2();
             OKbutton.Location = new Point(Size.Width - 67, Size.Height - 66);
@@ -100,22 +97,22 @@ namespace XRNeckSafer
 
         void Line2(Pen p, int x, int l)
         {
-            x2 = mf.conf.AutoSteps[0][x];
+            x2 = Config.Instance.AutoSteps[0][x];
             y2 = 0;
             DLine(p, 0, 0, x2, y2);
-            for (int i = 1; i < mf.conf.AutoSteps.Count; i++)
+            for (int i = 1; i < Config.Instance.AutoSteps.Count; i++)
             {
                 x1 = x2;
                 y1 = y2;
-                y2 = mf.conf.AutoSteps[i - 1][l];
+                y2 = Config.Instance.AutoSteps[i - 1][l];
                 DLine(p, x2, (int)(y2 * 2), x1, (int)(y1 * 2));
                 y1 = y2;
-                x2 = mf.conf.AutoSteps[i][x];
+                x2 = Config.Instance.AutoSteps[i][x];
                 DLine(p, x1, y1 * 2, x2, y2 * 2);
             }
             x1 = x2;
             y1 = y2;
-            y2 = mf.conf.AutoSteps[mf.conf.AutoSteps.Count - 1][l];
+            y2 = Config.Instance.AutoSteps[Config.Instance.AutoSteps.Count - 1][l];
             DLine(p, x2, y2 * 2, x1, y1 * 2);
             y1 = y2;
             x2 = 180;
@@ -124,22 +121,22 @@ namespace XRNeckSafer
 
         void Line(Pen p, int x, int l)
         {
-            x2 = mf.conf.AutoSteps[0][x];
+            x2 = Config.Instance.AutoSteps[0][x];
             y2 = 0;
             DLine(p, 0, 0, x2, y2);
-            for (int i = 1; i < mf.conf.AutoSteps.Count; i++)
+            for (int i = 1; i < Config.Instance.AutoSteps.Count; i++)
             {
                 x1 = x2;
                 y1 = y2;
-                y2 = mf.conf.AutoSteps[i - 1][l];
+                y2 = Config.Instance.AutoSteps[i - 1][l];
                 DLine(p, x2, y2 * 3, x1, y1 * 3);
                 y1 = y2;
-                x2 = mf.conf.AutoSteps[i][x];
+                x2 = Config.Instance.AutoSteps[i][x];
                 DLine(p, x1, y1 * 3, x2, y2 * 3);
             }
             x1 = x2;
             y1 = y2;
-            y2 = mf.conf.AutoSteps[mf.conf.AutoSteps.Count - 1][l];
+            y2 = Config.Instance.AutoSteps[Config.Instance.AutoSteps.Count - 1][l];
             DLine(p, x2, y2 * 3, x1, y1 * 3);
             y1 = y2;
             x2 = 180;
@@ -149,22 +146,22 @@ namespace XRNeckSafer
         void RedLine()
         {
 
-            x2 = mf.conf.AutoSteps[0][0];
+            x2 = Config.Instance.AutoSteps[0][0];
             y2 = x2;
-            step = mf.conf.AutoSteps[0][2];
+            step = Config.Instance.AutoSteps[0][2];
             DLine(redPen, 0, 0, x2, y2);
-            for (int i = 1; i < mf.conf.AutoSteps.Count; i++)
+            for (int i = 1; i < Config.Instance.AutoSteps.Count; i++)
             {
                 x1 = x2;
                 y1 = y2;
                 y2 = x2 + step;
                 DLine(redPen, x2, y2, x1, y1);
                 y1 = y2;
-                x2 = mf.conf.AutoSteps[i][0];
+                x2 = Config.Instance.AutoSteps[i][0];
                 y2 = x2 + step;
                 DLine(redPen, x1, y1, x2, y2);
 
-                step = mf.conf.AutoSteps[i][2];
+                step = Config.Instance.AutoSteps[i][2];
             }
             x1 = x2;
             y1 = y2;
@@ -178,10 +175,10 @@ namespace XRNeckSafer
         void GreenLine()
         {
 
-            x2 = mf.conf.AutoSteps[0][1];
+            x2 = Config.Instance.AutoSteps[0][1];
             y2 = x2;
-            step = mf.conf.AutoSteps[0][2];
-            for (int i = 1; i < mf.conf.AutoSteps.Count; i++)
+            step = Config.Instance.AutoSteps[0][2];
+            for (int i = 1; i < Config.Instance.AutoSteps.Count; i++)
             {
                 x1 = x2;
                 y1 = y2;
@@ -189,11 +186,11 @@ namespace XRNeckSafer
                 DLine(greenPen, x2, y2, x1, y1);
                 x1 = x2;
                 y1 = y2;
-                x2 = mf.conf.AutoSteps[i][1];
+                x2 = Config.Instance.AutoSteps[i][1];
                 y2 = x2 + step;
                 DLine(greenPen, x1, y1, x2, y2);
 
-                step = mf.conf.AutoSteps[i][2];
+                step = Config.Instance.AutoSteps[i][2];
             }
             x1 = x2;
             y1 = y2;
@@ -224,9 +221,9 @@ namespace XRNeckSafer
         {
             Point P1 = Scale(x, y);
             if (right)
-                gr.DrawString(s, f, b, P1.X - 40 + borderL, P1.Y - f.SizeInPoints + borderT - 4);
+                _graphics.DrawString(s, f, b, P1.X - 40 + borderL, P1.Y - f.SizeInPoints + borderT - 4);
             else
-                gr.DrawString(s, f, b, P1.X + borderL, P1.Y - f.SizeInPoints + borderT - 4);
+                _graphics.DrawString(s, f, b, P1.X + borderL, P1.Y - f.SizeInPoints + borderT - 4);
         }
 
         private void DLine(Pen pen, int x1, int y1, int x2, int y2)
@@ -234,7 +231,7 @@ namespace XRNeckSafer
             Point P1 = Scale(x1, y1);
             Point P2 = Scale(x2, y2);
 
-            gr.DrawLine(pen, P1.X + borderL, P1.Y + borderT, P2.X + borderL, P2.Y + borderT);
+            _graphics.DrawLine(pen, P1.X + borderL, P1.Y + borderT, P2.X + borderL, P2.Y + borderT);
         }
 
 
@@ -243,9 +240,9 @@ namespace XRNeckSafer
             grx = ClientSize.Width - 40;
             gry = ClientSize.Height / 2 - 30;
             bm1 = new Bitmap(ClientSize.Width, ClientSize.Height / 2);
-            gr = Graphics.FromImage(bm1);
+            _graphics = Graphics.FromImage(bm1);
 
-            gr.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+            _graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
             DLine(blackPen, 0, 0, 0, 180);
             DLine(blackPen, 0, 0, 180, 0);
@@ -258,14 +255,14 @@ namespace XRNeckSafer
                 DLine(dashedPen, 0, i, 180, i);
                 DString(i.ToString() + "°", myFont, myBrush, 1, i);
             }
-            gr.DrawString("Physical HMD yaw angle", myFont, myBrush, grx / 2 - 70, gry + 8);
+            _graphics.DrawString("Physical HMD yaw angle", myFont, myBrush, grx / 2 - 70, gry + 8);
 
-            gr.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            _graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
             GreenLine();
             RedLine();
-            gr.RotateTransform(270);
-            gr.DrawString("Visual yaw angle", myFont, myBrush, -gry / 2 - 60, 7);
+            _graphics.RotateTransform(270);
+            _graphics.DrawString("Visual yaw angle", myFont, myBrush, -gry / 2 - 60, 7);
 
         }
         void DrawBitmap2()
@@ -275,9 +272,9 @@ namespace XRNeckSafer
             gry = ClientSize.Height / 2 - 30;
 
             bm2 = new Bitmap(ClientSize.Width, ClientSize.Height / 2);
-            gr = Graphics.FromImage(bm2);
+            _graphics = Graphics.FromImage(bm2);
 
-            gr.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+            _graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
             DLine(blackPen, 0, 0, 0, 180);
             DLine(blackPen, 0, 0, 180, 0);
@@ -291,7 +288,7 @@ namespace XRNeckSafer
                 DString((i / 2).ToString() + "°", myFont, myBrush, 1, i);
                 DString((i / 3).ToString() + "cm", myFont, myBrush, 179, i, true);
             }
-            gr.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            _graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
             ActLine();
             DeLine();
@@ -299,19 +296,19 @@ namespace XRNeckSafer
             FwdLine();
 
             Rectangle L1 = new Rectangle(65, 10, 125, 48);
-            gr.FillRectangle(new SolidBrush(System.Drawing.Color.White), L1);
-            gr.DrawRectangle(blackPen, L1);
-            gr.DrawString("Rotational offset:", myFont, new SolidBrush(System.Drawing.Color.Black), L1.X + 1, L1.Y + 2);
-            gr.DrawString(" Activation (act)", myFont, new SolidBrush(System.Drawing.Color.Red), L1.X + 1, L1.Y + 17);
-            gr.DrawString(" Deactivation (de)", myFont, new SolidBrush(System.Drawing.Color.Green), L1.X + 1, L1.Y + 32);
+            _graphics.FillRectangle(new SolidBrush(Color.White), L1);
+            _graphics.DrawRectangle(blackPen, L1);
+            _graphics.DrawString("Rotational offset:", myFont, new SolidBrush(Color.Black), L1.X + 1, L1.Y + 2);
+            _graphics.DrawString(" Activation (act)", myFont, new SolidBrush(Color.Red), L1.X + 1, L1.Y + 17);
+            _graphics.DrawString(" Deactivation (de)", myFont, new SolidBrush(Color.Green), L1.X + 1, L1.Y + 32);
             Rectangle L2 = new Rectangle(ClientSize.Width - 192, 10, 137, 48);
-            gr.FillRectangle(new SolidBrush(System.Drawing.Color.White), L2);
-            gr.DrawRectangle(blackPen, L2);
-            gr.DrawString("Translational offset:", myFont, new SolidBrush(System.Drawing.Color.Black), L2.X + 1, L2.Y + 2);
-            gr.DrawString(" Left/Right (L/R)", myFont, new SolidBrush(System.Drawing.Color.Blue), L2.X + 1, L2.Y + 17);
-            gr.DrawString(" Forward (Fwd)", myFont, new SolidBrush(System.Drawing.Color.CadetBlue), L2.X + 1, L2.Y + 32);
-            gr.RotateTransform(270);
-            gr.DrawString("Autorot values", myFont, myBrush, -gry / 2 - 60, 7);
+            _graphics.FillRectangle(new SolidBrush(Color.White), L2);
+            _graphics.DrawRectangle(blackPen, L2);
+            _graphics.DrawString("Translational offset:", myFont, new SolidBrush(Color.Black), L2.X + 1, L2.Y + 2);
+            _graphics.DrawString(" Left/Right (L/R)", myFont, new SolidBrush(Color.Blue), L2.X + 1, L2.Y + 17);
+            _graphics.DrawString(" Forward (Fwd)", myFont, new SolidBrush(Color.CadetBlue), L2.X + 1, L2.Y + 32);
+            _graphics.RotateTransform(270);
+            _graphics.DrawString("Autorot values", myFont, myBrush, -gry / 2 - 60, 7);
 
         }
 
