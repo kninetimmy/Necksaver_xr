@@ -28,7 +28,7 @@ namespace XRNeckSafer
             // 
             this.CancelScanButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableLayoutPanel1.SetColumnSpan(this.CancelScanButton, 2);
-            this.CancelScanButton.Location = new System.Drawing.Point(159, 75);
+            this.CancelScanButton.Location = new System.Drawing.Point(163, 59);
             this.CancelScanButton.Name = "CancelScanButton";
             this.CancelScanButton.Size = new System.Drawing.Size(75, 23);
             this.CancelScanButton.TabIndex = 1;
@@ -41,7 +41,7 @@ namespace XRNeckSafer
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableLayoutPanel1.SetColumnSpan(this.label2, 2);
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(142, 9);
+            this.label2.Location = new System.Drawing.Point(146, 6);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(108, 16);
             this.label2.TabIndex = 2;
@@ -53,18 +53,15 @@ namespace XRNeckSafer
             this._pressedButtonsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this._pressedButtonsLabel, 2);
             this._pressedButtonsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._pressedButtonsLabel.Location = new System.Drawing.Point(3, 44);
+            this._pressedButtonsLabel.Location = new System.Drawing.Point(3, 34);
             this._pressedButtonsLabel.Name = "_pressedButtonsLabel";
-            this._pressedButtonsLabel.Size = new System.Drawing.Size(387, 16);
+            this._pressedButtonsLabel.Size = new System.Drawing.Size(395, 16);
             this._pressedButtonsLabel.TabIndex = 3;
             this._pressedButtonsLabel.Text = "none";
             this._pressedButtonsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.AutoSize = true;
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -72,20 +69,21 @@ namespace XRNeckSafer
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this._pressedButtonsLabel, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.CancelScanButton, 0, 2);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 4);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(393, 104);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(401, 85);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // ScanForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(402, 112);
+            this.ClientSize = new System.Drawing.Size(401, 85);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
