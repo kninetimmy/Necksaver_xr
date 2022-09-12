@@ -16,25 +16,19 @@ namespace XRNeckSafer
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScanForm));
             this.CancelScanButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this._pressedButtonsLabel = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(56, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(300, 20);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Scanning joysticks. Press button(s) now...";
             // 
             // CancelScanButton
             // 
-            this.CancelScanButton.Location = new System.Drawing.Point(173, 96);
+            this.CancelScanButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tableLayoutPanel1.SetColumnSpan(this.CancelScanButton, 2);
+            this.CancelScanButton.Location = new System.Drawing.Point(159, 75);
             this.CancelScanButton.Name = "CancelScanButton";
             this.CancelScanButton.Size = new System.Drawing.Size(75, 23);
             this.CancelScanButton.TabIndex = 1;
@@ -44,45 +38,71 @@ namespace XRNeckSafer
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tableLayoutPanel1.SetColumnSpan(this.label2, 2);
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(21, 61);
+            this.label2.Location = new System.Drawing.Point(142, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 16);
+            this.label2.Size = new System.Drawing.Size(108, 16);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Pressed:";
+            this.label2.Text = "Pressed buttons:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // _pressedButtonsLabel
             // 
-            this._pressedButtonsLabel.AutoSize = true;
+            this._pressedButtonsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.SetColumnSpan(this._pressedButtonsLabel, 2);
             this._pressedButtonsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._pressedButtonsLabel.Location = new System.Drawing.Point(79, 61);
+            this._pressedButtonsLabel.Location = new System.Drawing.Point(3, 44);
             this._pressedButtonsLabel.Name = "_pressedButtonsLabel";
-            this._pressedButtonsLabel.Size = new System.Drawing.Size(38, 16);
+            this._pressedButtonsLabel.Size = new System.Drawing.Size(387, 16);
             this._pressedButtonsLabel.TabIndex = 3;
             this._pressedButtonsLabel.Text = "none";
+            this._pressedButtonsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this._pressedButtonsLabel, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.CancelScanButton, 0, 2);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 4);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(393, 104);
+            this.tableLayoutPanel1.TabIndex = 4;
             // 
             // ScanForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 131);
-            this.Controls.Add(this._pressedButtonsLabel);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.CancelScanButton);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(402, 112);
+            this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ScanForm";
-            this.Text = "ScanForm";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.Text = "Scanning joysticks. Press button(s) now...";
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button CancelScanButton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label _pressedButtonsLabel;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

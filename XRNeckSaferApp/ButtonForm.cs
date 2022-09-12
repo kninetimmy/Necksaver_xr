@@ -12,6 +12,8 @@ namespace XRNeckSafer
         {
             _buttonConfig = bc;
             InitializeComponent();
+            MinimumSize = Size;
+            MaximumSize = Size;
             StartPosition = FormStartPosition.Manual;
             Top = mainFormTop;
             Left = mainFormRight - 10;

@@ -29,6 +29,7 @@ namespace XRNeckSafer
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ButtonForm));
             this.MainScanButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -224,9 +225,13 @@ namespace XRNeckSafer
             this.Controls.Add(this.label1);
             this.Controls.Add(this.MainButtonComboBox);
             this.Controls.Add(this.MainDeviceComboBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(320, 179);
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(320, 179);
             this.Name = "ButtonForm";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "ButtonForm";
             this.ResumeLayout(false);
             this.PerformLayout();

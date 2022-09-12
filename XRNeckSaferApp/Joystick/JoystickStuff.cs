@@ -64,6 +64,7 @@ namespace XRNeckSafer
             }
             return name;
         }
+
         public int IndexFromGuid(string guid)
         {
             int index = -1;

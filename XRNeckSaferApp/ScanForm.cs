@@ -28,6 +28,8 @@ namespace XRNeckSafer
         private ScanForm(int maxPressedButtonsCount = 1)
         {
             InitializeComponent();
+            MinimumSize = Size;
+            MaximumSize = Size;
             _scanner = new JoystickButtonScanner(maxPressedButtonsCount);
             _scanner.OnScanningComplete += OnButtonScanned;
             _scanner.OnCurrentlyPressedChanged += ChangePressedButtonsLabel;
