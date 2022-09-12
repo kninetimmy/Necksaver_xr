@@ -27,7 +27,6 @@ namespace XRNeckSafer
             // CancelScanButton
             // 
             this.CancelScanButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.tableLayoutPanel1.SetColumnSpan(this.CancelScanButton, 2);
             this.CancelScanButton.Location = new System.Drawing.Point(163, 59);
             this.CancelScanButton.Name = "CancelScanButton";
             this.CancelScanButton.Size = new System.Drawing.Size(75, 23);
@@ -39,7 +38,6 @@ namespace XRNeckSafer
             // label2
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.tableLayoutPanel1.SetColumnSpan(this.label2, 2);
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(146, 6);
             this.label2.Name = "label2";
@@ -51,7 +49,6 @@ namespace XRNeckSafer
             // _pressedButtonsLabel
             // 
             this._pressedButtonsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.SetColumnSpan(this._pressedButtonsLabel, 2);
             this._pressedButtonsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._pressedButtonsLabel.Location = new System.Drawing.Point(3, 34);
             this._pressedButtonsLabel.Name = "_pressedButtonsLabel";
@@ -63,9 +60,9 @@ namespace XRNeckSafer
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.AutoSize = true;
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this._pressedButtonsLabel, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.CancelScanButton, 0, 2);
