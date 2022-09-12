@@ -160,7 +160,9 @@
     <Compile Include="Joystick\JoystickButtonScanner.cs" />
     <Compile Include="Joystick\JoyBut.cs" />
     <Compile Include="Joystick\JoystickButton.cs" />
+    <Compile Include="Joystick\JoystickKeyboardScanner.cs" />
     <Compile Include="Joystick\JoystickStuff.cs" />
+    <Compile Include="Joystick\JoystickKeyboardInput.cs" />
     <Compile Include="Joystick\StickItem.cs" />
     <Compile Include="KeyInterceptor.cs" />
     <Compile Include="MainForm.cs">

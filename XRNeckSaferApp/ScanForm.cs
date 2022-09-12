@@ -38,6 +38,11 @@ namespace XRNeckSafer
 
         private void ChangePressedButtonsLabel(List<JoyBut> buttons)
         {
+            _pressedButtonsLabel.Text = CreatePressedButtonsLabel(buttons);
+        }
+
+        private string CreatePressedButtonsLabel(List<JoyBut> buttons)
+        {
             var builder = new StringBuilder();
             foreach (var button in buttons)
             {
@@ -48,7 +53,7 @@ namespace XRNeckSafer
                 var stickItem = JoystickStuff.Instance.GetStickItemByGuid(button.JoystickGuid);
                 builder.Append($"[{stickItem.InstanceName} But:{button.Button + 1}]");
             }
-            _pressedButtonsLabel.Text = builder.ToString();
+            return builder.ToString();
         }
 
         private void OnButtonScanned(List<JoyBut> buttons)

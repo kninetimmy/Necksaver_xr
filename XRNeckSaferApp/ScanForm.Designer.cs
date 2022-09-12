@@ -54,7 +54,7 @@ namespace XRNeckSafer
             this._pressedButtonsLabel.Name = "_pressedButtonsLabel";
             this._pressedButtonsLabel.Size = new System.Drawing.Size(395, 16);
             this._pressedButtonsLabel.TabIndex = 3;
-            this._pressedButtonsLabel.Text = "none";
+            this._pressedButtonsLabel.Text = "-";
             this._pressedButtonsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel1
