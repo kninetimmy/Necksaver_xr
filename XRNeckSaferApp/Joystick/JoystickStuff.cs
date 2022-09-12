@@ -1,7 +1,6 @@
 ﻿using SharpDX.DirectInput;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace XRNeckSafer
 {
@@ -177,22 +176,22 @@ namespace XRNeckSafer
         {
             List<JoyBut> result = null;
 
-            for (int i = 0; i < _stickItems.Count; i++)
+            for (var stickIndex = 0; stickIndex < _stickItems.Count; stickIndex++)
             {
-                StickItem stickItem = _stickItems[i];
+                StickItem stickItem = _stickItems[stickIndex];
                 if (!_joysticks.ContainsKey(stickItem.JoystickGuid))
                 {
                     continue;
                 }
                 JoystickState joystickState = _joysticks[stickItem.JoystickGuid].GetCurrentState();
-                for (int k = 0; k < stickItem.ButtonCount; k++)
+                for (var buttonIndex = 0; buttonIndex < stickItem.ButtonCount; buttonIndex++)
                 {
-                    if (joystickState.Buttons[k] != _lastButtons[i][k])
+                    if (joystickState.Buttons[buttonIndex] != _lastButtons[stickIndex][buttonIndex])
                     {
                         var joyBut = new JoyBut
                         {
                             JoystickGuid = stickItem.JoystickGuid,
-                            Button = k,
+                            Button = buttonIndex,
                             POV = -1
                         };
                         if (result == null)
@@ -202,15 +201,15 @@ namespace XRNeckSafer
                         result.Add(joyBut);
                     }
                 }
-                for (int k = 0; k < stickItem.PovCount; k++)
+                for (int povIndex = 0; povIndex < stickItem.PovCount; povIndex++)
                 {
-                    if (joystickState.PointOfViewControllers[k] != _lastPOVs[i][k])
+                    if (joystickState.PointOfViewControllers[povIndex] != _lastPOVs[stickIndex][povIndex])
                     {
                         var joyBut = new JoyBut
                         {
                             JoystickGuid = stickItem.JoystickGuid,
-                            Button = joystickState.PointOfViewControllers[k],
-                            POV = k
+                            Button = joystickState.PointOfViewControllers[povIndex],
+                            POV = povIndex
                         };
                         if (result == null)
                         {
