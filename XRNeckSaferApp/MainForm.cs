@@ -378,6 +378,7 @@ namespace XRNeckSafer
             setLabelColor(d_pressed, DownLabel);
             setButtonColor(reset_pressed, SetResetButton);
             setButtonColor(acc_res_pressed, AccumReset);
+            setButtonColor(pitch_acc_res_pressed, pAccumReset);
             setButtonColor(h_pressed, SetHoldButton1);
             setButtonColor(hp_pressed, SetPitchHoldButton);
 
@@ -1023,7 +1024,7 @@ namespace XRNeckSafer
 
         private void SetLeftButton_Click(object sender, EventArgs e)
         {
-            if (Config.Instance.MultipleLRbuttons == false)
+            if (!Config.Instance.MultipleLRbuttons)
             {
                 using (var frm = new ButtonForm(Top, Right, "Button for Left Rotation:", Config.Instance.LeftButton))
                 {
@@ -1043,7 +1044,7 @@ namespace XRNeckSafer
 
         private void SetRightButton_Click(object sender, EventArgs e)
         {
-            if (Config.Instance.MultipleLRbuttons == false)
+            if (!Config.Instance.MultipleLRbuttons)
             {
                 using (var frm = new ButtonForm(Top, Right, "Button for Right Rotation:", Config.Instance.RightButton))
                 {
@@ -1064,7 +1065,7 @@ namespace XRNeckSafer
         private void SetResetButton_Click(object sender, EventArgs e)
         {
 
-            if (Config.Instance.MultipleLRbuttons == false)
+            if (!Config.Instance.MultipleLRbuttons)
             {
                 using (var frm = new ButtonForm(Top, Right, "Reset Button:", Config.Instance.ResetButton))
                 {
@@ -1082,7 +1083,7 @@ namespace XRNeckSafer
 
         private void AccumReset_Click(object sender, EventArgs e)
         {
-            if (Config.Instance.MultipleLRbuttons == false)
+            if (!Config.Instance.MultipleLRbuttons)
             {
                 using (var frm = new ButtonForm(Top, Right, "Accum Reset Button:", Config.Instance.AccuResetButton))
                 {
@@ -1101,7 +1102,7 @@ namespace XRNeckSafer
 
         private void SetHoldButton1_Click(object sender, EventArgs e)
         {
-            if (Config.Instance.MultipleLRbuttons == false)
+            if (!Config.Instance.MultipleLRbuttons)
             {
                 using (var frm = new ButtonForm(Top, Right, "Hold Button:", Config.Instance.HoldButton1))
                 {
@@ -1454,7 +1455,7 @@ namespace XRNeckSafer
 
         private void SetDownButton_Click(object sender, EventArgs e)
         {
-            if (Config.Instance.MultipleLRbuttons == false)
+            if (!Config.Instance.MultipleLRbuttons)
             {
                 using (var frm = new ButtonForm(Top, Right, "Button for Down Rotation:", Config.Instance.DownButton))
                 {
@@ -1474,7 +1475,7 @@ namespace XRNeckSafer
 
         private void SetUpButton_Click(object sender, EventArgs e)
         {
-            if (Config.Instance.MultipleLRbuttons == false)
+            if (!Config.Instance.MultipleLRbuttons)
             {
                 using (var frm = new ButtonForm(Top, Right, "Button for up Rotation:", Config.Instance.UpButton))
                 {
@@ -1495,7 +1496,7 @@ namespace XRNeckSafer
 
         private void pAccumReset_Click(object sender, EventArgs e)
         {
-            if (Config.Instance.MultipleLRbuttons == false)
+            if (!Config.Instance.MultipleLRbuttons)
             {
                 using (var frm = new ButtonForm(Top, Right, "Pitch Accum Reset Button:", Config.Instance.PitchAccuResetButton))
                 {
@@ -1514,7 +1515,7 @@ namespace XRNeckSafer
 
         private void SetPitchHoldButton_Click(object sender, EventArgs e)
         {
-            if (Config.Instance.MultipleLRbuttons == false)
+            if (!Config.Instance.MultipleLRbuttons)
             {
                 using (var frm = new ButtonForm(Top, Right, "Pitch Hold Button:", Config.Instance.PitchHoldButton1))
                 {
