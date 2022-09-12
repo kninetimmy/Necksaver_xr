@@ -3,16 +3,16 @@
     public class JoyBut
     {
         private string _id;
-        private int _joyIndex = -1;
+        private string _joystickGuid = "-1";
         private int _button = -1;
         private int _pov = -1;
 
-        public int JoyIndex
+        public string JoystickGuid
         {
-            get => _joyIndex;
+            get => _joystickGuid;
             set
             {
-                _joyIndex = value;
+                _joystickGuid = value;
                 _id = GenerateId();
             }
         }
@@ -26,6 +26,7 @@
                 _id = GenerateId();
             }
         }
+
         public int POV
         {
             get => _pov;
@@ -52,7 +53,7 @@
 
         private string GenerateId()
         {
-            return $"{JoyIndex}-{Button}-{POV}";
+            return $"{JoystickGuid}-{Button}-{POV}";
         }
     }
 }

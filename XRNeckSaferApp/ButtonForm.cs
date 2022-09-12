@@ -31,43 +31,63 @@ namespace XRNeckSafer
         private void FillComboBoxes()
         {
             MainDeviceComboBox.Items.Clear();
-            MainDeviceComboBox.Items.Add("none");
+            MainDeviceComboBox.Items.Add(new ComboBoxStickItem());
             ModifierDeviceComboBox.Items.Clear();
-            ModifierDeviceComboBox.Items.Add("none");
+            ModifierDeviceComboBox.Items.Add(new ComboBoxStickItem());
             MainButtonComboBox.Items.Clear();
             MainButtonComboBox.Items.Add("none");
             ModifierButtonComboBox.Items.Clear();
             ModifierButtonComboBox.Items.Add("none");
 
-
-            for (int i = 0; i < JoystickStuff.Instance.GetDevicesCount(); i++)
+            foreach (StickItem stick in JoystickStuff.Instance.GetSticks())
             {
-                var device = JoystickStuff.Instance.GetDeviceByIndex(i);
-                MainDeviceComboBox.Items.Add(device.InstanceName);
-                ModifierDeviceComboBox.Items.Add(device.InstanceName);
+                var comboBoxItem = new ComboBoxStickItem
+                {
+                    StickItem = stick
+                };
+                MainDeviceComboBox.Items.Add(comboBoxItem);
+                ModifierDeviceComboBox.Items.Add(comboBoxItem);
+                if (_buttonConfig.JoystickGUID.Equals(stick.Guid))
+                {
+                    MainDeviceComboBox.SelectedItem = comboBoxItem;
+                }
+                if (_buttonConfig.ModJoystickGUID.Equals(stick.Guid))
+                {
+                    ModifierDeviceComboBox.SelectedItem = comboBoxItem;
+                }
             }
 
-            int Index = JoystickStuff.Instance.IndexFromGuid(_buttonConfig.JoystickGUID);
-            MainDeviceComboBox.SelectedIndex = Index + 1;
-            FillButtonComboBox(Index, MainButtonComboBox);
+            if (MainDeviceComboBox.SelectedItem == null)
+            {
+                MainDeviceComboBox.SelectedIndex = 0;
+            }
+            if (ModifierDeviceComboBox.SelectedItem == null)
+            {
+                ModifierDeviceComboBox.SelectedIndex = 0;
+            }
 
-            Index = JoystickStuff.Instance.IndexFromGuid(_buttonConfig.ModJoystickGUID);
-            ModifierDeviceComboBox.SelectedIndex = Index + 1;
-            FillButtonComboBox(Index, ModifierButtonComboBox);
+            var mainStickItem = JoystickStuff.Instance.GetStickItemByGuid(_buttonConfig.JoystickGUID);
+            FillButtonComboBox(mainStickItem, MainButtonComboBox);
+
+            var modifierStickItem = JoystickStuff.Instance.GetStickItemByGuid(_buttonConfig.ModJoystickGUID);
+            FillButtonComboBox(modifierStickItem, ModifierButtonComboBox);
             ModifierButtonComboBox.Text = _buttonConfig.ModButton;
 
             MainButtonComboBox.Text = _buttonConfig.Button;
         }
 
-        private void FillButtonComboBox(int joyIndex, ComboBox cb)
+        private void FillButtonComboBox(StickItem stickItem, ComboBox comboBox)
         {
-            cb.Items.Clear();
-            cb.Items.Add("none");
-            if (joyIndex == -1) return;
-            var stickItem = JoystickStuff.Instance.GetStickItemByIndex(joyIndex);
+            comboBox.Items.Clear();
+            comboBox.Items.Add("none");
+            if (stickItem == null)
+            {
+                comboBox.SelectedIndex = 0;
+                return;
+            }
             for (int i = 0; i < stickItem.Stick.Capabilities.ButtonCount; i++)
             {
-                cb.Items.Add("But: " + (i + 1));
+                comboBox.Items.Add("But: " + (i + 1));
             }
             for (int i = 0; i < stickItem.Stick.Capabilities.PovCount; i++)
             {
@@ -75,18 +95,17 @@ namespace XRNeckSafer
                 {
                     for (int j = 0; j < 360; j += 45)
                     {
-                        cb.Items.Add("P" + i + ": " + j);
+                        comboBox.Items.Add("P" + i + ": " + j);
                     }
                 }
                 else
                 {
-                    cb.Items.Add("Pov " + i + ": U");
-                    cb.Items.Add("Pov " + i + ": R");
-                    cb.Items.Add("Pov " + i + ": D");
-                    cb.Items.Add("Pov " + i + ": L");
+                    comboBox.Items.Add("Pov " + i + ": U");
+                    comboBox.Items.Add("Pov " + i + ": R");
+                    comboBox.Items.Add("Pov " + i + ": D");
+                    comboBox.Items.Add("Pov " + i + ": L");
                 }
             }
-
         }
 
         private void OnMainScanButtonClick(object sender, EventArgs e)
@@ -112,15 +131,20 @@ namespace XRNeckSafer
 
         private void ProcessMainButton(JoyBut joyBut)
         {
-            MainDeviceComboBox.Text = MainDeviceComboBox.Items[joyBut.JoyIndex + 1].ToString();
-            FillButtonComboBox(joyBut.JoyIndex, MainButtonComboBox);
+            var stickItem = JoystickStuff.Instance.GetStickItemByGuid(joyBut.JoystickGuid);
+            MainDeviceComboBox.Text = stickItem?.GetInstanceName() ?? "none";
+            FillButtonComboBox(stickItem, MainButtonComboBox);
+            if (stickItem == null)
+            {
+                MainButtonComboBox.Text = "none";
+                return;
+            }
             if (joyBut.POV == -1)
             {
                 MainButtonComboBox.Text = MainButtonComboBox.Items[joyBut.Button + 1].ToString();
             }
             else
             {
-                var stickItem = JoystickStuff.Instance.GetStickItemByIndex(joyBut.JoyIndex);
                 if (_buttonConfig.Use8WayHat)
                 {
                     int butindex =
@@ -144,16 +168,22 @@ namespace XRNeckSafer
 
         private void ProcessModifierButton(JoyBut joyBut)
         {
-            ModifierDeviceComboBox.Text = ModifierDeviceComboBox.Items[joyBut.JoyIndex + 1].ToString();
-            FillButtonComboBox(joyBut.JoyIndex, ModifierButtonComboBox);
+            var stickItem = JoystickStuff.Instance.GetStickItemByGuid(joyBut.JoystickGuid);
+            ModifierDeviceComboBox.Text = stickItem?.GetInstanceName() ?? "none";
+            FillButtonComboBox(stickItem, ModifierButtonComboBox);
+            if (stickItem == null)
+            {
+                ModifierButtonComboBox.Text = "none";
+                return;
+            }
             if (joyBut.POV == -1)
             {
                 ModifierButtonComboBox.Text = ModifierButtonComboBox.Items[joyBut.Button + 1].ToString();
             }
             else
             {
-                int butindex =
-                    JoystickStuff.Instance.GetStickItemByIndex(joyBut.JoyIndex).Stick.Capabilities.ButtonCount
+                var butindex =
+                    stickItem.Stick.Capabilities.ButtonCount
                     + joyBut.POV * 4
                     + joyBut.Button / 9000
                     + 1;
@@ -179,15 +209,19 @@ namespace XRNeckSafer
         private void OKButton_Click(object sender, EventArgs e)
         {
             if (MainDeviceComboBox.SelectedIndex == 0)
+            {
                 _buttonConfig.JoystickGUID = "none";
+            }
             else
-                _buttonConfig.JoystickGUID = JoystickStuff.Instance.GetDeviceByIndex(MainDeviceComboBox.SelectedIndex - 1).InstanceGuid.ToString();
+            {
+                _buttonConfig.JoystickGUID = (MainDeviceComboBox.SelectedItem as ComboBoxStickItem).StickItem.Guid;
+            }
             _buttonConfig.Button = MainButtonComboBox.Text;
 
             if (ModifierDeviceComboBox.SelectedIndex == 0)
                 _buttonConfig.ModJoystickGUID = "none";
             else
-                _buttonConfig.ModJoystickGUID = JoystickStuff.Instance.GetDeviceByIndex(ModifierDeviceComboBox.SelectedIndex - 1).InstanceGuid.ToString();
+                _buttonConfig.ModJoystickGUID = (ModifierDeviceComboBox.SelectedItem as ComboBoxStickItem).StickItem.Guid;
 
             _buttonConfig.ModButton = ModifierButtonComboBox.Text;
             _buttonConfig.UseModifier = UseModifierCheckBox.Checked;
@@ -207,20 +241,37 @@ namespace XRNeckSafer
 
         private void MainDeviceComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            FillButtonComboBox(MainDeviceComboBox.SelectedIndex - 1, MainButtonComboBox);
+            var selectedStickItem = (MainDeviceComboBox.SelectedItem as ComboBoxStickItem).StickItem;
+            FillButtonComboBox(selectedStickItem, MainButtonComboBox);
             MainButtonComboBox.Text = "none";
+            if (selectedStickItem == null)
+            {
+                ModifierDeviceComboBox.SelectedIndex = 0;
+                UseModifierCheckBox.Checked = false;
+            }
         }
 
         private void ModifierDeviceComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FillButtonComboBox(MainDeviceComboBox.SelectedIndex - 1, MainButtonComboBox);
-            MainButtonComboBox.Text = "none";
+            var selectedStickItem = (ModifierDeviceComboBox.SelectedItem as ComboBoxStickItem).StickItem;
+            FillButtonComboBox(selectedStickItem, ModifierButtonComboBox);
+            ModifierButtonComboBox.Text = "none";
         }
 
         private void Use8WayHatCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             _buttonConfig.Use8WayHat = Use8WayHatCheckBox.Checked;
             FillComboBoxes();
+        }
+    }
+
+    public class ComboBoxStickItem
+    {
+        public StickItem StickItem { get; set; }
+
+        public override string ToString()
+        {
+            return StickItem?.GetInstanceName() ?? "none";
         }
     }
 }

@@ -45,8 +45,8 @@ namespace XRNeckSafer
                 {
                     builder.Append("+");
                 }
-                var device = JoystickStuff.Instance.GetDeviceByIndex(button.JoyIndex);
-                builder.Append($"[{device.InstanceName} But:{button.Button + 1}]");
+                var stickItem = JoystickStuff.Instance.GetStickItemByGuid(button.JoystickGuid);
+                builder.Append($"[{stickItem.GetInstanceName()} But:{button.Button + 1}]");
             }
             _pressedButtonsLabel.Text = builder.ToString();
         }

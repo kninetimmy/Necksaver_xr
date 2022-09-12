@@ -246,12 +246,12 @@ namespace XRNeckSafer
 
         public void setButtonToolTip(Button b, ButtonConfig bc)
         {
-            string Text = JoystickStuff.Instance.GetDeviceNameByGuid(bc.JoystickGUID) + ": " + bc.Button;
+            var text = JoystickStuff.Instance.GetDeviceNameByGuid(bc.JoystickGUID) + ": " + bc.Button;
             if (bc.UseModifier)
             {
-                Text += "   +   " + JoystickStuff.Instance.GetDeviceNameByGuid(bc.ModJoystickGUID) + ": " + bc.ModButton;
+                text += "   +   " + JoystickStuff.Instance.GetDeviceNameByGuid(bc.ModJoystickGUID) + ": " + bc.ModButton;
             }
-            toolTip1.SetToolTip(b, Text);
+            toolTip1.SetToolTip(b, text);
         }
 
         private static string GetAssemblyProductVersion()
