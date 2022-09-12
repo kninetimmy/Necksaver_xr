@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
 
@@ -45,8 +46,7 @@ namespace XRNeckSafer
                     builder.Append("+");
                 }
                 var device = JoystickStuff.Instance.GetDeviceByIndex(button.JoyIndex);
-                var text = $"[{device.InstanceName} But:{button.Button + 1}]";
-                builder.Append(text);
+                builder.Append($"[{device.InstanceName} But:{button.Button + 1}]");
             }
             _pressedButtonsLabel.Text = builder.ToString();
         }
@@ -64,8 +64,13 @@ namespace XRNeckSafer
 
         private void OnCancelButtonClick(object sender, EventArgs e)
         {
-            _scanner.Stop();
             Close();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            _scanner.Stop();
+            base.OnClosing(e);
         }
 
         /// <summary>
