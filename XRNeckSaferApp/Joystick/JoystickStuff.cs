@@ -8,10 +8,11 @@ namespace XRNeckSafer
     public class JoystickStuff
     {
         private readonly DirectInput _directInput;
-        private List<DeviceInstance> _devices;
-        private List<StickItem> _stickItems;
-        private List<bool[]> _lastButtons;
-        private List<int[]> _lastPOVs;
+        private readonly List<DeviceInstance> _devices = new List<DeviceInstance>();
+        private readonly List<StickItem> _stickItems = new List<StickItem>();
+        private readonly Dictionary<string, Joystick> _joysticks = new Dictionary<string, Joystick>();
+        private readonly List<bool[]> _lastButtons = new List<bool[]>();
+        private readonly List<int[]> _lastPOVs = new List<int[]>();
 
         public bool DisableJoystickReconnect { get; set; }
 
@@ -38,7 +39,7 @@ namespace XRNeckSafer
 
         public StickItem GetStickItemByGuid(string guid)
         {
-            return _stickItems.Find(s => s.Guid.Equals(guid, StringComparison.OrdinalIgnoreCase));
+            return _stickItems.Find(s => s.JoystickGuid.Equals(guid, StringComparison.OrdinalIgnoreCase));
         }
 
         public IReadOnlyCollection<StickItem> GetSticks()
@@ -49,28 +50,34 @@ namespace XRNeckSafer
         public string GetDeviceNameByGuid(string guid)
         {
             var stickItem = GetStickItemByGuid(guid);
-            return stickItem?.GetInstanceName() ?? guid;
+            return stickItem?.InstanceName ?? guid;
         }
 
         public void ReloadJoysticks()
         {
-            _devices = _directInput.GetDevices(DeviceClass.GameControl, DeviceEnumerationFlags.AttachedOnly).ToList();
-            _stickItems = new List<StickItem>();
-            _lastButtons = new List<bool[]>();
-            _lastPOVs = new List<int[]>();
+            _devices.Clear();
+            _stickItems.Clear();
+            _lastButtons.Clear();
+            _lastPOVs.Clear();
+            _joysticks.Clear();
+            _devices.AddRange(_directInput.GetDevices(DeviceClass.GameControl, DeviceEnumerationFlags.AttachedOnly));
 
-            for (int i = 0; i < _devices.Count; i++)
+            foreach (var device in _devices)
             {
-                var device = _devices[i];
+                var joystick = new Joystick(_directInput, device.InstanceGuid);
+                joystick.Acquire();
+                _joysticks.Add(device.InstanceGuid.ToString(), joystick);
                 var stickItem = new StickItem 
                 {
                     Attached = _directInput.IsDeviceAttached(device.InstanceGuid),
-                    Guid = device.InstanceGuid.ToString()
+                    JoystickGuid = device.InstanceGuid.ToString(),
+                    ButtonCount = joystick.Capabilities.ButtonCount,
+                    PovCount = joystick.Capabilities.PovCount,
+                    InstanceName = joystick.Properties.InstanceName,
                 };
                 _lastButtons.Add(new bool[128]);
                 _lastPOVs.Add(new int[4]);
-                stickItem.Stick = new Joystick(_directInput, device.InstanceGuid);
-                stickItem.Stick.Acquire();
+                
                 _stickItems.Add(stickItem);
             }
         }
@@ -135,26 +142,30 @@ namespace XRNeckSafer
             }
             try
             {
-                JoystickState State = stickItem.Stick.GetCurrentState();
+                if (!_joysticks.ContainsKey(stickItem.JoystickGuid))
+                {
+                    return false;
+                }
+                JoystickState state = _joysticks[stickItem.JoystickGuid].GetCurrentState();
                 if ((p == -1) && (b == -1)) return false;
 
                 if (p == -1)
                 {
-                    return State.Buttons[b - 1];
+                    return state.Buttons[b - 1];
                 }
                 else
                 {
-                    if (State.PointOfViewControllers[p] == -1) return false;
+                    if (state.PointOfViewControllers[p] == -1) return false;
                     if (use8wayhat)
                     {
-                        return State.PointOfViewControllers[p] == b;
+                        return state.PointOfViewControllers[p] == b;
                     }
-                    return (Math.Abs(State.PointOfViewControllers[p] - b) < 5000) || (State.PointOfViewControllers[p] == 31500 && b == 0);
+                    return (Math.Abs(state.PointOfViewControllers[p] - b) < 5000) || (state.PointOfViewControllers[p] == 31500 && b == 0);
                 }
             }
             catch (Exception)
             {
-                if (!DisableJoystickReconnect && _directInput.IsDeviceAttached(new Guid(stickItem.Guid)))
+                if (!DisableJoystickReconnect && _directInput.IsDeviceAttached(new Guid(stickItem.JoystickGuid)))
                 {
                     ReloadJoysticks();
                 }
@@ -169,15 +180,18 @@ namespace XRNeckSafer
             for (int i = 0; i < _stickItems.Count; i++)
             {
                 StickItem stickItem = _stickItems[i];
-                Joystick joystick = stickItem.Stick;
-                JoystickState joystickState = joystick.GetCurrentState();
-                for (int k = 0; k < joystick.Capabilities.ButtonCount; k++)
+                if (!_joysticks.ContainsKey(stickItem.JoystickGuid))
+                {
+                    continue;
+                }
+                JoystickState joystickState = _joysticks[stickItem.JoystickGuid].GetCurrentState();
+                for (int k = 0; k < stickItem.ButtonCount; k++)
                 {
                     if (joystickState.Buttons[k] != _lastButtons[i][k])
                     {
                         var joyBut = new JoyBut
                         {
-                            JoystickGuid = stickItem.Guid,
+                            JoystickGuid = stickItem.JoystickGuid,
                             Button = k,
                             POV = -1
                         };
@@ -188,13 +202,13 @@ namespace XRNeckSafer
                         result.Add(joyBut);
                     }
                 }
-                for (int k = 0; k < joystick.Capabilities.PovCount; k++)
+                for (int k = 0; k < stickItem.PovCount; k++)
                 {
                     if (joystickState.PointOfViewControllers[k] != _lastPOVs[i][k])
                     {
                         var joyBut = new JoyBut
                         {
-                            JoystickGuid = stickItem.Guid,
+                            JoystickGuid = stickItem.JoystickGuid,
                             Button = joystickState.PointOfViewControllers[k],
                             POV = k
                         };
@@ -213,7 +227,8 @@ namespace XRNeckSafer
         {
             for (int i = 0; i < _stickItems.Count; i++)
             {
-                JoystickState currentState = _stickItems[i].Stick.GetCurrentState();
+                var joystickGuid = _stickItems[i].JoystickGuid;
+                JoystickState currentState = _joysticks[joystickGuid].GetCurrentState();
                 Array.Copy(currentState.Buttons, _lastButtons[i], 128);
                 Array.Copy(currentState.PointOfViewControllers, _lastPOVs[i], 4);
             }
