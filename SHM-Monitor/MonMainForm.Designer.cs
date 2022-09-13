@@ -44,7 +44,7 @@
             this.OutputTextBox.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OutputTextBox.Location = new System.Drawing.Point(3, 32);
             this.OutputTextBox.Name = "OutputTextBox";
-            this.OutputTextBox.Size = new System.Drawing.Size(506, 587);
+            this.OutputTextBox.Size = new System.Drawing.Size(506, 687);
             this.OutputTextBox.TabIndex = 0;
             this.OutputTextBox.Text = "";
             this.OutputTextBox.WordWrap = false;
@@ -114,7 +114,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(509, 621);
+            this.ClientSize = new System.Drawing.Size(509, 721);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.updateInterval);
@@ -124,6 +124,7 @@
             this.DoubleBuffered = true;
             this.Name = "SHMMonForm";
             this.Text = "XRNS SHM Monitor";
+            this.SizeChanged += new System.EventHandler(this.SHMMonForm_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.updateInterval)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -82,13 +82,14 @@ namespace SHM_Monitor
             int shmSizeDeb = 2*20*MAXMONVAL;
 
             shmDeb = MemoryMappedFile.CreateOrOpen(shmNameDeb, shmSizeDeb);
-            accessor = shm.CreateViewAccessor();
+            accessorDeb = shmDeb.CreateViewAccessor();
         }
 
-        public void generateOutput()
+        public unsafe void generateOutput()
         {
             accessor.Read<shmVal_s>(0, out shmValues);
-            accessor.ReadArray<byte>(0, shmDebValues,0,MAXMONVAL*2*20);
+            accessorDeb.ReadArray<byte>(0, shmDebValues,0,MAXMONVAL*2*20);
+           
 
             StringBuilder sb = new StringBuilder();
 
@@ -113,8 +114,13 @@ namespace SHM_Monitor
             sb.Append(generateLine("holdLinearPitchRotation" , shmValues.holdLinearPitchRotation.ToString()));
             sb.Append(generateLine("hasBeenCentered" , shmValues.hasBeenCentered.ToString()));
             sb.Append("-----------------------"+Environment.NewLine);
-            sb.Append(System.Text.Encoding.ASCII.GetString(shmDebValues));
 
+            for (int i = 0; i < MAXMONVAL; i++)
+            {
+                string n = System.Text.Encoding.ASCII.GetString(shmDebValues.Skip(i * 40).Take(20).ToArray());
+                string v = System.Text.Encoding.ASCII.GetString(shmDebValues.Skip(i * 40 + 20).Take(20).ToArray());
+                sb.Append(generateLine(n.Substring(0, n.IndexOf('\0')), v.Substring(0, v.IndexOf('\0'))));
+            }
             OutputTextBox.Text = sb.ToString();
         }
 
@@ -151,6 +157,12 @@ namespace SHM_Monitor
         private void updateInterval_ValueChanged(object sender, EventArgs e)
         {
             timer1.Interval = (int)updateInterval.Value;
+        }
+
+        private void SHMMonForm_SizeChanged(object sender, EventArgs e)
+        {
+            OutputTextBox.Height = Height - 74;
+            OutputTextBox.Width = Width - 21;
         }
     }
 }

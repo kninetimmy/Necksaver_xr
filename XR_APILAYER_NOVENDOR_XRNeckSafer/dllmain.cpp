@@ -101,32 +101,7 @@ namespace {
         float roll, pitch, yaw;
     };
 
-    void initMon() {
-        for (int i = 0; i < MAXMONVAL; i++) {
-            bufferDeb[i * 40] = '#';
-            bufferDeb[i * 40+20] = '#';
-        }
-    }
-
-    auto toMonitor = [](char* name, auto v) {
-#ifdef _DEBUG
-        for (int i = 0; i < MAXMONVAL; i++) {
-            if (strcmp(name, &bufferDeb[i*40]) == 0) {
-                strcpy(&bufferDeb[i * 40+20], &(std::to_string(v)[0]));
-                return;
-            }
-            if ('#' == bufferDeb[i * 40]) {
-                strcpy(&bufferDeb[i * 40], name);
-                strcpy(&bufferDeb[i * 40 + 20], &(std::to_string(v)[0]));
-                return;
-            }
-        }
-#endif
-    };
-
     void prepareSHM() {
-
-
         // prepare SHM
         m_shmHandler = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, m_memoryName.c_str());
 
@@ -193,7 +168,10 @@ namespace {
             bufferDeb = (char*)MapViewOfFile(m_shmHandlerDeb, FILE_MAP_ALL_ACCESS, 0, 0, MAXMONVAL * 40);
             if (NULL != bufferDeb) {
                 Log("XRNeckSafer shared debug memory ready\n");
-                initMon();
+                for (int i = 0; i < MAXMONVAL; i++) {
+                    bufferDeb[i * 40] = '#';
+                    bufferDeb[i * 40 + 20] = '#';
+                }
             }
             else {
                 Log("Cannot map XRNeckSafer shared debug memory: null buffer.\n");
@@ -204,6 +182,23 @@ namespace {
         }
 #endif
     }
+
+    auto toMonitor = [](const char* name, auto v) {
+#ifdef _DEBUG
+        for (int i = 0; i < MAXMONVAL; i++) {
+            if (strcmp(name, &bufferDeb[i * 40]) == 0) {
+                strcpy(&bufferDeb[i * 40 + 20], &(std::to_string(v)[0]));
+                return;
+            }
+            if ('#' == bufferDeb[i * 40]) {
+                strcpy(&bufferDeb[i * 40], name);
+                strcpy(&bufferDeb[i * 40 + 20], &(std::to_string(v)[0]));
+                return;
+            }
+        }
+#endif
+    };
+
 
     EulerAngles ToEulerAngles(XrQuaternionf q) {
         EulerAngles angles;
@@ -317,6 +312,20 @@ namespace {
 
         const XrResult result2 = nextXrLocateSpace(m_ViewSpace, m_LocalSpace, frameEndInfo->displayTime, &location);
         DebugLog("XrLocateSpace for HMD %d\n", result2);
+
+        XrSpaceLocation locationStage;
+        locationStage.type = XR_TYPE_SPACE_LOCATION;
+        locationStage.next = nullptr;
+
+        const XrResult result3 = nextXrLocateSpace(m_ViewSpace, m_StageSpace, frameEndInfo->displayTime, &locationStage);
+        DebugLog("XrLocateSpace in STAGE for HMD %d\n", result3);
+
+        toMonitor("LOCAL x", location.pose.position.x);
+        toMonitor("LOCAL y", location.pose.position.y);
+        toMonitor("LOCAL z", location.pose.position.z);
+        toMonitor("STAGE x", locationStage.pose.position.x);
+        toMonitor("STAGE y", locationStage.pose.position.y);
+        toMonitor("STAGE z", locationStage.pose.position.z);
 
         if (location.locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT) {
 
