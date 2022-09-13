@@ -85,7 +85,7 @@ namespace SHM_Monitor
             accessorDeb = shmDeb.CreateViewAccessor();
         }
 
-        public unsafe void generateOutput()
+        public void generateOutput()
         {
             accessor.Read<shmVal_s>(0, out shmValues);
             accessorDeb.ReadArray<byte>(0, shmDebValues,0,MAXMONVAL*2*20);

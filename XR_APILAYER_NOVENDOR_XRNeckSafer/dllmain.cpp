@@ -39,12 +39,14 @@ namespace {
     PFN_xrEndFrame nextXrEndFrame = nullptr;
 
     std::set<XrSpace> isViewSpace;
+    std::set<XrSpace> isLocalSpace;
     std::set<XrSpace> isStageSpace;
 
     PFN_xrCreateReferenceSpace nextXrCreateReferenceSpace = nullptr;
 
-    XrSpaceLocation centerHmdLocation;
-    XrSpaceLocation lastHmdLocation;
+    XrSpaceLocation centerHmdLocationLocal;
+    XrSpaceLocation centerHmdLocationStage;
+//    XrSpaceLocation lastHmdLocation;
     XrVector3f delta;
     XrVector3f trans;
 
@@ -169,7 +171,8 @@ namespace {
             if (NULL != bufferDeb) {
                 Log("XRNeckSafer shared debug memory ready\n");
                 for (int i = 0; i < MAXMONVAL; i++) {
-                    bufferDeb[i * 40] = '#';
+                    strcpy(&bufferDeb[i * 40], "#                   ");
+                    strcpy(&bufferDeb[i * 40], "#                   ");
                     bufferDeb[i * 40 + 20] = '#';
                 }
             }
@@ -282,14 +285,15 @@ namespace {
         const XrResult resS = nextXrCreateReferenceSpace(*session, &referenceSpaceCreateInfo, &m_StageSpace);
         DebugLog("STAGE space: %d\n", m_StageSpace);
 
-        lastHmdLocation.type = XR_TYPE_SPACE_LOCATION;
-        lastHmdLocation.next = nullptr;
+//        lastHmdLocation.type = XR_TYPE_SPACE_LOCATION;
+//        lastHmdLocation.next = nullptr;
 
         XrSpaceLocation startingLocation;
 
         const XrResult result2 = nextXrLocateSpace(m_ViewSpace, m_LocalSpace, 0, &startingLocation);
-        centerHmdLocation = startingLocation;
-        lastHmdLocation = startingLocation;
+        centerHmdLocationLocal = startingLocation;
+        centerHmdLocationStage = startingLocation;
+        //        lastHmdLocation = startingLocation;
         holdYawOffsetValue = 0;
 
         DebugLog("XrLocateSpace for HMD %d\n", result2);
@@ -332,7 +336,8 @@ namespace {
             // center button pressed? -> current orientation gets center orientation
             if (buffer->resetHmdOrientation) {
                 // EulerAngles centerAngles;
-                centerHmdLocation = location;
+                centerHmdLocationLocal = location;
+                centerHmdLocationStage = locationStage;
                 buffer->resetHmdOrientation = false;
                 shmValues.hasBeenCentered = true;
                 buffer->hasBeenCentered = shmValues.hasBeenCentered;
@@ -353,7 +358,7 @@ namespace {
 
             //substract center orientation from current orientation to get corrected relative HMD orientation
             const DirectX::XMVECTOR orientation = LoadXrQuaternion(location.pose.orientation);
-            const DirectX::XMVECTOR centerOrientation = LoadXrQuaternion(centerHmdLocation.pose.orientation);
+            const DirectX::XMVECTOR centerOrientation = LoadXrQuaternion(centerHmdLocationLocal.pose.orientation);
             const DirectX::XMVECTOR invertCenterOrientation = DirectX::XMQuaternionConjugate(centerOrientation);
             const DirectX::XMVECTOR substractedOrientation = DirectX::XMQuaternionMultiply(orientation, invertCenterOrientation);
             StoreXrQuaternion(&location.pose.orientation, substractedOrientation);
@@ -437,6 +442,7 @@ namespace {
             DebugLog("VIEW: %d\n", *space);
         }
         if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_LOCAL) {
+            isLocalSpace.insert(*space);
             DebugLog("LOCAL: %d\n", *space);
         }
         if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_STAGE) {
@@ -463,6 +469,7 @@ namespace {
         bool spaceIsViewSpace = isViewSpace.count(space);
         bool baseSpaceIsViewSpace = isViewSpace.count(baseSpace);
         bool baseSpaceIsStageSpace = isStageSpace.count(baseSpace); // IL2: true, DCS: false
+        bool baseSpaceIsLocalSpace = isLocalSpace.count(baseSpace); // IL2: true, DCS: false
 
         DebugLog("space: %d  bspace: %d\n", space, baseSpace);
 
@@ -470,11 +477,16 @@ namespace {
             // save current location
             XrVector3f pos = location->pose.position;
 
-            // centerHmdLocation was sampled in LOCAL space 
-            // when LocateSpace is requested for STAGE basespace we need to compensate the position
             if (baseSpaceIsStageSpace) {
-                pos = pos - centerHmdLocation.pose.position;
+                pos = pos - centerHmdLocationStage.pose.position;
             }
+            if (baseSpaceIsLocalSpace) {
+                pos = pos - centerHmdLocationLocal.pose.position;
+            }
+
+            toMonitor("pos x", pos.x);
+            toMonitor("pos y", pos.y);
+            toMonitor("pos z", pos.z);
 
             DirectX::XMVECTOR vPitchAxis = { 1.f,0.f,0.f };
 
@@ -497,7 +509,10 @@ namespace {
                 StoreXrVector3(&pos, DirectX::XMVector3Rotate(LoadXrVector3(pos), qYawOffset));
 
                 if (baseSpaceIsStageSpace) {
-                    pos = pos + centerHmdLocation.pose.position;
+                    pos = pos + centerHmdLocationStage.pose.position;
+                }
+                if (baseSpaceIsLocalSpace) {
+                    pos = pos + centerHmdLocationLocal.pose.position;
                 }
 
                 location->pose.position = pos - trans;
