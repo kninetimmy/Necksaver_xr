@@ -110,9 +110,7 @@ namespace {
 
     auto toMonitor = [](char* name, auto v) {
 #ifdef _DEBUG
-#define VARNAME(name) (#name)
-        int i;
-        for (i = 0; i < MAXMONVAL; i++) {
+        for (int i = 0; i < MAXMONVAL; i++) {
             if (strcmp(name, &bufferDeb[i*40]) == 0) {
                 strcpy(&bufferDeb[i * 40+20], &(std::to_string(v)[0]));
                 return;
@@ -126,6 +124,86 @@ namespace {
 #endif
     };
 
+    void prepareSHM() {
+
+
+        // prepare SHM
+        m_shmHandler = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, m_memoryName.c_str());
+
+        if (m_shmHandler) {
+            Log("XRNeckSafer shared memory found\n");
+        }
+        else {
+            m_shmHandler = CreateFileMapping(
+                INVALID_HANDLE_VALUE,
+                NULL,
+                PAGE_READWRITE,
+                0,
+                sizeof(shmValues),
+                m_memoryName.c_str());
+
+            Log("XRNeckSafer shared memory created\n");
+        }
+
+        if (m_shmHandler) {
+            buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
+            if (NULL != buffer) {
+                Log("XRNeckSafer shared memory ready\n");
+                buffer->hasBeenCentered = false;
+            }
+            else {
+                Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
+            }
+        }
+        else {
+            Log("Couldn't create XRNeckSafer shared memory\n");
+        }
+
+
+        if (m_shmHandler) {
+            buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
+            if (NULL != buffer) {
+                Log("XRNeckSafer shared memory ready\n");
+                buffer->hasBeenCentered = false;
+            }
+            else {
+                Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
+            }
+        }
+        else {
+            Log("Couldn't create XRNeckSafer shared memory\n");
+        }
+
+#ifdef _DEBUG
+        if (m_shmHandlerDeb) {
+            Log("XRNeckSafer shared debug memory found\n");
+        }
+        else {
+            m_shmHandlerDeb = CreateFileMapping(
+                INVALID_HANDLE_VALUE,
+                NULL,
+                PAGE_READWRITE,
+                0,
+                40 * MAXMONVAL,
+                m_memoryNameDeb.c_str());
+            Log("XRNeckSafer shared debug memory created\n");
+        }
+
+        if (m_shmHandlerDeb) {
+            bufferDeb = (char*)MapViewOfFile(m_shmHandlerDeb, FILE_MAP_ALL_ACCESS, 0, 0, MAXMONVAL * 40);
+            if (NULL != bufferDeb) {
+                Log("XRNeckSafer shared debug memory ready\n");
+                initMon();
+            }
+            else {
+                Log("Cannot map XRNeckSafer shared debug memory: null buffer.\n");
+            }
+        }
+        else {
+            Log("Couldn't create XRNeckSafer shared debug memory\n");
+        }
+#endif
+    }
 
     EulerAngles ToEulerAngles(XrQuaternionf q) {
         EulerAngles angles;
@@ -646,82 +724,7 @@ extern "C" {
         apiLayerRequest->getInstanceProcAddr = reinterpret_cast<PFN_xrGetInstanceProcAddr>(XRNeckSafer_xrGetInstanceProcAddr);
         apiLayerRequest->createApiLayerInstance = reinterpret_cast<PFN_xrCreateApiLayerInstance>(XRNeckSafer_xrCreateApiLayerInstance);
 
-        // prepare SHM
-        m_shmHandler = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, m_memoryName.c_str());
-
-        if (m_shmHandler) {
-            Log("XRNeckSafer shared memory found\n");
-        }
-        else {
-            m_shmHandler = CreateFileMapping(
-                INVALID_HANDLE_VALUE,
-                NULL,
-                PAGE_READWRITE,
-                0,
-                sizeof(shmValues),
-                m_memoryName.c_str());
-
-            Log("XRNeckSafer shared memory created\n");
-        }
-
-       if (m_shmHandler) {
-            buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
-            if (NULL != buffer) {
-                Log("XRNeckSafer shared memory ready\n");
-                buffer->hasBeenCentered = false;
-            }
-            else {
-                Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
-            }
-       }
-        else {
-            Log("Couldn't create XRNeckSafer shared memory\n");
-        }
-
-
-       if (m_shmHandler) {
-           buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
-           if (NULL != buffer) {
-               Log("XRNeckSafer shared memory ready\n");
-               buffer->hasBeenCentered = false;
-           }
-           else {
-               Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
-           }
-       }
-       else {
-           Log("Couldn't create XRNeckSafer shared memory\n");
-       }
-
-#ifdef _DEBUG
-       if (m_shmHandlerDeb) {
-           Log("XRNeckSafer shared debug memory found\n");
-       }
-       else {
-           m_shmHandlerDeb = CreateFileMapping(
-               INVALID_HANDLE_VALUE,
-               NULL,
-               PAGE_READWRITE,
-               0,
-               40* MAXMONVAL,
-               m_memoryNameDeb.c_str());
-           Log("XRNeckSafer shared debug memory created\n");
-       }
-
-       if (m_shmHandlerDeb) {
-           bufferDeb = (char*)MapViewOfFile(m_shmHandlerDeb, FILE_MAP_ALL_ACCESS, 0, 0, MAXMONVAL*40);
-           if (NULL != bufferDeb) {
-               Log("XRNeckSafer shared debug memory ready\n");
-               initMon();
-           }
-           else {
-               Log("Cannot map XRNeckSafer shared debug memory: null buffer.\n");
-           }
-       }
-       else {
-           Log("Couldn't create XRNeckSafer shared debug memory\n");
-       }
-#endif
+        prepareSHM();
 
         DebugLog("<-- XRNeckSafer_xrNegotiateLoaderApiLayerInterface\n");
 
