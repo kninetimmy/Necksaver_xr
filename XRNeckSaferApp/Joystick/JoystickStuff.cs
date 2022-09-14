@@ -79,6 +79,7 @@ namespace XRNeckSafer
                 
                 _stickItems.Add(stickItem);
             }
+            InitScan();
         }
 
         public bool IsButtonPressed(ButtonConfig butconf)
@@ -222,7 +223,7 @@ namespace XRNeckSafer
             return result;
         }
 
-        public void InitScan()
+        private void InitScan()
         {
             for (int i = 0; i < _stickItems.Count; i++)
             {

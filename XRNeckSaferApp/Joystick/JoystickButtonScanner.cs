@@ -27,7 +27,7 @@ namespace XRNeckSafer
 
         public void StartScan()
         {
-            JoystickStuff.Instance.InitScan();
+            JoystickStuff.Instance.ReloadJoysticks();
             _scanTimer.Start();
         }
 
@@ -45,7 +45,7 @@ namespace XRNeckSafer
             }
             if (_pressedButtons.Any())
             {
-                Stop();
+                // Stop();
                 OnScanningComplete?.Invoke(_pressedButtons.Values.ToList());
                 _pressedButtons.Clear();
             }
@@ -59,6 +59,7 @@ namespace XRNeckSafer
         public void Dispose()
         {
             _scanTimer?.Dispose();
+            UnsubscribeAllHandlers();
             _scanTimer = null;
         }
 
@@ -84,12 +85,18 @@ namespace XRNeckSafer
             }
         }
 
+        private void UnsubscribeAllHandlers()
+        {
+            OnScanningComplete?.GetInvocationList().ToList().ForEach(d => OnScanningComplete -= d as Action<List<JoyBut>>);
+            OnCurrentlyPressedChanged?.GetInvocationList().ToList().ForEach(d => OnCurrentlyPressedChanged -= d as Action<List<JoyBut>>);
+        }
+
         //private void Debug()
         //{
         //    var builder = new System.Text.StringBuilder();
-        //    foreach(var key in _pressedButtons.Keys)
+        //    foreach (var key in _pressedButtons.Keys)
         //    {
-        //        if(builder.Length > 0)
+        //        if (builder.Length > 0)
         //        {
         //            builder.Append("+");
         //        }

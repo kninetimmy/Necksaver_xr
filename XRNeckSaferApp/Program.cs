@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -24,12 +26,30 @@ namespace XRNeckSafer
                 // main application entry point
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                KeyInterceptor.SetHook();
-                Application.Run(new MainForm());
-                KeyInterceptor.RemoveHook();
+                using (var host = CreateHostBuilder().Build())
+                {
+                    ServiceProvider = host.Services;
+                    KeyInterceptor.SetHook();
+                    Application.Run(ServiceProvider.GetRequiredService<MainForm>());
+                    KeyInterceptor.RemoveHook();
+                }
+
                 mutex.ReleaseMutex();
             }
 
+        }
+
+        private static IServiceProvider ServiceProvider { get; set; }
+
+        private static IHostBuilder CreateHostBuilder()
+        {
+            return Host.CreateDefaultBuilder()
+                .ConfigureServices((context, services) => {
+                    services.AddSingleton<VRStuff>();
+                    services.AddTransient<MainForm>();
+                    services.AddTransient<JoystickKeyboardScanner>();
+                    services.AddTransient<JoystickButtonScanner>();
+                });
         }
     }
 }

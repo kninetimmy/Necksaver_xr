@@ -82,7 +82,6 @@ namespace XRNeckSafer
                 }
                 // LogPressedKeys(_pressedKeys);
                 KeyPressed?.Invoke(_pressedKeys.ToArray());
-                
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
@@ -94,7 +93,7 @@ namespace XRNeckSafer
         //        return;
         //    }
         //    var builder = new StringBuilder();
-        //    foreach(var key in keys)
+        //    foreach (var key in keys)
         //    {
         //        if (builder.Length > 0)
         //        {

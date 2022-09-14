@@ -15,7 +15,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this._components = new System.ComponentModel.Container();
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -57,11 +57,10 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.loopTimer = new System.Windows.Forms.Timer(this._components);
             this.HMDYawBox = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.SetResetButton = new System.Windows.Forms.Button();
+            this.SetResetButton = new XRNeckSafer.BooleanActionButton();
             this.HMDYawLabel = new System.Windows.Forms.Label();
             this.VersionLabel = new System.Windows.Forms.Label();
             this.ManualGroup = new System.Windows.Forms.GroupBox();
@@ -70,7 +69,7 @@
             this.transFNUP = new System.Windows.Forms.NumericUpDown();
             this.label24 = new System.Windows.Forms.Label();
             this.angleNUD = new System.Windows.Forms.NumericUpDown();
-            this.transLRNUP = new System.Windows.Forms.NumericUpDown();
+            this.transLRNUP = new XRNeckSafer.NumericActionUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -84,7 +83,7 @@
             this.SetRightButton = new System.Windows.Forms.Button();
             this.RightLabel = new System.Windows.Forms.Label();
             this.LeftLabel = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this._components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.advancedConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startMinimzedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -109,8 +108,8 @@
             this.aPILayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableAPILayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listApiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this._components);
-            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this._components);
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ARGroup = new System.Windows.Forms.GroupBox();
@@ -584,11 +583,6 @@
             this.label10.TabIndex = 24;
             this.label10.Text = "-  DCS: \"recenter VR Headset\"";
             // 
-            // loopTimer
-            // 
-            this.loopTimer.Interval = 20;
-            this.loopTimer.Tick += new System.EventHandler(this.loopTimer_Tick);
-            // 
             // HMDYawBox
             // 
             this.HMDYawBox.Controls.Add(this.label1);
@@ -626,6 +620,9 @@
             // 
             // SetResetButton
             // 
+            this.SetResetButton.ActionPropertyName = "SetResetCenter";
+            this.SetResetButton.ActiveBackColour = System.Drawing.SystemColors.ControlText;
+            this.SetResetButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.SetResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SetResetButton.Location = new System.Drawing.Point(165, 51);
             this.SetResetButton.Name = "SetResetButton";
@@ -753,6 +750,7 @@
             // 
             // transLRNUP
             // 
+            this.transLRNUP.ActionPropertyName = "TransitionOffsetLeftRight";
             this.transLRNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.transLRNUP.Location = new System.Drawing.Point(176, 63);
             this.transLRNUP.Minimum = new decimal(new int[] {
@@ -1992,7 +1990,6 @@
 
         #endregion
         private System.Windows.Forms.GroupBox stepwiseGroup;
-        private System.Windows.Forms.Timer loopTimer;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
@@ -2003,7 +2000,6 @@
         private System.Windows.Forms.Label RightLabel;
         private System.Windows.Forms.Label LeftLabel;
         private System.Windows.Forms.NumericUpDown transFNUP;
-        private System.Windows.Forms.NumericUpDown transLRNUP;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label16;
@@ -2023,7 +2019,7 @@
         private System.Windows.Forms.Button DeleteButton;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button SetHoldButton1;
-        private System.Windows.Forms.Button SetResetButton;
+        private BooleanActionButton SetResetButton;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem advancedConfigToolStripMenuItem;
@@ -2137,6 +2133,8 @@
         private System.Windows.Forms.ToolStripMenuItem disableAllGUIOutputToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem disableJoystickAutoReconnectToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.ComponentModel.IContainer components;
+        private NumericActionUpDown transLRNUP;
     }
 }
 

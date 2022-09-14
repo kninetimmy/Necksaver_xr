@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -36,10 +37,10 @@ namespace XRNeckSafer
 
         private readonly VRStuff _vr;
 
-        public MainForm()
+        public MainForm(VRStuff vr)
         {
             InitializeComponent();
-            _vr = new VRStuff();
+            _vr = vr;
             VersionLabel.Text = GetAssemblyProductVersion();
             KeyInterceptor.KeyPressed += OnKeyPressed;
             notifyIcon.ContextMenuStrip = contextMenuStrip;
@@ -1558,10 +1559,114 @@ namespace XRNeckSafer
         {
             if (disposing)
             {
-                _vr?.Dispose();
                 _components?.Dispose();
             }
             base.Dispose(disposing);
+        }
+    }
+
+    public class Action
+    {
+        public string ActionName { get; set; }
+        public bool Toggle { get; set; }
+        public JoystickKeyboardInput Input { get; set; }
+    }
+
+    //public class ActionConfig
+    //{
+    //    public string ControlName { get; set; }
+    //    public List<Action> Actions { get; set; }
+    //}
+
+    public class CustomButton : Button
+    {
+        private readonly string[] _validActionNames = new [] { "Click" };
+        private readonly JoystickKeyboardScanner _scanner;
+
+        public Action Action { get; set; }
+
+        public CustomButton(): base()
+        {
+            //var controlActionConfig = Config.Instance.ControlActionConfig.Find(a => a.ControlName.Equals(Name, StringComparison.Ordinal));
+            //if (controlActionConfig == null)
+            //{
+            //    foreach(var actionName in _validActionNames)
+            //    {
+
+            //    }
+            //    // Config.Instance.ControlActionConfig.Add(controlActionConfig);
+            //    Config.Instance.WriteConfig();
+            //}
+            //Click += OnCustomButtonClick;
+            //_scanner.OnScanningComplete += OnScanningComplete;
+            var action = new Action
+            {
+                ActionName = "SetCentreButton",
+                Toggle = false,
+                Input = new JoystickKeyboardInput
+                {
+                    KeyboardKeys = new List<Keys> { Keys.LShiftKey },
+                    JoystickButtons = new List<JoyBut> { new JoyBut { Button = 5, JoystickGuid = "" } }
+                }
+            };
+            Action = action;
+            //Actions = new List<Action>
+            //{
+            //    new Action
+            //    {
+            //        ActionName = "SetCentreButton",
+            //        Toggle = false,
+            //        Input = new JoystickKeyboardInput
+            //        {
+            //            KeyboardKeys = new List<Keys> { Keys.LShiftKey },
+            //            JoystickButtons = new List<JoyBut> { new JoyBut { Button = 5, JoystickGuid = "" } }
+            //        }
+            //    }
+            //};
+        }
+
+        private void OnCustomButtonClick(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void OnScanningComplete(JoystickKeyboardInput input)
+        {
+            //var action = Actions.FirstOrDefault(a => a.Input.IsEqual(input));
+            //if (action == null)
+            //{
+            //    return;
+            //}
+
+            //switch (action.ActionName)
+            //{
+            //    case "Click": 
+            //        PerformClick();
+            //        break;
+            //}
+        }
+
+        public void SetControlAction(Action action)
+        {
+
+        }
+
+        private void SetButtonColor(bool pressed, Button b)
+        {
+            var foreColor = SystemColors.ControlText;
+            var backColor = SystemColors.Control;
+
+            if (pressed)
+            {
+                foreColor = System.Drawing.Color.LightGreen;
+                backColor = SystemColors.ControlText;
+            }
+
+            if (b.ForeColor != foreColor)
+            {
+                b.ForeColor = foreColor;
+                b.BackColor = backColor;
+            }
         }
     }
 }

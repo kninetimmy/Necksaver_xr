@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization;
 
 namespace XRNeckSafer
 {
@@ -105,6 +106,11 @@ namespace XRNeckSafer
         public List<int[]> UpAutoSteps;
         public List<int[]> DownAutoSteps;
 
+        [DataMember]
+        [JsonProperty(ItemTypeNameHandling = TypeNameHandling.All)]
+        public ActionProperty[] ActionProperties { get; set; }
+
+        public static event Action ConfigReloaded;
 
         private Config()
         {
@@ -179,8 +185,9 @@ namespace XRNeckSafer
 
         public static Config ReloadConfig()
         {
-            _instance = null;
-            return Instance;
+            _instance = ReadConfig();
+            ConfigReloaded?.Invoke();
+            return _instance;
         }
 
         private static Config ReadConfig()
@@ -196,7 +203,7 @@ namespace XRNeckSafer
                 {
                     return CreateDefaultConfig();
                 }
-                Config c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configfilename));
+                Config c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configfilename), new Newtonsoft.Json.Converters.StringEnumConverter());
                 if (c.LeftButton == null) c.LeftButton = new ButtonConfig();
                 if (c.LeftButton2 == null) c.LeftButton2 = new ButtonConfig();
                 if (c.LeftButton3 == null) c.LeftButton3 = new ButtonConfig();
@@ -296,7 +303,7 @@ namespace XRNeckSafer
             {
                 Directory.CreateDirectory(directory);
             }
-            File.WriteAllText(configfilename, JsonConvert.SerializeObject(this, Formatting.Indented));
+            File.WriteAllText(configfilename, JsonConvert.SerializeObject(this, Formatting.Indented, new Newtonsoft.Json.Converters.StringEnumConverter()));
         }
     }
 }
