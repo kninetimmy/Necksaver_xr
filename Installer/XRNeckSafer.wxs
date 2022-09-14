@@ -37,7 +37,7 @@
       </Directory>
       <Component Id="RegistryEntries" Guid="*" Win64="yes">
         <RegistryKey Root="HKLM" Key="Software\Khronos\OpenXR\1\ApiLayers\Implicit">
-          <RegistryValue Type="integer" Name="[INSTALLDIR]OpenXrApiLayer\XR_APILAYER_NOVENDOR_XRNeckSafer.json" Value="0" KeyPath="yes" />
+          <RegistryValue Type="integer" Name="[#XR_APILAYER_NOVENDOR_XRNECKSAFER.JSON]" Value="0" KeyPath="yes" />
           <RegistryValue Type="string" Value="Default Value" />
         </RegistryKey>
       </Component>
