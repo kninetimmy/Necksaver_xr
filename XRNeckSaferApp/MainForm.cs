@@ -637,7 +637,7 @@ namespace XRNeckSafer
 
             arot = autorot * pitchsign;
         }
-        
+
         private void SetTransOffsetF(decimal value)
         {
             // Config.Instance.TransF = (int)value;
@@ -1107,7 +1107,7 @@ namespace XRNeckSafer
 
                 }
             }
-            else 
+            else
             {
                 if (Config.Instance.PitchAutoMode == "stepwise")
                 {
@@ -1406,7 +1406,7 @@ namespace XRNeckSafer
             }
             YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
-            _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear", 
+            _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear",
                 Config.Instance.LinearLimU, Config.Instance.LinearLimD,
                 Config.Instance.LinearMultU, Config.Instance.LinearMultD);
             Config.Instance.WriteConfig();
@@ -1546,6 +1546,22 @@ namespace XRNeckSafer
         {
             var button = (NumericActionUpDown)sender;
             ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            // disable navigation on form using keyboard in order to avoid
+            // mess up with actions which have these keys assigned
+            if (!msg.HWnd.Equals(Handle) && 
+                (keyData == Keys.Left 
+                || keyData == Keys.Right 
+                || keyData == Keys.Up 
+                || keyData == Keys.Down
+                || keyData == Keys.Tab))
+            {
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }
