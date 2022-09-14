@@ -31,10 +31,11 @@ namespace XRNeckSafer
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ActionPropertiesForm));
             this._actionPropertiesGridView = new System.Windows.Forms.DataGridView();
-            this._saveButton = new System.Windows.Forms.Button();
             this._actionPropertyNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this._actionPropertyInputColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this._actionPropertyScanColumn = new System.Windows.Forms.DataGridViewButtonColumn();
+            this._saveButton = new System.Windows.Forms.Button();
+            this._cancelButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this._actionPropertiesGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,21 +57,10 @@ namespace XRNeckSafer
             this._actionPropertiesGridView.ReadOnly = true;
             this._actionPropertiesGridView.RowHeadersVisible = false;
             this._actionPropertiesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this._actionPropertiesGridView.Size = new System.Drawing.Size(534, 309);
+            this._actionPropertiesGridView.Size = new System.Drawing.Size(486, 320);
             this._actionPropertiesGridView.TabIndex = 1;
             this._actionPropertiesGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ActionPropertiesGridViewCellContentClick);
             this._actionPropertiesGridView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.GridViewDataBindingComplete);
-            // 
-            // _saveButton
-            // 
-            this._saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._saveButton.Location = new System.Drawing.Point(454, 325);
-            this._saveButton.Name = "_saveButton";
-            this._saveButton.Size = new System.Drawing.Size(75, 23);
-            this._saveButton.TabIndex = 2;
-            this._saveButton.Text = "Save";
-            this._saveButton.UseVisualStyleBackColor = true;
-            this._saveButton.Click += new System.EventHandler(this.OnSaveButtonClick);
             // 
             // _actionPropertyNameColumn
             // 
@@ -99,11 +89,34 @@ namespace XRNeckSafer
             this._actionPropertyScanColumn.Text = "Scan";
             this._actionPropertyScanColumn.Width = 50;
             // 
+            // _saveButton
+            // 
+            this._saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._saveButton.Location = new System.Drawing.Point(308, 336);
+            this._saveButton.Name = "_saveButton";
+            this._saveButton.Size = new System.Drawing.Size(75, 23);
+            this._saveButton.TabIndex = 2;
+            this._saveButton.Text = "Save";
+            this._saveButton.UseVisualStyleBackColor = true;
+            this._saveButton.Click += new System.EventHandler(this.OnSaveButtonClick);
+            // 
+            // _cancelButton
+            // 
+            this._cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._cancelButton.Location = new System.Drawing.Point(406, 336);
+            this._cancelButton.Name = "_cancelButton";
+            this._cancelButton.Size = new System.Drawing.Size(75, 23);
+            this._cancelButton.TabIndex = 3;
+            this._cancelButton.Text = "Cancel";
+            this._cancelButton.UseVisualStyleBackColor = true;
+            this._cancelButton.Click += new System.EventHandler(this.OnCancelButtonClick);
+            // 
             // ActionPropertiesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(541, 359);
+            this.ClientSize = new System.Drawing.Size(493, 370);
+            this.Controls.Add(this._cancelButton);
             this.Controls.Add(this._saveButton);
             this.Controls.Add(this._actionPropertiesGridView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -122,5 +135,6 @@ namespace XRNeckSafer
         private System.Windows.Forms.DataGridViewTextBoxColumn _actionPropertyNameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn _actionPropertyInputColumn;
         private System.Windows.Forms.DataGridViewButtonColumn _actionPropertyScanColumn;
+        private System.Windows.Forms.Button _cancelButton;
     }
 }

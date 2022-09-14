@@ -21,6 +21,7 @@ namespace XRNeckSafer
             Top = mainFormTop;
             Left = mainFormRight - 10;
             PopulateBindingList();
+            MinimumSize = Size;
         }
 
         private void PopulateBindingList()
@@ -86,6 +87,11 @@ namespace XRNeckSafer
                 var firstIndex = _selectedIndexes.First();
                 _actionPropertiesGridView.CurrentCell = _actionPropertiesGridView.Rows[firstIndex].Cells[0];
             }
+        }
+
+        private void OnCancelButtonClick(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 
