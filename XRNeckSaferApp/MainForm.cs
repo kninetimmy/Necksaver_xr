@@ -1039,22 +1039,19 @@ namespace XRNeckSafer
                 //{
                 //    frm.ShowDialog();
                 //}
-                using (var form = new ActionPropertiesForm(button.ActionPropertyName, Top, Right))
-                {
-                    form.ShowDialog();
-                }
+                ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
             }
-            else
-            {
-                using (var form = new ActionPropertiesForm(button.ActionPropertyName, Top, Right))
-                {
-                    form.ShowDialog();
-                }
-                //using (var frm = new MultiButtons(Top, Right, "Reset", Config.Instance.ResetButton, Config.Instance.ResetButton2, Config.Instance.ResetButton3))
-                //{
-                //    frm.ShowDialog();
-                //}
-            }
+            //else
+            //{
+            //    using (var form = new ActionPropertiesForm(button.ActionPropertyName, Top, Right))
+            //    {
+            //        form.ShowDialog();
+            //    }
+            //    //using (var frm = new MultiButtons(Top, Right, "Reset", Config.Instance.ResetButton, Config.Instance.ResetButton2, Config.Instance.ResetButton3))
+            //    //{
+            //    //    frm.ShowDialog();
+            //    //}
+            //}
         }
 
         private void AccumReset_Click(object sender, EventArgs e)
@@ -1542,19 +1539,13 @@ namespace XRNeckSafer
         private void OnTranslationLeftRightDoubleClick(object sender, MouseEventArgs e)
         {
             var button = (NumericActionUpDown)sender;
-            using (var form = new ActionPropertiesForm(button.ActionPropertyName, Top, Right))
-            {
-                form.ShowDialog();
-            }
+            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
         }
 
         private void OnTranslationForwardDoubleClick(object sender, MouseEventArgs e)
         {
             var button = (NumericActionUpDown)sender;
-            using (var form = new ActionPropertiesForm(button.ActionPropertyName, Top, Right))
-            {
-                form.ShowDialog();
-            }
+            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
         }
     }
 }

@@ -13,7 +13,15 @@ namespace XRNeckSafer
         private readonly string _actionPropertyName;
         private List<int> _selectedIndexes;
 
-        public ActionPropertiesForm(string actionPropertyName, int mainFormTop, int mainFormRight)
+        public static void ShowForm(string actionPropertyName, int mainFormTop, int mainFormRight)
+        {
+            using (var form = new ActionPropertiesForm(actionPropertyName, mainFormTop, mainFormRight))
+            {
+                form.ShowDialog();
+            }
+        }
+
+        private ActionPropertiesForm(string actionPropertyName, int mainFormTop, int mainFormRight)
         {
             _actionPropertyName = actionPropertyName;
             InitializeComponent();
