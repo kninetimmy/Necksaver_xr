@@ -171,9 +171,8 @@ namespace {
             if (NULL != bufferDeb) {
                 Log("XRNeckSafer shared debug memory ready\n");
                 for (int i = 0; i < MAXMONVAL; i++) {
-                    strcpy(&bufferDeb[i * 40], "#                   ");
-                    strcpy(&bufferDeb[i * 40], "#                   ");
-                    bufferDeb[i * 40 + 20] = '#';
+                    strcpy(&bufferDeb[i * 40], "#                  ");
+                    strcpy(&bufferDeb[i * 40+20], "#                  ");
                 }
             }
             else {
