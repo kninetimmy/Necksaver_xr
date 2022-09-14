@@ -48,7 +48,7 @@ namespace XRNeckSafer
             {
                 return;
             }
-            _actionProperty = Config.Instance.ActionProperties.FirstOrDefault(p => p.Name == ActionPropertyName) as BooleanActionProperty;
+            _actionProperty = Config.Instance.ActionProperties?.FirstOrDefault(p => p.Name == ActionPropertyName) as BooleanActionProperty;
             if (_actionProperty != null)
             {
                 _actionProperty.Triggered += ActionPropertyTriggered;

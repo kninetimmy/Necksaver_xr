@@ -116,6 +116,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Text.Encodings.Web, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.6.0.0\lib\net461\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
@@ -143,6 +144,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionControls\BooleanActionButton.cs" />
+    <Compile Include="ActionControls\NumericActionUpDown.cs" />
+    <Compile Include="ActionProperties\ActionProperty.cs" />
+    <Compile Include="ActionProperties\ActionPropertyConverter.cs" />
+    <Compile Include="ActionProperties\ActionPropertyEvent.cs" />
+    <Compile Include="ActionProperties\ActionPropertyEventArgs.cs" />
+    <Compile Include="ActionProperties\ActionPropertyProcessor.cs" />
+    <Compile Include="ActionProperties\BooleanActionProperty.cs" />
+    <Compile Include="ActionProperties\NumericUpDownActionProperty.cs" />
     <Compile Include="ButtonForm.cs">
       <SubType>Form</SubType>
     </Compile>

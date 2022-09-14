@@ -108,7 +108,7 @@ namespace XRNeckSafer
 
         [DataMember]
         [JsonProperty(ItemTypeNameHandling = TypeNameHandling.All)]
-        public ActionProperty[] ActionProperties { get; set; }
+        public List<ActionProperty> ActionProperties { get; set; }
 
         public static event Action ConfigReloaded;
 
@@ -231,6 +231,7 @@ namespace XRNeckSafer
                 if (c.PitchHoldButton1 == null) c.PitchHoldButton1 = new ButtonConfig();
                 if (c.PitchHoldButton2 == null) c.PitchHoldButton2 = new ButtonConfig();
                 if (c.PitchHoldButton3 == null) c.PitchHoldButton3 = new ButtonConfig();
+                if (c.ActionProperties == null) c.ActionProperties = new List<ActionProperty>();
 
                 if (c.AutoSteps.Count == 0)
                 {
@@ -292,6 +293,7 @@ namespace XRNeckSafer
                 conf.DownAutoSteps.Add(new int[3] { 70, 61, 30 });
                 conf.DownAutoSteps.Add(new int[3] { 80, 71, 40 });
             }
+            if (conf.ActionProperties == null) conf.ActionProperties = new List<ActionProperty>();
             conf.WriteConfig();
             return conf;
         }

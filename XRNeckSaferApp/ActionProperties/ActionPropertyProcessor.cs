@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace XRNeckSafer
@@ -6,14 +7,14 @@ namespace XRNeckSafer
     public class ActionPropertyProcessor : IDisposable
     {
         private JoystickKeyboardScanner _scanner;
-        private readonly ActionProperty[] _properties;
+        private readonly List<ActionProperty> _properties;
 
-        public ActionPropertyProcessor(ActionProperty[] properties)
+        public ActionPropertyProcessor(List<ActionProperty> properties)
         {
             _scanner = new JoystickKeyboardScanner(2);
             _scanner.OnCurrentlyPressedChanged += OnCurrentlyPressedChanged;
             _scanner.OnScanningComplete += OnScanningComplete;
-            _properties = properties;
+            _properties = properties ?? new List<ActionProperty>();
         }
 
         private void OnScanningComplete(JoystickKeyboardInput input)

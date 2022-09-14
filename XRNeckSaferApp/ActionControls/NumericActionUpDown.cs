@@ -40,7 +40,7 @@ namespace XRNeckSafer
             {
                 return;
             }
-            _actionProperty = Config.Instance.ActionProperties.FirstOrDefault(p => p.Name == ActionPropertyName) as NumericUpDownActionProperty;
+            _actionProperty = Config.Instance.ActionProperties?.FirstOrDefault(p => p.Name == ActionPropertyName) as NumericUpDownActionProperty;
             if (_actionProperty != null)
             {
                 Value = _actionProperty.GetValue();
