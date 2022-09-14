@@ -42,7 +42,6 @@ namespace XRNeckSafer
             InitializeComponent();
             _vr = new VRStuff();
             VersionLabel.Text = GetAssemblyProductVersion();
-            KeyInterceptor.KeyPressed += OnKeyPressed;
             notifyIcon.ContextMenuStrip = contextMenuStrip;
             showToolStripMenuItem.Click += showToolStripMenuItem_Click;
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
@@ -52,8 +51,8 @@ namespace XRNeckSafer
             angleNUD.Value = Config.Instance.Angle;
             upNUD.Value = Config.Instance.UpAngle;
             downNUD.Value = Config.Instance.DownAngle;
-            transFNUP.Value = Config.Instance.TransF;
-            transLRNUP.Value = Config.Instance.TransLR;
+            // transFNUP.Value = Config.Instance.TransF;
+            // transLRNUP.Value = Config.Instance.TransLR;
             additivRB.Checked = Config.Instance.Additiv;
             if (Config.Instance.AutoMode == "stepwise")
             {
@@ -182,7 +181,7 @@ namespace XRNeckSafer
 
             setButtonToolTip(SetLeftButton, Config.Instance.LeftButton);
             setButtonToolTip(SetRightButton, Config.Instance.RightButton);
-            setButtonToolTip(SetResetButton, Config.Instance.ResetButton);
+            // setButtonToolTip(SetResetButton, Config.Instance.ResetButton);
             setButtonToolTip(AccumReset, Config.Instance.AccuResetButton);
             setButtonToolTip(SetHoldButton1, Config.Instance.HoldButton1);
 
@@ -210,39 +209,6 @@ namespace XRNeckSafer
             _pARText = "Autorotation";
             _hmdtext = "";
             loopTimer.Start();
-        }
-
-        private void OnKeyPressed(Keys[] pressedKeys)
-        {
-            if (!JoystickStuff.Instance.IsButtonPressed(Config.Instance.LeftButton) && !JoystickStuff.Instance.IsButtonPressed(Config.Instance.RightButton))
-            {
-                return;
-            }
-
-            if (pressedKeys.CheckMatch(Keys.Up))
-            {
-                transFNUP.Value++;
-                SetTransOffsetF(transFNUP.Value);
-                return;
-            }
-            if (pressedKeys.CheckMatch(Keys.Down))
-            {
-                transFNUP.Value--;
-                SetTransOffsetF(transFNUP.Value);
-                return;
-            }
-            if (pressedKeys.CheckMatch(Keys.Right))
-            {
-                transLRNUP.Value++;
-                SetTransOffsetLR(transLRNUP.Value);
-                return;
-            }
-            if (pressedKeys.CheckMatch(Keys.Left))
-            {
-                transLRNUP.Value--;
-                SetTransOffsetLR(transLRNUP.Value);
-                return;
-            }
         }
 
         public void setButtonToolTip(Button b, ButtonConfig bc)
@@ -337,7 +303,7 @@ namespace XRNeckSafer
 
         private void loopTimer_Tick(object sender, EventArgs e)
         {
-            bool reset_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.ResetButton);
+            bool reset_pressed = SetResetButton.ActionPropertyValue;  //  JoystickStuff.Instance.IsButtonPressed(Config.Instance.ResetButton);
             bool acc_res_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.AccuResetButton);
             bool pitch_acc_res_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.PitchAccuResetButton);
             bool l_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.LeftButton);
@@ -674,16 +640,16 @@ namespace XRNeckSafer
         
         private void SetTransOffsetF(decimal value)
         {
-            Config.Instance.TransF = (int)value;
+            // Config.Instance.TransF = (int)value;
             _transOffsetForward = (float)value / 100F;
-            Config.Instance.WriteConfig();
+            // Config.Instance.WriteConfig();
         }
 
         private void SetTransOffsetLR(decimal value)
         {
-            Config.Instance.TransLR = (int)value;
+            // Config.Instance.TransLR = (int)value;
             _transOffsetLeftRight = (float)value / 100F;
-            Config.Instance.WriteConfig();
+            // Config.Instance.WriteConfig();
         }
 
         private void OnYawForwardTranslationChanged(object sender, EventArgs e)
@@ -1065,20 +1031,29 @@ namespace XRNeckSafer
 
         private void SetResetButton_Click(object sender, EventArgs e)
         {
-
+            var button = (BooleanActionButton)sender;
+            // button.ActionPropertyName;
             if (!Config.Instance.MultipleLRbuttons)
             {
-                using (var frm = new ButtonForm(Top, Right, "Reset Button:", Config.Instance.ResetButton))
+                //using (var frm = new ButtonForm(Top, Right, "Reset Button:", Config.Instance.ResetButton))
+                //{
+                //    frm.ShowDialog();
+                //}
+                using (var form = new ActionPropertiesForm(button.ActionPropertyName, Top, Right))
                 {
-                    frm.ShowDialog();
+                    form.ShowDialog();
                 }
             }
             else
             {
-                using (var frm = new MultiButtons(Top, Right, "Reset", Config.Instance.ResetButton, Config.Instance.ResetButton2, Config.Instance.ResetButton3))
+                using (var form = new ActionPropertiesForm(button.ActionPropertyName, Top, Right))
                 {
-                    frm.ShowDialog();
+                    form.ShowDialog();
                 }
+                //using (var frm = new MultiButtons(Top, Right, "Reset", Config.Instance.ResetButton, Config.Instance.ResetButton2, Config.Instance.ResetButton3))
+                //{
+                //    frm.ShowDialog();
+                //}
             }
         }
 
@@ -1562,6 +1537,24 @@ namespace XRNeckSafer
                 _components?.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private void OnTranslationLeftRightDoubleClick(object sender, MouseEventArgs e)
+        {
+            var button = (NumericActionUpDown)sender;
+            using (var form = new ActionPropertiesForm(button.ActionPropertyName, Top, Right))
+            {
+                form.ShowDialog();
+            }
+        }
+
+        private void OnTranslationForwardDoubleClick(object sender, MouseEventArgs e)
+        {
+            var button = (NumericActionUpDown)sender;
+            using (var form = new ActionPropertiesForm(button.ActionPropertyName, Top, Right))
+            {
+                form.ShowDialog();
+            }
         }
     }
 }

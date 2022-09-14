@@ -29,6 +29,7 @@ namespace XRNeckSafer
                 using (new ActionPropertyProcessor(Config.Instance.ActionProperties))
                 {
                     Application.Run(new MainForm());
+                    Config.Instance.WriteConfig();
                 }
                 KeyInterceptor.RemoveHook();
 

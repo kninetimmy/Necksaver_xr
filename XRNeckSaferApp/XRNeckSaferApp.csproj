@@ -146,6 +146,12 @@
   <ItemGroup>
     <Compile Include="ActionControls\BooleanActionButton.cs" />
     <Compile Include="ActionControls\NumericActionUpDown.cs" />
+    <Compile Include="ActionPropertiesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ActionPropertiesForm.Designer.cs">
+      <DependentUpon>ActionPropertiesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ActionProperties\ActionProperty.cs" />
     <Compile Include="ActionProperties\ActionPropertyConverter.cs" />
     <Compile Include="ActionProperties\ActionPropertyEvent.cs" />
@@ -189,6 +195,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScanJoystickKeyboardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScanJoystickKeyboardForm.Designer.cs">
+      <DependentUpon>ScanJoystickKeyboardForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ScanForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -196,6 +208,9 @@
       <DependentUpon>ScanForm.cs</DependentUpon>
     </Compile>
     <Compile Include="VRStuff.cs" />
+    <EmbeddedResource Include="ActionPropertiesForm.resx">
+      <DependentUpon>ActionPropertiesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ButtonForm.resx">
       <DependentUpon>ButtonForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -218,6 +233,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ScanJoystickKeyboardForm.resx">
+      <DependentUpon>ScanJoystickKeyboardForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ScanForm.resx">
       <DependentUpon>ScanForm.cs</DependentUpon>
     </EmbeddedResource>

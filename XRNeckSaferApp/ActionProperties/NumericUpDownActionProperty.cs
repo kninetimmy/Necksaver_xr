@@ -6,8 +6,8 @@ namespace XRNeckSafer
     [DataContract]
     public class NumericUpDownActionProperty : ActionProperty<int>
     {
-        public const string UP_EVENT_NAME = "Up";
-        public const string DOWN_EVENT_NAME = "Down";
+        const string UP_EVENT_NAME = "Up";
+        const string DOWN_EVENT_NAME = "Down";
 
         public override void DispatchEvent(ActionPropertyEvent actionEvent, bool sameKeys, bool keyReleased)
         {
@@ -26,6 +26,28 @@ namespace XRNeckSafer
                     ProcessEvent(actionEvent);
                     break;
             }
+        }
+
+        public static NumericUpDownActionProperty CreateProperty(string name)
+        {
+            return new NumericUpDownActionProperty
+            {
+                Name = name,
+                Value = 0,
+                Events = new[]
+                {
+                    new ActionPropertyEvent
+                    {
+                        Name = UP_EVENT_NAME,
+                        InputCombination = new JoystickKeyboardInput(),
+                    },
+                    new ActionPropertyEvent
+                    {
+                        Name = DOWN_EVENT_NAME,
+                        InputCombination = new JoystickKeyboardInput(),
+                    }
+                }
+            };
         }
     }
 }

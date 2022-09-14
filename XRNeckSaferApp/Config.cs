@@ -57,7 +57,7 @@ namespace XRNeckSafer
         public ButtonConfig RightButton;
         public ButtonConfig RightButton2;
         public ButtonConfig RightButton3;
-        public ButtonConfig ResetButton;
+        // public ButtonConfig ResetButton; // replaced with ActionProperty
         public ButtonConfig ResetButton2;
         public ButtonConfig ResetButton3;
         public ButtonConfig HoldButton1;
@@ -81,8 +81,8 @@ namespace XRNeckSafer
         public int Angle;
         public int UpAngle;
         public int DownAngle;
-        public int TransLR;
-        public int TransF;
+        // public int TransLR; // replaced with ActionProperty
+        // public int TransF; // replaced with ActionProperty
         public int LinearLimL;
         public int LinearLimR;
         public int LinearMultL;
@@ -106,7 +106,6 @@ namespace XRNeckSafer
         public List<int[]> UpAutoSteps;
         public List<int[]> DownAutoSteps;
 
-        [DataMember]
         [JsonProperty(ItemTypeNameHandling = TypeNameHandling.All)]
         public List<ActionProperty> ActionProperties { get; set; }
 
@@ -120,7 +119,7 @@ namespace XRNeckSafer
             RightButton = new ButtonConfig();
             RightButton2 = new ButtonConfig();
             RightButton3 = new ButtonConfig();
-            ResetButton = new ButtonConfig();
+            // ResetButton = new ButtonConfig();
             ResetButton2 = new ButtonConfig();
             ResetButton3 = new ButtonConfig();
             HoldButton1 = new ButtonConfig();
@@ -144,8 +143,8 @@ namespace XRNeckSafer
             Angle = 30;
             UpAngle = 30;
             DownAngle = 30;
-            TransLR = 0;
-            TransF = 0;
+            //TransLR = 0;
+            //TransF = 0;
             LinearLimL = 95;
             LinearLimR = 95;
             LinearMultL = 120;
@@ -210,7 +209,7 @@ namespace XRNeckSafer
                 if (c.RightButton == null) c.RightButton = new ButtonConfig();
                 if (c.RightButton2 == null) c.RightButton2 = new ButtonConfig();
                 if (c.RightButton3 == null) c.RightButton3 = new ButtonConfig();
-                if (c.ResetButton == null) c.ResetButton = new ButtonConfig();
+                // if (c.ResetButton == null) c.ResetButton = new ButtonConfig();
                 if (c.ResetButton2 == null) c.ResetButton2 = new ButtonConfig();
                 if (c.ResetButton3 == null) c.ResetButton3 = new ButtonConfig();
                 if (c.HoldButton1 == null) c.HoldButton1 = new ButtonConfig();

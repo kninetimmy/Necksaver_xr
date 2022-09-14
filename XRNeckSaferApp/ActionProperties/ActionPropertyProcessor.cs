@@ -48,10 +48,10 @@ namespace XRNeckSafer
             if (_scanner != null)
             {
                 _scanner.Dispose();
-                foreach(var prop in _properties)
-                {
-                    prop.UnsubscribeTriggerHandlers();
-                }
+                //foreach(var prop in _properties)
+                //{
+                //    prop.UnsubscribeTriggerHandlers();
+                //}
                 _scanner = null;
             }
         }

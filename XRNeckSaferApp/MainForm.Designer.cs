@@ -66,7 +66,7 @@
             this.ManualGroup = new System.Windows.Forms.GroupBox();
             this.AccumReset = new System.Windows.Forms.Button();
             this.label25 = new System.Windows.Forms.Label();
-            this.transFNUP = new System.Windows.Forms.NumericUpDown();
+            this.transFNUP = new XRNeckSafer.NumericActionUpDown();
             this.label24 = new System.Windows.Forms.Label();
             this.angleNUD = new System.Windows.Forms.NumericUpDown();
             this.transLRNUP = new XRNeckSafer.NumericActionUpDown();
@@ -708,6 +708,7 @@
             // 
             // transFNUP
             // 
+            this.transFNUP.ActionPropertyName = "TransitionOffsetForward";
             this.transFNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.transFNUP.Location = new System.Drawing.Point(176, 87);
             this.transFNUP.Minimum = new decimal(new int[] {
@@ -719,6 +720,7 @@
             this.transFNUP.Size = new System.Drawing.Size(44, 20);
             this.transFNUP.TabIndex = 26;
             this.transFNUP.ValueChanged += new System.EventHandler(this.OnYawForwardTranslationChanged);
+            this.transFNUP.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnTranslationForwardDoubleClick);
             // 
             // label24
             // 
@@ -763,6 +765,7 @@
             this.transLRNUP.Size = new System.Drawing.Size(44, 20);
             this.transLRNUP.TabIndex = 25;
             this.transLRNUP.ValueChanged += new System.EventHandler(this.OnYawLeftRightTranslationChanged);
+            this.transLRNUP.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnTranslationLeftRightDoubleClick);
             // 
             // label8
             // 
@@ -2005,7 +2008,7 @@
         private System.Windows.Forms.GroupBox ManualGroup;
         private System.Windows.Forms.Label RightLabel;
         private System.Windows.Forms.Label LeftLabel;
-        private System.Windows.Forms.NumericUpDown transFNUP;
+        private XRNeckSafer.NumericActionUpDown transFNUP;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label16;

@@ -41,11 +41,14 @@ namespace XRNeckSafer
                 return;
             }
             _actionProperty = Config.Instance.ActionProperties?.FirstOrDefault(p => p.Name == ActionPropertyName) as NumericUpDownActionProperty;
-            if (_actionProperty != null)
+            if (_actionProperty == null)
             {
-                Value = _actionProperty.GetValue();
-                _actionProperty.Triggered += ActionPropertyTriggered;
+                _actionProperty = NumericUpDownActionProperty.CreateProperty(ActionPropertyName);
+                Config.Instance.ActionProperties.Add(_actionProperty);
             }
+
+            Value = _actionProperty.GetValue();
+            _actionProperty.Triggered += ActionPropertyTriggered;
         }
 
         private void ActionPropertyTriggered(ActionPropertyEventArgs<int> args)

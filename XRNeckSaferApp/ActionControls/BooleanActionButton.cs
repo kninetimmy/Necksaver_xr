@@ -49,11 +49,13 @@ namespace XRNeckSafer
                 return;
             }
             _actionProperty = Config.Instance.ActionProperties?.FirstOrDefault(p => p.Name == ActionPropertyName) as BooleanActionProperty;
-            if (_actionProperty != null)
+            if (_actionProperty == null)
             {
-                _actionProperty.Triggered += ActionPropertyTriggered;
-                SetButtonColor(_actionProperty.GetValue());
+                _actionProperty = BooleanActionProperty.CreateProperty(ActionPropertyName);
+                Config.Instance.ActionProperties.Add(_actionProperty);
             }
+            _actionProperty.Triggered += ActionPropertyTriggered;
+            SetButtonColor(_actionProperty.GetValue());
         }
 
         private void ActionPropertyTriggered(ActionPropertyEventArgs<bool> args)

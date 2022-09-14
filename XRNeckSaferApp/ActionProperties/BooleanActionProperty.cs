@@ -6,7 +6,7 @@ namespace XRNeckSafer
     [DataContract]
     public class BooleanActionProperty : ActionProperty<bool>
     {
-        public const string TOGGLE_EVENT_NAME = "Toggle";
+        const string TOGGLE_EVENT_NAME = "Toggle";
 
         [DataMember]
         [JsonProperty(Order = 1)]
@@ -30,6 +30,24 @@ namespace XRNeckSafer
                     ProcessEvent(actionEvent);
                     break;
             }
+        }
+
+        public static BooleanActionProperty CreateProperty(string name)
+        {
+            return new BooleanActionProperty
+            {
+                Name = name,
+                Value = false,
+                Events = new[] 
+                { 
+                    new ActionPropertyEvent 
+                    { 
+                        Name = TOGGLE_EVENT_NAME,
+                        InputCombination = new JoystickKeyboardInput(),
+                        Toggle = false
+                    } 
+                }
+            };
         }
     }
 }
