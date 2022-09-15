@@ -144,8 +144,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionControls\BooleanActionButton.cs" />
-    <Compile Include="ActionControls\NumericActionUpDown.cs" />
+    <Compile Include="ActionControls\BooleanActionButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ActionControls\NumericActionUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ActionPropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
