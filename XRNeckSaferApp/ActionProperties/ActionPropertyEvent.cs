@@ -7,8 +7,7 @@ namespace XRNeckSafer
     {
         [DataMember]
         public JoystickKeyboardInput InputCombination { get; set; }
-        [DataMember]
-        public bool Toggle { get; set; }
+
         [DataMember]
         public string Name { get; set; }
     }
