@@ -24,8 +24,8 @@ namespace XRNeckSafer
                 // main application entry point
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new SplashScreen());
                 KeyInterceptor.SetHook();
-
                 using (new ActionPropertyProcessor(Config.Instance.ActionProperties))
                 {
                     Application.Run(new MainForm());
@@ -35,7 +35,6 @@ namespace XRNeckSafer
 
                 mutex.ReleaseMutex();
             }
-
         }
     }
 }
