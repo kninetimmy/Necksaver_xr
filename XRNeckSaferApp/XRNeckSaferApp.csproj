@@ -290,7 +290,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="openxr_loader.dll" />
-    <None Include="Resources\output-onlinegiftools.gif" />
     <Content Include="XRNS.ico" />
     <None Include="Graph.png" />
   </ItemGroup>

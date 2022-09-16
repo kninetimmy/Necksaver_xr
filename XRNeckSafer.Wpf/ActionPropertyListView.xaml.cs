@@ -52,7 +52,7 @@ namespace XRNeckSafer.Wpf
         {
             var checkBox = (CheckBox)e.Source;
             var model = checkBox.DataContext as ActionPropertyDataModel;
-            model.InvertValue = checkBox?.IsChecked ?? false;
+            model.InvertValue = checkBox.IsChecked ?? false;
             Changed?.Invoke(new ActionPropertyDataModelChangeEventArgs
             {
                 Model = model,
@@ -64,7 +64,7 @@ namespace XRNeckSafer.Wpf
         {
             var checkBox = (CheckBox)e.Source;
             var model = checkBox.DataContext as ActionPropertyDataModel;
-            model.ToggleValue = checkBox?.IsChecked ?? false;
+            model.ToggleValue = checkBox.IsChecked ?? false;
 
             Changed?.Invoke(new ActionPropertyDataModelChangeEventArgs
             {
