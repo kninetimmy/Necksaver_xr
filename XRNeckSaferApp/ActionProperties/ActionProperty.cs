@@ -10,7 +10,8 @@ namespace XRNeckSafer
     {
         [DataMember]
         public string Name { get; set; }
-        [DataMember]
+
+        [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.All)]
         public ActionPropertyEvent[] Events { get; set; }
 
         [JsonIgnore]

@@ -22,8 +22,13 @@ namespace XRNeckSafer
             foreach (var prop in _properties)
             {
                 var actionEvent = prop.Events.FirstOrDefault(p => p.InputCombination.IsEqual(input));
-                if (actionEvent != null && !actionEvent.Toggle)
+                if (actionEvent != null)
                 {
+                    var toggleEvent = actionEvent as ActionPropertyToggleEvent;
+                    if (toggleEvent != null && toggleEvent.Toggle)
+                    {
+                        continue;
+                    }
                     // Console.WriteLine("Process trigger - OnScanningComplete!");
                     prop.DispatchEvent(actionEvent, false, true);
                 }
