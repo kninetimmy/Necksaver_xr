@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -9,9 +7,8 @@ namespace XRNeckSafer
 {
     public partial class ActionPropertiesForm : Form
     {
-        // private readonly BindingList<ActionPropertyDataModel> _bindingSource = new BindingList<ActionPropertyDataModel>();
         private readonly string _actionPropertyName;
-        private List<int> _selectedIndexes;
+        // private List<int> _selectedIndexes;
 
         public static void ShowForm(string actionPropertyName, int mainFormTop, int mainFormRight)
         {
@@ -30,7 +27,7 @@ namespace XRNeckSafer
             Left = mainFormRight - 10;
             PopulateBindingList();
             MinimumSize = Size;
-            _wpfList.Changed += ActionPropertyListChanged;
+            // _wpfList.Changed += ActionPropertyListChanged;
             _wpfList.ScanClick += OnScanClick;
             _wpfList.ClearClick += OnClearClick;
         }
@@ -58,31 +55,9 @@ namespace XRNeckSafer
             args.Model.NewInputCombination = result;
         }
 
-        private void ActionPropertyListChanged(Wpf.ActionPropertyDataModelChangeEventArgs args)
-        {
-            var property = Config.Instance.ActionProperties.FirstOrDefault(p => p.Name == args.Model.ActionPropertyName);
-            if (property == null)
-            {
-                return;
-            }
-            var actionEvent = property.Events.FirstOrDefault(e => e.Name == args.Model.EventName);
-            //switch(args.ChangedProperty)
-            //{
-            //    case nameof(args.Model.NewToggleValue):
-            //        actionEvent.Toggle = args.Model.NewToggleValue;
-            //        break;
-            //    case nameof(args.Model.NewInvertValue):
-            //        if (property is BooleanActionProperty booleanProp)
-            //        {
-            //            booleanProp.Invert = args.Model.NewInvertValue;
-            //        }
-            //        break;
-            //}
-        }
-
         private void PopulateBindingList()
         {
-            _selectedIndexes = new List<int>();
+            // _selectedIndexes = new List<int>();
             var props = new List<Wpf.ActionPropertyDataModel>();
             Config.Instance.ActionProperties.ForEach(prop =>
             {
