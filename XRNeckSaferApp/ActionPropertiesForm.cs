@@ -32,21 +32,28 @@ namespace XRNeckSafer
             MinimumSize = Size;
             _wpfList.Changed += ActionPropertyListChanged;
             _wpfList.ScanClick += OnScanClick;
+            _wpfList.ClearClick += OnClearClick;
         }
 
-        private void OnScanClick(Wpf.ActionPropertyDataModelScanEventArgs args)
+        private void OnClearClick(Wpf.ActionPropertyDataModelEventArgs args)
+        {
+            args.Model.InputCombination = string.Empty;
+            args.Model.NewInputCombination = new JoystickKeyboardInput();
+        }
+
+        private void OnScanClick(Wpf.ActionPropertyDataModelEventArgs args)
         {
             var result = ScanJoystickKeyboardForm.ShowForm(FormStartPosition.CenterParent, Top, Left, 2);
             if (result == null)
             {
                 return;
             }
-            var property = Config.Instance.ActionProperties.FirstOrDefault(p => p.Name == args.Model.ActionPropertyName);
-            if (property == null)
-            {
-                return;
-            }
-            var actionEvent = property.Events.FirstOrDefault(e => e.Name == args.Model.EventName);
+            //var property = Config.Instance.ActionProperties.FirstOrDefault(p => p.Name == args.Model.ActionPropertyName);
+            //if (property == null)
+            //{
+            //    return;
+            //}
+            // var actionEvent = property.Events.FirstOrDefault(e => e.Name == args.Model.EventName);
             args.Model.InputCombination = result.ToString();
             args.Model.NewInputCombination = result;
         }

@@ -11,6 +11,7 @@
         <Style x:Key="_textBlockVertical" TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
+        <local:BitmapToImageSourceConverter x:Key="BitmapToImageSourceConverter" />
     </UserControl.Resources>
     <DataGrid CanUserAddRows="False" CanUserDeleteRows="False" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanUserReorderColumns="False" IsReadOnly="True" 
                       Name="_listView" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="LightGray" ItemsSource="{Binding ElementName=HostControl, Path=Properties}" VerticalContentAlignment="Center">
@@ -20,7 +21,7 @@
             <DataGridTemplateColumn Header="Toggle">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <StackPanel HorizontalAlignment="Stretch">
+                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <StackPanel HorizontalAlignment="Center">
                                 <CheckBox Name="_toggleCheckBox" IsChecked="{Binding ToggleValue}" Checked="OnToggleCheckboxClick" Unchecked="OnToggleCheckboxClick">
                                     <CheckBox.Style>
@@ -41,8 +42,8 @@
             <DataGridTemplateColumn Header="Invert">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <StackPanel HorizontalAlignment="Stretch">
-                            <StackPanel HorizontalAlignment="Center">
+                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                            <StackPanel HorizontalAlignment="Center" >
                                 <CheckBox Name="_invertCheckBox" IsChecked="{Binding InvertValue}" Checked="InvertCheckBox_Click" Unchecked="InvertCheckBox_Click">
                                     <CheckBox.Style>
                                         <Style TargetType="CheckBox">
@@ -65,6 +66,17 @@
                     <DataTemplate>
                         <StackPanel VerticalAlignment="Center">
                             <Button Name="_scanButton" Content="..." Click="OnScanButtonClick" />
+                        </StackPanel>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="Clear">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel VerticalAlignment="Center">
+                            <Button Click="ClearEventClick" Background="Transparent" BorderBrush="Transparent">
+                                <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.deleteIcon}, Converter={StaticResource BitmapToImageSourceConverter}}" />
+                            </Button>
                         </StackPanel>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>

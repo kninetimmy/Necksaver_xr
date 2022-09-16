@@ -15,7 +15,8 @@ namespace XRNeckSafer.Wpf
         public ObservableCollection<ActionPropertyDataModel> Properties { get; set; } = new ObservableCollection<ActionPropertyDataModel>();
 
         public event Action<ActionPropertyDataModelChangeEventArgs> Changed;
-        public event Action<ActionPropertyDataModelScanEventArgs> ScanClick;
+        public event Action<ActionPropertyDataModelEventArgs> ScanClick;
+        public event Action<ActionPropertyDataModelEventArgs> ClearClick;
 
         public ActioonPropertyListView()
         {
@@ -37,7 +38,12 @@ namespace XRNeckSafer.Wpf
         private void OnScanButtonClick(object sender, RoutedEventArgs e)
         {
             var model = ((Button)e.OriginalSource).DataContext as ActionPropertyDataModel;
-            ScanClick?.Invoke(new ActionPropertyDataModelScanEventArgs { Model = model });
+            ScanClick?.Invoke(new ActionPropertyDataModelEventArgs { Model = model });
+            RefreshDataGrid();
+        }
+
+        private void RefreshDataGrid()
+        {
             var view = CollectionViewSource.GetDefaultView(_listView.ItemsSource);
             view.Refresh();
         }
@@ -65,6 +71,13 @@ namespace XRNeckSafer.Wpf
                 Model = model,
                 ChangedProperty = nameof(model.ToggleValue)
             });
+        }
+
+        private void ClearEventClick(object sender, RoutedEventArgs e)
+        {
+            var model = ((Button)sender).DataContext as ActionPropertyDataModel;
+            ClearClick?.Invoke(new ActionPropertyDataModelEventArgs { Model = model });
+            RefreshDataGrid();
         }
     }
 }

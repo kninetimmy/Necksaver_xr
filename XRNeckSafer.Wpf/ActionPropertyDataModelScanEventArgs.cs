@@ -1,6 +1,6 @@
 ﻿namespace XRNeckSafer.Wpf
 {
-    public class ActionPropertyDataModelScanEventArgs
+    public class ActionPropertyDataModelEventArgs
     {
         public ActionPropertyDataModel Model { get; set; }
     }
