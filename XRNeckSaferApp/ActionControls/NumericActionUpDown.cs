@@ -7,7 +7,6 @@ namespace XRNeckSafer
 {
     public class NumericActionUpDown : NumericUpDown
     {
-        // private string _actionPropertyName = string.Empty;
         private NumericUpDownActionProperty _actionProperty;
         private bool _firstTimeRendered;
 

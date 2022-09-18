@@ -8,7 +8,15 @@ namespace XRNeckSafer
     {
         private readonly ButtonConfig _buttonConfig;
 
-        public ButtonForm(int mainFormTop, int mainFormRight, string title, ButtonConfig config)
+        public static void Show(int mainFormTop, int mainFormRight, string title, ButtonConfig config)
+        {
+            using (var form = new ButtonForm(mainFormTop, mainFormRight, title, config))
+            {
+                form.ShowDialog();
+            }
+        }
+
+        private ButtonForm(int mainFormTop, int mainFormRight, string title, ButtonConfig config)
         {
             _buttonConfig = config;
             InitializeComponent();

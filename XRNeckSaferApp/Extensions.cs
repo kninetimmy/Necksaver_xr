@@ -22,7 +22,7 @@ namespace XRNeckSafer
             return distinctKeysToCheck.All(k => pressedKeys.Contains(k));
         }
 
-        public static bool InDesignerMode(this object o)
+        public static bool InDesignerMode(this Control o)
         {
             return Assembly.GetCallingAssembly() != Assembly.GetEntryAssembly();
         }

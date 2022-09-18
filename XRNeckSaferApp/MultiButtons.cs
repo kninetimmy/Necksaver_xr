@@ -11,7 +11,15 @@ namespace XRNeckSafer
         private readonly int _mainFormRight;
         private readonly string _sideText;
 
-        public MultiButtons(int mainFormTop, int mainFormRight, string sideText, ButtonConfig bc1, ButtonConfig bc2, ButtonConfig bc3)
+        public static void Show(int mainFormTop, int mainFormRight, string sideText, ButtonConfig bc1, ButtonConfig bc2, ButtonConfig bc3)
+        {
+            using (var form = new MultiButtons(mainFormTop, mainFormRight, sideText, bc1, bc2, bc3))
+            {
+                form.ShowDialog();
+            }
+        }
+
+        private MultiButtons(int mainFormTop, int mainFormRight, string sideText, ButtonConfig bc1, ButtonConfig bc2, ButtonConfig bc3)
         {
             _mainFormTop = mainFormTop;
             _mainFormRight = mainFormRight;
@@ -41,27 +49,18 @@ namespace XRNeckSafer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            using (var frm = new ButtonForm(_mainFormTop, _mainFormRight, "Button for" + _sideText + " Rotation:", _bconf1))
-            {
-                frm.ShowDialog();
-            }
+            ButtonForm.Show(_mainFormTop, _mainFormRight, "Button for" + _sideText + " Rotation:", _bconf1);
             setButtonToolTip(button1, _bconf1);
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            using (var frm = new ButtonForm(_mainFormTop, _mainFormRight, "Button for" + _sideText + " Rotation:", _bconf2))
-            {
-                frm.ShowDialog();
-            }
+            ButtonForm.Show(_mainFormTop, _mainFormRight, "Button for" + _sideText + " Rotation:", _bconf2);
             setButtonToolTip(button2, _bconf2);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            using (var frm = new ButtonForm(_mainFormTop, _mainFormRight, "Button for" + _sideText + " Rotation:", _bconf3))
-            {
-                frm.ShowDialog();
-            }
+            ButtonForm.Show(_mainFormTop, _mainFormRight, "Button for" + _sideText + " Rotation:", _bconf3);
             setButtonToolTip(button3, _bconf3);
         }
 

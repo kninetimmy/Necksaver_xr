@@ -927,7 +927,7 @@ namespace XRNeckSafer
         private void AutorotGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
-            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
+            AutorotGridView.MaximumSize = new Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
             Config.Instance.WriteConfig();
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
@@ -936,7 +936,7 @@ namespace XRNeckSafer
         private void AutorotGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
             AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
-            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
+            AutorotGridView.MaximumSize = new Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
             Config.Instance.WriteConfig();
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
@@ -945,7 +945,7 @@ namespace XRNeckSafer
         {
             UpAutorotGridView.Height = UpAutorotGridView.RowCount * 22 + 20;
 
-            UpAutorotGridView.MaximumSize = new System.Drawing.Size(UpAutorotGridView.Width, stepwiseGroup.Height - 60);
+            UpAutorotGridView.MaximumSize = new Size(UpAutorotGridView.Width, stepwiseGroup.Height - 60);
             Config.Instance.WriteConfig();
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
@@ -954,7 +954,7 @@ namespace XRNeckSafer
         private void UpAutorotGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
             UpAutorotGridView.Height = UpAutorotGridView.RowCount * 22 + 20;
-            UpAutorotGridView.MaximumSize = new System.Drawing.Size(UpAutorotGridView.Width, stepwiseGroup.Height - 60);
+            UpAutorotGridView.MaximumSize = new Size(UpAutorotGridView.Width, stepwiseGroup.Height - 60);
             Config.Instance.WriteConfig();
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
@@ -962,7 +962,7 @@ namespace XRNeckSafer
         private void DownAutorotGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             DownAutorotGridView.Height = DownAutorotGridView.RowCount * 22 + 20;
-            DownAutorotGridView.MaximumSize = new System.Drawing.Size(DownAutorotGridView.Width, stepwiseGroup.Height - 60);
+            DownAutorotGridView.MaximumSize = new Size(DownAutorotGridView.Width, stepwiseGroup.Height - 60);
             Config.Instance.WriteConfig();
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
@@ -971,7 +971,7 @@ namespace XRNeckSafer
         private void DownAutorotGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
             DownAutorotGridView.Height = DownAutorotGridView.RowCount * 22 + 20;
-            DownAutorotGridView.MaximumSize = new System.Drawing.Size(DownAutorotGridView.Width, stepwiseGroup.Height - 60);
+            DownAutorotGridView.MaximumSize = new Size(DownAutorotGridView.Width, stepwiseGroup.Height - 60);
             Config.Instance.WriteConfig();
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
@@ -993,17 +993,11 @@ namespace XRNeckSafer
         {
             if (!Config.Instance.MultipleLRbuttons)
             {
-                using (var frm = new ButtonForm(Top, Right, "Button for Left Rotation:", Config.Instance.LeftButton))
-                {
-                    frm.ShowDialog();
-                }
+                ButtonForm.Show(Top, Right, "Button for Left Rotation:", Config.Instance.LeftButton);
             }
             else
             {
-                using (var frm = new MultiButtons(Top, Right, "Left", Config.Instance.LeftButton, Config.Instance.LeftButton2, Config.Instance.LeftButton3))
-                {
-                    frm.ShowDialog();
-                }
+                MultiButtons.Show(Top, Right, "Left", Config.Instance.LeftButton, Config.Instance.LeftButton2, Config.Instance.LeftButton3);
             }
             setButtonToolTip(SetLeftButton, Config.Instance.LeftButton);
             setLabelToolTip(LeftLabel, Config.Instance.LeftButton);
@@ -1013,17 +1007,11 @@ namespace XRNeckSafer
         {
             if (!Config.Instance.MultipleLRbuttons)
             {
-                using (var frm = new ButtonForm(Top, Right, "Button for Right Rotation:", Config.Instance.RightButton))
-                {
-                    frm.ShowDialog();
-                }
+                ButtonForm.Show(Top, Right, "Button for Right Rotation:", Config.Instance.RightButton);
             }
             else
             {
-                using (var frm = new MultiButtons(Top, Right, "Right", Config.Instance.RightButton, Config.Instance.RightButton2, Config.Instance.RightButton3))
-                {
-                    frm.ShowDialog();
-                }
+                MultiButtons.Show(Top, Right, "Right", Config.Instance.RightButton, Config.Instance.RightButton2, Config.Instance.RightButton3);
             }
             setButtonToolTip(SetRightButton, Config.Instance.RightButton);
             setLabelToolTip(RightLabel, Config.Instance.RightButton);
@@ -1057,17 +1045,11 @@ namespace XRNeckSafer
         {
             if (!Config.Instance.MultipleLRbuttons)
             {
-                using (var frm = new ButtonForm(Top, Right, "Accum Reset Button:", Config.Instance.AccuResetButton))
-                {
-                    frm.ShowDialog();
-                }
+                ButtonForm.Show(Top, Right, "Accum Reset Button:", Config.Instance.AccuResetButton);
             }
             else
             {
-                using (var frm = new MultiButtons(Top, Right, "Accum Reset", Config.Instance.AccuResetButton, Config.Instance.AccuResetButton2, Config.Instance.AccuResetButton3))
-                {
-                    frm.ShowDialog();
-                }
+                MultiButtons.Show(Top, Right, "Accum Reset", Config.Instance.AccuResetButton, Config.Instance.AccuResetButton2, Config.Instance.AccuResetButton3);
             }
             setButtonToolTip(AccumReset, Config.Instance.AccuResetButton);
         }
@@ -1076,17 +1058,11 @@ namespace XRNeckSafer
         {
             if (!Config.Instance.MultipleLRbuttons)
             {
-                using (var frm = new ButtonForm(Top, Right, "Hold Button:", Config.Instance.HoldButton1))
-                {
-                    frm.ShowDialog();
-                }
+                ButtonForm.Show(Top, Right, "Hold Button:", Config.Instance.HoldButton1);
             }
             else
             {
-                using (var frm = new MultiButtons(Top, Right, "Hold Button", Config.Instance.HoldButton1, Config.Instance.HoldButton2, Config.Instance.HoldButton3))
-                {
-                    frm.ShowDialog();
-                }
+                MultiButtons.Show(Top, Right, "Hold Button", Config.Instance.HoldButton1, Config.Instance.HoldButton2, Config.Instance.HoldButton3);
             }
             setButtonToolTip(SetHoldButton1, Config.Instance.HoldButton1);
         }
@@ -1102,7 +1078,7 @@ namespace XRNeckSafer
                     YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
                     stepwiseGroup.Height = ARGroup.Height - 50;
                     AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
-                    AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
+                    AutorotGridView.MaximumSize = new Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
 
                 }
             }
@@ -1114,9 +1090,9 @@ namespace XRNeckSafer
                     YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
                     pStepwiseGroup.Height = pARGroup.Height - 48;
                     DownAutorotGridView.Height = DownAutorotGridView.RowCount * 22 + 20;
-                    DownAutorotGridView.MaximumSize = new System.Drawing.Size(DownAutorotGridView.Width, pStepwiseGroup.Height - 60);
+                    DownAutorotGridView.MaximumSize = new Size(DownAutorotGridView.Width, pStepwiseGroup.Height - 60);
                     UpAutorotGridView.Height = UpAutorotGridView.RowCount * 22 + 20;
-                    UpAutorotGridView.MaximumSize = new System.Drawing.Size(UpAutorotGridView.Width, pStepwiseGroup.Height - 60);
+                    UpAutorotGridView.MaximumSize = new Size(UpAutorotGridView.Width, pStepwiseGroup.Height - 60);
 
                 }
             }
@@ -1399,7 +1375,7 @@ namespace XRNeckSafer
                 pStepwiseGroup.Visible = true;
                 pLinearGroup.Visible = false;
                 pARGroup.Height = 220;
-                pStepwiseGroup.Size = new System.Drawing.Size(236, 172);
+                pStepwiseGroup.Size = new Size(236, 172);
                 pStepwiseGroup.Location = new System.Drawing.Point(7, 40);
                 Config.Instance.PitchAutoMode = "stepwise";
             }
@@ -1429,17 +1405,11 @@ namespace XRNeckSafer
         {
             if (!Config.Instance.MultipleLRbuttons)
             {
-                using (var frm = new ButtonForm(Top, Right, "Button for Down Rotation:", Config.Instance.DownButton))
-                {
-                    frm.ShowDialog();
-                }
+                ButtonForm.Show(Top, Right, "Button for Down Rotation:", Config.Instance.DownButton);
             }
             else
             {
-                using (var frm = new MultiButtons(Top, Right, "Down", Config.Instance.DownButton, Config.Instance.DownButton2, Config.Instance.DownButton3))
-                {
-                    frm.ShowDialog();
-                }
+                MultiButtons.Show(Top, Right, "Down", Config.Instance.DownButton, Config.Instance.DownButton2, Config.Instance.DownButton3);
             }
             setButtonToolTip(SetDownButton, Config.Instance.DownButton);
             setLabelToolTip(DownLabel, Config.Instance.DownButton);
@@ -1449,17 +1419,11 @@ namespace XRNeckSafer
         {
             if (!Config.Instance.MultipleLRbuttons)
             {
-                using (var frm = new ButtonForm(Top, Right, "Button for up Rotation:", Config.Instance.UpButton))
-                {
-                    frm.ShowDialog();
-                }
+                ButtonForm.Show(Top, Right, "Button for up Rotation:", Config.Instance.UpButton);
             }
             else
             {
-                using (var frm = new MultiButtons(Top, Right, "Down", Config.Instance.UpButton, Config.Instance.UpButton2, Config.Instance.UpButton3))
-                {
-                    frm.ShowDialog();
-                }
+                MultiButtons.Show(Top, Right, "Down", Config.Instance.UpButton, Config.Instance.UpButton2, Config.Instance.UpButton3);
             }
             setButtonToolTip(SetUpButton, Config.Instance.UpButton);
             setLabelToolTip(UpLabel, Config.Instance.UpButton);
@@ -1470,17 +1434,11 @@ namespace XRNeckSafer
         {
             if (!Config.Instance.MultipleLRbuttons)
             {
-                using (var frm = new ButtonForm(Top, Right, "Pitch Accum Reset Button:", Config.Instance.PitchAccuResetButton))
-                {
-                    frm.ShowDialog();
-                }
+                ButtonForm.Show(Top, Right, "Pitch Accum Reset Button:", Config.Instance.PitchAccuResetButton);
             }
             else
             {
-                using (var frm = new MultiButtons(Top, Right, "Accum Reset", Config.Instance.PitchAccuResetButton, Config.Instance.PitchAccuResetButton2, Config.Instance.PitchAccuResetButton3))
-                {
-                    frm.ShowDialog();
-                }
+                MultiButtons.Show(Top, Right, "Accum Reset", Config.Instance.PitchAccuResetButton, Config.Instance.PitchAccuResetButton2, Config.Instance.PitchAccuResetButton3);
             }
             setButtonToolTip(pAccumReset, Config.Instance.PitchAccuResetButton);
         }
@@ -1489,17 +1447,11 @@ namespace XRNeckSafer
         {
             if (!Config.Instance.MultipleLRbuttons)
             {
-                using (var frm = new ButtonForm(Top, Right, "Pitch Hold Button:", Config.Instance.PitchHoldButton1))
-                {
-                    frm.ShowDialog();
-                }
+                ButtonForm.Show(Top, Right, "Pitch Hold Button:", Config.Instance.PitchHoldButton1);
             }
             else
             {
-                using (var frm = new MultiButtons(Top, Right, "Hold Button", Config.Instance.PitchHoldButton1, Config.Instance.PitchHoldButton2, Config.Instance.PitchHoldButton3))
-                {
-                    frm.ShowDialog();
-                }
+                MultiButtons.Show(Top, Right, "Hold Button", Config.Instance.PitchHoldButton1, Config.Instance.PitchHoldButton2, Config.Instance.PitchHoldButton3);
             }
             setButtonToolTip(SetPitchHoldButton, Config.Instance.PitchHoldButton1);
         }
