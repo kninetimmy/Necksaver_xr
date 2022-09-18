@@ -41,7 +41,7 @@ namespace XRNeckSafer
                 {
                     builder.Append("+");
                 }
-                var joystickName = JoystickService.GetJoystickName(button.JoystickGuid);
+                var joystickName = JoystickService.GetJoystickName(button.JoystickGuid) ?? "UNPLUGGED";
                 if (button.POV != -1)
                 {
                     builder.Append($"[{joystickName} POV:{button.POV + 1} {button.Button / 100}°]");

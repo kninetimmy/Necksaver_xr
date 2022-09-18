@@ -79,8 +79,8 @@ namespace XRNeckSafer
             {
                 pAROffButton.Checked = true;
             }
-            pitchAutorotChanged(new Object(), new EventArgs());
-            autorot_changed(new Object(), new EventArgs());
+            pitchAutorotChanged(new object(), new EventArgs());
+            autorot_changed(new object(), new EventArgs());
             YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
 
@@ -1205,7 +1205,7 @@ namespace XRNeckSafer
 
         private void listApiToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            List<String> LayerNames = _vr.ListApiLayers();
+            List<string> LayerNames = _vr.ListApiLayers();
 
             if (LayerNames[0] != "Error")
             {

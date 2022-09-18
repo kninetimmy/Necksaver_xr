@@ -28,7 +28,7 @@ namespace XRNeckSafer
             {
                 return null;
             }
-            return _joysticGuids.ContainsKey(guid) ? _joysticGuids[guid].Properties.InstanceName : "";
+            return _joysticGuids.ContainsKey(guid) ? _joysticGuids[guid].Properties.InstanceName : null;
         }
 
         public static void Start()

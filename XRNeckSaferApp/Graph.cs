@@ -213,11 +213,11 @@ namespace XRNeckSafer
 
         }
 
-        private void DString(String s, Font f, Brush b, int x, int y)
+        private void DString(string s, Font f, Brush b, int x, int y)
         {
             DString(s, f, b, x, y, false);
         }
-        private void DString(String s, Font f, Brush b, int x, int y, bool right)
+        private void DString(string s, Font f, Brush b, int x, int y, bool right)
         {
             Point P1 = Scale(x, y);
             if (right)
