@@ -38,6 +38,11 @@ namespace XRNeckSafer
 
         private void ChangePressedButtonsLabel(List<JoyBut> buttons)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<List<JoyBut>>(ChangePressedButtonsLabel), buttons);
+                return;
+            }
             _pressedButtonsLabel.Text = CreatePressedButtonsLabel(buttons);
         }
 
@@ -50,14 +55,19 @@ namespace XRNeckSafer
                 {
                     builder.Append("+");
                 }
-                var stickItem = JoystickStuff.Instance.GetStickItemByGuid(button.JoystickGuid);
-                builder.Append($"[{stickItem.InstanceName} But:{button.Button + 1}]");
+                var name = JoystickService.GetJoystickName(button.JoystickGuid);
+                builder.Append($"[{name} But:{button.Button + 1}]");
             }
             return builder.ToString();
         }
 
         private void OnButtonScanned(List<JoyBut> buttons)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<List<JoyBut>>(OnButtonScanned), buttons);
+                return;
+            }
             _result.AddRange(buttons);
             Close();
         }

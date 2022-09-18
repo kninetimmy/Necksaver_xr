@@ -12,6 +12,7 @@ namespace XRNeckSafer
         [STAThread]
         static void Main()
         {
+            
             using (var mutex = new Mutex(false, "XRNeckSafer singleton application"))
             {
                 bool isAnotherInstanceOpen = !mutex.WaitOne(TimeSpan.Zero);
@@ -24,6 +25,7 @@ namespace XRNeckSafer
                 // main application entry point
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+                JoystickService.Start();
                 Application.Run(new SplashScreen());
                 KeyInterceptor.SetHook();
                 using (new ActionPropertyProcessor(Config.Instance.ActionProperties))

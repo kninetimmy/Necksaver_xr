@@ -8,9 +8,9 @@ namespace XRNeckSafer
     {
         private readonly ButtonConfig _buttonConfig;
 
-        public ButtonForm(int mainFormTop, int mainFormRight, string title, ButtonConfig bc)
+        public ButtonForm(int mainFormTop, int mainFormRight, string title, ButtonConfig config)
         {
-            _buttonConfig = bc;
+            _buttonConfig = config;
             InitializeComponent();
             MinimumSize = Size;
             MaximumSize = Size;
@@ -18,7 +18,7 @@ namespace XRNeckSafer
             Top = mainFormTop;
             Left = mainFormRight - 10;
             Text = title;
-            JoystickStuff.Instance.ReloadJoysticks();
+            // joystick.ReloadJoysticks();
 
             UseModifierCheckBox.Checked = _buttonConfig.UseModifier;
             InvertcheckBox.Checked = _buttonConfig.Invert;
@@ -39,7 +39,8 @@ namespace XRNeckSafer
             ModifierButtonComboBox.Items.Clear();
             ModifierButtonComboBox.Items.Add("none");
 
-            foreach (StickItem stick in JoystickStuff.Instance.GetSticks())
+            var stickItems = JoystickService.GetJoysticks();
+            foreach (StickItem stick in stickItems)
             {
                 var comboBoxItem = new ComboBoxStickItem
                 {
@@ -66,10 +67,10 @@ namespace XRNeckSafer
                 ModifierDeviceComboBox.SelectedIndex = 0;
             }
 
-            var mainStickItem = JoystickStuff.Instance.GetStickItemByGuid(_buttonConfig.JoystickGUID);
+            var mainStickItem = stickItems.FirstOrDefault(i => i.JoystickGuid.Equals(_buttonConfig.JoystickGUID)); //_joystick.GetStickItemByGuid(_buttonConfig.JoystickGUID);
             FillButtonComboBox(mainStickItem, MainButtonComboBox);
 
-            var modifierStickItem = JoystickStuff.Instance.GetStickItemByGuid(_buttonConfig.ModJoystickGUID);
+            var modifierStickItem = stickItems.FirstOrDefault(i => i.JoystickGuid.Equals(_buttonConfig.ModJoystickGUID)); // _joystick.GetStickItemByGuid(_buttonConfig.ModJoystickGUID);
             FillButtonComboBox(modifierStickItem, ModifierButtonComboBox);
             ModifierButtonComboBox.Text = _buttonConfig.ModButton;
 
@@ -131,7 +132,8 @@ namespace XRNeckSafer
 
         private void ProcessMainButton(JoyBut joyBut)
         {
-            var stickItem = JoystickStuff.Instance.GetStickItemByGuid(joyBut.JoystickGuid);
+            var stickItem = JoystickService.GetJoysticks().FirstOrDefault(i => i.JoystickGuid.Equals(joyBut.JoystickGuid, StringComparison.Ordinal));
+                // _joystick.GetStickItemByGuid(joyBut.JoystickGuid);
             MainDeviceComboBox.Text = stickItem?.InstanceName ?? "none";
             FillButtonComboBox(stickItem, MainButtonComboBox);
             if (stickItem == null)
@@ -168,7 +170,8 @@ namespace XRNeckSafer
 
         private void ProcessModifierButton(JoyBut joyBut)
         {
-            var stickItem = JoystickStuff.Instance.GetStickItemByGuid(joyBut.JoystickGuid);
+            var stickItem = JoystickService.GetJoysticks().FirstOrDefault(i => i.JoystickGuid.Equals(joyBut.JoystickGuid, StringComparison.Ordinal));
+                // _joystick.GetStickItemByGuid(joyBut.JoystickGuid);
             ModifierDeviceComboBox.Text = stickItem?.InstanceName ?? "none";
             FillButtonComboBox(stickItem, ModifierButtonComboBox);
             if (stickItem == null)

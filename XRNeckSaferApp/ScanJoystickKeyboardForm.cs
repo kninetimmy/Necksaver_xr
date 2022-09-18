@@ -34,11 +34,21 @@ namespace XRNeckSafer
 
         private void OnCurrentlyPressedChanged(JoystickKeyboardInput input, bool sameKeys)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<JoystickKeyboardInput, bool>(OnCurrentlyPressedChanged), input, sameKeys);
+                return;
+            }
             _pressedButtonsLabel.Text = input.ToString();
         }
 
         private void OnScanningComplete(JoystickKeyboardInput input)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<JoystickKeyboardInput>(OnScanningComplete), input);
+                return;
+            }
             _result = input.Clone();
             Close();
         }

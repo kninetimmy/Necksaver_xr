@@ -44,7 +44,7 @@
                     <DataTemplate>
                         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <StackPanel HorizontalAlignment="Center" >
-                                <CheckBox Name="_invertCheckBox" IsChecked="{Binding InvertValue}" Checked="InvertCheckBox_Click" Unchecked="InvertCheckBox_Click">
+                                <CheckBox Name="_invertCheckBox" IsChecked="{Binding InvertValue}" Checked="OnInvertCheckBoxClick" Unchecked="OnInvertCheckBoxClick">
                                     <CheckBox.Style>
                                         <Style TargetType="CheckBox">
                                             <Style.Triggers>

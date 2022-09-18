@@ -67,10 +67,10 @@ namespace XRNeckSafer
 
         public void setButtonToolTip(Button b, ButtonConfig bc)
         {
-            string Text = JoystickStuff.Instance.GetDeviceNameByGuid(bc.JoystickGUID) + ": " + bc.Button;
+            string Text = JoystickService.GetJoystickName(bc.JoystickGUID) + ": " + bc.Button;
             if (bc.UseModifier)
             {
-                Text += "   +   " + JoystickStuff.Instance.GetDeviceNameByGuid(bc.ModJoystickGUID) + ": " + bc.ModButton;
+                Text += "   +   " + JoystickService.GetJoystickName(bc.ModJoystickGUID) + ": " + bc.ModButton;
             }
             toolTip1.SetToolTip(b, Text);
         }

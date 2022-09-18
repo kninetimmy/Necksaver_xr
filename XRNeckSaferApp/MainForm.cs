@@ -213,10 +213,10 @@ namespace XRNeckSafer
 
         public void setButtonToolTip(Button b, ButtonConfig bc)
         {
-            var text = JoystickStuff.Instance.GetDeviceNameByGuid(bc.JoystickGUID) + ": " + bc.Button;
+            var text = JoystickService.GetJoystickName(bc.JoystickGUID) ?? "none" + ": " + bc.Button;
             if (bc.UseModifier)
             {
-                text += "   +   " + JoystickStuff.Instance.GetDeviceNameByGuid(bc.ModJoystickGUID) + ": " + bc.ModButton;
+                text += "   +   " + JoystickService.GetJoystickName(bc.ModJoystickGUID) ?? "none" + ": " + bc.ModButton;
             }
             toolTip1.SetToolTip(b, text);
         }
@@ -228,10 +228,10 @@ namespace XRNeckSafer
 
         private void setLabelToolTip(Label l, ButtonConfig bc)
         {
-            string Text = JoystickStuff.Instance.GetDeviceNameByGuid(bc.JoystickGUID) + ": " + bc.Button;
+            string Text = JoystickService.GetJoystickName(bc.JoystickGUID) ?? "none" + ": " + bc.Button;
             if (bc.UseModifier)
             {
-                Text += "   +   " + JoystickStuff.Instance.GetDeviceNameByGuid(bc.ModJoystickGUID) + ": " + bc.ModButton;
+                Text += "   +   " + JoystickService.GetJoystickName(bc.ModJoystickGUID) ?? "none" + ": " + bc.ModButton;
             }
             toolTip1.SetToolTip(l, Text);
         }
@@ -303,36 +303,36 @@ namespace XRNeckSafer
 
         private void loopTimer_Tick(object sender, EventArgs e)
         {
-            bool reset_pressed = SetResetButton.ActionPropertyValue;  //  JoystickStuff.Instance.IsButtonPressed(Config.Instance.ResetButton);
-            bool acc_res_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.AccuResetButton);
-            bool pitch_acc_res_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.PitchAccuResetButton);
-            bool l_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.LeftButton);
-            bool r_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.RightButton);
-            bool u_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.UpButton);
-            bool d_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.DownButton);
-            bool h_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.HoldButton1);
-            bool hp_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.PitchHoldButton1);
+            bool reset_pressed = SetResetButton.ActionPropertyValue;  // JoystickService.IsButtonPressed(Config.Instance.ResetButton);
+            bool acc_res_pressed = JoystickService.IsButtonPressed(Config.Instance.AccuResetButton);
+            bool pitch_acc_res_pressed = JoystickService.IsButtonPressed(Config.Instance.PitchAccuResetButton);
+            bool l_pressed = JoystickService.IsButtonPressed(Config.Instance.LeftButton);
+            bool r_pressed = JoystickService.IsButtonPressed(Config.Instance.RightButton);
+            bool u_pressed = JoystickService.IsButtonPressed(Config.Instance.UpButton);
+            bool d_pressed = JoystickService.IsButtonPressed(Config.Instance.DownButton);
+            bool h_pressed = JoystickService.IsButtonPressed(Config.Instance.HoldButton1);
+            bool hp_pressed = JoystickService.IsButtonPressed(Config.Instance.PitchHoldButton1);
             //            bool h_pressed = checkButtonPress(SetHoldButton1, conf.HoldButton1);
             if (Config.Instance.MultipleLRbuttons)
             {
-                l_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.LeftButton2);
-                l_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.LeftButton3);
-                r_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.RightButton2);
-                r_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.RightButton3);
-                u_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.UpButton2);
-                u_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.UpButton3);
-                d_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.DownButton2);
-                d_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.DownButton3);
-                reset_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.ResetButton2);
-                reset_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.ResetButton3);
-                acc_res_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.AccuResetButton2);
-                acc_res_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.AccuResetButton3);
-                pitch_acc_res_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.PitchAccuResetButton2);
-                pitch_acc_res_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.PitchAccuResetButton3);
-                h_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.HoldButton2);
-                h_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.HoldButton3);
-                hp_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.PitchHoldButton2);
-                hp_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.PitchHoldButton3);
+                l_pressed |= JoystickService.IsButtonPressed(Config.Instance.LeftButton2);
+                l_pressed |= JoystickService.IsButtonPressed(Config.Instance.LeftButton3);
+                r_pressed |= JoystickService.IsButtonPressed(Config.Instance.RightButton2);
+                r_pressed |= JoystickService.IsButtonPressed(Config.Instance.RightButton3);
+                u_pressed |= JoystickService.IsButtonPressed(Config.Instance.UpButton2);
+                u_pressed |= JoystickService.IsButtonPressed(Config.Instance.UpButton3);
+                d_pressed |= JoystickService.IsButtonPressed(Config.Instance.DownButton2);
+                d_pressed |= JoystickService.IsButtonPressed(Config.Instance.DownButton3);
+                reset_pressed |= JoystickService.IsButtonPressed(Config.Instance.ResetButton2);
+                reset_pressed |= JoystickService.IsButtonPressed(Config.Instance.ResetButton3);
+                acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.AccuResetButton2);
+                acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.AccuResetButton3);
+                pitch_acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.PitchAccuResetButton2);
+                pitch_acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.PitchAccuResetButton3);
+                h_pressed |= JoystickService.IsButtonPressed(Config.Instance.HoldButton2);
+                h_pressed |= JoystickService.IsButtonPressed(Config.Instance.HoldButton3);
+                hp_pressed |= JoystickService.IsButtonPressed(Config.Instance.PitchHoldButton2);
+                hp_pressed |= JoystickService.IsButtonPressed(Config.Instance.PitchHoldButton3);
             }
 
             setButtonColor(l_pressed, SetLeftButton);
@@ -1032,7 +1032,6 @@ namespace XRNeckSafer
         private void SetResetButton_Click(object sender, EventArgs e)
         {
             var button = (BooleanActionButton)sender;
-            // button.ActionPropertyName;
             if (!Config.Instance.MultipleLRbuttons)
             {
                 //using (var frm = new ButtonForm(Top, Right, "Reset Button:", Config.Instance.ResetButton))
@@ -1518,9 +1517,7 @@ namespace XRNeckSafer
 
         private void disableJoystickAutoReconnectToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
         {
-            Config.Instance.DisableJoystickReconnect = disableAllGUIOutputToolStripMenuItem.Checked;
             Config.Instance.WriteConfig();
-            JoystickStuff.Instance.DisableJoystickReconnect = Config.Instance.DisableJoystickReconnect;
         }
 
         /// <summary>
@@ -1552,10 +1549,10 @@ namespace XRNeckSafer
         {
             // disable navigation on form using keyboard in order to avoid
             // mess up with actions which have these keys assigned
-            if (!msg.HWnd.Equals(Handle) && 
-                (keyData == Keys.Left 
-                || keyData == Keys.Right 
-                || keyData == Keys.Up 
+            if (!msg.HWnd.Equals(Handle) &&
+                (keyData == Keys.Left
+                || keyData == Keys.Right
+                || keyData == Keys.Up
                 || keyData == Keys.Down
                 || keyData == Keys.Tab))
             {

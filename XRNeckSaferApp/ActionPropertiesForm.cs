@@ -40,6 +40,11 @@ namespace XRNeckSafer
 
         private void OnScanClick(Wpf.ActionPropertyDataModelEventArgs args)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<Wpf.ActionPropertyDataModelEventArgs>(OnScanClick), args);
+                return;
+            }
             var result = ScanJoystickKeyboardForm.ShowForm(FormStartPosition.CenterParent, Top, Left, 2);
             if (result == null)
             {
@@ -68,7 +73,7 @@ namespace XRNeckSafer
                     var toggleAction = actionEvent as ActionPropertyToggleEvent;
                     var dataModel = new Wpf.ActionPropertyDataModel
                     {
-                        InputCombination = actionEvent.InputCombination?.ToString(),
+                        InputCombination = actionEvent.InputCombination.ToString(),
                         ActionPropertyName = prop.Name,
                         EventName = actionEvent.Name,
                         IsToggleEnabled = toggleAction != null,

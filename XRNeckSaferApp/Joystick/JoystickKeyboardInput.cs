@@ -41,8 +41,13 @@ namespace XRNeckSafer
                 {
                     builder.Append("+");
                 }
-                var stickItem = JoystickStuff.Instance.GetStickItemByGuid(button.JoystickGuid);
-                builder.Append($"[{stickItem.InstanceName} But:{button.Button + 1}]");
+                var joystickName = JoystickService.GetJoystickName(button.JoystickGuid);
+                if (button.POV != -1)
+                {
+                    builder.Append($"[{joystickName} POV:{button.POV + 1} {button.Button / 100}°]");
+                    continue;
+                }
+                builder.Append($"[{joystickName} But:{button.Button + 1}]");
             }
             foreach (var key in KeyboardKeys)
             {

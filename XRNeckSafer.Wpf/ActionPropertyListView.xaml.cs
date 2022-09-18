@@ -8,7 +8,7 @@ using System.Windows.Data;
 namespace XRNeckSafer.Wpf
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for ActioonPropertyListView.xaml
     /// </summary>
     public partial class ActioonPropertyListView : UserControl
     {
@@ -48,7 +48,7 @@ namespace XRNeckSafer.Wpf
             view.Refresh();
         }
 
-        private void InvertCheckBox_Click(object sender, RoutedEventArgs e)
+        private void OnInvertCheckBoxClick(object sender, RoutedEventArgs e)
         {
             var checkBox = (CheckBox)e.Source;
             var model = checkBox.DataContext as ActionPropertyDataModel;
