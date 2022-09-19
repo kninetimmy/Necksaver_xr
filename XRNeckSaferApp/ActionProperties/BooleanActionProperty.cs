@@ -17,19 +17,33 @@ namespace XRNeckSafer
             return Invert ? !base.GetValue() : base.GetValue();
         }
 
-        public override void DispatchEvent(ActionPropertyEvent actionEvent, bool sameKeys, bool keyReleased)
+        public override void DispatchEvent(ActionPropertyEvent actionEvent, bool sameKeys, bool matched)
         {
             if (sameKeys)
             {
                 return;
             }
+            var toggle = ((ActionPropertyToggleEvent)actionEvent).Toggle;
             switch (actionEvent.Name)
             {
                 case SWITCH_EVENT_NAME:
-                    Value = !Value;
+                    Value = GetNewValue(matched, toggle);
                     ProcessEvent(actionEvent);
                     break;
             }
+        }
+
+        private bool GetNewValue(bool matched, bool toggle)
+        {
+            if (toggle && matched)
+            {
+                return !Value;
+            }
+            if (toggle && !matched)
+            {
+                return Value;
+            }
+            return matched;
         }
 
         public static BooleanActionProperty CreateProperty(string name)

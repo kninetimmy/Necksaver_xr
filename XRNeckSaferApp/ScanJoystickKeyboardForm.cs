@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace XRNeckSafer
@@ -28,7 +29,7 @@ namespace XRNeckSafer
             MinimumSize = Size;
             MaximumSize = Size;
             _scanner = new JoystickKeyboardScanner(maxPressedButtonsCount);
-            _scanner.OnScanningComplete += OnScanningComplete; ;
+            _scanner.BeforeRelesed += OnScanningComplete;
             _scanner.OnCurrentlyPressedChanged += OnCurrentlyPressedChanged;
         }
 
@@ -56,6 +57,13 @@ namespace XRNeckSafer
         private void OnCancelButtonClick(object sender, EventArgs e)
         {
             Close();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            _scanner.BeforeRelesed -= OnScanningComplete; ;
+            _scanner.OnCurrentlyPressedChanged -= OnCurrentlyPressedChanged;
+            base.OnClosing(e);
         }
 
         /// <summary>

@@ -593,7 +593,7 @@
             this.HMDYawBox.Controls.Add(this.label11);
             this.HMDYawBox.Controls.Add(this.label12);
             this.HMDYawBox.Controls.Add(this.label10);
-            this.HMDYawBox.Location = new System.Drawing.Point(12, 21);
+            this.HMDYawBox.Location = new System.Drawing.Point(12, 25);
             this.HMDYawBox.Name = "HMDYawBox";
             this.HMDYawBox.Size = new System.Drawing.Size(256, 109);
             this.HMDYawBox.TabIndex = 31;
@@ -1179,7 +1179,7 @@
             this.YawPitchTab.Controls.Add(this.YawTab);
             this.YawPitchTab.Controls.Add(this.PitchTab);
             this.YawPitchTab.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.YawPitchTab.Location = new System.Drawing.Point(6, 136);
+            this.YawPitchTab.Location = new System.Drawing.Point(6, 140);
             this.YawPitchTab.Name = "YawPitchTab";
             this.YawPitchTab.SelectedIndex = 0;
             this.YawPitchTab.Size = new System.Drawing.Size(268, 470);

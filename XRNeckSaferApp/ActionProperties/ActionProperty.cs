@@ -20,7 +20,7 @@ namespace XRNeckSafer
         [JsonIgnore]
         public string ValidationError { get; private set; }
 
-        public abstract void DispatchEvent(ActionPropertyEvent actionEvent, bool sameKeys, bool keyReleased);
+        public abstract void DispatchEvent(ActionPropertyEvent actionEvent, bool sameKeys, bool matched);
 
         public abstract void UnsubscribeTriggerHandlers();
 

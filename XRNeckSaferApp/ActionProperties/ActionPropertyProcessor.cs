@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace XRNeckSafer
 {
@@ -13,37 +12,17 @@ namespace XRNeckSafer
         {
             _scanner = new JoystickKeyboardScanner(2);
             _scanner.OnCurrentlyPressedChanged += OnCurrentlyPressedChanged;
-            _scanner.OnScanningComplete += OnScanningComplete;
             _properties = properties ?? new List<ActionProperty>();
-        }
-
-        private void OnScanningComplete(JoystickKeyboardInput input)
-        {
-            foreach (var prop in _properties)
-            {
-                var actionEvent = prop.Events.FirstOrDefault(p => p.InputCombination.IsEqual(input));
-                if (actionEvent != null)
-                {
-                    var toggleEvent = actionEvent as ActionPropertyToggleEvent;
-                    if (toggleEvent != null && toggleEvent.Toggle)
-                    {
-                        continue;
-                    }
-                    // Console.WriteLine("Process trigger - OnScanningComplete!");
-                    prop.DispatchEvent(actionEvent, false, true);
-                }
-            }
         }
 
         private void OnCurrentlyPressedChanged(JoystickKeyboardInput input, bool sameKeys)
         {
-            foreach (var prop in _properties)
+            // Console.WriteLine($"Accessor: same - {sameKeys} {input}");
+            foreach (ActionProperty prop in _properties)
             {
-                var actionEvent = prop.Events.FirstOrDefault(p => p.InputCombination.IsEqual(input));
-                if (actionEvent != null)
+                foreach (var propEvent in prop.Events)
                 {
-                    // Console.WriteLine("Process trigger - OnCurrentlyPressedChanged!");
-                    prop.DispatchEvent(actionEvent, sameKeys, false);
+                    prop.DispatchEvent(propEvent, sameKeys, propEvent.InputCombination.Match(input));
                 }
             }
         }
@@ -53,10 +32,6 @@ namespace XRNeckSafer
             if (_scanner != null)
             {
                 _scanner.Dispose();
-                //foreach(var prop in _properties)
-                //{
-                //    prop.UnsubscribeTriggerHandlers();
-                //}
                 _scanner = null;
             }
         }

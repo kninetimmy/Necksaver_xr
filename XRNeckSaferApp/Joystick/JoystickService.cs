@@ -21,6 +21,8 @@ namespace XRNeckSafer
         };
 
         public static event Action<Guid, JoyBut, bool> PressedButtonsUpdate;
+        public static event Action<Guid, string> DeviceDisconnected;
+        public static event Action<Guid, string> DeviceConnected;
 
         public static string GetJoystickName(string stringGuid)
         {
@@ -113,6 +115,7 @@ namespace XRNeckSafer
                             var joystick = new Joystick(directInput, deviceInstance.InstanceGuid);
                             Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId}: Found Joystick with GUID: {deviceInstance.InstanceGuid}." +
                                 $" {joystick.Capabilities.ButtonCount} buttons, {joystick.Capabilities.PovCount} POVs");
+                            DeviceConnected?.Invoke(deviceInstance.InstanceGuid, joystick.Properties.InstanceName);
                             _joysticGuids.Add(deviceInstance.InstanceGuid, joystick);
                             _joystickWorkers.Add(deviceInstance.InstanceGuid, RunJoystickStatePoll(deviceInstance.InstanceGuid, joystick));
                         }
@@ -136,14 +139,20 @@ namespace XRNeckSafer
         {
             Guid guid = (Guid)e.Result;
             Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId}: Completed polling Joystick with GUID: {guid}");
+            var joystickName = GetJoystickName(guid.ToString());
             lock (_joysticGuids)
             {
+                if (_joysticGuids.TryGetValue(guid, out Joystick joystick))
+                {
+                    joystick.Dispose();
+                }
                 _pressedJoystickButtons.Remove(guid);
                 _joysticGuids.Remove(guid);
                 _joystickWorkers[guid]?.Dispose();
                 _joystickWorkers.Remove(guid);
             }
             Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId}: Removed Joystick with GUID: {guid}");
+            DeviceDisconnected?.Invoke(guid, joystickName);
         }
 
         private static void PollJoystickUpdate(object sender, DoWorkEventArgs e)
@@ -193,7 +202,7 @@ namespace XRNeckSafer
                                 }
                             }
                         }
-                        Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId}: {state}");
+                        // Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId}: {state}");
                         PressedButtonsUpdate?.Invoke(joystickGuid, joyBut, pressed);
                         // worker.ReportProgress(0, state);
                     }
@@ -203,8 +212,6 @@ namespace XRNeckSafer
             catch (SharpDX.SharpDXException err)
             {
                 Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId}: ERROR {err.Message}");
-                // disconnected
-                joystick?.Dispose();
             }
         }
 
@@ -230,7 +237,7 @@ namespace XRNeckSafer
         }
 
 
-
+        [Obsolete("Keep this method for compartibility with old way of pressed buttons check")]
         private static bool IsPressed(bool use8wayhat, string joystickGuid, string button)
         {
             int b = -1, p = -1;

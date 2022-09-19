@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace XRNeckSafer
 {
@@ -9,9 +8,9 @@ namespace XRNeckSafer
         const string UP_EVENT_NAME = "Up";
         const string DOWN_EVENT_NAME = "Down";
 
-        public override void DispatchEvent(ActionPropertyEvent actionEvent, bool sameKeys, bool keyReleased)
+        public override void DispatchEvent(ActionPropertyEvent actionEvent, bool sameKeys, bool matched)
         {
-            if (keyReleased)
+            if (!matched)
             {
                 return;
             }

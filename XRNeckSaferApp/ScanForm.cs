@@ -32,8 +32,8 @@ namespace XRNeckSafer
             MinimumSize = Size;
             MaximumSize = Size;
             _scanner = new JoystickButtonScanner(maxPressedButtonsCount);
-            _scanner.OnScanningComplete += OnButtonScanned;
-            _scanner.OnCurrentlyPressedChanged += ChangePressedButtonsLabel;
+            _scanner.BeforeButtonReleased += OnBeforeButtonReleased;
+            _scanner.CurrentlyPressedChanged += ChangePressedButtonsLabel;
         }
 
         private void ChangePressedButtonsLabel(List<JoyBut> buttons)
@@ -61,11 +61,11 @@ namespace XRNeckSafer
             return builder.ToString();
         }
 
-        private void OnButtonScanned(List<JoyBut> buttons)
+        private void OnBeforeButtonReleased(List<JoyBut> buttons)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action<List<JoyBut>>(OnButtonScanned), buttons);
+                Invoke(new Action<List<JoyBut>>(OnBeforeButtonReleased), buttons);
                 return;
             }
             _result.AddRange(buttons);
@@ -84,6 +84,8 @@ namespace XRNeckSafer
 
         protected override void OnClosing(CancelEventArgs e)
         {
+            _scanner.BeforeButtonReleased -= OnBeforeButtonReleased;
+            _scanner.CurrentlyPressedChanged -= ChangePressedButtonsLabel;
             _scanner.Stop();
             base.OnClosing(e);
         }
@@ -96,8 +98,8 @@ namespace XRNeckSafer
         {
             if (disposing)
             {
-                components?.Dispose();
                 _scanner.Dispose();
+                components?.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -45,6 +45,7 @@ namespace XRNeckSafer
             notifyIcon.ContextMenuStrip = contextMenuStrip;
             showToolStripMenuItem.Click += showToolStripMenuItem_Click;
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+            JoystickService.DeviceDisconnected += OnJoystickDisconnected;
 
             if (Config.Instance.StartMinimized) this.WindowState = FormWindowState.Minimized;
 
@@ -209,6 +210,16 @@ namespace XRNeckSafer
             _pARText = "Autorotation";
             _hmdtext = "";
             loopTimer.Start();
+        }
+
+        private void OnJoystickDisconnected(Guid guid, string joystickName)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<Guid, string>(OnJoystickDisconnected), guid, joystickName);
+                return;
+            }
+            MessageBox.Show($"Joystick {joystickName} with GUID: {guid} has been disconnected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public void setButtonToolTip(Button b, ButtonConfig bc)

@@ -52,6 +52,11 @@ namespace XRNeckSafer
 
         private void ActionPropertyTriggered(ActionPropertyEventArgs<int> args)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<ActionPropertyEventArgs<int>>(ActionPropertyTriggered), args);
+                return;
+            }
             Value = args.Value;
         }
 

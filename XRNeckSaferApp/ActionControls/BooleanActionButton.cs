@@ -13,6 +13,7 @@ namespace XRNeckSafer
         private System.Drawing.Color _activeBackColour = System.Drawing.Color.Black;
         private BooleanActionProperty _actionProperty;
         private bool _firstTimeRendered;
+        private bool _isActive;
 
         [Category("ActionProperty"), Description("ActionProperty name")]
         public string ActionPropertyName { get; set; }
@@ -55,18 +56,29 @@ namespace XRNeckSafer
                 Config.Instance.ActionProperties.Add(_actionProperty);
             }
             _actionProperty.Triggered += ActionPropertyTriggered;
-            SetButtonColor(_actionProperty.GetValue());
+            _isActive = _actionProperty.GetValue();
+            SetButtonColor();
         }
 
         private void ActionPropertyTriggered(ActionPropertyEventArgs<bool> args)
         {
-            SetButtonColor(args.Value);
-            ActionPropertyValueChanged?.Invoke(args.Value);
+            if (InvokeRequired)
+            {
+                Invoke(new Action<ActionPropertyEventArgs<bool>>(ActionPropertyTriggered), args);
+                return;
+            }
+            if (_isActive == args.Value)
+            {
+                return;
+            }
+            _isActive = args.Value;
+            SetButtonColor();
+            ActionPropertyValueChanged?.Invoke(_isActive);
         }
 
-        private void SetButtonColor(bool active)
+        private void SetButtonColor()
         {
-            if (active)
+            if (_isActive)
             {
                 ForeColor = ActiveForeColour;
                 BackColor = ActiveBackColour;
