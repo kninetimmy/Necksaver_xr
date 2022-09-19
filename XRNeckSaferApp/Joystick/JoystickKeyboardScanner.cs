@@ -15,7 +15,7 @@ namespace XRNeckSafer
         private readonly int _maxPressedButtonsCount;
         private readonly HashSet<Keys> _excludedButtons = new HashSet<Keys>
         {
-            Keys.Apps, Keys.Space, Keys.Enter, Keys.Escape, Keys.LWin, Keys.RWin, Keys.Tab, Keys.CapsLock
+            Keys.Apps, Keys.Enter, Keys.Escape, Keys.LWin, Keys.RWin, Keys.Tab, Keys.CapsLock
         }; 
 
         public event Action<JoystickKeyboardInput, bool> OnCurrentlyPressedChanged;

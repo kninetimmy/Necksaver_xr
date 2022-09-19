@@ -1517,7 +1517,9 @@ namespace XRNeckSafer
                 || keyData == Keys.Right
                 || keyData == Keys.Up
                 || keyData == Keys.Down
-                || keyData == Keys.Tab))
+                || keyData == Keys.Tab
+                || keyData == Keys.Space
+                || keyData == Keys.Enter))
             {
                 return true;
             }
