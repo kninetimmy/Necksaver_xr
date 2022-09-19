@@ -1,26 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace XRNeckSafer.Wpf
 {
     /// <summary>
     /// Interaction logic for ActioonPropertyListView.xaml
     /// </summary>
-    public partial class ActioonPropertyListView : UserControl
+    public partial class ActionPropertyListView : UserControl
     {
         public ObservableCollection<ActionPropertyDataModel> Properties { get; set; } = new ObservableCollection<ActionPropertyDataModel>();
-
         public event Action<ActionPropertyDataModelChangeEventArgs> Changed;
         public event Action<ActionPropertyDataModelEventArgs> ScanClick;
         public event Action<ActionPropertyDataModelEventArgs> ClearClick;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public ActioonPropertyListView()
+        public ActionPropertyListView()
         {
             InitializeComponent();
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var selected = Properties.FirstOrDefault(p => p.Selected);
+            if (selected != null)
+            {
+                // var actionProperies = Properties.Where(p => p.ActionPropertyName == selected.ActionPropertyName).ToList();
+                var selectedIndex = Properties.IndexOf(selected);
+                
+                //_listView.SelectedItems.Clear();
+                //actionProperies.ForEach(p => _listView.SelectedItems.Add(p));
+                _listView.SelectedIndex = selectedIndex;
+                DataGridRow row = (DataGridRow)_listView.ItemContainerGenerator.ContainerFromIndex(selectedIndex);
+                row.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+            }
         }
 
         public void PopulateProperties(IEnumerable<ActionPropertyDataModel> models)

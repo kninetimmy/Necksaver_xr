@@ -180,14 +180,14 @@ namespace XRNeckSafer
             DownAutorotGridView.Columns[2].HeaderCell.Style.ForeColor = System.Drawing.Color.Black;
             DownAutorotGridView.Columns[2].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
 
-            setButtonToolTip(SetLeftButton, Config.Instance.LeftButton);
-            setButtonToolTip(SetRightButton, Config.Instance.RightButton);
+            // setButtonToolTip(SetLeftButton, Config.Instance.LeftButton);
+            // setButtonToolTip(SetRightButton, Config.Instance.RightButton);
             // setButtonToolTip(SetResetButton, Config.Instance.ResetButton);
             setButtonToolTip(AccumReset, Config.Instance.AccuResetButton);
             setButtonToolTip(SetHoldButton1, Config.Instance.HoldButton1);
 
-            setLabelToolTip(LeftLabel, Config.Instance.LeftButton);
-            setLabelToolTip(RightLabel, Config.Instance.RightButton);
+            // setLabelToolTip(LeftLabel, Config.Instance.LeftButton);
+            // setLabelToolTip(RightLabel, Config.Instance.RightButton);
 
             error_label.Visible = check_autorot_config();
             error_label2.Visible = error_label.Visible;
@@ -317,8 +317,8 @@ namespace XRNeckSafer
             bool reset_pressed = SetResetButton.ActionPropertyValue;  // JoystickService.IsButtonPressed(Config.Instance.ResetButton);
             bool acc_res_pressed = JoystickService.IsButtonPressed(Config.Instance.AccuResetButton);
             bool pitch_acc_res_pressed = JoystickService.IsButtonPressed(Config.Instance.PitchAccuResetButton);
-            bool l_pressed = JoystickService.IsButtonPressed(Config.Instance.LeftButton);
-            bool r_pressed = JoystickService.IsButtonPressed(Config.Instance.RightButton);
+            bool l_pressed = SetLeftButton.ActionPropertyValue; // JoystickService.IsButtonPressed(Config.Instance.LeftButton);
+            bool r_pressed = SetRightButton.ActionPropertyValue; // JoystickService.IsButtonPressed(Config.Instance.RightButton);
             bool u_pressed = JoystickService.IsButtonPressed(Config.Instance.UpButton);
             bool d_pressed = JoystickService.IsButtonPressed(Config.Instance.DownButton);
             bool h_pressed = JoystickService.IsButtonPressed(Config.Instance.HoldButton1);
@@ -326,16 +326,16 @@ namespace XRNeckSafer
             //            bool h_pressed = checkButtonPress(SetHoldButton1, conf.HoldButton1);
             if (Config.Instance.MultipleLRbuttons)
             {
-                l_pressed |= JoystickService.IsButtonPressed(Config.Instance.LeftButton2);
-                l_pressed |= JoystickService.IsButtonPressed(Config.Instance.LeftButton3);
-                r_pressed |= JoystickService.IsButtonPressed(Config.Instance.RightButton2);
-                r_pressed |= JoystickService.IsButtonPressed(Config.Instance.RightButton3);
+                //l_pressed |= JoystickService.IsButtonPressed(Config.Instance.LeftButton2);
+                //l_pressed |= JoystickService.IsButtonPressed(Config.Instance.LeftButton3);
+                //r_pressed |= JoystickService.IsButtonPressed(Config.Instance.RightButton2);
+                //r_pressed |= JoystickService.IsButtonPressed(Config.Instance.RightButton3);
                 u_pressed |= JoystickService.IsButtonPressed(Config.Instance.UpButton2);
                 u_pressed |= JoystickService.IsButtonPressed(Config.Instance.UpButton3);
                 d_pressed |= JoystickService.IsButtonPressed(Config.Instance.DownButton2);
                 d_pressed |= JoystickService.IsButtonPressed(Config.Instance.DownButton3);
-                reset_pressed |= JoystickService.IsButtonPressed(Config.Instance.ResetButton2);
-                reset_pressed |= JoystickService.IsButtonPressed(Config.Instance.ResetButton3);
+                //reset_pressed |= JoystickService.IsButtonPressed(Config.Instance.ResetButton2);
+                //reset_pressed |= JoystickService.IsButtonPressed(Config.Instance.ResetButton3);
                 acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.AccuResetButton2);
                 acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.AccuResetButton3);
                 pitch_acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.PitchAccuResetButton2);
@@ -346,15 +346,15 @@ namespace XRNeckSafer
                 hp_pressed |= JoystickService.IsButtonPressed(Config.Instance.PitchHoldButton3);
             }
 
-            setButtonColor(l_pressed, SetLeftButton);
+            // setButtonColor(l_pressed, SetLeftButton);
             setLabelColor(l_pressed, LeftLabel);
-            setButtonColor(r_pressed, SetRightButton);
+            // setButtonColor(r_pressed, SetRightButton);
             setLabelColor(r_pressed, RightLabel);
             setButtonColor(u_pressed, SetUpButton);
             setLabelColor(u_pressed, UpLabel);
             setButtonColor(d_pressed, SetDownButton);
             setLabelColor(d_pressed, DownLabel);
-            setButtonColor(reset_pressed, SetResetButton);
+            // setButtonColor(reset_pressed, SetResetButton);
             setButtonColor(acc_res_pressed, AccumReset);
             setButtonColor(pitch_acc_res_pressed, pAccumReset);
             setButtonColor(h_pressed, SetHoldButton1);
@@ -1000,56 +1000,22 @@ namespace XRNeckSafer
             Config.Instance.WriteConfig();
         }
 
-        private void SetLeftButton_Click(object sender, EventArgs e)
+        private void SetLeftButtonClick(object sender, EventArgs e)
         {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                ButtonForm.Show(Top, Right, "Button for Left Rotation:", Config.Instance.LeftButton);
-            }
-            else
-            {
-                MultiButtons.Show(Top, Right, "Left", Config.Instance.LeftButton, Config.Instance.LeftButton2, Config.Instance.LeftButton3);
-            }
-            setButtonToolTip(SetLeftButton, Config.Instance.LeftButton);
-            setLabelToolTip(LeftLabel, Config.Instance.LeftButton);
+            var button = (BooleanActionButton)sender;
+            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
         }
 
-        private void SetRightButton_Click(object sender, EventArgs e)
+        private void SetRightButtonClick(object sender, EventArgs e)
         {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                ButtonForm.Show(Top, Right, "Button for Right Rotation:", Config.Instance.RightButton);
-            }
-            else
-            {
-                MultiButtons.Show(Top, Right, "Right", Config.Instance.RightButton, Config.Instance.RightButton2, Config.Instance.RightButton3);
-            }
-            setButtonToolTip(SetRightButton, Config.Instance.RightButton);
-            setLabelToolTip(RightLabel, Config.Instance.RightButton);
+            var button = (BooleanActionButton)sender;
+            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
         }
 
         private void SetResetButton_Click(object sender, EventArgs e)
         {
             var button = (BooleanActionButton)sender;
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                //using (var frm = new ButtonForm(Top, Right, "Reset Button:", Config.Instance.ResetButton))
-                //{
-                //    frm.ShowDialog();
-                //}
-                ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
-            }
-            //else
-            //{
-            //    using (var form = new ActionPropertiesForm(button.ActionPropertyName, Top, Right))
-            //    {
-            //        form.ShowDialog();
-            //    }
-            //    //using (var frm = new MultiButtons(Top, Right, "Reset", Config.Instance.ResetButton, Config.Instance.ResetButton2, Config.Instance.ResetButton3))
-            //    //{
-            //    //    frm.ShowDialog();
-            //    //}
-            //}
+            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
         }
 
         private void AccumReset_Click(object sender, EventArgs e)

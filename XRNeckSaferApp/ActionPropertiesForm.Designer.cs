@@ -33,7 +33,7 @@ namespace XRNeckSafer
             this._saveButton = new System.Windows.Forms.Button();
             this._cancelButton = new System.Windows.Forms.Button();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            this._wpfList = new XRNeckSafer.Wpf.ActioonPropertyListView();
+            this._wpfList = new XRNeckSafer.Wpf.ActionPropertyListView();
             this.SuspendLayout();
             // 
             // _saveButton
@@ -91,6 +91,6 @@ namespace XRNeckSafer
         private System.Windows.Forms.Button _saveButton;
         private System.Windows.Forms.Button _cancelButton;
         private System.Windows.Forms.Integration.ElementHost elementHost1;
-        private Wpf.ActioonPropertyListView _wpfList;
+        private Wpf.ActionPropertyListView _wpfList;
     }
 }

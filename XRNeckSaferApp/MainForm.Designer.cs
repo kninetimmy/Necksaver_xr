@@ -79,8 +79,8 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.SetLeftButton = new System.Windows.Forms.Button();
-            this.SetRightButton = new System.Windows.Forms.Button();
+            this.SetLeftButton = new XRNeckSafer.BooleanActionButton();
+            this.SetRightButton = new BooleanActionButton();
             this.RightLabel = new System.Windows.Forms.Label();
             this.LeftLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -864,6 +864,9 @@
             // 
             // SetLeftButton
             // 
+            this.SetLeftButton.ActionPropertyName = "ManualRotationLeft";
+            this.SetLeftButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.SetLeftButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.SetLeftButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SetLeftButton.Location = new System.Drawing.Point(39, 20);
             this.SetLeftButton.Name = "SetLeftButton";
@@ -871,10 +874,11 @@
             this.SetLeftButton.TabIndex = 36;
             this.SetLeftButton.Text = "Set Button";
             this.SetLeftButton.UseVisualStyleBackColor = true;
-            this.SetLeftButton.Click += new System.EventHandler(this.SetLeftButton_Click);
+            this.SetLeftButton.Click += new System.EventHandler(this.SetLeftButtonClick);
             // 
             // SetRightButton
             // 
+            this.SetRightButton.ActionPropertyName = "ManualRotationRight";
             this.SetRightButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SetRightButton.Location = new System.Drawing.Point(167, 20);
             this.SetRightButton.Name = "SetRightButton";
@@ -882,7 +886,7 @@
             this.SetRightButton.TabIndex = 37;
             this.SetRightButton.Text = "Set Button";
             this.SetRightButton.UseVisualStyleBackColor = false;
-            this.SetRightButton.Click += new System.EventHandler(this.SetRightButton_Click);
+            this.SetRightButton.Click += new System.EventHandler(this.SetRightButtonClick);
             // 
             // RightLabel
             // 
@@ -2017,9 +2021,9 @@
         private System.Windows.Forms.NumericUpDown angleNUD;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button SetLeftButton;
+        private BooleanActionButton SetLeftButton;
         private System.Windows.Forms.RadioButton additivRB;
-        private System.Windows.Forms.Button SetRightButton;
+        private BooleanActionButton SetRightButton;
         private System.Windows.Forms.RadioButton snapRB;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label24;

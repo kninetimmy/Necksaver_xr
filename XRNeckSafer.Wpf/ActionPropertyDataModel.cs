@@ -12,7 +12,7 @@ namespace XRNeckSafer.Wpf
         public bool InvertValue { get; set; }
         public bool IsInvertEnabled { get; set; }
         public string EventName { get; set; }
-
+        public bool Selected { get; set; }
         public object Event { get; set; }
     }
 

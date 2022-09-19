@@ -10,7 +10,6 @@ namespace XRNeckSafer
     public partial class ActionPropertiesForm : Form
     {
         private readonly string _actionPropertyName;
-        // private List<int> _selectedIndexes;
 
         public static void ShowForm(string actionPropertyName, int mainFormTop, int mainFormRight)
         {
@@ -29,7 +28,6 @@ namespace XRNeckSafer
             Left = mainFormRight - 10;
             PopulateBindingList();
             MinimumSize = Size;
-            // _wpfList.Changed += ActionPropertyListChanged;
             _wpfList.ScanClick += OnScanClick;
             _wpfList.ClearClick += OnClearClick;
         }
@@ -52,19 +50,12 @@ namespace XRNeckSafer
             {
                 return;
             }
-            //var property = Config.Instance.ActionProperties.FirstOrDefault(p => p.Name == args.Model.ActionPropertyName);
-            //if (property == null)
-            //{
-            //    return;
-            //}
-            // var actionEvent = property.Events.FirstOrDefault(e => e.Name == args.Model.EventName);
             args.Model.InputCombination = result.ToString();
             args.Model.NewInputCombination = result;
         }
 
         private void PopulateBindingList()
         {
-            // _selectedIndexes = new List<int>();
             var props = new ObservableCollection<ActionPropertyDataModel>();
             Config.Instance.ActionProperties.ForEach(prop =>
             {
@@ -88,6 +79,7 @@ namespace XRNeckSafer
                         ToggleValue = toggleAction != null && toggleAction.Toggle,
                         IsInvertEnabled = boolProp != null,
                         InvertValue = boolProp?.Invert ?? false,
+                        Selected = currentProperty,
                         Event = actionEvent,
                     };
                     props.Add(dataModel);
