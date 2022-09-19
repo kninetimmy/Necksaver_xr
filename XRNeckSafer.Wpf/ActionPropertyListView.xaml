@@ -11,13 +11,69 @@
         <Style x:Key="_textBlockVertical" TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
+        <Style x:Key="_dataGrid" TargetType="DataGrid">
+            <Setter Property="CanUserAddRows" Value="False" />
+            <Setter Property="CanUserDeleteRows" Value="False" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="CanUserReorderColumns" Value="False" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="GridLinesVisibility" Value="Horizontal" />
+            <Setter Property="HorizontalGridLinesBrush" Value="LightGray" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HeadersVisibility" Value="Column" />
+        </Style>
         <local:BitmapToImageSourceConverter x:Key="BitmapToImageSourceConverter" />
     </UserControl.Resources>
-    <DataGrid CanUserAddRows="False" CanUserDeleteRows="False" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanUserReorderColumns="False" IsReadOnly="True" 
-                      Name="_listView" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="LightGray" ItemsSource="{Binding ElementName=HostControl, Path=Properties}" VerticalContentAlignment="Center">
+    <DataGrid Style="{StaticResource _dataGrid}" Name="_listView" ItemsSource="{Binding ElementName=HostControl, Path=Properties}">
         <DataGrid.Columns>
             <DataGridTextColumn Header="Event Name" Binding="{Binding EventName}" ElementStyle="{StaticResource _textBlockVertical}" />
-            <DataGridTextColumn Header="Key/Joystick mapping" Binding="{Binding InputCombination}" Width="*" ElementStyle="{StaticResource _textBlockVertical}" />
+            <DataGridTemplateColumn Header="Key/Joystick mapping" Width="*">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <DataGrid x:Name="_inputsGrid" Style="{StaticResource _dataGrid}" ItemsSource="{Binding InputCombinations}" HeadersVisibility="None">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="*" Binding="{Binding InputCombination}" ElementStyle="{StaticResource _textBlockVertical}" />
+                                <DataGridTemplateColumn Header="Scan" Width="20">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center">
+                                                <Button Name="_scanTButton" Content=".." Click="OnScanButtonClick" Width="15" Height="15" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Clear">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center">
+                                                <Button Click="ClearEventClick" Background="Transparent" BorderBrush="Transparent">
+                                                    <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.deleteIcon}, Converter={StaticResource BitmapToImageSourceConverter}}" />
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <!--<ListView ItemsSource="{Binding InputCombinations}" BorderThickness="0" Margin="0" Padding="0">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="Red">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding InputCombination}"  />
+                                        </StackPanel>
+                                        --><!--<StackPanel Background="Yellow">
+                                            <TextBlock Text="{Binding InputCombination}"  />
+                                        </StackPanel>--><!--
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>-->
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
             <DataGridTemplateColumn Header="Toggle">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
@@ -61,7 +117,7 @@
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
-            <DataGridTemplateColumn Header="Scan">
+            <!--<DataGridTemplateColumn Header="Scan">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <StackPanel VerticalAlignment="Center">
@@ -80,7 +136,7 @@
                         </StackPanel>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
+            </DataGridTemplateColumn>-->
         </DataGrid.Columns>
         <DataGrid.GroupStyle>
             <GroupStyle>

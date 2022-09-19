@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace XRNeckSafer
@@ -17,7 +18,7 @@ namespace XRNeckSafer
             return Invert ? !base.GetValue() : base.GetValue();
         }
 
-        public override void DispatchEvent(ActionPropertyEvent actionEvent, bool sameKeys, bool matched)
+        public override void DispatchEvent(ActionPropertyEvent actionEvent, JoystickKeyboardInput input, bool sameKeys, bool matched)
         {
             if (sameKeys)
             {
@@ -28,7 +29,7 @@ namespace XRNeckSafer
             {
                 case SWITCH_EVENT_NAME:
                     Value = GetNewValue(matched, toggle);
-                    ProcessEvent(actionEvent);
+                    ProcessEvent(actionEvent, input);
                     break;
             }
         }
@@ -52,14 +53,18 @@ namespace XRNeckSafer
             {
                 Name = name,
                 Value = false,
-                Events = new[] 
-                { 
-                    new ActionPropertyToggleEvent 
-                    { 
+                Events = new[]
+                {
+                    new ActionPropertyToggleEvent
+                    {
                         Name = SWITCH_EVENT_NAME,
-                        InputCombination = new JoystickKeyboardInput(),
+                        InputCombinations = new List<JoystickKeyboardInput> { 
+                            new JoystickKeyboardInput(),
+                            new JoystickKeyboardInput(),
+                            new JoystickKeyboardInput()
+                        },
                         Toggle = false
-                    } 
+                    }
                 }
             };
         }

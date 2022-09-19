@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
@@ -20,7 +21,7 @@ namespace XRNeckSafer
         [JsonIgnore]
         public string ValidationError { get; private set; }
 
-        public abstract void DispatchEvent(ActionPropertyEvent actionEvent, bool sameKeys, bool matched);
+        public abstract void DispatchEvent(ActionPropertyEvent actionEvent, JoystickKeyboardInput input, bool sameKeys, bool matched);
 
         public abstract void UnsubscribeTriggerHandlers();
 
@@ -43,16 +44,16 @@ namespace XRNeckSafer
                     return Valid;
                 }
 
-                var tuples = Events.Select(t => new Tuple<string, JoystickKeyboardInput>(t.Name, t.InputCombination)).ToList();
-                foreach(var tuple in tuples)
-                {
-                    if (tuples.Count(c => c.Item2.IsEqual(tuple.Item2)) > 1)
-                    {
-                        Valid = false;
-                        ValidationError = $"Duplicate combination \"{tuple.Item2}\" in \"{tuple.Item1}\" event in \"{Name}\" action property";
-                        return Valid;
-                    }
-                }
+                //var tuples = Events.Select(t => new Tuple<string, List<JoystickKeyboardInput>>(t.Name, t.InputCombinations)).ToList();
+                //foreach(var tuple in tuples)
+                //{
+                //    if (tuples.Count(c => c.Item2.IsEqual(tuple.Item2)) > 1)
+                //    {
+                //        Valid = false;
+                //        ValidationError = $"Duplicate combination \"{tuple.Item2}\" in \"{tuple.Item1}\" event in \"{Name}\" action property";
+                //        return Valid;
+                //    }
+                //}
             }
             return Valid;
         }
@@ -76,9 +77,9 @@ namespace XRNeckSafer
             return Value = value;
         }
 
-        protected void ProcessEvent(ActionPropertyEvent actionEvent)
+        protected void ProcessEvent(ActionPropertyEvent actionEvent, JoystickKeyboardInput input)
         {
-            Triggered?.Invoke(new ActionPropertyEventArgs<T>(GetValue(), actionEvent));
+            Triggered?.Invoke(new ActionPropertyEventArgs<T>(GetValue(), actionEvent, input));
         }
 
         public override void UnsubscribeTriggerHandlers()

@@ -60,11 +60,18 @@ namespace XRNeckSafer
             return builder.ToString();
         }
 
+        private bool IsEmpty()
+        {
+            return KeyboardKeys.Count == 0 && JoystickButtons.Count == 0;
+        }
+
         public bool Match(JoystickKeyboardInput input)
         {
-            var keyboardMatched = KeyboardKeys.All(k => input.KeyboardKeys.Any(nk => nk == k));
-            var joystickMatched = JoystickButtons.All(b => input.JoystickButtons.Any(nb => nb.GetId() == b.GetId()));
-            return keyboardMatched && joystickMatched;
+            var keyboardMatched = !KeyboardKeys.Any()
+                || (KeyboardKeys.Any() && input.KeyboardKeys.Any() && KeyboardKeys.All(k => input.KeyboardKeys.Any(nk => nk == k)));
+            var joystickMatched = !JoystickButtons.Any()
+                || (JoystickButtons.Any() && input.JoystickButtons.Any() && JoystickButtons.All(b => input.JoystickButtons.Any(nb => nb.GetId() == b.GetId())));
+            return keyboardMatched && joystickMatched && !IsEmpty();
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Forms;
+using XRNeckSafer.Wpf;
 
 namespace XRNeckSafer
 {
@@ -32,17 +34,17 @@ namespace XRNeckSafer
             _wpfList.ClearClick += OnClearClick;
         }
 
-        private void OnClearClick(Wpf.ActionPropertyDataModelEventArgs args)
+        private void OnClearClick(ActionPropertyDataModelEventArgs args)
         {
             args.Model.InputCombination = string.Empty;
             args.Model.NewInputCombination = new JoystickKeyboardInput();
         }
 
-        private void OnScanClick(Wpf.ActionPropertyDataModelEventArgs args)
+        private void OnScanClick(ActionPropertyDataModelEventArgs args)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action<Wpf.ActionPropertyDataModelEventArgs>(OnScanClick), args);
+                Invoke(new Action<ActionPropertyDataModelEventArgs>(OnScanClick), args);
                 return;
             }
             var result = ScanJoystickKeyboardForm.ShowForm(FormStartPosition.CenterParent, Top, Left, 2);
@@ -63,7 +65,7 @@ namespace XRNeckSafer
         private void PopulateBindingList()
         {
             // _selectedIndexes = new List<int>();
-            var props = new List<Wpf.ActionPropertyDataModel>();
+            var props = new ObservableCollection<ActionPropertyDataModel>();
             Config.Instance.ActionProperties.ForEach(prop =>
             {
                 var currentProperty = _actionPropertyName.Equals(prop.Name);
@@ -71,9 +73,15 @@ namespace XRNeckSafer
                 foreach (var actionEvent in prop.Events)
                 {
                     var toggleAction = actionEvent as ActionPropertyToggleEvent;
-                    var dataModel = new Wpf.ActionPropertyDataModel
+                    var dataModel = new ActionPropertyDataModel
                     {
-                        InputCombination = actionEvent.InputCombination.ToString(),
+                        InputCombinations = new ObservableCollection<Input>(actionEvent.InputCombinations
+                            .Select(i => new Input
+                            { 
+                                InputCombination = i.ToString(),
+                                EventName = actionEvent.Name,
+                                ActionPropertyName = prop.Name,
+                            }).ToArray()),
                         ActionPropertyName = prop.Name,
                         EventName = actionEvent.Name,
                         IsToggleEnabled = toggleAction != null,
@@ -90,7 +98,7 @@ namespace XRNeckSafer
 
         private void OnSaveButtonClick(object sender, EventArgs e)
         {
-            foreach (var model in _wpfList.Properties)
+            foreach (ActionPropertyDataModel model in _wpfList.Properties)
             {
                 var configActionProperty = Config.Instance.ActionProperties.FirstOrDefault(p => p.Name.Equals(model.ActionPropertyName, StringComparison.Ordinal));
                 if (configActionProperty == null)
@@ -98,10 +106,14 @@ namespace XRNeckSafer
                     continue;
                 }
                 var actionEvent = (ActionPropertyEvent)model.Event;
-                var newInput = model.NewInputCombination as JoystickKeyboardInput;
-                if (newInput != null)
+                for (int index = 0; index < model.InputCombinations.Count; index++)
                 {
-                    actionEvent.InputCombination = newInput;
+                    Input input = model.InputCombinations[index];
+                    var newInput = input.NewInputCombination as JoystickKeyboardInput;
+                    if (newInput != null)
+                    {
+                        actionEvent.InputCombinations[index] = newInput;
+                    }
                 }
                 if (actionEvent is ActionPropertyToggleEvent toggleEvent && toggleEvent != null)
                 {

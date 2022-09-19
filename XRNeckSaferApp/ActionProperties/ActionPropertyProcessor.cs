@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace XRNeckSafer
 {
@@ -20,9 +21,19 @@ namespace XRNeckSafer
             // Console.WriteLine($"Accessor: same - {sameKeys} {input}");
             foreach (ActionProperty prop in _properties)
             {
-                foreach (var propEvent in prop.Events)
+                foreach (ActionPropertyEvent propEvent in prop.Events)
                 {
-                    prop.DispatchEvent(propEvent, sameKeys, propEvent.InputCombination.Match(input));
+                    var matched = propEvent.InputCombinations.FirstOrDefault(i => i.Match(input));
+                    if (matched != null)
+                    {
+                        prop.DispatchEvent(propEvent, matched, sameKeys, true);
+                        continue;
+                    }
+                    var firstEvent = propEvent.InputCombinations.FirstOrDefault();
+                    if (firstEvent != null)
+                    {
+                        prop.DispatchEvent(propEvent, firstEvent, sameKeys, false);
+                    }
                 }
             }
         }

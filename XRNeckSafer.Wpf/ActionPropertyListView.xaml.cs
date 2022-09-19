@@ -37,15 +37,8 @@ namespace XRNeckSafer.Wpf
 
         private void OnScanButtonClick(object sender, RoutedEventArgs e)
         {
-            var model = ((Button)e.OriginalSource).DataContext as ActionPropertyDataModel;
+            var model = ((Button)e.OriginalSource).DataContext as Input;
             ScanClick?.Invoke(new ActionPropertyDataModelEventArgs { Model = model });
-            RefreshDataGrid();
-        }
-
-        private void RefreshDataGrid()
-        {
-            var view = CollectionViewSource.GetDefaultView(_listView.ItemsSource);
-            view.Refresh();
         }
 
         private void OnInvertCheckBoxClick(object sender, RoutedEventArgs e)
@@ -75,9 +68,8 @@ namespace XRNeckSafer.Wpf
 
         private void ClearEventClick(object sender, RoutedEventArgs e)
         {
-            var model = ((Button)sender).DataContext as ActionPropertyDataModel;
+            var model = ((Button)sender).DataContext as Input;
             ClearClick?.Invoke(new ActionPropertyDataModelEventArgs { Model = model });
-            RefreshDataGrid();
         }
     }
 }
