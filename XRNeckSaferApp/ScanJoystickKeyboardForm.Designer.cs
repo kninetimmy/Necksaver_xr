@@ -27,11 +27,11 @@ namespace XRNeckSafer
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(149, 9);
+            this.label2.Location = new System.Drawing.Point(122, 7);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(108, 16);
+            this.label2.Size = new System.Drawing.Size(161, 19);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Pressed buttons:";
+            this.label2.Text = "Pressed key/button(s):";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // _pressedButtonsLabel
@@ -73,7 +73,7 @@ namespace XRNeckSafer
             this.MinimizeBox = false;
             this.Name = "ScanJoystickKeyboardForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "Scanning joysticks and keys. Press button(s) now...";
+            this.Text = "Scanning joysticks and keys. Press key/button(s) now...";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnFormKeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);

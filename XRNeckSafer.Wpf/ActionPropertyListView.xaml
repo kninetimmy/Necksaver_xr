@@ -26,7 +26,7 @@
         </Style>
         <local:BitmapToImageSourceConverter x:Key="BitmapToImageSourceConverter" />
     </UserControl.Resources>
-    <DataGrid Style="{StaticResource _dataGrid}" Name="_listView" ItemsSource="{Binding ElementName=HostControl, Path=Properties}">
+    <DataGrid Style="{StaticResource _dataGrid}" Name="_dataGrid" ItemsSource="{Binding ElementName=HostControl, Path=Properties}">
         <DataGrid.Columns>
             <DataGridTextColumn Header="Event Name" Binding="{Binding EventName}" ElementStyle="{StaticResource _textBlockVertical}" />
             <DataGridTemplateColumn Header="Key/Joystick mapping" Width="*">

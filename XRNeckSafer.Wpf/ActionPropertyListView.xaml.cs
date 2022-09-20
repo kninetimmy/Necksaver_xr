@@ -32,13 +32,9 @@ namespace XRNeckSafer.Wpf
             var selected = Properties.FirstOrDefault(p => p.Selected);
             if (selected != null)
             {
-                // var actionProperies = Properties.Where(p => p.ActionPropertyName == selected.ActionPropertyName).ToList();
                 var selectedIndex = Properties.IndexOf(selected);
-                
-                //_listView.SelectedItems.Clear();
-                //actionProperies.ForEach(p => _listView.SelectedItems.Add(p));
-                _listView.SelectedIndex = selectedIndex;
-                DataGridRow row = (DataGridRow)_listView.ItemContainerGenerator.ContainerFromIndex(selectedIndex);
+                _dataGrid.SelectedIndex = selectedIndex;
+                DataGridRow row = (DataGridRow)_dataGrid.ItemContainerGenerator.ContainerFromIndex(selectedIndex);
                 row.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             }
         }
@@ -50,7 +46,7 @@ namespace XRNeckSafer.Wpf
             {
                 Properties.Add(model);
             }
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_listView.ItemsSource);
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_dataGrid.ItemsSource);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("ActionPropertyName");
             view.GroupDescriptions.Add(groupDescription);
         }
