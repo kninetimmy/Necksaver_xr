@@ -69,10 +69,8 @@ namespace XRNeckSafer
                         InputCombinations = new ObservableCollection<Input>(actionEvent.InputCombinations
                             .Select(i => new Input
                             { 
-                                InputCombination = i.ToString(),
-                                EventName = actionEvent.Name,
-                                ActionPropertyName = prop.Name,
-                            }).ToArray()),
+                                InputCombination = i.ToString()
+                            })),
                         ActionPropertyName = prop.Name,
                         EventName = actionEvent.Name,
                         IsToggleEnabled = toggleAction != null,

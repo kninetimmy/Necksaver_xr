@@ -22,8 +22,6 @@ namespace XRNeckSafer.Wpf
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string ActionPropertyName { get; set; }
-        public string EventName { get; set; }
         public string InputCombination 
         { 
             get => _inputCombination;
