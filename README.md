@@ -80,7 +80,7 @@ Smooth Autorotation gives a linear amplification of your head rotation, beginnin
 
 ## **Installation (since beta4a)**
 
- **Uninstall old version before installing! (see below)**  
+ 0. Uninstall old version before installing! (see below)  
  1. Download the installer: [XRNeckSaferBeta4a.msi](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSafer-beta4a.msi)
  2. Run the installer
  3. Start XRNeckSaferApp.exe and go to OpenXR in the Menu on top. Select "Show active OpenXR API Layers"
