@@ -36,9 +36,10 @@ namespace XRNeckSafer
             // 
             // _pressedButtonsLabel
             // 
-            this._pressedButtonsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this._pressedButtonsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this._pressedButtonsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._pressedButtonsLabel.Location = new System.Drawing.Point(3, 44);
+            this._pressedButtonsLabel.Location = new System.Drawing.Point(3, 34);
             this._pressedButtonsLabel.Name = "_pressedButtonsLabel";
             this._pressedButtonsLabel.Size = new System.Drawing.Size(400, 16);
             this._pressedButtonsLabel.TabIndex = 3;
