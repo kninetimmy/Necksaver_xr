@@ -53,7 +53,7 @@
             this.numericUpDownMultLeft = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownStartRight = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownStartLeft = new System.Windows.Forms.NumericUpDown();
-            this.SetHoldButton1 = new System.Windows.Forms.Button();
+            this.YawAutorotationHoldButton = new XRNeckSafer.BooleanActionButton();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -80,7 +80,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.SetLeftButton = new XRNeckSafer.BooleanActionButton();
-            this.SetRightButton = new BooleanActionButton();
+            this.SetRightButton = new XRNeckSafer.BooleanActionButton();
             this.RightLabel = new System.Windows.Forms.Label();
             this.LeftLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -155,7 +155,7 @@
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UpAddButton = new System.Windows.Forms.Button();
             this.UpDelButton = new System.Windows.Forms.Button();
-            this.SetPitchHoldButton = new System.Windows.Forms.Button();
+            this.PitchAutorotationHoldButton = new XRNeckSafer.BooleanActionButton();
             this.pManualGroup = new System.Windows.Forms.GroupBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
@@ -543,16 +543,19 @@
             this.numericUpDownStartLeft.ValueChanged += new System.EventHandler(this.numericUpDownStartLeft_ValueChanged);
             this.numericUpDownStartLeft.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownStartLeft_KeyUp);
             // 
-            // SetHoldButton1
+            // YawAutorotationHoldButton
             // 
-            this.SetHoldButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetHoldButton1.Location = new System.Drawing.Point(196, 15);
-            this.SetHoldButton1.Name = "SetHoldButton1";
-            this.SetHoldButton1.Size = new System.Drawing.Size(48, 22);
-            this.SetHoldButton1.TabIndex = 42;
-            this.SetHoldButton1.Text = "Hold";
-            this.SetHoldButton1.UseVisualStyleBackColor = true;
-            this.SetHoldButton1.Click += new System.EventHandler(this.SetHoldButton1_Click);
+            this.YawAutorotationHoldButton.ActionPropertyName = "YawAutorotationHold";
+            this.YawAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.YawAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.YawAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YawAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
+            this.YawAutorotationHoldButton.Name = "YawAutorotationHoldButton";
+            this.YawAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
+            this.YawAutorotationHoldButton.TabIndex = 42;
+            this.YawAutorotationHoldButton.Text = "Hold";
+            this.YawAutorotationHoldButton.UseVisualStyleBackColor = true;
+            this.YawAutorotationHoldButton.Click += new System.EventHandler(this.YawAutorotationHoldButtonClick);
             // 
             // label12
             // 
@@ -879,6 +882,8 @@
             // SetRightButton
             // 
             this.SetRightButton.ActionPropertyName = "ManualRotationRight";
+            this.SetRightButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.SetRightButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.SetRightButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SetRightButton.Location = new System.Drawing.Point(167, 20);
             this.SetRightButton.Name = "SetRightButton";
@@ -1131,7 +1136,7 @@
             this.ARGroup.Controls.Add(this.ARstepwise);
             this.ARGroup.Controls.Add(this.AROffButton);
             this.ARGroup.Controls.Add(this.stepwiseGroup);
-            this.ARGroup.Controls.Add(this.SetHoldButton1);
+            this.ARGroup.Controls.Add(this.YawAutorotationHoldButton);
             this.ARGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ARGroup.Location = new System.Drawing.Point(5, 152);
             this.ARGroup.Name = "ARGroup";
@@ -1223,7 +1228,7 @@
             this.pARGroup.Controls.Add(this.pLinearGroup);
             this.pARGroup.Controls.Add(this.pAROffButton);
             this.pARGroup.Controls.Add(this.pStepwiseGroup);
-            this.pARGroup.Controls.Add(this.SetPitchHoldButton);
+            this.pARGroup.Controls.Add(this.PitchAutorotationHoldButton);
             this.pARGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pARGroup.Location = new System.Drawing.Point(5, 152);
             this.pARGroup.Name = "pARGroup";
@@ -1708,16 +1713,19 @@
             this.UpDelButton.UseVisualStyleBackColor = true;
             this.UpDelButton.Click += new System.EventHandler(this.UpDeleteButton_Click);
             // 
-            // SetPitchHoldButton
+            // PitchAutorotationHoldButton
             // 
-            this.SetPitchHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetPitchHoldButton.Location = new System.Drawing.Point(196, 15);
-            this.SetPitchHoldButton.Name = "SetPitchHoldButton";
-            this.SetPitchHoldButton.Size = new System.Drawing.Size(48, 22);
-            this.SetPitchHoldButton.TabIndex = 42;
-            this.SetPitchHoldButton.Text = "Hold";
-            this.SetPitchHoldButton.UseVisualStyleBackColor = true;
-            this.SetPitchHoldButton.Click += new System.EventHandler(this.SetPitchHoldButton_Click);
+            this.PitchAutorotationHoldButton.ActionPropertyName = "PitchAutorotationHold";
+            this.PitchAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.PitchAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.PitchAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PitchAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
+            this.PitchAutorotationHoldButton.Name = "PitchAutorotationHoldButton";
+            this.PitchAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
+            this.PitchAutorotationHoldButton.TabIndex = 42;
+            this.PitchAutorotationHoldButton.Text = "Hold";
+            this.PitchAutorotationHoldButton.UseVisualStyleBackColor = true;
+            this.PitchAutorotationHoldButton.Click += new System.EventHandler(this.PitchAutorotationHoldButtonClick);
             // 
             // pManualGroup
             // 
@@ -2032,7 +2040,7 @@
         private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.Button DeleteButton;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Button SetHoldButton1;
+        private BooleanActionButton YawAutorotationHoldButton;
         private BooleanActionButton SetResetButton;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.MenuStrip menuStrip;
@@ -2130,7 +2138,6 @@
         private System.Windows.Forms.DataGridView UpAutorotGridView;
         private System.Windows.Forms.Button UpAddButton;
         private System.Windows.Forms.Button UpDelButton;
-        private System.Windows.Forms.Button SetPitchHoldButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
@@ -2150,6 +2157,7 @@
         private System.ComponentModel.IContainer components;
         private NumericActionUpDown transLRNUP;
         private System.Windows.Forms.Timer loopTimer;
+        private BooleanActionButton PitchAutorotationHoldButton;
     }
 }
 

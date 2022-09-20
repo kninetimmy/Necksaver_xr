@@ -8,15 +8,37 @@ namespace XRNeckSafer
     public class NumericActionUpDown : NumericUpDown
     {
         private NumericUpDownActionProperty _actionProperty;
-        private bool _firstTimeRendered;
+        private bool _firstTimeRendered; 
+        private string _actionPropertyName;
 
         [Category("ActionProperty"), Description("ActionProperty name")]
-        public string ActionPropertyName { get; set; }
+        public string ActionPropertyName
+        {
+            get => _actionPropertyName;
+            set
+            {
+                _actionPropertyName = value;
+                if (this.InDesignerMode())
+                {
+                    return;
+                }
+                InitialiseActionProperty();
+            }
+        }
 
         public NumericActionUpDown() : base()
         {
             Config.ConfigReloaded += OnConfigReloaded;
             ValueChanged += OnValueChanged;
+        }
+
+        private void InitialiseActionProperty()
+        {
+            if (!_firstTimeRendered)
+            {
+                _firstTimeRendered = true;
+                SubscribeActionProperty();
+            }
         }
 
         private void OnValueChanged(object sender, EventArgs e)

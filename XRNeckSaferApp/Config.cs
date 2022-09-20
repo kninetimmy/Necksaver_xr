@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization;
 
 namespace XRNeckSafer
 {
@@ -51,18 +50,6 @@ namespace XRNeckSafer
 
     public class Config
     {
-        // public ButtonConfig LeftButton;
-        //public ButtonConfig LeftButton2;
-        //public ButtonConfig LeftButton3;
-        // public ButtonConfig RightButton;
-        //public ButtonConfig RightButton2;
-        //public ButtonConfig RightButton3;
-        // public ButtonConfig ResetButton; // replaced with ActionProperty
-        //public ButtonConfig ResetButton2;
-        //public ButtonConfig ResetButton3;
-        public ButtonConfig HoldButton1;
-        public ButtonConfig HoldButton2;
-        public ButtonConfig HoldButton3;
         public ButtonConfig AccuResetButton;
         public ButtonConfig AccuResetButton2;
         public ButtonConfig AccuResetButton3;
@@ -75,9 +62,6 @@ namespace XRNeckSafer
         public ButtonConfig PitchAccuResetButton;
         public ButtonConfig PitchAccuResetButton2;
         public ButtonConfig PitchAccuResetButton3;
-        public ButtonConfig PitchHoldButton1;
-        public ButtonConfig PitchHoldButton2;
-        public ButtonConfig PitchHoldButton3;
         public int Angle;
         public int UpAngle;
         public int DownAngle;
@@ -113,18 +97,6 @@ namespace XRNeckSafer
 
         private Config()
         {
-            // LeftButton = new ButtonConfig();
-            //LeftButton2 = new ButtonConfig();
-            //LeftButton3 = new ButtonConfig();
-            //RightButton = new ButtonConfig();
-            //RightButton2 = new ButtonConfig();
-            //RightButton3 = new ButtonConfig();
-            // ResetButton = new ButtonConfig();
-            //ResetButton2 = new ButtonConfig();
-            //ResetButton3 = new ButtonConfig();
-            HoldButton1 = new ButtonConfig();
-            HoldButton2 = new ButtonConfig();
-            HoldButton3 = new ButtonConfig();
             AccuResetButton = new ButtonConfig();
             AccuResetButton2 = new ButtonConfig();
             AccuResetButton3 = new ButtonConfig();
@@ -137,9 +109,6 @@ namespace XRNeckSafer
             PitchAccuResetButton = new ButtonConfig();
             PitchAccuResetButton2 = new ButtonConfig();
             PitchAccuResetButton3 = new ButtonConfig();
-            PitchHoldButton1 = new ButtonConfig();
-            PitchHoldButton2 = new ButtonConfig();
-            PitchHoldButton3 = new ButtonConfig();
             Angle = 30;
             UpAngle = 30;
             DownAngle = 30;
@@ -203,18 +172,6 @@ namespace XRNeckSafer
                     return CreateDefaultConfig();
                 }
                 Config c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configfilename), new Newtonsoft.Json.Converters.StringEnumConverter());
-                // if (c.LeftButton == null) c.LeftButton = new ButtonConfig();
-                //if (c.LeftButton2 == null) c.LeftButton2 = new ButtonConfig();
-                //if (c.LeftButton3 == null) c.LeftButton3 = new ButtonConfig();
-                //if (c.RightButton == null) c.RightButton = new ButtonConfig();
-                //if (c.RightButton2 == null) c.RightButton2 = new ButtonConfig();
-                //if (c.RightButton3 == null) c.RightButton3 = new ButtonConfig();
-                // if (c.ResetButton == null) c.ResetButton = new ButtonConfig();
-                //if (c.ResetButton2 == null) c.ResetButton2 = new ButtonConfig();
-                //if (c.ResetButton3 == null) c.ResetButton3 = new ButtonConfig();
-                if (c.HoldButton1 == null) c.HoldButton1 = new ButtonConfig();
-                if (c.HoldButton2 == null) c.HoldButton2 = new ButtonConfig();
-                if (c.HoldButton3 == null) c.HoldButton3 = new ButtonConfig();
                 if (c.AccuResetButton == null) c.AccuResetButton = new ButtonConfig();
                 if (c.AccuResetButton2 == null) c.AccuResetButton2 = new ButtonConfig();
                 if (c.AccuResetButton3 == null) c.AccuResetButton3 = new ButtonConfig();
@@ -227,9 +184,6 @@ namespace XRNeckSafer
                 if (c.PitchAccuResetButton == null) c.PitchAccuResetButton = new ButtonConfig();
                 if (c.PitchAccuResetButton2 == null) c.PitchAccuResetButton2 = new ButtonConfig();
                 if (c.PitchAccuResetButton3 == null) c.PitchAccuResetButton3 = new ButtonConfig();
-                if (c.PitchHoldButton1 == null) c.PitchHoldButton1 = new ButtonConfig();
-                if (c.PitchHoldButton2 == null) c.PitchHoldButton2 = new ButtonConfig();
-                if (c.PitchHoldButton3 == null) c.PitchHoldButton3 = new ButtonConfig();
                 if (c.ActionProperties == null) c.ActionProperties = new List<ActionProperty>();
 
                 if (c.AutoSteps.Count == 0)

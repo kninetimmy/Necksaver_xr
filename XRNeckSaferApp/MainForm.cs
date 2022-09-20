@@ -184,7 +184,7 @@ namespace XRNeckSafer
             // setButtonToolTip(SetRightButton, Config.Instance.RightButton);
             // setButtonToolTip(SetResetButton, Config.Instance.ResetButton);
             setButtonToolTip(AccumReset, Config.Instance.AccuResetButton);
-            setButtonToolTip(SetHoldButton1, Config.Instance.HoldButton1);
+            // setButtonToolTip(YawAutorotationHoldButton, Config.Instance.HoldButton1);
 
             // setLabelToolTip(LeftLabel, Config.Instance.LeftButton);
             // setLabelToolTip(RightLabel, Config.Instance.RightButton);
@@ -314,51 +314,38 @@ namespace XRNeckSafer
 
         private void loopTimer_Tick(object sender, EventArgs e)
         {
-            bool reset_pressed = SetResetButton.ActionPropertyValue;  // JoystickService.IsButtonPressed(Config.Instance.ResetButton);
+            bool reset_pressed = SetResetButton.ActionPropertyValue;
             bool acc_res_pressed = JoystickService.IsButtonPressed(Config.Instance.AccuResetButton);
             bool pitch_acc_res_pressed = JoystickService.IsButtonPressed(Config.Instance.PitchAccuResetButton);
-            bool l_pressed = SetLeftButton.ActionPropertyValue; // JoystickService.IsButtonPressed(Config.Instance.LeftButton);
-            bool r_pressed = SetRightButton.ActionPropertyValue; // JoystickService.IsButtonPressed(Config.Instance.RightButton);
+            bool l_pressed = SetLeftButton.ActionPropertyValue;
+            bool r_pressed = SetRightButton.ActionPropertyValue;
             bool u_pressed = JoystickService.IsButtonPressed(Config.Instance.UpButton);
             bool d_pressed = JoystickService.IsButtonPressed(Config.Instance.DownButton);
-            bool h_pressed = JoystickService.IsButtonPressed(Config.Instance.HoldButton1);
-            bool hp_pressed = JoystickService.IsButtonPressed(Config.Instance.PitchHoldButton1);
+            bool h_pressed = YawAutorotationHoldButton.ActionPropertyValue;
+            bool hp_pressed = PitchAutorotationHoldButton.ActionPropertyValue;
             //            bool h_pressed = checkButtonPress(SetHoldButton1, conf.HoldButton1);
             if (Config.Instance.MultipleLRbuttons)
             {
-                //l_pressed |= JoystickService.IsButtonPressed(Config.Instance.LeftButton2);
-                //l_pressed |= JoystickService.IsButtonPressed(Config.Instance.LeftButton3);
-                //r_pressed |= JoystickService.IsButtonPressed(Config.Instance.RightButton2);
-                //r_pressed |= JoystickService.IsButtonPressed(Config.Instance.RightButton3);
                 u_pressed |= JoystickService.IsButtonPressed(Config.Instance.UpButton2);
                 u_pressed |= JoystickService.IsButtonPressed(Config.Instance.UpButton3);
                 d_pressed |= JoystickService.IsButtonPressed(Config.Instance.DownButton2);
                 d_pressed |= JoystickService.IsButtonPressed(Config.Instance.DownButton3);
-                //reset_pressed |= JoystickService.IsButtonPressed(Config.Instance.ResetButton2);
-                //reset_pressed |= JoystickService.IsButtonPressed(Config.Instance.ResetButton3);
                 acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.AccuResetButton2);
                 acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.AccuResetButton3);
                 pitch_acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.PitchAccuResetButton2);
                 pitch_acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.PitchAccuResetButton3);
-                h_pressed |= JoystickService.IsButtonPressed(Config.Instance.HoldButton2);
-                h_pressed |= JoystickService.IsButtonPressed(Config.Instance.HoldButton3);
-                hp_pressed |= JoystickService.IsButtonPressed(Config.Instance.PitchHoldButton2);
-                hp_pressed |= JoystickService.IsButtonPressed(Config.Instance.PitchHoldButton3);
             }
 
-            // setButtonColor(l_pressed, SetLeftButton);
             setLabelColor(l_pressed, LeftLabel);
-            // setButtonColor(r_pressed, SetRightButton);
             setLabelColor(r_pressed, RightLabel);
             setButtonColor(u_pressed, SetUpButton);
             setLabelColor(u_pressed, UpLabel);
             setButtonColor(d_pressed, SetDownButton);
             setLabelColor(d_pressed, DownLabel);
-            // setButtonColor(reset_pressed, SetResetButton);
             setButtonColor(acc_res_pressed, AccumReset);
             setButtonColor(pitch_acc_res_pressed, pAccumReset);
-            setButtonColor(h_pressed, SetHoldButton1);
-            setButtonColor(hp_pressed, SetPitchHoldButton);
+            setButtonColor(h_pressed, YawAutorotationHoldButton);
+            setButtonColor(hp_pressed, PitchAutorotationHoldButton);
 
             bool pitchlimit = _vr.GetHmdPitch() - 90 > Config.Instance.PitchLimForAutorot;
 
@@ -651,16 +638,12 @@ namespace XRNeckSafer
 
         private void SetTransOffsetF(decimal value)
         {
-            // Config.Instance.TransF = (int)value;
             _transOffsetForward = (float)value / 100F;
-            // Config.Instance.WriteConfig();
         }
 
         private void SetTransOffsetLR(decimal value)
         {
-            // Config.Instance.TransLR = (int)value;
             _transOffsetLeftRight = (float)value / 100F;
-            // Config.Instance.WriteConfig();
         }
 
         private void OnYawForwardTranslationChanged(object sender, EventArgs e)
@@ -1031,17 +1014,10 @@ namespace XRNeckSafer
             setButtonToolTip(AccumReset, Config.Instance.AccuResetButton);
         }
 
-        private void SetHoldButton1_Click(object sender, EventArgs e)
+        private void YawAutorotationHoldButtonClick(object sender, EventArgs e)
         {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                ButtonForm.Show(Top, Right, "Hold Button:", Config.Instance.HoldButton1);
-            }
-            else
-            {
-                MultiButtons.Show(Top, Right, "Hold Button", Config.Instance.HoldButton1, Config.Instance.HoldButton2, Config.Instance.HoldButton3);
-            }
-            setButtonToolTip(SetHoldButton1, Config.Instance.HoldButton1);
+            var button = (BooleanActionButton)sender;
+            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
         }
 
         void sizeChanged()
@@ -1420,17 +1396,10 @@ namespace XRNeckSafer
             setButtonToolTip(pAccumReset, Config.Instance.PitchAccuResetButton);
         }
 
-        private void SetPitchHoldButton_Click(object sender, EventArgs e)
+        private void PitchAutorotationHoldButtonClick(object sender, EventArgs e)
         {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                ButtonForm.Show(Top, Right, "Pitch Hold Button:", Config.Instance.PitchHoldButton1);
-            }
-            else
-            {
-                MultiButtons.Show(Top, Right, "Hold Button", Config.Instance.PitchHoldButton1, Config.Instance.PitchHoldButton2, Config.Instance.PitchHoldButton3);
-            }
-            setButtonToolTip(SetPitchHoldButton, Config.Instance.PitchHoldButton1);
+            var button = (BooleanActionButton)sender;
+            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
         }
 
         private void disableAllGUIOutputToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
