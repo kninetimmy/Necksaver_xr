@@ -24,7 +24,7 @@
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
                 <EasingDoubleKeyFrame KeyTime="00:00:00.5000000" Value="0"/>
                 <EasingDoubleKeyFrame KeyTime="00:00:02" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:02.3000000" Value="180"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:02.3000000" Value="120"/>
                 <EasingDoubleKeyFrame KeyTime="00:00:02.6000000" Value="360"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
