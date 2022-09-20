@@ -1,6 +1,6 @@
 
 
-### Download link: [XRNeckSaferBeta3c.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3c.zip)
+### Download link: [XRNeckSaferBeta4a.msi](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta4a.msi)
 
 # **Description**
 
@@ -42,6 +42,14 @@ Pressing the graph button (above the table) shows you a representation of the en
 
 Smooth Autorotation gives a linear amplification of your head rotation, beginning at the **"Start at"** value. **"Amplify by"** 100%  means that for every degree head rotation you get one extra degree visual rotation. So, with a "Start at" value of 90 deg, if you turn your head to 100 you get 110 deg visual rotation (10 deg from 90 deg + 10 deg amplification). 200% gives 2 extra degrees for every "real" degree head rotation, and so on. **Please be aware that this non-1:1 motion can cause nausea!** (it does for me). If this is the case for you too, better use Stepwise Autorotation, It is much easier on your stomach.
 
+**Changelog for beta4a**
+- Installer (thanks Nikoz!) No more messing around with copying files and running scripts. (see below how to uninstall older versions)
+- Location of XRNS all app and layer files is now in %Program Files%/XRNeckSafer
+- Location of XRNS config file is now in %Program Data%/XRNecksafer
+- Fixes for shifted pivot point. Hopefully! Please report if you still have problems
+- Better button scan UI and functionality
+- Lots of cleaning up, refacturing and making things generally safer (thanks again Nikoz!)
+
 **Changelog for beta3c:**
 - fixes for smooth pitch axis (change of values not recognised and U/D mixup)
 - fixes for stepwise pitch axis (down table)
@@ -63,8 +71,6 @@ Stop Mixed Reality Portal before replacing the XR_APILAYER_NOVENDOR_XRNeckSafer.
 
 **You should delete your old config file (XRNeckSafer.cfg) and reconfigure XRNS from scratch though.**
 
-
-
 **Changelog for beta2b:**
 - linear autorotation values are now saved correctly
 - fixed extreme amplify values at very first start
@@ -78,10 +84,27 @@ Stop Mixed Reality Portal before replacing the XR_APILAYER_NOVENDOR_XRNeckSafer.
 - some UI work
 - Reset button is now called Center button to avoid confusion
 
+## **Installation (since beta4a)**
+
+   **Uninstall old version before installing!**  
+ 1. Download the installer: [XRNeckSaferBeta4a.msi](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta4a.msi)
+ 2. Run the installer
+ 3. Start XRNeckSaferApp.exe and go to OpenXR in the Menu on top. Select "Show active OpenXR API Layers"
+  This should list all the active Layers and should include "XR_APILAYER_NOVENDOR_XRNeckSafer"
+ 4. If this works you can configure XRNeckSafer as before
+ 5. Once in game press the combined Game/XRNS center button
+
+ **Uninstallation can be done with the installer or via windows uninstall** 
 
 
-## **Installation:**
+**Uninstallation of older versions (before beta4)
+1. Stop OpenXR Runtime (Mixed-Reality-Portal for Reverb G2)
+2. Go to  %ProgramFiles%\OpenXrApiLayer folder and run "Uninstall-XR_APILAYER_NOVENDOR_XRNeckSafer.ps1" as a PowerShell script 
+   (right click on it and select "Execute with PowerShell"). This will uninstall the API Layer.
+3. If the API layer was uninstalled correctly (check with Show active OpenXR API Layers menu item in XRNeckSaferApp.exe) you can delete the %ProgramFiles%\OpenXrApiLayer folder
+4. Now you can delete the folder with 
 
+**Installation of older versions (before beta4, only if you really want to, better use the newest version!)
 0. Download [XRNeckSaferBeta3b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3c.zip)
 1. Create a folder and unzip XRNeckSaferBeta3.zip into it.
 2. Stop OpenXR Runtime (Mixed-Reality-Portal for Reverb G2) and copy the OpenXrApiLayer folder to %ProgramFiles% (e.g. C:\Program Files\OpenXrApiLayer) 
@@ -95,11 +118,10 @@ Stop Mixed Reality Portal before replacing the XR_APILAYER_NOVENDOR_XRNeckSafer.
 6. If this works you can configure XRNeckSafer similar to VRNeckSafer.
 7. Once in game press the combined Game/XRNS center button.
 
-## **Trouble shooting**
+## **Troubleshooting**
 
 - If you are unable to start XRNeckSaferApp.exe it could be your AntiVirus SW preventing it running. In that case you could exclude your XRNS directory from the AV scan. 
   Make sure however that there really is no virus involved!
-- Another solution that worked for some is to include the line `<loadFromRemoteSources enabled="true" />` into XRNeckSaferApp.exe.config inside the `<runtime>` tag.
 
 ## **Known issues:**
 
@@ -113,7 +135,6 @@ Stop Mixed Reality Portal before replacing the XR_APILAYER_NOVENDOR_XRNeckSafer.
  - make it work with native OpenXR games (MSFS)
  - build instructions
  - better documentation
- - installer
 
 ## **Feedback**
 
@@ -125,6 +146,7 @@ The OpenXR API Layer is heavily based on Matthieu Bucchianeri's (mbucchia) [XR_A
 XRNS would not be possible without his kind help! 
 Thanks to Firdimigdi for his support on smooth autorotation!
 Thanks to 65th Haack and 453 Jihadi Daddy for testing!
+Big Thanks to Nikoz for providing the installer, ideas, feedback and a lot of other improvements!
 
 This project uses several third-party libraries, which are used and distributed under their own license terms.
 
