@@ -168,8 +168,8 @@
             this.pSnapRP = new System.Windows.Forms.RadioButton();
             this.pAdditivRB = new System.Windows.Forms.RadioButton();
             this.label31 = new System.Windows.Forms.Label();
-            this.SetUpButton = new BooleanActionButton();
-            this.SetDownButton = new BooleanActionButton();
+            this.SetUpButton = new XRNeckSafer.BooleanActionButton();
+            this.SetDownButton = new XRNeckSafer.BooleanActionButton();
             this.DownLabel = new System.Windows.Forms.Label();
             this.UpLabel = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
@@ -1889,6 +1889,8 @@
             // SetUpButton
             // 
             this.SetUpButton.ActionPropertyName = "ManualRotationUp";
+            this.SetUpButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.SetUpButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.SetUpButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SetUpButton.Location = new System.Drawing.Point(39, 20);
             this.SetUpButton.Name = "SetUpButton";
@@ -1901,6 +1903,8 @@
             // SetDownButton
             // 
             this.SetDownButton.ActionPropertyName = "ManualRotationDown";
+            this.SetDownButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.SetDownButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.SetDownButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SetDownButton.Location = new System.Drawing.Point(167, 20);
             this.SetDownButton.Name = "SetDownButton";
@@ -1964,6 +1968,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "XRNS (0 deg)";
+            this.Load += new System.EventHandler(this.OnFormLoaded);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.Resize += new System.EventHandler(this.MainForm_Resize);

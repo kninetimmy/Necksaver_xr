@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
 
 namespace XRNeckSafer
 {
@@ -26,7 +27,6 @@ namespace XRNeckSafer
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 JoystickService.Start();
-                Application.Run(new SplashScreen());
                 KeyInterceptor.SetHook();
                 using (new ActionPropertyProcessor(Config.Instance.ActionProperties))
                 {

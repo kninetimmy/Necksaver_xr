@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
 
 namespace XRNeckSafer
 {
@@ -1437,6 +1438,13 @@ namespace XRNeckSafer
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void OnFormLoaded(object sender, EventArgs e)
+        {
+            var splashScreen = new Wpf.SplashScreen();
+            ElementHost.EnableModelessKeyboardInterop(splashScreen);
+            splashScreen.ShowDialog();
         }
     }
 }
