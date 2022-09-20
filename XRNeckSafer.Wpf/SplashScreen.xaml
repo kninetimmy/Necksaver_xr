@@ -10,22 +10,42 @@
         <Storyboard x:Key="StartAnimation">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image" Storyboard.TargetProperty="(FrameworkElement.Width)">
                 <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.5000000" Value="300"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.7000000" Value="300"/>
                 <EasingDoubleKeyFrame KeyTime="00:00:02" Value="300"/>
                 <EasingDoubleKeyFrame KeyTime="00:00:02.3000000" Value="200"/>
                 <EasingDoubleKeyFrame KeyTime="00:00:02.6000000" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image" Storyboard.TargetProperty="(UIElement.Opacity)">
-                <EasingDoubleKeyFrame KeyTime="00:00:00.5000000" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.7000000" Value="1"/>
                 <EasingDoubleKeyFrame KeyTime="00:00:02" Value="1"/>
                 <EasingDoubleKeyFrame KeyTime="00:00:02.3000000" Value="0.5"/>
                 <EasingDoubleKeyFrame KeyTime="00:00:02.6000000" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
-                <EasingDoubleKeyFrame KeyTime="00:00:00.5000000" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.7000000" Value="0"/>
                 <EasingDoubleKeyFrame KeyTime="00:00:02" Value="0"/>
                 <EasingDoubleKeyFrame KeyTime="00:00:02.3000000" Value="120"/>
                 <EasingDoubleKeyFrame KeyTime="00:00:02.6000000" Value="360"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.1000000" Value="-67.162"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.2000000" Value="-198.812"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="-404.133"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.4000000" Value="-431.115"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.5000000" Value="-264.163"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-65.432"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.7000000" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.1000000" Value="-89.207"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.2000000" Value="-176.026"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="-73.777"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.4000000" Value="73.336"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.5000000" Value="144.83"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.6000000" Value="72.857"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.7000000" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Window.Resources>
