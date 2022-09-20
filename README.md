@@ -1,6 +1,6 @@
 
 
-### Download link: [XRNeckSaferBeta4a.msi](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta4a.msi)
+### Download link: [XRNeckSaferBeta4a.msi](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSafer-beta4a.msi)
 
 # **Description**
 
@@ -81,7 +81,7 @@ Smooth Autorotation gives a linear amplification of your head rotation, beginnin
 ## **Installation (since beta4a)**
 
  **Uninstall old version before installing! (see below)**  
- 1. Download the installer: [XRNeckSaferBeta4a.msi](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta4a.msi)
+ 1. Download the installer: [XRNeckSaferBeta4a.msi](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSafer-beta4a.msi)
  2. Run the installer
  3. Start XRNeckSaferApp.exe and go to OpenXR in the Menu on top. Select "Show active OpenXR API Layers"
   This should list all the active Layers and should include "XR_APILAYER_NOVENDOR_XRNeckSafer"
@@ -147,4 +147,4 @@ Thanks for your help and patience guys!
 Cheers,
  J2_NobiWan
 
-### Download link: [XRNeckSaferBeta3b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3c.zip)
+### Download link: [XRNeckSaferBeta3b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSafer-beta4a.msi)
