@@ -82,7 +82,7 @@ namespace XRNeckSafer
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ActionPropertiesForm";
-            this.Text = "Action Properties Configuration";
+            this.Text = "Keyboard/Joystick mapping configuration";
             this.ResumeLayout(false);
 
         }

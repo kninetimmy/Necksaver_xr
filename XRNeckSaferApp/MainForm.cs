@@ -319,17 +319,13 @@ namespace XRNeckSafer
             bool pitch_acc_res_pressed = JoystickService.IsButtonPressed(Config.Instance.PitchAccuResetButton);
             bool l_pressed = SetLeftButton.ActionPropertyValue;
             bool r_pressed = SetRightButton.ActionPropertyValue;
-            bool u_pressed = JoystickService.IsButtonPressed(Config.Instance.UpButton);
-            bool d_pressed = JoystickService.IsButtonPressed(Config.Instance.DownButton);
+            bool u_pressed = SetUpButton.ActionPropertyValue;
+            bool d_pressed = SetDownButton.ActionPropertyValue; // JoystickService.IsButtonPressed(Config.Instance.DownButton);
             bool h_pressed = YawAutorotationHoldButton.ActionPropertyValue;
             bool hp_pressed = PitchAutorotationHoldButton.ActionPropertyValue;
             //            bool h_pressed = checkButtonPress(SetHoldButton1, conf.HoldButton1);
             if (Config.Instance.MultipleLRbuttons)
             {
-                u_pressed |= JoystickService.IsButtonPressed(Config.Instance.UpButton2);
-                u_pressed |= JoystickService.IsButtonPressed(Config.Instance.UpButton3);
-                d_pressed |= JoystickService.IsButtonPressed(Config.Instance.DownButton2);
-                d_pressed |= JoystickService.IsButtonPressed(Config.Instance.DownButton3);
                 acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.AccuResetButton2);
                 acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.AccuResetButton3);
                 pitch_acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.PitchAccuResetButton2);
@@ -338,9 +334,8 @@ namespace XRNeckSafer
 
             setLabelColor(l_pressed, LeftLabel);
             setLabelColor(r_pressed, RightLabel);
-            setButtonColor(u_pressed, SetUpButton);
             setLabelColor(u_pressed, UpLabel);
-            setButtonColor(d_pressed, SetDownButton);
+            // setButtonColor(d_pressed, SetDownButton);
             setLabelColor(d_pressed, DownLabel);
             setButtonColor(acc_res_pressed, AccumReset);
             setButtonColor(pitch_acc_res_pressed, pAccumReset);
@@ -1354,33 +1349,16 @@ namespace XRNeckSafer
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
         }
 
-        private void SetDownButton_Click(object sender, EventArgs e)
+        private void OnSetDownClick(object sender, EventArgs e)
         {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                ButtonForm.Show(Top, Right, "Button for Down Rotation:", Config.Instance.DownButton);
-            }
-            else
-            {
-                MultiButtons.Show(Top, Right, "Down", Config.Instance.DownButton, Config.Instance.DownButton2, Config.Instance.DownButton3);
-            }
-            setButtonToolTip(SetDownButton, Config.Instance.DownButton);
-            setLabelToolTip(DownLabel, Config.Instance.DownButton);
+            var button = (BooleanActionButton)sender;
+            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
         }
 
-        private void SetUpButton_Click(object sender, EventArgs e)
+        private void OnSetUpClick(object sender, EventArgs e)
         {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                ButtonForm.Show(Top, Right, "Button for up Rotation:", Config.Instance.UpButton);
-            }
-            else
-            {
-                MultiButtons.Show(Top, Right, "Down", Config.Instance.UpButton, Config.Instance.UpButton2, Config.Instance.UpButton3);
-            }
-            setButtonToolTip(SetUpButton, Config.Instance.UpButton);
-            setLabelToolTip(UpLabel, Config.Instance.UpButton);
-
+            var button = (BooleanActionButton)sender;
+            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
         }
 
         private void pAccumReset_Click(object sender, EventArgs e)

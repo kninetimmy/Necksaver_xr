@@ -168,8 +168,8 @@
             this.pSnapRP = new System.Windows.Forms.RadioButton();
             this.pAdditivRB = new System.Windows.Forms.RadioButton();
             this.label31 = new System.Windows.Forms.Label();
-            this.SetUpButton = new System.Windows.Forms.Button();
-            this.SetDownButton = new System.Windows.Forms.Button();
+            this.SetUpButton = new BooleanActionButton();
+            this.SetDownButton = new BooleanActionButton();
             this.DownLabel = new System.Windows.Forms.Label();
             this.UpLabel = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
@@ -1888,6 +1888,7 @@
             // 
             // SetUpButton
             // 
+            this.SetUpButton.ActionPropertyName = "ManualRotationUp";
             this.SetUpButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SetUpButton.Location = new System.Drawing.Point(39, 20);
             this.SetUpButton.Name = "SetUpButton";
@@ -1895,10 +1896,11 @@
             this.SetUpButton.TabIndex = 36;
             this.SetUpButton.Text = "Set Button";
             this.SetUpButton.UseVisualStyleBackColor = true;
-            this.SetUpButton.Click += new System.EventHandler(this.SetUpButton_Click);
+            this.SetUpButton.Click += new System.EventHandler(this.OnSetUpClick);
             // 
             // SetDownButton
             // 
+            this.SetDownButton.ActionPropertyName = "ManualRotationDown";
             this.SetDownButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SetDownButton.Location = new System.Drawing.Point(167, 20);
             this.SetDownButton.Name = "SetDownButton";
@@ -1906,7 +1908,7 @@
             this.SetDownButton.TabIndex = 37;
             this.SetDownButton.Text = "Set Button";
             this.SetDownButton.UseVisualStyleBackColor = false;
-            this.SetDownButton.Click += new System.EventHandler(this.SetDownButton_Click);
+            this.SetDownButton.Click += new System.EventHandler(this.OnSetDownClick);
             // 
             // DownLabel
             // 
@@ -2110,8 +2112,8 @@
         private System.Windows.Forms.RadioButton pSnapRP;
         private System.Windows.Forms.RadioButton pAdditivRB;
         private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Button SetUpButton;
-        private System.Windows.Forms.Button SetDownButton;
+        private BooleanActionButton SetUpButton;
+        private BooleanActionButton SetDownButton;
         private System.Windows.Forms.Label DownLabel;
         private System.Windows.Forms.Label UpLabel;
         private System.Windows.Forms.Label label26;

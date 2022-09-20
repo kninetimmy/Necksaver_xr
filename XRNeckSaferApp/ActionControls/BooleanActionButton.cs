@@ -73,6 +73,10 @@ namespace XRNeckSafer
             {
                 return;
             }
+            if (string.IsNullOrEmpty(ActionPropertyName))
+            {
+                throw new ArgumentException($"{nameof(ActionPropertyName)} can not be empty.");
+            }
             _actionProperty = Config.Instance.ActionProperties?.FirstOrDefault(p => p.Name == ActionPropertyName) as BooleanActionProperty;
             if (_actionProperty == null)
             {

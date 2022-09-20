@@ -53,12 +53,6 @@ namespace XRNeckSafer
         public ButtonConfig AccuResetButton;
         public ButtonConfig AccuResetButton2;
         public ButtonConfig AccuResetButton3;
-        public ButtonConfig UpButton;
-        public ButtonConfig UpButton2;
-        public ButtonConfig UpButton3;
-        public ButtonConfig DownButton;
-        public ButtonConfig DownButton2;
-        public ButtonConfig DownButton3;
         public ButtonConfig PitchAccuResetButton;
         public ButtonConfig PitchAccuResetButton2;
         public ButtonConfig PitchAccuResetButton3;
@@ -100,12 +94,6 @@ namespace XRNeckSafer
             AccuResetButton = new ButtonConfig();
             AccuResetButton2 = new ButtonConfig();
             AccuResetButton3 = new ButtonConfig();
-            UpButton = new ButtonConfig();
-            UpButton2 = new ButtonConfig();
-            UpButton3 = new ButtonConfig();
-            DownButton = new ButtonConfig();
-            DownButton2 = new ButtonConfig();
-            DownButton3 = new ButtonConfig();
             PitchAccuResetButton = new ButtonConfig();
             PitchAccuResetButton2 = new ButtonConfig();
             PitchAccuResetButton3 = new ButtonConfig();
@@ -175,12 +163,6 @@ namespace XRNeckSafer
                 if (c.AccuResetButton == null) c.AccuResetButton = new ButtonConfig();
                 if (c.AccuResetButton2 == null) c.AccuResetButton2 = new ButtonConfig();
                 if (c.AccuResetButton3 == null) c.AccuResetButton3 = new ButtonConfig();
-                if (c.UpButton == null) c.UpButton = new ButtonConfig();
-                if (c.UpButton2 == null) c.UpButton2 = new ButtonConfig();
-                if (c.UpButton3 == null) c.UpButton3 = new ButtonConfig();
-                if (c.DownButton == null) c.DownButton = new ButtonConfig();
-                if (c.DownButton2 == null) c.DownButton2 = new ButtonConfig();
-                if (c.DownButton3 == null) c.DownButton3 = new ButtonConfig();
                 if (c.PitchAccuResetButton == null) c.PitchAccuResetButton = new ButtonConfig();
                 if (c.PitchAccuResetButton2 == null) c.PitchAccuResetButton2 = new ButtonConfig();
                 if (c.PitchAccuResetButton3 == null) c.PitchAccuResetButton3 = new ButtonConfig();
