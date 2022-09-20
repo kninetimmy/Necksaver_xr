@@ -222,16 +222,6 @@ namespace XRNeckSafer
             MessageBox.Show($"Joystick {joystickName} with GUID: {guid} has been disconnected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        public void setButtonToolTip(Button b, ButtonConfig bc)
-        {
-            var text = JoystickService.GetJoystickName(bc.JoystickGUID) ?? "none" + ": " + bc.Button;
-            if (bc.UseModifier)
-            {
-                text += "   +   " + JoystickService.GetJoystickName(bc.ModJoystickGUID) ?? "none" + ": " + bc.ModButton;
-            }
-            toolTip1.SetToolTip(b, text);
-        }
-
         private static string GetAssemblyProductVersion()
         {
             return Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
@@ -250,19 +240,16 @@ namespace XRNeckSafer
         private void OnYawRotationAngleChanged(object sender, EventArgs e)
         {
             Config.Instance.Angle = (int)angleNUD.Value;
-            Config.Instance.WriteConfig();
         }
 
         private void OnPitchTiltUpRotationChanged(object sender, EventArgs e)
         {
             Config.Instance.UpAngle = (int)upNUD.Value;
-            Config.Instance.WriteConfig();
         }
 
         private void OnPitchTiltDownRotationChanged(object sender, EventArgs e)
         {
             Config.Instance.DownAngle = (int)downNUD.Value;
-            Config.Instance.WriteConfig();
         }
 
         private void additivRB_CheckedChanged(object sender, EventArgs e)
@@ -274,7 +261,6 @@ namespace XRNeckSafer
             label15.Enabled = !additivRB.Checked;
             label16.Enabled = !additivRB.Checked;
             label17.Enabled = !additivRB.Checked;
-            Config.Instance.WriteConfig();
         }
 
         //private void setButtonColor(bool pressed, Button b)
@@ -864,7 +850,6 @@ namespace XRNeckSafer
             if (good)
             {
                 Config.Instance.AutoSteps[e.RowIndex][e.ColumnIndex] = val;
-                Config.Instance.WriteConfig();
             }
 
             error_label.Visible = check_autorot_config();
@@ -884,7 +869,6 @@ namespace XRNeckSafer
             if (good)
             {
                 Config.Instance.UpAutoSteps[e.RowIndex][e.ColumnIndex] = val;
-                Config.Instance.WriteConfig();
             }
 
             upErrorLabel1.Visible = check_UP_autorot_config();
@@ -902,7 +886,6 @@ namespace XRNeckSafer
             if (good)
             {
                 Config.Instance.DownAutoSteps[e.RowIndex][e.ColumnIndex] = val;
-                Config.Instance.WriteConfig();
             }
 
             downErrorLabel1.Visible = check_DOWN_autorot_config();
@@ -913,7 +896,6 @@ namespace XRNeckSafer
         {
             AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
             AutorotGridView.MaximumSize = new Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
-            Config.Instance.WriteConfig();
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
         }
@@ -922,7 +904,6 @@ namespace XRNeckSafer
         {
             AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
             AutorotGridView.MaximumSize = new Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
-            Config.Instance.WriteConfig();
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
         }
@@ -931,7 +912,6 @@ namespace XRNeckSafer
             UpAutorotGridView.Height = UpAutorotGridView.RowCount * 22 + 20;
 
             UpAutorotGridView.MaximumSize = new Size(UpAutorotGridView.Width, stepwiseGroup.Height - 60);
-            Config.Instance.WriteConfig();
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
         }
@@ -940,7 +920,6 @@ namespace XRNeckSafer
         {
             UpAutorotGridView.Height = UpAutorotGridView.RowCount * 22 + 20;
             UpAutorotGridView.MaximumSize = new Size(UpAutorotGridView.Width, stepwiseGroup.Height - 60);
-            Config.Instance.WriteConfig();
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
         }
@@ -948,7 +927,6 @@ namespace XRNeckSafer
         {
             DownAutorotGridView.Height = DownAutorotGridView.RowCount * 22 + 20;
             DownAutorotGridView.MaximumSize = new Size(DownAutorotGridView.Width, stepwiseGroup.Height - 60);
-            Config.Instance.WriteConfig();
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
         }
@@ -957,7 +935,6 @@ namespace XRNeckSafer
         {
             DownAutorotGridView.Height = DownAutorotGridView.RowCount * 22 + 20;
             DownAutorotGridView.MaximumSize = new Size(DownAutorotGridView.Width, stepwiseGroup.Height - 60);
-            Config.Instance.WriteConfig();
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
         }
@@ -965,13 +942,11 @@ namespace XRNeckSafer
         private void startMinimzedToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
         {
             Config.Instance.StartMinimized = startMinimzedToolStripMenuItem.Checked;
-            Config.Instance.WriteConfig();
         }
 
         private void minimizeToTrayToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
         {
             Config.Instance.MinimizeToTray = minimizeToTrayToolStripMenuItem.Checked;
-            Config.Instance.WriteConfig();
         }
 
         private void SetLeftButtonClick(object sender, EventArgs e)
@@ -1106,7 +1081,6 @@ namespace XRNeckSafer
             Config.Instance.DisableGUIOutput = false;
             Config.Instance.DisableJoystickReconnect = false;
             // Config.Instance.MultipleLRbuttons = false;
-            Config.Instance.WriteConfig();
             setMenuCheckmarks();
         }
 
@@ -1121,7 +1095,6 @@ namespace XRNeckSafer
             foreach (ToolStripMenuItem item in PitchLimToolStripMenuItem.DropDownItems) item.Checked = false;
             ((ToolStripMenuItem)e.ClickedItem).Checked = true;
             int.TryParse(e.ClickedItem.Text.Substring(0, 2), out Config.Instance.PitchLimForAutorot);
-            Config.Instance.WriteConfig();
         }
 
         private void moreLRButtonsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1181,13 +1154,11 @@ namespace XRNeckSafer
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
             _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", Config.Instance.LinearLimL, Config.Instance.LinearLimR,
                 Config.Instance.LinearMultL, Config.Instance.LinearMultR);
-            Config.Instance.WriteConfig();
         }
         private void applyLinearSettings()
         {
             _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", Config.Instance.LinearLimL, Config.Instance.LinearLimR, Config.Instance.LinearMultL, Config.Instance.LinearMultR);
             _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear", Config.Instance.LinearLimU, Config.Instance.LinearLimD, Config.Instance.LinearMultU, Config.Instance.LinearMultD);
-            Config.Instance.WriteConfig();
         }
 
         private void numericUpDownMultLeft_ValueChanged(object sender, EventArgs e)
@@ -1317,7 +1288,6 @@ namespace XRNeckSafer
             _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear",
                 Config.Instance.LinearLimU, Config.Instance.LinearLimD,
                 Config.Instance.LinearMultU, Config.Instance.LinearMultD);
-            Config.Instance.WriteConfig();
 
         }
 
@@ -1366,12 +1336,11 @@ namespace XRNeckSafer
                 HMDYawLabel.Text = "     (HMD angle output disabled)";
                 Text = "XRNS";
             }
-            Config.Instance.WriteConfig();
         }
 
         private void disableJoystickAutoReconnectToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
         {
-            Config.Instance.WriteConfig();
+            // Config.Instance.WriteConfig();
         }
 
         /// <summary>

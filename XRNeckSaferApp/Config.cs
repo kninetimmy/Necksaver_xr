@@ -211,7 +211,6 @@ namespace XRNeckSafer
                 conf.DownAutoSteps.Add(new int[3] { 80, 71, 40 });
             }
             if (conf.ActionProperties == null) conf.ActionProperties = new List<ActionProperty>();
-            conf.WriteConfig();
             return conf;
         }
 
