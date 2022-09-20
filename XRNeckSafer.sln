@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31205.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XR_APILAYER_NOVENDOR_XRNeckSafer", "XR_APILAYER_NOVENDOR_XRNeckSafer\XR_APILAYER_NOVENDOR_XRNeckSafer.vcxproj", "{92E50B91-2FA3-48A0-B7F7-E04D7790E15B}"
 EndProject
@@ -26,6 +26,8 @@ EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{A2BDA7C8-A238-42A7-BA12-D808EDA7E938}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XRNeckSafer.Wpf", "XRNeckSafer.Wpf\XRNeckSafer.Wpf.csproj", "{5ACC821D-2764-439C-88CD-AB48AF8465DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SHM-Monitor", "SHM-Monitor\SHM-Monitor.csproj", "{1057BD1D-396B-485C-9584-3286F167CA3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,18 +67,18 @@ Global
 		{A2BDA7C8-A238-42A7-BA12-D808EDA7E938}.Release|x64.ActiveCfg = Release|x86
 		{A2BDA7C8-A238-42A7-BA12-D808EDA7E938}.Release|x86.ActiveCfg = Release|x86
 		{A2BDA7C8-A238-42A7-BA12-D808EDA7E938}.Release|x86.Build.0 = Release|x86
-		{5ACC821D-2764-439C-88CD-AB48AF8465DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5ACC821D-2764-439C-88CD-AB48AF8465DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5ACC821D-2764-439C-88CD-AB48AF8465DD}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{5ACC821D-2764-439C-88CD-AB48AF8465DD}.Debug|x64.Build.0 = Debug|Any CPU
-		{5ACC821D-2764-439C-88CD-AB48AF8465DD}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5ACC821D-2764-439C-88CD-AB48AF8465DD}.Debug|x86.Build.0 = Debug|Any CPU
-		{5ACC821D-2764-439C-88CD-AB48AF8465DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5ACC821D-2764-439C-88CD-AB48AF8465DD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5ACC821D-2764-439C-88CD-AB48AF8465DD}.Release|x64.ActiveCfg = Release|Any CPU
-		{5ACC821D-2764-439C-88CD-AB48AF8465DD}.Release|x64.Build.0 = Release|Any CPU
-		{5ACC821D-2764-439C-88CD-AB48AF8465DD}.Release|x86.ActiveCfg = Release|Any CPU
-		{5ACC821D-2764-439C-88CD-AB48AF8465DD}.Release|x86.Build.0 = Release|Any CPU
+		{1057BD1D-396B-485C-9584-3286F167CA3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1057BD1D-396B-485C-9584-3286F167CA3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1057BD1D-396B-485C-9584-3286F167CA3E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1057BD1D-396B-485C-9584-3286F167CA3E}.Debug|x64.Build.0 = Debug|Any CPU
+		{1057BD1D-396B-485C-9584-3286F167CA3E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1057BD1D-396B-485C-9584-3286F167CA3E}.Debug|x86.Build.0 = Debug|Any CPU
+		{1057BD1D-396B-485C-9584-3286F167CA3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1057BD1D-396B-485C-9584-3286F167CA3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1057BD1D-396B-485C-9584-3286F167CA3E}.Release|x64.ActiveCfg = Release|Any CPU
+		{1057BD1D-396B-485C-9584-3286F167CA3E}.Release|x64.Build.0 = Release|Any CPU
+		{1057BD1D-396B-485C-9584-3286F167CA3E}.Release|x86.ActiveCfg = Release|Any CPU
+		{1057BD1D-396B-485C-9584-3286F167CA3E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

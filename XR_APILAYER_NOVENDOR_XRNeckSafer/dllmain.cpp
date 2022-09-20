@@ -18,6 +18,8 @@
 #include "math.h"
 #include <set>
 
+#define MAXMONVAL 20
+
 namespace {
     using namespace xr::math;
 
@@ -37,12 +39,14 @@ namespace {
     PFN_xrEndFrame nextXrEndFrame = nullptr;
 
     std::set<XrSpace> isViewSpace;
+    std::set<XrSpace> isLocalSpace;
     std::set<XrSpace> isStageSpace;
 
     PFN_xrCreateReferenceSpace nextXrCreateReferenceSpace = nullptr;
 
-    XrSpaceLocation centerHmdLocation;
-    XrSpaceLocation lastHmdLocation;
+    XrSpaceLocation centerHmdLocationLocal;
+    XrSpaceLocation centerHmdLocationStage;
+//    XrSpaceLocation lastHmdLocation;
     XrVector3f delta;
     XrVector3f trans;
 
@@ -79,8 +83,13 @@ namespace {
     } shmValues;
 
     std::wstring m_memoryName = L"XRNeckSaferSHM";
+    std::wstring m_memoryNameDeb = L"XRNeckSaferDebSHM";
+
     HANDLE m_shmHandler = 0;
+    HANDLE m_shmHandlerDeb = 0;
     shmVal_s* buffer;
+
+    char* bufferDeb;
 
     XrSpace m_LocalSpace{ XR_NULL_HANDLE };
     XrSpace m_ViewSpace{ XR_NULL_HANDLE };
@@ -93,6 +102,105 @@ namespace {
     struct EulerAngles {
         float roll, pitch, yaw;
     };
+
+    void prepareSHM() {
+        // prepare SHM
+        m_shmHandler = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, m_memoryName.c_str());
+
+        if (m_shmHandler) {
+            Log("XRNeckSafer shared memory found\n");
+        }
+        else {
+            m_shmHandler = CreateFileMapping(
+                INVALID_HANDLE_VALUE,
+                NULL,
+                PAGE_READWRITE,
+                0,
+                sizeof(shmValues),
+                m_memoryName.c_str());
+
+            Log("XRNeckSafer shared memory created\n");
+        }
+
+        if (m_shmHandler) {
+            buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
+            if (NULL != buffer) {
+                Log("XRNeckSafer shared memory ready\n");
+                buffer->hasBeenCentered = false;
+            }
+            else {
+                Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
+            }
+        }
+        else {
+            Log("Couldn't create XRNeckSafer shared memory\n");
+        }
+
+
+        if (m_shmHandler) {
+            buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
+            if (NULL != buffer) {
+                Log("XRNeckSafer shared memory ready\n");
+                buffer->hasBeenCentered = false;
+            }
+            else {
+                Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
+            }
+        }
+        else {
+            Log("Couldn't create XRNeckSafer shared memory\n");
+        }
+
+#ifdef _DEBUG
+        if (m_shmHandlerDeb) {
+            Log("XRNeckSafer shared debug memory found\n");
+        }
+        else {
+            m_shmHandlerDeb = CreateFileMapping(
+                INVALID_HANDLE_VALUE,
+                NULL,
+                PAGE_READWRITE,
+                0,
+                40 * MAXMONVAL,
+                m_memoryNameDeb.c_str());
+            Log("XRNeckSafer shared debug memory created\n");
+        }
+
+        if (m_shmHandlerDeb) {
+            bufferDeb = (char*)MapViewOfFile(m_shmHandlerDeb, FILE_MAP_ALL_ACCESS, 0, 0, MAXMONVAL * 40);
+            if (NULL != bufferDeb) {
+                Log("XRNeckSafer shared debug memory ready\n");
+                for (int i = 0; i < MAXMONVAL; i++) {
+                    strcpy(&bufferDeb[i * 40], "#                  ");
+                    strcpy(&bufferDeb[i * 40+20], "#                  ");
+                }
+            }
+            else {
+                Log("Cannot map XRNeckSafer shared debug memory: null buffer.\n");
+            }
+        }
+        else {
+            Log("Couldn't create XRNeckSafer shared debug memory\n");
+        }
+#endif
+    }
+
+    auto toMonitor = [](const char* name, auto v) {
+#ifdef _DEBUG
+        for (int i = 0; i < MAXMONVAL; i++) {
+            if (strcmp(name, &bufferDeb[i * 40]) == 0) {
+                strcpy(&bufferDeb[i * 40 + 20], &(std::to_string(v)[0]));
+                return;
+            }
+            if ('#' == bufferDeb[i * 40]) {
+                strcpy(&bufferDeb[i * 40], name);
+                strcpy(&bufferDeb[i * 40 + 20], &(std::to_string(v)[0]));
+                return;
+            }
+        }
+#endif
+    };
+
 
     EulerAngles ToEulerAngles(XrQuaternionf q) {
         EulerAngles angles;
@@ -176,14 +284,15 @@ namespace {
         const XrResult resS = nextXrCreateReferenceSpace(*session, &referenceSpaceCreateInfo, &m_StageSpace);
         DebugLog("STAGE space: %d\n", m_StageSpace);
 
-        lastHmdLocation.type = XR_TYPE_SPACE_LOCATION;
-        lastHmdLocation.next = nullptr;
+//        lastHmdLocation.type = XR_TYPE_SPACE_LOCATION;
+//        lastHmdLocation.next = nullptr;
 
         XrSpaceLocation startingLocation;
 
         const XrResult result2 = nextXrLocateSpace(m_ViewSpace, m_LocalSpace, 0, &startingLocation);
-        centerHmdLocation = startingLocation;
-        lastHmdLocation = startingLocation;
+        centerHmdLocationLocal = startingLocation;
+        centerHmdLocationStage = startingLocation;
+        //        lastHmdLocation = startingLocation;
         holdYawOffsetValue = 0;
 
         DebugLog("XrLocateSpace for HMD %d\n", result2);
@@ -207,12 +316,27 @@ namespace {
         const XrResult result2 = nextXrLocateSpace(m_ViewSpace, m_LocalSpace, frameEndInfo->displayTime, &location);
         DebugLog("XrLocateSpace for HMD %d\n", result2);
 
+        XrSpaceLocation locationStage;
+        locationStage.type = XR_TYPE_SPACE_LOCATION;
+        locationStage.next = nullptr;
+
+        const XrResult result3 = nextXrLocateSpace(m_ViewSpace, m_StageSpace, frameEndInfo->displayTime, &locationStage);
+        DebugLog("XrLocateSpace in STAGE for HMD %d\n", result3);
+
+        toMonitor("LOCAL x", location.pose.position.x);
+        toMonitor("LOCAL y", location.pose.position.y);
+        toMonitor("LOCAL z", location.pose.position.z);
+        toMonitor("STAGE x", locationStage.pose.position.x);
+        toMonitor("STAGE y", locationStage.pose.position.y);
+        toMonitor("STAGE z", locationStage.pose.position.z);
+
         if (location.locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT) {
 
             // center button pressed? -> current orientation gets center orientation
             if (buffer->resetHmdOrientation) {
                 // EulerAngles centerAngles;
-                centerHmdLocation = location;
+                centerHmdLocationLocal = location;
+                centerHmdLocationStage = locationStage;
                 buffer->resetHmdOrientation = false;
                 shmValues.hasBeenCentered = true;
                 buffer->hasBeenCentered = shmValues.hasBeenCentered;
@@ -233,7 +357,7 @@ namespace {
 
             //substract center orientation from current orientation to get corrected relative HMD orientation
             const DirectX::XMVECTOR orientation = LoadXrQuaternion(location.pose.orientation);
-            const DirectX::XMVECTOR centerOrientation = LoadXrQuaternion(centerHmdLocation.pose.orientation);
+            const DirectX::XMVECTOR centerOrientation = LoadXrQuaternion(centerHmdLocationLocal.pose.orientation);
             const DirectX::XMVECTOR invertCenterOrientation = DirectX::XMQuaternionConjugate(centerOrientation);
             const DirectX::XMVECTOR substractedOrientation = DirectX::XMQuaternionMultiply(orientation, invertCenterOrientation);
             StoreXrQuaternion(&location.pose.orientation, substractedOrientation);
@@ -242,6 +366,8 @@ namespace {
             EulerAngles angles = ToEulerAngles(location.pose.orientation);
             buffer->hmdYawAngle = angles.yaw * 180.f / (float)M_PI;
             buffer->hmdPitchAngle = angles.pitch * 180.f / (float)M_PI;
+
+            toMonitor((char *)"angles.yaw",angles.yaw);
 
             if (shmValues.useLinearRotation) {
                 shmValues.leftStartAt = buffer->leftStartAt;
@@ -315,6 +441,7 @@ namespace {
             DebugLog("VIEW: %d\n", *space);
         }
         if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_LOCAL) {
+            isLocalSpace.insert(*space);
             DebugLog("LOCAL: %d\n", *space);
         }
         if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_STAGE) {
@@ -341,6 +468,7 @@ namespace {
         bool spaceIsViewSpace = isViewSpace.count(space);
         bool baseSpaceIsViewSpace = isViewSpace.count(baseSpace);
         bool baseSpaceIsStageSpace = isStageSpace.count(baseSpace); // IL2: true, DCS: false
+        bool baseSpaceIsLocalSpace = isLocalSpace.count(baseSpace); 
 
         DebugLog("space: %d  bspace: %d\n", space, baseSpace);
 
@@ -348,11 +476,16 @@ namespace {
             // save current location
             XrVector3f pos = location->pose.position;
 
-            // centerHmdLocation was sampled in LOCAL space 
-            // when LocateSpace is requested for STAGE basespace we need to compensate the position
             if (baseSpaceIsStageSpace) {
-                pos = pos - centerHmdLocation.pose.position;
+                pos = pos - centerHmdLocationStage.pose.position;
             }
+//            if (baseSpaceIsLocalSpace) {
+//                pos = pos - centerHmdLocationLocal.pose.position;
+//            }
+
+            toMonitor("pos x", pos.x);
+            toMonitor("pos y", pos.y);
+            toMonitor("pos z", pos.z);
 
             DirectX::XMVECTOR vPitchAxis = { 1.f,0.f,0.f };
 
@@ -375,8 +508,13 @@ namespace {
                 StoreXrVector3(&pos, DirectX::XMVector3Rotate(LoadXrVector3(pos), qYawOffset));
 
                 if (baseSpaceIsStageSpace) {
-                    pos = pos + centerHmdLocation.pose.position;
+                    pos = pos + centerHmdLocationStage.pose.position;
+                    StoreXrVector3(&trans, DirectX::XMVector3Rotate(LoadXrVector3(trans), LoadXrQuaternion(centerHmdLocationStage.pose.orientation)));
                 }
+//                if (baseSpaceIsLocalSpace) {
+//                    pos = pos + centerHmdLocationLocal.pose.position;
+//                }
+
 
                 location->pose.position = pos - trans;
             }
@@ -611,39 +749,7 @@ extern "C" {
         apiLayerRequest->getInstanceProcAddr = reinterpret_cast<PFN_xrGetInstanceProcAddr>(XRNeckSafer_xrGetInstanceProcAddr);
         apiLayerRequest->createApiLayerInstance = reinterpret_cast<PFN_xrCreateApiLayerInstance>(XRNeckSafer_xrCreateApiLayerInstance);
 
-        // prepare SHM
-        m_shmHandler = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, m_memoryName.c_str());
-
-        if (m_shmHandler) {
-            Log("XRNeckSafer shared memory found\n");
-        }
-        else {
-            m_shmHandler = CreateFileMapping(
-                INVALID_HANDLE_VALUE,
-                NULL,
-                PAGE_READWRITE,
-                0,
-                sizeof(shmValues),
-                m_memoryName.c_str());
-
-            Log("XRNeckSafer shared memory created\n");
-        }
-
-       if (m_shmHandler) {
-            buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
-            if (NULL != buffer) {
-                Log("XRNeckSafer shared memory ready\n");
-                buffer->hasBeenCentered = false;
-            }
-            else {
-                Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
-            }
-       }
-        else {
-            Log("Couldn't create XRNeckSafer shared memory\n");
-        }
-
-
+        prepareSHM();
 
         DebugLog("<-- XRNeckSafer_xrNegotiateLoaderApiLayerInterface\n");
 
