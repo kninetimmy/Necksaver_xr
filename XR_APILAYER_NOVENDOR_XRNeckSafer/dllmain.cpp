@@ -16,6 +16,7 @@
 
 #include "pch.h"
 #include "math.h"
+#include "utility.h"
 #include <set>
 
 #define MAXMONVAL 20
@@ -41,6 +42,7 @@ namespace {
     std::set<XrSpace> isViewSpace;
     std::set<XrSpace> isLocalSpace;
     std::set<XrSpace> isStageSpace;
+    std::vector<XrView> m_EyeOffsets{};
 
     PFN_xrCreateReferenceSpace nextXrCreateReferenceSpace = nullptr;
 
@@ -49,6 +51,9 @@ namespace {
 //    XrSpaceLocation lastHmdLocation;
     XrVector3f delta;
     XrVector3f trans;
+    XrTime m_LastFrameTime{ 0 };
+    utility::Cache<XrPosef> m_PoseCache{ 2, xr::math::Pose::Identity() };
+
 
     XrQuaternionf HmdOrientation;
     DirectX::XMVECTOR qYawOffset;
@@ -307,7 +312,85 @@ namespace {
         const XrFrameEndInfo* frameEndInfo)
     {
         DebugLog("--> XRNeckSafer_xrEndFrame\n");
-        const XrResult result = nextXrEndFrame(session, frameEndInfo);
+
+
+        // from OXRMC
+        m_LastFrameTime = frameEndInfo->displayTime;
+        std::vector<const XrCompositionLayerBaseHeader*> resetLayers{};
+        std::vector<XrCompositionLayerProjection*> resetProjectionLayers{};
+        std::vector<std::vector<XrCompositionLayerProjectionView>*> resetViews{};
+
+        for (uint32_t i = 0; i < frameEndInfo->layerCount; i++)
+        {
+            XrCompositionLayerBaseHeader baseHeader = *frameEndInfo->layers[i];
+            XrCompositionLayerBaseHeader* headerPtr{ nullptr };
+            if (XR_TYPE_COMPOSITION_LAYER_PROJECTION == baseHeader.type)
+            {
+                DebugLog("xrEndFrame: projection layer %u, space: %u\n", i, baseHeader.space);
+
+                const XrCompositionLayerProjection* projectionLayer =
+                    reinterpret_cast<const XrCompositionLayerProjection*>(frameEndInfo->layers[i]);
+
+                std::vector<XrCompositionLayerProjectionView>* projectionViews =
+                    new std::vector<XrCompositionLayerProjectionView>{};
+                resetViews.push_back(projectionViews);
+                projectionViews->resize(projectionLayer->viewCount);
+                memcpy(projectionViews->data(),
+                    projectionLayer->views,
+                    projectionLayer->viewCount * sizeof(XrCompositionLayerProjectionView));
+
+                // use pose cache for reverse calculation
+                XrPosef reversedManipulation = Pose::Invert(m_PoseCache.GetSample(frameEndInfo->displayTime));
+                m_PoseCache.CleanUp(frameEndInfo->displayTime);
+
+                for (uint32_t j = 0; j < projectionLayer->viewCount; j++)
+                {
+                    (*projectionViews)[j].pose = Pose::Multiply((*projectionViews)[j].pose, reversedManipulation);
+                }
+
+                // create layer with reset view poses
+                XrCompositionLayerProjection* const resetProjectionLayer =
+                    new XrCompositionLayerProjection{ projectionLayer->type,
+                                                     projectionLayer->next,
+                                                     projectionLayer->layerFlags,
+                                                     projectionLayer->space,
+                                                     projectionLayer->viewCount,
+                                                     projectionViews->data() };
+
+                resetProjectionLayers.push_back(resetProjectionLayer);
+                headerPtr = reinterpret_cast<XrCompositionLayerBaseHeader*>(resetProjectionLayer);
+            }
+            if (!headerPtr)
+            {
+                resetLayers.push_back(frameEndInfo->layers[i]);
+            }
+            else
+            {
+                const XrCompositionLayerBaseHeader* const baseHeaderPtr = headerPtr;
+                resetLayers.push_back(baseHeaderPtr);
+            }
+        }
+        XrFrameEndInfo resetFrameEndInfo{ frameEndInfo->type,
+                                         frameEndInfo->next,
+                                         frameEndInfo->displayTime,
+                                         frameEndInfo->environmentBlendMode,
+                                         frameEndInfo->layerCount,
+                                         resetLayers.data() };
+
+        const XrResult result = nextXrEndFrame(session, &resetFrameEndInfo);
+
+        // clean up memory
+        for (auto layer : resetProjectionLayers)
+        {
+            delete layer;
+        }
+        for (auto views : resetViews)
+        {
+            delete views;
+        }
+
+
+
 
         XrSpaceLocation location;
         location.type = XR_TYPE_SPACE_LOCATION;
@@ -553,6 +636,31 @@ namespace {
         // Call the chain to perform the actual operation.
         const XrResult result = nextXrLocateViews(session, viewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views);
 
+
+        std::vector<XrPosef> originalEyePoses{};
+        for (uint32_t i = 0; i < *viewCountOutput; i++)
+        {
+            originalEyePoses.push_back(views[i].pose);
+        }
+
+        if (m_EyeOffsets.empty())
+        {
+            // determine eye poses
+            XrViewLocateInfo offsetViewLocateInfo{ viewLocateInfo->type, nullptr, viewLocateInfo->viewConfigurationType,viewLocateInfo->displayTime, m_ViewSpace };
+
+            CHECK_XRCMD(nextXrLocateViews(session, &offsetViewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views));
+            for (uint32_t i = 0; i < *viewCountOutput; i++)
+            {
+                m_EyeOffsets.push_back(views[i]);
+            }
+        }
+        // manipulate reference space location
+        XrSpaceLocation location{ XR_TYPE_SPACE_LOCATION, nullptr };
+        CHECK_XRCMD(xrLocateSpace(m_ViewSpace, viewLocateInfo->space, viewLocateInfo->displayTime, &location));
+        for (uint32_t i = 0; i < *viewCountOutput; i++)
+        {
+            views[i].pose = Pose::Multiply(m_EyeOffsets[i].pose, location.pose);
+        }
 //        // requested NOT for VIEW space: someone is actually asking for the views in a LOCAL/STAGE space
 //        if (!isViewSpace.count(viewLocateInfo->space)) {
 //
