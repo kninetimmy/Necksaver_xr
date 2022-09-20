@@ -35,9 +35,21 @@
           <RegistryValue Root="HKCU" Key="Software\[ProductName]" Name="ProgramMenuShortcut" Type="integer" Value="1" KeyPath="yes" />
         </Component>
       </Directory>
-      <Directory Id="ProgramFilesFolder" Name="PFiles">
+      <Component Id="RegistryEntries" Guid="*" Win64="yes">
+        <RegistryKey Root="HKLM" Key="Software\Khronos\OpenXR\1\ApiLayers\Implicit">
+          <RegistryValue Type="integer" Name="[#XR_APILAYER_NOVENDOR_XRNECKSAFER.JSON]" Value="0" KeyPath="yes" />
+          <RegistryValue Type="string" Value="Default Value" />
+        </RegistryKey>
+      </Component>
+      <Directory Id="ProgramFiles64Folder" Name="ProgFiles">
         <Directory Id="INSTALLDIR" Name="XRNeckSafer">
-          <Component Id="XRNeckSaferComponent" Guid="C981E08D-9CCE-4BB5-A566-BA6DD6454E9B">
+          <Directory Id="OpenXrApiLayer" Name="OpenXrApiLayer">
+            <Component Id="OpenXrApiLayerComponent" Guid="69A13BC7-A585-4803-A232-442A6D664365" Win64="yes">
+              <File Id="XR_APILAYER_NOVENDOR_XRNECKSAFER.DLL" Name="XR_APILAYER_NOVENDOR_XRNeckSafer.dll" Source="..\x64\Release\XR_APILAYER_NOVENDOR_XRNeckSafer.dll" />
+              <File Id="XR_APILAYER_NOVENDOR_XRNECKSAFER.JSON" Name="XR_APILAYER_NOVENDOR_XRNeckSafer.json" Source="..\x64\Release\XR_APILAYER_NOVENDOR_XRNeckSafer.json" />
+            </Component>
+          </Directory>
+          <Component Id="XRNeckSaferComponent" Guid="C981E08D-9CCE-4BB5-A566-BA6DD6454E9B" Win64="yes">
             <File Id="XRNECKSAFERAPP.EXE" Name="XRNeckSaferApp.exe" Source="..\XRNeckSaferApp\bin\Release\XRNeckSaferApp.exe" />
             <File Id="MICROSOFT.BCL.ASYNCINTERFACES.DLL" Name="Microsoft.Bcl.AsyncInterfaces.dll" Source="..\XRNeckSaferApp\bin\Release\Microsoft.Bcl.AsyncInterfaces.dll" />
             <File Id="MICROSOFT.BCL.HASHCODE.DLL" Name="Microsoft.Bcl.HashCode.dll" Source="..\XRNeckSaferApp\bin\Release\Microsoft.Bcl.HashCode.dll" />
@@ -61,20 +73,6 @@
             <File Id="ULTZ.BCL.HALF.DLL" Name="Ultz.Bcl.Half.dll" Source="..\XRNeckSaferApp\bin\Release\Ultz.Bcl.Half.dll" />
             <File Id="OPENXR_LOADER.DLL" Name="openxr_loader.dll" Source="..\XRNeckSaferApp\openxr_loader.dll" />
             <File Id="XRNECKSAFERAPP.EXE.CONFIG" Name="XRNeckSaferApp.exe.config" Source="..\XRNeckSaferApp\bin\Release\XRNeckSaferApp.exe.config" />
-          </Component>
-        </Directory>
-      </Directory>
-      <Component Id="RegistryEntries" Guid="*" Win64="yes">
-        <RegistryKey Root="HKLM" Key="Software\Khronos\OpenXR\1\ApiLayers\Implicit">
-          <RegistryValue Type="integer" Name="[ProgramFiles64Folder]OpenXrApiLayer\XR_APILAYER_NOVENDOR_XRNeckSafer.json" Value="0" KeyPath="yes" />
-          <RegistryValue Type="string" Value="Default Value" />
-        </RegistryKey>
-      </Component>
-      <Directory Id="ProgramFiles64Folder" Name="ProgFiles">
-        <Directory Id="OpenXrApiLayer" Name="OpenXrApiLayer">
-          <Component Id="OpenXrApiLayerComponent" Guid="69A13BC7-A585-4803-A232-442A6D664365" Win64="yes">
-            <File Id="XR_APILAYER_NOVENDOR_XRNECKSAFER.DLL" Name="XR_APILAYER_NOVENDOR_XRNeckSafer.dll" Source="..\x64\Release\XR_APILAYER_NOVENDOR_XRNeckSafer.dll" />
-            <File Id="XR_APILAYER_NOVENDOR_XRNECKSAFER.JSON" Name="XR_APILAYER_NOVENDOR_XRNeckSafer.json" Source="..\x64\Release\XR_APILAYER_NOVENDOR_XRNeckSafer.json" />
           </Component>
         </Directory>
       </Directory>
