@@ -555,7 +555,7 @@
             this.YawAutorotationHoldButton.TabIndex = 42;
             this.YawAutorotationHoldButton.Text = "Hold";
             this.YawAutorotationHoldButton.UseVisualStyleBackColor = true;
-            this.YawAutorotationHoldButton.Click += new System.EventHandler(this.YawAutorotationHoldButtonClick);
+            this.YawAutorotationHoldButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // label12
             // 
@@ -634,7 +634,7 @@
             this.SetResetButton.TabIndex = 28;
             this.SetResetButton.Text = "Set Center Button";
             this.SetResetButton.UseVisualStyleBackColor = true;
-            this.SetResetButton.Click += new System.EventHandler(this.SetResetButton_Click);
+            this.SetResetButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // HMDYawLabel
             // 
@@ -691,6 +691,8 @@
             // AccumReset
             // 
             this.AccumReset.ActionPropertyName = "SetAccumResetYaw";
+            this.AccumReset.ActiveBackColour = System.Drawing.Color.Black;
+            this.AccumReset.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.AccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AccumReset.Location = new System.Drawing.Point(69, 99);
             this.AccumReset.Name = "AccumReset";
@@ -698,7 +700,7 @@
             this.AccumReset.TabIndex = 54;
             this.AccumReset.Text = "Set Acc. Reset";
             this.AccumReset.UseVisualStyleBackColor = true;
-            this.AccumReset.Click += new System.EventHandler(this.AccumReset_Click);
+            this.AccumReset.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // label25
             // 
@@ -724,7 +726,7 @@
             this.transFNUP.Size = new System.Drawing.Size(44, 20);
             this.transFNUP.TabIndex = 26;
             this.transFNUP.ValueChanged += new System.EventHandler(this.OnYawForwardTranslationChanged);
-            this.transFNUP.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnTranslationForwardDoubleClick);
+            this.transFNUP.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnNumericActionUpDownDoubleClick);
             // 
             // label24
             // 
@@ -769,7 +771,7 @@
             this.transLRNUP.Size = new System.Drawing.Size(44, 20);
             this.transLRNUP.TabIndex = 25;
             this.transLRNUP.ValueChanged += new System.EventHandler(this.OnYawLeftRightTranslationChanged);
-            this.transLRNUP.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnTranslationLeftRightDoubleClick);
+            this.transLRNUP.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnNumericActionUpDownDoubleClick);
             // 
             // label8
             // 
@@ -878,7 +880,7 @@
             this.SetLeftButton.TabIndex = 36;
             this.SetLeftButton.Text = "Set Button";
             this.SetLeftButton.UseVisualStyleBackColor = true;
-            this.SetLeftButton.Click += new System.EventHandler(this.SetLeftButtonClick);
+            this.SetLeftButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // SetRightButton
             // 
@@ -892,7 +894,7 @@
             this.SetRightButton.TabIndex = 37;
             this.SetRightButton.Text = "Set Button";
             this.SetRightButton.UseVisualStyleBackColor = false;
-            this.SetRightButton.Click += new System.EventHandler(this.SetRightButtonClick);
+            this.SetRightButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // RightLabel
             // 
@@ -1726,7 +1728,7 @@
             this.PitchAutorotationHoldButton.TabIndex = 42;
             this.PitchAutorotationHoldButton.Text = "Hold";
             this.PitchAutorotationHoldButton.UseVisualStyleBackColor = true;
-            this.PitchAutorotationHoldButton.Click += new System.EventHandler(this.PitchAutorotationHoldButtonClick);
+            this.PitchAutorotationHoldButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // pManualGroup
             // 
@@ -1777,6 +1779,8 @@
             // pAccumReset
             // 
             this.pAccumReset.ActionPropertyName = "SetAccumResetPitch";
+            this.pAccumReset.ActiveBackColour = System.Drawing.Color.Black;
+            this.pAccumReset.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.pAccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pAccumReset.Location = new System.Drawing.Point(69, 99);
             this.pAccumReset.Name = "pAccumReset";
@@ -1784,7 +1788,7 @@
             this.pAccumReset.TabIndex = 54;
             this.pAccumReset.Text = "Set Acc. Reset";
             this.pAccumReset.UseVisualStyleBackColor = true;
-            this.pAccumReset.Click += new System.EventHandler(this.pAccumReset_Click);
+            this.pAccumReset.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // label19
             // 
@@ -1900,7 +1904,7 @@
             this.SetUpButton.TabIndex = 36;
             this.SetUpButton.Text = "Set Button";
             this.SetUpButton.UseVisualStyleBackColor = true;
-            this.SetUpButton.Click += new System.EventHandler(this.OnSetUpClick);
+            this.SetUpButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // SetDownButton
             // 
@@ -1914,7 +1918,7 @@
             this.SetDownButton.TabIndex = 37;
             this.SetDownButton.Text = "Set Button";
             this.SetDownButton.UseVisualStyleBackColor = false;
-            this.SetDownButton.Click += new System.EventHandler(this.OnSetDownClick);
+            this.SetDownButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // DownLabel
             // 

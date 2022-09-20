@@ -949,31 +949,7 @@ namespace XRNeckSafer
             Config.Instance.MinimizeToTray = minimizeToTrayToolStripMenuItem.Checked;
         }
 
-        private void SetLeftButtonClick(object sender, EventArgs e)
-        {
-            var button = (BooleanActionButton)sender;
-            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
-        }
-
-        private void SetRightButtonClick(object sender, EventArgs e)
-        {
-            var button = (BooleanActionButton)sender;
-            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
-        }
-
-        private void SetResetButton_Click(object sender, EventArgs e)
-        {
-            var button = (BooleanActionButton)sender;
-            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
-        }
-
-        private void AccumReset_Click(object sender, EventArgs e)
-        {
-            var button = (BooleanActionButton)sender;
-            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
-        }
-
-        private void YawAutorotationHoldButtonClick(object sender, EventArgs e)
+        private void OnBooleanActionButtonClick(object sender, EventArgs e)
         {
             var button = (BooleanActionButton)sender;
             ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
@@ -1304,30 +1280,6 @@ namespace XRNeckSafer
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
         }
 
-        private void OnSetDownClick(object sender, EventArgs e)
-        {
-            var button = (BooleanActionButton)sender;
-            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
-        }
-
-        private void OnSetUpClick(object sender, EventArgs e)
-        {
-            var button = (BooleanActionButton)sender;
-            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
-        }
-
-        private void pAccumReset_Click(object sender, EventArgs e)
-        {
-            var button = (BooleanActionButton)sender;
-            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
-        }
-
-        private void PitchAutorotationHoldButtonClick(object sender, EventArgs e)
-        {
-            var button = (BooleanActionButton)sender;
-            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
-        }
-
         private void disableAllGUIOutputToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
         {
             Config.Instance.DisableGUIOutput = disableAllGUIOutputToolStripMenuItem.Checked;
@@ -1356,13 +1308,7 @@ namespace XRNeckSafer
             base.Dispose(disposing);
         }
 
-        private void OnTranslationLeftRightDoubleClick(object sender, MouseEventArgs e)
-        {
-            var button = (NumericActionUpDown)sender;
-            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
-        }
-
-        private void OnTranslationForwardDoubleClick(object sender, MouseEventArgs e)
+        private void OnNumericActionUpDownDoubleClick(object sender, MouseEventArgs e)
         {
             var button = (NumericActionUpDown)sender;
             ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
