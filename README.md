@@ -97,6 +97,7 @@ Smooth Autorotation gives a linear amplification of your head rotation, beginnin
 4. Now you can delete the folder with 
 
 **Installation of older versions (before beta4. Only if you really want to! Better use the newest version!)**
+
 0. Download [XRNeckSaferBeta3b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3c.zip)
 1. Create a folder and unzip XRNeckSaferBeta3.zip into it.
 2. Stop OpenXR Runtime (Mixed-Reality-Portal for Reverb G2) and copy the OpenXrApiLayer folder to %ProgramFiles% (e.g. C:\Program Files\OpenXrApiLayer) 
