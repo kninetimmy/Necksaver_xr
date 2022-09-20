@@ -210,7 +210,6 @@ namespace XRNeckSafer
             _ARText = "Autorotation";
             _pARText = "Autorotation";
             _hmdtext = "";
-            loopTimer.Start();
         }
 
         private void OnJoystickDisconnected(Guid guid, string joystickName)
@@ -1445,6 +1444,7 @@ namespace XRNeckSafer
             var splashScreen = new Wpf.SplashScreen();
             ElementHost.EnableModelessKeyboardInterop(splashScreen);
             splashScreen.ShowDialog();
+            loopTimer.Start();
         }
     }
 }
