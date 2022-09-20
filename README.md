@@ -44,7 +44,7 @@ Smooth Autorotation gives a linear amplification of your head rotation, beginnin
 
 **Changelog for beta4a**
 - Installer (thanks Nikoz!) No more messing around with copying files and running scripts. (see below how to uninstall older versions)
-- Location of XRNS all app and layer files is now in %Program Files%/XRNeckSafer
+- Location of XRNS app and layer files is now in %Program Files%/XRNeckSafer
 - Location of XRNS config file is now in %Program Data%/XRNecksafer
 - Fixes for shifted pivot point. Hopefully! Please report if you still have problems
 - Better button scan UI and functionality
