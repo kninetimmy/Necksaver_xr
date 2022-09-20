@@ -41,25 +41,25 @@ namespace XRNeckSafer
         [Obsolete("Keep this method for compartibility with old way of pressed buttons check")]
         public static StickItem[] GetJoysticks()
         {
-            lock (_joysticGuids)
+            //lock (_joysticGuids)
+            //{
+            return _joysticGuids.Keys.Select(guid =>
             {
-                return _joysticGuids.Keys.Select(guid =>
+                var joystick = _joysticGuids[guid];
+                if (joystick.IsDisposed)
                 {
-                    var joystick = _joysticGuids[guid];
-                    if (joystick.IsDisposed)
-                    {
-                        return null;
-                    }
-                    return new StickItem
-                    {
-                        Attached = true,
-                        InstanceName = joystick.Properties.InstanceName,
-                        ButtonCount = joystick.Capabilities.ButtonCount,
-                        PovCount = joystick.Capabilities.PovCount,
-                        JoystickGuid = guid.ToString()
-                    };
-                }).Where(s => s != null).ToArray();
-            }
+                    return null;
+                }
+                return new StickItem
+                {
+                    Attached = true,
+                    InstanceName = joystick.Properties.InstanceName,
+                    ButtonCount = joystick.Capabilities.ButtonCount,
+                    PovCount = joystick.Capabilities.PovCount,
+                    JoystickGuid = guid.ToString()
+                };
+            }).Where(s => s != null).ToArray();
+            // }
         }
 
         public static List<JoyBut> GetPressedButtons()
