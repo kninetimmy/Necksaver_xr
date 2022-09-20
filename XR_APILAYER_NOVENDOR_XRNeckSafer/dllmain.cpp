@@ -468,7 +468,7 @@ namespace {
         bool spaceIsViewSpace = isViewSpace.count(space);
         bool baseSpaceIsViewSpace = isViewSpace.count(baseSpace);
         bool baseSpaceIsStageSpace = isStageSpace.count(baseSpace); // IL2: true, DCS: false
-        bool baseSpaceIsLocalSpace = isLocalSpace.count(baseSpace); // IL2: true, DCS: false
+        bool baseSpaceIsLocalSpace = isLocalSpace.count(baseSpace); 
 
         DebugLog("space: %d  bspace: %d\n", space, baseSpace);
 
@@ -479,9 +479,9 @@ namespace {
             if (baseSpaceIsStageSpace) {
                 pos = pos - centerHmdLocationStage.pose.position;
             }
-            if (baseSpaceIsLocalSpace) {
-                pos = pos - centerHmdLocationLocal.pose.position;
-            }
+//            if (baseSpaceIsLocalSpace) {
+//                pos = pos - centerHmdLocationLocal.pose.position;
+//            }
 
             toMonitor("pos x", pos.x);
             toMonitor("pos y", pos.y);
@@ -509,10 +509,12 @@ namespace {
 
                 if (baseSpaceIsStageSpace) {
                     pos = pos + centerHmdLocationStage.pose.position;
+                    StoreXrVector3(&trans, DirectX::XMVector3Rotate(LoadXrVector3(trans), LoadXrQuaternion(centerHmdLocationStage.pose.orientation)));
                 }
-                if (baseSpaceIsLocalSpace) {
-                    pos = pos + centerHmdLocationLocal.pose.position;
-                }
+//                if (baseSpaceIsLocalSpace) {
+//                    pos = pos + centerHmdLocationLocal.pose.position;
+//                }
+
 
                 location->pose.position = pos - trans;
             }
