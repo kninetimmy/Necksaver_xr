@@ -54,14 +54,9 @@ namespace XRNeckSafer
             Close();
         }
 
-        private void OnCancelButtonClick(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         protected override void OnClosing(CancelEventArgs e)
         {
-            _scanner.BeforeRelesed -= OnScanningComplete; ;
+            _scanner.BeforeRelesed -= OnScanningComplete;
             _scanner.OnCurrentlyPressedChanged -= OnCurrentlyPressedChanged;
             base.OnClosing(e);
         }
