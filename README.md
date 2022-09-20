@@ -24,7 +24,7 @@ If you want to move your head position a few centimeters when using snap view (e
 Enable one of the "Autorotation" features to automatically activate the offset when turning your head over defined activation angles. No joystick buttons required.
 This can be done in several steps or continuous (linear). To temporarily inhibit autorotation use the Hold buttons.
 
-### **Stepwise Autorotation**
+### **Stepwise Autorotation**  
 
  There is a (very) small explanation coming up when you hover your mouse over the labels on top of the table in the app.
 
