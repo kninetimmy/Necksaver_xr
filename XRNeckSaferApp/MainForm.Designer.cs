@@ -64,7 +64,7 @@
             this.HMDYawLabel = new System.Windows.Forms.Label();
             this.VersionLabel = new System.Windows.Forms.Label();
             this.ManualGroup = new System.Windows.Forms.GroupBox();
-            this.AccumReset = new System.Windows.Forms.Button();
+            this.AccumReset = new XRNeckSafer.BooleanActionButton();
             this.label25 = new System.Windows.Forms.Label();
             this.transFNUP = new XRNeckSafer.NumericActionUpDown();
             this.label24 = new System.Windows.Forms.Label();
@@ -159,7 +159,7 @@
             this.pManualGroup = new System.Windows.Forms.GroupBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.pAccumReset = new System.Windows.Forms.Button();
+            this.pAccumReset = new XRNeckSafer.BooleanActionButton();
             this.label19 = new System.Windows.Forms.Label();
             this.upNUD = new System.Windows.Forms.NumericUpDown();
             this.downNUD = new System.Windows.Forms.NumericUpDown();
@@ -690,6 +690,7 @@
             // 
             // AccumReset
             // 
+            this.AccumReset.ActionPropertyName = "SetAccumResetYaw";
             this.AccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AccumReset.Location = new System.Drawing.Point(69, 99);
             this.AccumReset.Name = "AccumReset";
@@ -1775,6 +1776,7 @@
             // 
             // pAccumReset
             // 
+            this.pAccumReset.ActionPropertyName = "SetAccumResetPitch";
             this.pAccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pAccumReset.Location = new System.Drawing.Point(69, 99);
             this.pAccumReset.Name = "pAccumReset";
@@ -2081,7 +2083,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn rot;
         private System.Windows.Forms.DataGridViewTextBoxColumn LR;
         private System.Windows.Forms.DataGridViewTextBoxColumn Fwd;
-        private System.Windows.Forms.Button AccumReset;
+        private XRNeckSafer.BooleanActionButton AccumReset;
         private System.Windows.Forms.ToolStripMenuItem aPILayerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableAPILayerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listApiToolStripMenuItem;
@@ -2108,7 +2110,7 @@
         private System.Windows.Forms.GroupBox pManualGroup;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Button pAccumReset;
+        private BooleanActionButton pAccumReset;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.NumericUpDown upNUD;
         private System.Windows.Forms.NumericUpDown downNUD;

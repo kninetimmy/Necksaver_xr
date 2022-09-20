@@ -50,12 +50,6 @@ namespace XRNeckSafer
 
     public class Config
     {
-        public ButtonConfig AccuResetButton;
-        public ButtonConfig AccuResetButton2;
-        public ButtonConfig AccuResetButton3;
-        public ButtonConfig PitchAccuResetButton;
-        public ButtonConfig PitchAccuResetButton2;
-        public ButtonConfig PitchAccuResetButton3;
         public int Angle;
         public int UpAngle;
         public int DownAngle;
@@ -73,7 +67,7 @@ namespace XRNeckSafer
         public bool PitchAdditiv;
         public bool StartMinimized;
         public bool MinimizeToTray;
-        public bool MultipleLRbuttons;
+        // public bool MultipleLRbuttons;
         public bool DisableGUIOutput;
         public bool DisableJoystickReconnect;
         public int PitchLimForAutorot;
@@ -91,12 +85,6 @@ namespace XRNeckSafer
 
         private Config()
         {
-            AccuResetButton = new ButtonConfig();
-            AccuResetButton2 = new ButtonConfig();
-            AccuResetButton3 = new ButtonConfig();
-            PitchAccuResetButton = new ButtonConfig();
-            PitchAccuResetButton2 = new ButtonConfig();
-            PitchAccuResetButton3 = new ButtonConfig();
             Angle = 30;
             UpAngle = 30;
             DownAngle = 30;
@@ -114,7 +102,7 @@ namespace XRNeckSafer
             PitchAdditiv = false;
             StartMinimized = false;
             MinimizeToTray = false;
-            MultipleLRbuttons = false;
+            // MultipleLRbuttons = false;
             DisableGUIOutput = false;
             DisableJoystickReconnect = false;
             PitchLimForAutorot = 90;
@@ -160,12 +148,6 @@ namespace XRNeckSafer
                     return CreateDefaultConfig();
                 }
                 Config c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configfilename), new Newtonsoft.Json.Converters.StringEnumConverter());
-                if (c.AccuResetButton == null) c.AccuResetButton = new ButtonConfig();
-                if (c.AccuResetButton2 == null) c.AccuResetButton2 = new ButtonConfig();
-                if (c.AccuResetButton3 == null) c.AccuResetButton3 = new ButtonConfig();
-                if (c.PitchAccuResetButton == null) c.PitchAccuResetButton = new ButtonConfig();
-                if (c.PitchAccuResetButton2 == null) c.PitchAccuResetButton2 = new ButtonConfig();
-                if (c.PitchAccuResetButton3 == null) c.PitchAccuResetButton3 = new ButtonConfig();
                 if (c.ActionProperties == null) c.ActionProperties = new List<ActionProperty>();
 
                 if (c.AutoSteps.Count == 0)

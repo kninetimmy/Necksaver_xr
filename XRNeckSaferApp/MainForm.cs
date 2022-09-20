@@ -184,7 +184,7 @@ namespace XRNeckSafer
             // setButtonToolTip(SetLeftButton, Config.Instance.LeftButton);
             // setButtonToolTip(SetRightButton, Config.Instance.RightButton);
             // setButtonToolTip(SetResetButton, Config.Instance.ResetButton);
-            setButtonToolTip(AccumReset, Config.Instance.AccuResetButton);
+            // setButtonToolTip(AccumReset, Config.Instance.AccuResetButton);
             // setButtonToolTip(YawAutorotationHoldButton, Config.Instance.HoldButton1);
 
             // setLabelToolTip(LeftLabel, Config.Instance.LeftButton);
@@ -277,23 +277,24 @@ namespace XRNeckSafer
             Config.Instance.WriteConfig();
         }
 
-        private void setButtonColor(bool pressed, Button b)
-        {
-            System.Drawing.Color fc = SystemColors.ControlText;
-            System.Drawing.Color bc = SystemColors.Control;
+        //private void setButtonColor(bool pressed, Button b)
+        //{
+        //    System.Drawing.Color fc = SystemColors.ControlText;
+        //    System.Drawing.Color bc = SystemColors.Control;
 
-            if (pressed)
-            {
-                fc = System.Drawing.Color.LightGreen;
-                bc = SystemColors.ControlText;
-            }
+        //    if (pressed)
+        //    {
+        //        fc = System.Drawing.Color.LightGreen;
+        //        bc = SystemColors.ControlText;
+        //    }
 
-            if (b.ForeColor != fc)
-            {
-                b.ForeColor = fc;
-                b.BackColor = bc;
-            }
-        }
+        //    if (b.ForeColor != fc)
+        //    {
+        //        b.ForeColor = fc;
+        //        b.BackColor = bc;
+        //    }
+        //}
+
         void setLabelColor(bool pressed, Label l)
         {
             System.Drawing.Color fc = SystemColors.ControlText;
@@ -315,32 +316,27 @@ namespace XRNeckSafer
         private void loopTimer_Tick(object sender, EventArgs e)
         {
             bool reset_pressed = SetResetButton.ActionPropertyValue;
-            bool acc_res_pressed = JoystickService.IsButtonPressed(Config.Instance.AccuResetButton);
-            bool pitch_acc_res_pressed = JoystickService.IsButtonPressed(Config.Instance.PitchAccuResetButton);
+            bool acc_res_pressed = AccumReset.ActionPropertyValue;
+            bool pitch_acc_res_pressed = pAccumReset.ActionPropertyValue;
             bool l_pressed = SetLeftButton.ActionPropertyValue;
             bool r_pressed = SetRightButton.ActionPropertyValue;
             bool u_pressed = SetUpButton.ActionPropertyValue;
-            bool d_pressed = SetDownButton.ActionPropertyValue; // JoystickService.IsButtonPressed(Config.Instance.DownButton);
+            bool d_pressed = SetDownButton.ActionPropertyValue;
             bool h_pressed = YawAutorotationHoldButton.ActionPropertyValue;
             bool hp_pressed = PitchAutorotationHoldButton.ActionPropertyValue;
             //            bool h_pressed = checkButtonPress(SetHoldButton1, conf.HoldButton1);
-            if (Config.Instance.MultipleLRbuttons)
-            {
-                acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.AccuResetButton2);
-                acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.AccuResetButton3);
-                pitch_acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.PitchAccuResetButton2);
-                pitch_acc_res_pressed |= JoystickService.IsButtonPressed(Config.Instance.PitchAccuResetButton3);
-            }
+            //if (Config.Instance.MultipleLRbuttons)
+            //{
+            //}
 
             setLabelColor(l_pressed, LeftLabel);
             setLabelColor(r_pressed, RightLabel);
             setLabelColor(u_pressed, UpLabel);
-            // setButtonColor(d_pressed, SetDownButton);
             setLabelColor(d_pressed, DownLabel);
-            setButtonColor(acc_res_pressed, AccumReset);
-            setButtonColor(pitch_acc_res_pressed, pAccumReset);
-            setButtonColor(h_pressed, YawAutorotationHoldButton);
-            setButtonColor(hp_pressed, PitchAutorotationHoldButton);
+            // setButtonColor(acc_res_pressed, AccumReset);
+            //setButtonColor(pitch_acc_res_pressed, pAccumReset);
+            //setButtonColor(h_pressed, YawAutorotationHoldButton);
+            //setButtonColor(hp_pressed, PitchAutorotationHoldButton);
 
             bool pitchlimit = _vr.GetHmdPitch() - 90 > Config.Instance.PitchLimForAutorot;
 
@@ -998,15 +994,8 @@ namespace XRNeckSafer
 
         private void AccumReset_Click(object sender, EventArgs e)
         {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                ButtonForm.Show(Top, Right, "Accum Reset Button:", Config.Instance.AccuResetButton);
-            }
-            else
-            {
-                MultiButtons.Show(Top, Right, "Accum Reset", Config.Instance.AccuResetButton, Config.Instance.AccuResetButton2, Config.Instance.AccuResetButton3);
-            }
-            setButtonToolTip(AccumReset, Config.Instance.AccuResetButton);
+            var button = (BooleanActionButton)sender;
+            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
         }
 
         private void YawAutorotationHoldButtonClick(object sender, EventArgs e)
@@ -1101,7 +1090,7 @@ namespace XRNeckSafer
         {
             startMinimzedToolStripMenuItem.Checked = Config.Instance.StartMinimized;
             minimizeToTrayToolStripMenuItem.Checked = Config.Instance.MinimizeToTray;
-            MultipleLRButtonsToolStripMenuItem.Checked = Config.Instance.MultipleLRbuttons;
+            // MultipleLRButtonsToolStripMenuItem.Checked = Config.Instance.MultipleLRbuttons;
             disableAllGUIOutputToolStripMenuItem.Checked = Config.Instance.DisableGUIOutput;
             disableJoystickAutoReconnectToolStripMenuItem.Checked = Config.Instance.DisableJoystickReconnect;
 
@@ -1116,7 +1105,7 @@ namespace XRNeckSafer
             Config.Instance.PitchLimForAutorot = 90;
             Config.Instance.DisableGUIOutput = false;
             Config.Instance.DisableJoystickReconnect = false;
-            Config.Instance.MultipleLRbuttons = false;
+            // Config.Instance.MultipleLRbuttons = false;
             Config.Instance.WriteConfig();
             setMenuCheckmarks();
         }
@@ -1140,14 +1129,14 @@ namespace XRNeckSafer
             if (MultipleLRButtonsToolStripMenuItem.Checked)
             {
                 MultipleLRButtonsToolStripMenuItem.Checked = false;
-                Config.Instance.MultipleLRbuttons = false;
-                Config.Instance.WriteConfig();
+                // Config.Instance.MultipleLRbuttons = false;
+                // Config.Instance.WriteConfig();
             }
             else
             {
                 MultipleLRButtonsToolStripMenuItem.Checked = true;
-                Config.Instance.MultipleLRbuttons = true;
-                Config.Instance.WriteConfig();
+                // Config.Instance.MultipleLRbuttons = true;
+                // Config.Instance.WriteConfig();
             }
         }
 
@@ -1363,15 +1352,8 @@ namespace XRNeckSafer
 
         private void pAccumReset_Click(object sender, EventArgs e)
         {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                ButtonForm.Show(Top, Right, "Pitch Accum Reset Button:", Config.Instance.PitchAccuResetButton);
-            }
-            else
-            {
-                MultiButtons.Show(Top, Right, "Accum Reset", Config.Instance.PitchAccuResetButton, Config.Instance.PitchAccuResetButton2, Config.Instance.PitchAccuResetButton3);
-            }
-            setButtonToolTip(pAccumReset, Config.Instance.PitchAccuResetButton);
+            var button = (BooleanActionButton)sender;
+            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
         }
 
         private void PitchAutorotationHoldButtonClick(object sender, EventArgs e)
