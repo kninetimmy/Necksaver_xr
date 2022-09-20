@@ -65,12 +65,6 @@ Smooth Autorotation gives a linear amplification of your head rotation, beginnin
 - options to disable GUI output and joystick auto reconnect to eliminate possible causes of stutter 
 - list of OpenXR API layers reenabled
 
-If you update from an earlier version there is no need to run the INSTALL script again. Just replace all files (including the XR_APILAYER_NOVENDOR_XRNeckSafer.dll in your %Program Files\OpenXRApiLayer\ folder) with the new versions. 
-
-Stop Mixed Reality Portal before replacing the XR_APILAYER_NOVENDOR_XRNeckSafer.dll.
-
-**You should delete your old config file (XRNeckSafer.cfg) and reconfigure XRNS from scratch though.**
-
 **Changelog for beta2b:**
 - linear autorotation values are now saved correctly
 - fixed extreme amplify values at very first start
@@ -86,16 +80,14 @@ Stop Mixed Reality Portal before replacing the XR_APILAYER_NOVENDOR_XRNeckSafer.
 
 ## **Installation (since beta4a)**
 
-   **Uninstall old version before installing!**  
+ **Uninstall old version before installing! (see below)**  
  1. Download the installer: [XRNeckSaferBeta4a.msi](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta4a.msi)
  2. Run the installer
  3. Start XRNeckSaferApp.exe and go to OpenXR in the Menu on top. Select "Show active OpenXR API Layers"
   This should list all the active Layers and should include "XR_APILAYER_NOVENDOR_XRNeckSafer"
  4. If this works you can configure XRNeckSafer as before
  5. Once in game press the combined Game/XRNS center button
-
- **Uninstallation can be done with the installer or via windows uninstall** 
-
+ 6. Uninstallation of beta4a can now be done with the installer or via windows uninstall 
 
 **Uninstallation of older versions (before beta4)
 1. Stop OpenXR Runtime (Mixed-Reality-Portal for Reverb G2)
@@ -104,7 +96,7 @@ Stop Mixed Reality Portal before replacing the XR_APILAYER_NOVENDOR_XRNeckSafer.
 3. If the API layer was uninstalled correctly (check with Show active OpenXR API Layers menu item in XRNeckSaferApp.exe) you can delete the %ProgramFiles%\OpenXrApiLayer folder
 4. Now you can delete the folder with 
 
-**Installation of older versions (before beta4, only if you really want to, better use the newest version!)
+**Installation of older versions (before beta4. Only if you really want to! Better use the newest version!)
 0. Download [XRNeckSaferBeta3b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3c.zip)
 1. Create a folder and unzip XRNeckSaferBeta3.zip into it.
 2. Stop OpenXR Runtime (Mixed-Reality-Portal for Reverb G2) and copy the OpenXrApiLayer folder to %ProgramFiles% (e.g. C:\Program Files\OpenXrApiLayer) 
@@ -125,7 +117,7 @@ Stop Mixed Reality Portal before replacing the XR_APILAYER_NOVENDOR_XRNeckSafer.
 
 ## **Known issues:**
 
-- If translation is not working correctly reset the OpenXR setup (reset HOME and ENVIRONMENT in Mixed Reality Portal, thanks Melanor8807).
+- If translation is not working correctly reset the OpenXR setup (for WMR reset HOME and ENVIRONMENT in Mixed Reality Portal, thanks Melanor8807).
 - "Smooth" autorotation might cause nausea for some users! It does for me... So be careful und stop it when you feel uncomfortable!
 - When you are experiencing FPS loss with XRNS try to minimize the XRNS App and/or disable angle output for the GUI and disable joystick auto reconnect under options.
 - XRNS works with games that can use OpenComposite (e.g. IL-2 and DCS). Native OpenXR games are not working yet. 
