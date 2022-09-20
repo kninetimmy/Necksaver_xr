@@ -5,15 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:XRNeckSafer.Wpf"
         mc:Ignorable="d"
-        Title="SplashScreen" WindowStyle="None" Background="Transparent" AllowsTransparency="True" WindowStartupLocation="CenterScreen" Height="250" Width="250">
+        Title="SplashScreen" WindowStyle="None" Background="Transparent" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
     <Window.Resources>
-
         <Storyboard x:Key="StartAnimation">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image" Storyboard.TargetProperty="(FrameworkElement.Width)">
                 <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.5000000" Value="200"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:02" Value="200"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:02.3000000" Value="100"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.5000000" Value="300"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:02" Value="300"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:02.3000000" Value="200"/>
                 <EasingDoubleKeyFrame KeyTime="00:00:02.6000000" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image" Storyboard.TargetProperty="(UIElement.Opacity)">
@@ -30,8 +29,12 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Window.Resources>
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Image  x:Name="image" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Source="/XRNeckSafer.Wpf;component/XRNS-logo.jpg" RenderTransformOrigin="0.5,0.5">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Image x:Name="image" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/XRNeckSafer.Wpf;component/XRNS_splash_icon.jpeg" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
