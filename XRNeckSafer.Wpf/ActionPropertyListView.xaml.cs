@@ -20,7 +20,6 @@ namespace XRNeckSafer.Wpf
         public event Action<ActionPropertyDataModelChangeEventArgs> Changed;
         public event Action<ActionPropertyDataModelEventArgs> ScanClick;
         public event Action<ActionPropertyDataModelEventArgs> ClearClick;
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public ActionPropertyListView()
         {

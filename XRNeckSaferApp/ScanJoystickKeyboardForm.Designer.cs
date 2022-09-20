@@ -74,6 +74,7 @@ namespace XRNeckSafer
             this.Name = "ScanJoystickKeyboardForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Scanning joysticks and keys. Press button(s) now...";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnFormKeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

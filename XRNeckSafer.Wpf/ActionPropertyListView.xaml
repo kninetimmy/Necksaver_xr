@@ -39,7 +39,7 @@
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel VerticalAlignment="Center">
-                                                <Button Name="_scanTButton" Content=".." Click="OnScanButtonClick" Width="15" Height="15" />
+                                                <Button ToolTip="Assign key/joystick shortcut" Name="_scanTButton" Content=".." Click="OnScanButtonClick" Width="15" Height="15" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
@@ -48,7 +48,7 @@
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel VerticalAlignment="Center">
-                                                <Button Click="ClearEventClick" Background="Transparent" BorderBrush="Transparent">
+                                                <Button ToolTip="Clear key/joystick shortcut" Click="ClearEventClick" Background="Transparent" BorderBrush="Transparent">
                                                     <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.deleteIcon}, Converter={StaticResource BitmapToImageSourceConverter}}" />
                                                 </Button>
                                             </StackPanel>
@@ -57,20 +57,6 @@
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <!--<ListView ItemsSource="{Binding InputCombinations}" BorderThickness="0" Margin="0" Padding="0">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="Red">
-                                        <StackPanel>
-                                            <TextBlock Text="{Binding InputCombination}"  />
-                                        </StackPanel>
-                                        --><!--<StackPanel Background="Yellow">
-                                            <TextBlock Text="{Binding InputCombination}"  />
-                                        </StackPanel>--><!--
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>-->
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
@@ -117,26 +103,6 @@
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
-            <!--<DataGridTemplateColumn Header="Scan">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <StackPanel VerticalAlignment="Center">
-                            <Button Name="_scanButton" Content="..." Click="OnScanButtonClick" />
-                        </StackPanel>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-            <DataGridTemplateColumn Header="Clear">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <StackPanel VerticalAlignment="Center">
-                            <Button Click="ClearEventClick" Background="Transparent" BorderBrush="Transparent">
-                                <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.deleteIcon}, Converter={StaticResource BitmapToImageSourceConverter}}" />
-                            </Button>
-                        </StackPanel>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>-->
         </DataGrid.Columns>
         <DataGrid.GroupStyle>
             <GroupStyle>

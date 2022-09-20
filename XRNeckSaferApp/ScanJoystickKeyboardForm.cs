@@ -74,5 +74,13 @@ namespace XRNeckSafer
             }
             base.Dispose(disposing);
         }
+
+        private void OnFormKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
+        }
     }
 }
