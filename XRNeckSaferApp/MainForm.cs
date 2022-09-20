@@ -1129,14 +1129,10 @@ namespace XRNeckSafer
             if (MultipleLRButtonsToolStripMenuItem.Checked)
             {
                 MultipleLRButtonsToolStripMenuItem.Checked = false;
-                // Config.Instance.MultipleLRbuttons = false;
-                // Config.Instance.WriteConfig();
             }
             else
             {
                 MultipleLRButtonsToolStripMenuItem.Checked = true;
-                // Config.Instance.MultipleLRbuttons = true;
-                // Config.Instance.WriteConfig();
             }
         }
 

@@ -38,30 +38,6 @@ namespace XRNeckSafer
             StartJoysticksWorker();
         }
 
-        [Obsolete("Keep this method for compartibility with old way of pressed buttons check")]
-        public static StickItem[] GetJoysticks()
-        {
-            //lock (_joysticGuids)
-            //{
-            return _joysticGuids.Keys.Select(guid =>
-            {
-                var joystick = _joysticGuids[guid];
-                if (joystick.IsDisposed)
-                {
-                    return null;
-                }
-                return new StickItem
-                {
-                    Attached = true,
-                    InstanceName = joystick.Properties.InstanceName,
-                    ButtonCount = joystick.Capabilities.ButtonCount,
-                    PovCount = joystick.Capabilities.PovCount,
-                    JoystickGuid = guid.ToString()
-                };
-            }).Where(s => s != null).ToArray();
-            // }
-        }
-
         public static List<JoyBut> GetPressedButtons()
         {
             var result = new List<JoyBut>();
@@ -214,96 +190,5 @@ namespace XRNeckSafer
                 Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId}: ERROR {err.Message}");
             }
         }
-
-        //[Obsolete("Keep this method for compartibility with old way of pressed buttons check")]
-        //public static bool IsButtonPressed(ButtonConfig butconf)
-        //{
-        //    if (butconf == null)
-        //    {
-        //        return false;
-        //    }
-        //    bool pressed = IsPressed(butconf.Use8WayHat, butconf.JoystickGUID, butconf.Button);
-        //    if (butconf.UseModifier)
-        //        pressed = pressed && IsPressed(butconf.Use8WayHat, butconf.ModJoystickGUID, butconf.ModButton);
-        //    if (butconf.Toggle)
-        //    {
-        //        if (pressed && !butconf.laststate)
-        //            butconf.togglestate = !butconf.togglestate;
-        //        butconf.laststate = pressed;
-        //        return butconf.togglestate;
-        //    }
-        //    pressed = butconf.Invert ? !pressed : pressed;
-        //    return pressed;
-        //}
-
-
-        //[Obsolete("Keep this method for compartibility with old way of pressed buttons check")]
-        //private static bool IsPressed(bool use8wayhat, string joystickGuid, string button)
-        //{
-        //    int b = -1, p = -1;
-        //    var stickItem = GetJoysticks().FirstOrDefault(j => j.JoystickGuid.Equals(joystickGuid, StringComparison.Ordinal));
-        //    if (stickItem == null)
-        //    {
-        //        return false;
-        //    }
-
-        //    if (button.StartsWith("But:"))
-        //    {
-        //        int.TryParse(button.Substring(5), out b);
-        //    }
-        //    else if (button.StartsWith("Pov "))
-        //    {
-        //        int.TryParse(button.Substring(4, 1), out p);
-        //        switch (button.Substring(7))
-        //        {
-        //            case "U":
-        //                b = 0;
-        //                break;
-        //            case "R":
-        //                b = 9000;
-        //                break;
-        //            case "D":
-        //                b = 18000;
-        //                break;
-        //            case "L":
-        //                b = 27000;
-        //                break;
-        //        }
-        //    }
-        //    else if (button.StartsWith("P"))
-        //    {
-        //        int.TryParse(button.Substring(1, 1), out p);
-        //        int.TryParse(button.Substring(4), out b);
-        //        b *= 100;
-        //    }
-        //    try
-        //    {
-        //        if (!_joysticGuids.TryGetValue(new Guid(stickItem.JoystickGuid), out Joystick joystick))
-        //        {
-        //            return false;
-        //        }
-        //        JoystickState state = joystick.GetCurrentState();
-        //        if ((p == -1) && (b == -1)) return false;
-
-        //        if (p == -1)
-        //        {
-        //            return state.Buttons[b]; // state.Buttons[b - 1];
-        //        }
-        //        else
-        //        {
-        //            if (state.PointOfViewControllers[p] == -1) return false;
-        //            if (use8wayhat)
-        //            {
-        //                return state.PointOfViewControllers[p] == b;
-        //            }
-        //            return (Math.Abs(state.PointOfViewControllers[p] - b) < 5000) || (state.PointOfViewControllers[p] == 31500 && b == 0);
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        return false;
-        //    }
-        //}
     }
 }
