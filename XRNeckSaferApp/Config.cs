@@ -5,49 +5,6 @@ using System.IO;
 
 namespace XRNeckSafer
 {
-    public class ButtonConfig
-    {
-        public string JoystickGUID;
-        public string Button;
-        public string ModJoystickGUID;
-        public string ModButton;
-        public bool UseModifier;
-        public bool Use8WayHat;
-        public bool Invert;
-        public bool Toggle;
-        [JsonIgnore]
-        public bool togglestate;
-        public bool laststate;
-        public ButtonConfig()
-        {
-            JoystickGUID = "none";
-            Button = "none";
-            ModJoystickGUID = "none";
-            ModButton = "none";
-            UseModifier = false;
-            Use8WayHat = false;
-            Invert = false;
-            Toggle = false;
-            togglestate = false;
-            laststate = false;
-        }
-
-        public ButtonConfig CopyConfig(ButtonConfig buttonConfig)
-        {
-            buttonConfig.JoystickGUID = string.Copy(JoystickGUID);
-            buttonConfig.Button = string.Copy(Button);
-            buttonConfig.ModJoystickGUID = string.Copy(ModJoystickGUID);
-            buttonConfig.ModButton = string.Copy(ModButton);
-            buttonConfig.UseModifier = UseModifier;
-            buttonConfig.Use8WayHat = Use8WayHat;
-            buttonConfig.Invert = Invert;
-            buttonConfig.Toggle = Toggle;
-
-            return buttonConfig;
-        }
-
-    }
-
     public class Config
     {
         public int Angle;

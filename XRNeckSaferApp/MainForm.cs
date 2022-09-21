@@ -265,16 +265,6 @@ namespace XRNeckSafer
             return Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
         }
 
-        private void setLabelToolTip(Label l, ButtonConfig bc)
-        {
-            string Text = JoystickService.GetJoystickName(bc.JoystickGUID) ?? "none" + ": " + bc.Button;
-            if (bc.UseModifier)
-            {
-                Text += "   +   " + JoystickService.GetJoystickName(bc.ModJoystickGUID) ?? "none" + ": " + bc.ModButton;
-            }
-            toolTip1.SetToolTip(l, Text);
-        }
-
         private void OnYawRotationAngleChanged(object sender, EventArgs e)
         {
             Config.Instance.Angle = (int)angleNUD.Value;
