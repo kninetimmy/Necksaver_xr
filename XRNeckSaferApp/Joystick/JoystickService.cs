@@ -26,11 +26,11 @@ namespace XRNeckSafer
 
         public static string GetJoystickName(string stringGuid)
         {
-            if (!Guid.TryParse(stringGuid, out Guid guid) || !_joysticGuids.TryGetValue(guid, out Joystick joystick))
+            if (!Guid.TryParse(stringGuid, out Guid guid))
             {
                 return null;
             }
-            return joystick?.Properties?.InstanceName;
+            return GetJoystickName(guid);
         }
 
         public static string GetJoystickName(Guid guid)

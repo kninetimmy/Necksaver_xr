@@ -166,7 +166,6 @@
       <DependentUpon>ActionPropertiesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ActionProperties\ActionProperty.cs" />
-    <Compile Include="ActionProperties\ActionPropertyConverter.cs" />
     <Compile Include="ActionProperties\ActionPropertyEvent.cs" />
     <Compile Include="ActionProperties\ActionPropertyEventArgs.cs" />
     <Compile Include="ActionProperties\ActionPropertyProcessor.cs" />
