@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace XRNeckSafer
@@ -9,9 +9,9 @@ namespace XRNeckSafer
         const string UP_EVENT_NAME = "Up";
         const string DOWN_EVENT_NAME = "Down";
 
-        public override void DispatchEvent(ActionPropertyEvent actionEvent, bool sameKeys, bool keyReleased)
+        public override void DispatchEvent(ActionPropertyEvent actionEvent, JoystickKeyboardInput input, bool sameKeys, bool matched)
         {
-            if (keyReleased)
+            if (!matched)
             {
                 return;
             }
@@ -19,11 +19,11 @@ namespace XRNeckSafer
             {
                 case UP_EVENT_NAME:
                     Value++;
-                    ProcessEvent(actionEvent);
+                    ProcessEvent(actionEvent, input);
                     break;
                 case DOWN_EVENT_NAME:
                     Value--;
-                    ProcessEvent(actionEvent);
+                    ProcessEvent(actionEvent, input);
                     break;
             }
         }
@@ -39,12 +39,12 @@ namespace XRNeckSafer
                     new ActionPropertyEvent
                     {
                         Name = UP_EVENT_NAME,
-                        InputCombination = new JoystickKeyboardInput(),
+                        InputCombinations = new List<JoystickKeyboardInput> { new JoystickKeyboardInput() },
                     },
                     new ActionPropertyEvent
                     {
                         Name = DOWN_EVENT_NAME,
-                        InputCombination = new JoystickKeyboardInput(),
+                        InputCombinations = new List<JoystickKeyboardInput> { new JoystickKeyboardInput() },
                     }
                 }
             };

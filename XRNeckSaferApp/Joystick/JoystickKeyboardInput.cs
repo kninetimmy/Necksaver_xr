@@ -13,7 +13,7 @@ namespace XRNeckSafer
         public List<Keys> KeyboardKeys { get; set; } = new List<Keys>();
 
         [DataMember]
-        public List<JoyBut> JoystickButtons { get; set; } = new List<JoyBut>();
+        public List<JoystickButton> JoystickButtons { get; set; } = new List<JoystickButton>();
 
         public bool IsEqual(JoystickKeyboardInput input)
         {
@@ -41,8 +41,13 @@ namespace XRNeckSafer
                 {
                     builder.Append("+");
                 }
-                var stickItem = JoystickStuff.Instance.GetStickItemByGuid(button.JoystickGuid);
-                builder.Append($"[{stickItem.InstanceName} But:{button.Button + 1}]");
+                var joystickName = JoystickService.GetJoystickName(button.JoystickGuid) ?? "UNPLUGGED";
+                if (button.POV != -1)
+                {
+                    builder.Append($"[{joystickName} POV:{button.POV + 1} {button.Button / 100}°]");
+                    continue;
+                }
+                builder.Append($"[{joystickName} But:{button.Button + 1}]");
             }
             foreach (var key in KeyboardKeys)
             {
@@ -53,6 +58,20 @@ namespace XRNeckSafer
                 builder.Append($"[Key:{key}]");
             }
             return builder.ToString();
+        }
+
+        private bool IsEmpty()
+        {
+            return KeyboardKeys.Count == 0 && JoystickButtons.Count == 0;
+        }
+
+        public bool Match(JoystickKeyboardInput input)
+        {
+            var keyboardMatched = !KeyboardKeys.Any()
+                || (KeyboardKeys.Any() && input.KeyboardKeys.Any() && KeyboardKeys.All(k => input.KeyboardKeys.Any(nk => nk == k)));
+            var joystickMatched = !JoystickButtons.Any()
+                || (JoystickButtons.Any() && input.JoystickButtons.Any() && JoystickButtons.All(b => input.JoystickButtons.Any(nb => nb.GetId() == b.GetId())));
+            return keyboardMatched && joystickMatched && !IsEmpty();
         }
     }
 }

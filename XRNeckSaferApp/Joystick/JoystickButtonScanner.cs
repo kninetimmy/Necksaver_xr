@@ -1,97 +1,150 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace XRNeckSafer
 {
     public class JoystickButtonScanner : IDisposable
     {
-        private Timer _scanTimer;
-        private readonly Dictionary<string, JoyBut> _pressedButtons;
+        private readonly Dictionary<string, JoystickButton> _pressedButtons;
+        private readonly Dictionary<string, JoystickButton> _pressedResultButtons;
         private readonly int _maxPressedButtonsCount;
+        private List<JoystickButton> _excludeButtons = new List<JoystickButton>();
 
-        public event Action<List<JoyBut>> OnScanningComplete;
-        public event Action<List<JoyBut>> OnCurrentlyPressedChanged;
+        public event Action<List<JoystickButton>> CurrentlyPressedChanged;
+        public event Action<List<JoystickButton>> BeforeButtonReleased;
 
         public JoystickButtonScanner(int maxPressedButtonsCount = 1)
         {
-            _pressedButtons = new Dictionary<string, JoyBut>();
-            _scanTimer = new Timer()
-            {
-                Interval = 100
-            };
-            _scanTimer.Tick += new EventHandler(ScanTimerLoop);
+            _pressedButtons = new Dictionary<string, JoystickButton>();
+            _pressedResultButtons = new Dictionary<string, JoystickButton>();
             _maxPressedButtonsCount = maxPressedButtonsCount;
+            JoystickService.PressedButtonsUpdate += JoystickPollingPressedButtonsUpdate;
+        }
+
+        private void JoystickPollingPressedButtonsUpdate(Guid guid, JoystickButton joyBut, bool pressed)
+        {
+            var isExcludedButton = _excludeButtons.Any(e => e.GetId() == joyBut.GetId());
+            if (isExcludedButton)
+            {
+                return;
+            }
+            if (pressed)
+            {
+                if (AddResultButton(joyBut))
+                {
+                    // Console.WriteLine($"Pressed result buttons - {DebugPressedButtons()}");
+                    CurrentlyPressedChanged?.Invoke(_pressedResultButtons.Values.ToList());
+
+                }
+                return;
+            }
+
+            if (isExcludedButton)
+            {
+                _excludeButtons.RemoveAll(e => e.GetId() == joyBut.GetId());
+            }
+            if (RemoveResultButton(joyBut))
+            {
+                CurrentlyPressedChanged?.Invoke(_pressedResultButtons.Values.ToList());
+                // Console.WriteLine($"Pressed result buttons - {DebugPressedButtons()}");
+            }
         }
 
         public void StartScan()
         {
-            JoystickStuff.Instance.ReloadJoysticks();
-            _scanTimer.Start();
-        }
-
-        private void ScanTimerLoop(object sender, EventArgs e)
-        {
-            var pressedButtons = JoystickStuff.Instance.GetPressedButtons();
-            if (pressedButtons != null)
-            {
-                if (AddButtons(pressedButtons))
-                {
-                    // Debug();
-                    OnCurrentlyPressedChanged?.Invoke(_pressedButtons.Values.ToList());
-                }
-                return;
-            }
-            if (_pressedButtons.Any())
-            {
-                // Stop();
-                OnScanningComplete?.Invoke(_pressedButtons.Values.ToList());
-                _pressedButtons.Clear();
-            }
+            _excludeButtons = JoystickService.GetPressedButtons();
         }
 
         public void Stop()
         {
-            _scanTimer.Stop();
+            _excludeButtons.Clear();
         }
 
         public void Dispose()
         {
-            _scanTimer?.Dispose();
             UnsubscribeAllHandlers();
-            _scanTimer = null;
         }
 
-        private bool AddButtons(List<JoyBut> buttons)
+        private bool IsLimitReached()
         {
-            if (_maxPressedButtonsCount <= _pressedButtons.Count)
-            {
+            return _maxPressedButtonsCount <= _pressedResultButtons.Count;
+        }
+
+        private bool AddResultButton(JoystickButton button)
+        {
+            lock (_pressedButtons)
+            { 
+                var id = button.GetId();
+                if (!_pressedButtons.ContainsKey(id))
+                {
+                    _pressedButtons.Add(id, button);
+                }
+                if (IsLimitReached())
+                {
+                    return false;
+                }
+                if (_maxPressedButtonsCount > _pressedResultButtons.Count && !_pressedResultButtons.ContainsKey(id))
+                {
+                    _pressedResultButtons.Add(id, button);
+                    // Console.WriteLine($"Added button - {button.GetId()}");
+                    return true;
+                }
                 return false;
             }
+        }
+
+        private bool RemoveResultButton(JoystickButton button)
+        {
             lock (_pressedButtons)
             {
-                var added = false;
-                foreach (var button in buttons)
+                var isPov = button.POV > -1;
+                if (isPov)
                 {
-                    var id = button.GetId();
-                    if (_maxPressedButtonsCount > _pressedButtons.Count && !_pressedButtons.ContainsKey(id))
+                    var removed = false;
+                    var povButtonKeys = _pressedButtons.Keys.Where(key => _pressedButtons[key].POV == button.POV && _pressedButtons[key].JoystickGuid == button.JoystickGuid).ToArray();
+                    foreach (var povKey in povButtonKeys)
                     {
-                        _pressedButtons.Add(id, button);
-                        added = true;
+                        removed |= RemoveButton(povKey);
+                    }
+                    return removed;
+                }
+                return RemoveButton(button.GetId());
+            }
+        }
+
+        private bool RemoveButton(string id)
+        {
+            if (_pressedButtons.ContainsKey(id))
+            {
+                _pressedButtons.Remove(id);
+            }
+            if (_pressedResultButtons.ContainsKey(id))
+            {
+                BeforeButtonReleased?.Invoke(_pressedResultButtons.Values.ToList());
+                _pressedResultButtons.Remove(id);
+                if (!IsLimitReached() && _pressedResultButtons.Count < _pressedButtons.Count)
+                {
+                    var shiftToResultKey = _pressedButtons.Keys.FirstOrDefault(key => !_pressedResultButtons.ContainsKey(key));
+                    if (shiftToResultKey != null)
+                    {
+                        _pressedResultButtons.Add(shiftToResultKey, _pressedButtons[shiftToResultKey]);
                     }
                 }
-                return added;
+                return true;
             }
+            return false;
         }
 
         private void UnsubscribeAllHandlers()
         {
-            OnScanningComplete?.GetInvocationList().ToList().ForEach(d => OnScanningComplete -= d as Action<List<JoyBut>>);
-            OnCurrentlyPressedChanged?.GetInvocationList().ToList().ForEach(d => OnCurrentlyPressedChanged -= d as Action<List<JoyBut>>);
+
+            BeforeButtonReleased?.GetInvocationList().ToList().ForEach(d => BeforeButtonReleased -= d as Action<List<JoystickButton>>);
+            CurrentlyPressedChanged?.GetInvocationList().ToList().ForEach(d => CurrentlyPressedChanged -= d as Action<List<JoystickButton>>);
+            JoystickService.PressedButtonsUpdate -= JoystickPollingPressedButtonsUpdate;
         }
 
-        //private void Debug()
+        //private string DebugPressedButtons()
         //{
         //    var builder = new System.Text.StringBuilder();
         //    foreach (var key in _pressedButtons.Keys)
@@ -100,9 +153,27 @@ namespace XRNeckSafer
         //        {
         //            builder.Append("+");
         //        }
-        //        builder.Append(key);
+        //        builder.Append($"[{key}]");
         //    }
-        //    Console.WriteLine(builder.ToString());
+        //    return builder.ToString();
+        //}
+
+        //private string DebugButtons(List<JoyBut> buttons)
+        //{
+        //    if (buttons == null || !buttons.Any())
+        //    {
+        //        return "NONE";
+        //    }
+        //    var builder = new System.Text.StringBuilder();
+        //    foreach (var button in buttons)
+        //    {
+        //        if (builder.Length > 0)
+        //        {
+        //            builder.Append("+");
+        //        }
+        //        builder.Append(button.GetId());
+        //    }
+        //    return builder.ToString();
         //}
     }
 }

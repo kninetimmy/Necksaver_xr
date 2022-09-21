@@ -7,17 +7,38 @@ namespace XRNeckSafer
 {
     public class NumericActionUpDown : NumericUpDown
     {
-        // private string _actionPropertyName = string.Empty;
         private NumericUpDownActionProperty _actionProperty;
-        private bool _firstTimeRendered;
+        private bool _firstTimeRendered; 
+        private string _actionPropertyName;
 
         [Category("ActionProperty"), Description("ActionProperty name")]
-        public string ActionPropertyName { get; set; }
+        public string ActionPropertyName
+        {
+            get => _actionPropertyName;
+            set
+            {
+                _actionPropertyName = value;
+                if (this.InDesignerMode())
+                {
+                    return;
+                }
+                InitialiseActionProperty();
+            }
+        }
 
         public NumericActionUpDown() : base()
         {
             Config.ConfigReloaded += OnConfigReloaded;
             ValueChanged += OnValueChanged;
+        }
+
+        private void InitialiseActionProperty()
+        {
+            if (!_firstTimeRendered)
+            {
+                _firstTimeRendered = true;
+                SubscribeActionProperty();
+            }
         }
 
         private void OnValueChanged(object sender, EventArgs e)
@@ -40,6 +61,10 @@ namespace XRNeckSafer
             {
                 return;
             }
+            if (string.IsNullOrEmpty(ActionPropertyName))
+            {
+                throw new ArgumentException($"{nameof(ActionPropertyName)} can not be empty.");
+            }
             _actionProperty = Config.Instance.ActionProperties?.FirstOrDefault(p => p.Name == ActionPropertyName) as NumericUpDownActionProperty;
             if (_actionProperty == null)
             {
@@ -53,6 +78,11 @@ namespace XRNeckSafer
 
         private void ActionPropertyTriggered(ActionPropertyEventArgs<int> args)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<ActionPropertyEventArgs<int>>(ActionPropertyTriggered), args);
+                return;
+            }
             Value = args.Value;
         }
 

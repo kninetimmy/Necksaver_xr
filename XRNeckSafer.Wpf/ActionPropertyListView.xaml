@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="XRNeckSafer.Wpf.ActioonPropertyListView"
+﻿<UserControl x:Class="XRNeckSafer.Wpf.ActionPropertyListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,13 +11,55 @@
         <Style x:Key="_textBlockVertical" TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
+        <Style x:Key="_dataGrid" TargetType="DataGrid">
+            <Setter Property="CanUserAddRows" Value="False" />
+            <Setter Property="CanUserDeleteRows" Value="False" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="CanUserReorderColumns" Value="False" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="GridLinesVisibility" Value="Horizontal" />
+            <Setter Property="HorizontalGridLinesBrush" Value="LightGray" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HeadersVisibility" Value="Column" />
+        </Style>
         <local:BitmapToImageSourceConverter x:Key="BitmapToImageSourceConverter" />
     </UserControl.Resources>
-    <DataGrid CanUserAddRows="False" CanUserDeleteRows="False" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanUserReorderColumns="False" IsReadOnly="True" 
-                      Name="_listView" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="LightGray" ItemsSource="{Binding ElementName=HostControl, Path=Properties}" VerticalContentAlignment="Center">
+    <DataGrid Style="{StaticResource _dataGrid}" Name="_dataGrid" ItemsSource="{Binding ElementName=HostControl, Path=Properties}">
         <DataGrid.Columns>
             <DataGridTextColumn Header="Event Name" Binding="{Binding EventName}" ElementStyle="{StaticResource _textBlockVertical}" />
-            <DataGridTextColumn Header="Key/Joystick mapping" Binding="{Binding InputCombination}" Width="*" ElementStyle="{StaticResource _textBlockVertical}" />
+            <DataGridTemplateColumn Header="Key/Joystick mapping" Width="*">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <DataGrid x:Name="_inputsGrid" Style="{StaticResource _dataGrid}" ItemsSource="{Binding InputCombinations}" HeadersVisibility="None">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="*" Binding="{Binding InputCombination}" ElementStyle="{StaticResource _textBlockVertical}" />
+                                <DataGridTemplateColumn Header="Scan" Width="20">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center">
+                                                <Button ToolTip="Assign key/joystick shortcut" Name="_scanTButton" Content=".." Click="OnScanButtonClick" Width="15" Height="15" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Clear">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center">
+                                                <Button ToolTip="Clear key/joystick shortcut" Click="ClearEventClick" Background="Transparent" BorderBrush="Transparent">
+                                                    <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.deleteIcon}, Converter={StaticResource BitmapToImageSourceConverter}}" />
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
             <DataGridTemplateColumn Header="Toggle">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
@@ -44,7 +86,7 @@
                     <DataTemplate>
                         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <StackPanel HorizontalAlignment="Center" >
-                                <CheckBox Name="_invertCheckBox" IsChecked="{Binding InvertValue}" Checked="InvertCheckBox_Click" Unchecked="InvertCheckBox_Click">
+                                <CheckBox Name="_invertCheckBox" IsChecked="{Binding InvertValue}" Checked="OnInvertCheckBoxClick" Unchecked="OnInvertCheckBoxClick">
                                     <CheckBox.Style>
                                         <Style TargetType="CheckBox">
                                             <Style.Triggers>
@@ -58,26 +100,6 @@
                             </StackPanel>
                         </StackPanel>
 
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-            <DataGridTemplateColumn Header="Scan">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <StackPanel VerticalAlignment="Center">
-                            <Button Name="_scanButton" Content="..." Click="OnScanButtonClick" />
-                        </StackPanel>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-            <DataGridTemplateColumn Header="Clear">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <StackPanel VerticalAlignment="Center">
-                            <Button Click="ClearEventClick" Background="Transparent" BorderBrush="Transparent">
-                                <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.deleteIcon}, Converter={StaticResource BitmapToImageSourceConverter}}" />
-                            </Button>
-                        </StackPanel>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 
 namespace XRNeckSafer
@@ -20,6 +19,7 @@ namespace XRNeckSafer
         private delegate IntPtr LowLevelKeyboardHandler(int nCode, IntPtr wParam, IntPtr lParam);
 
         public static event Action<Keys[]> KeyPressed;
+        public static event Action<Keys[]> BeforeKeyReleased;
 
         private static LowLevelKeyboardHandler _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
@@ -44,9 +44,16 @@ namespace XRNeckSafer
         {
             if (KeyPressed != null)
             {
-                foreach (var invokerDelegate in KeyPressed.GetInvocationList())
+                foreach (var invokerDelegate in KeyPressed?.GetInvocationList())
                 {
-                    KeyPressed -= (invokerDelegate as Action<Keys[]>);
+                    KeyPressed -= invokerDelegate as Action<Keys[]>;
+                }
+            }
+            if (BeforeKeyReleased != null)
+            {
+                foreach (var invokerDelegate in BeforeKeyReleased?.GetInvocationList())
+                {
+                    BeforeKeyReleased -= invokerDelegate as Action<Keys[]>;
                 }
             }
         }
@@ -77,6 +84,7 @@ namespace XRNeckSafer
                     }
                     if (keyUp)
                     {
+                        BeforeKeyReleased?.Invoke(_pressedKeys.ToArray());
                         _pressedKeys.Remove(key);
                     }
                 }

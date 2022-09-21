@@ -1,10 +1,14 @@
 ﻿using SharpDX;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
+using XRNeckSafer.Wpf;
 
 namespace XRNeckSafer
 {
@@ -45,8 +49,9 @@ namespace XRNeckSafer
             notifyIcon.ContextMenuStrip = contextMenuStrip;
             showToolStripMenuItem.Click += showToolStripMenuItem_Click;
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
-
-            if (Config.Instance.StartMinimized) this.WindowState = FormWindowState.Minimized;
+            JoystickService.DeviceDisconnected += OnJoystickDisconnected;
+            JoystickService.DeviceConnected += OnJoystickConnected;
+            if (Config.Instance.StartMinimized) WindowState = FormWindowState.Minimized;
 
             angleNUD.Value = Config.Instance.Angle;
             upNUD.Value = Config.Instance.UpAngle;
@@ -79,8 +84,8 @@ namespace XRNeckSafer
             {
                 pAROffButton.Checked = true;
             }
-            pitchAutorotChanged(new Object(), new EventArgs());
-            autorot_changed(new Object(), new EventArgs());
+            pitchAutorotChanged(new object(), new EventArgs());
+            autorot_changed(new object(), new EventArgs());
             YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
 
@@ -179,15 +184,6 @@ namespace XRNeckSafer
             DownAutorotGridView.Columns[2].HeaderCell.Style.ForeColor = System.Drawing.Color.Black;
             DownAutorotGridView.Columns[2].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
 
-            setButtonToolTip(SetLeftButton, Config.Instance.LeftButton);
-            setButtonToolTip(SetRightButton, Config.Instance.RightButton);
-            // setButtonToolTip(SetResetButton, Config.Instance.ResetButton);
-            setButtonToolTip(AccumReset, Config.Instance.AccuResetButton);
-            setButtonToolTip(SetHoldButton1, Config.Instance.HoldButton1);
-
-            setLabelToolTip(LeftLabel, Config.Instance.LeftButton);
-            setLabelToolTip(RightLabel, Config.Instance.RightButton);
-
             error_label.Visible = check_autorot_config();
             error_label2.Visible = error_label.Visible;
             upErrorLabel1.Visible = check_autorot_config();
@@ -208,17 +204,51 @@ namespace XRNeckSafer
             _ARText = "Autorotation";
             _pARText = "Autorotation";
             _hmdtext = "";
-            loopTimer.Start();
+            UpdateDevicesLabel();
         }
 
-        public void setButtonToolTip(Button b, ButtonConfig bc)
+        private void OnJoystickConnected(Guid guid, string joystickName)
         {
-            var text = JoystickStuff.Instance.GetDeviceNameByGuid(bc.JoystickGUID) + ": " + bc.Button;
-            if (bc.UseModifier)
+            if (InvokeRequired)
             {
-                text += "   +   " + JoystickStuff.Instance.GetDeviceNameByGuid(bc.ModJoystickGUID) + ": " + bc.ModButton;
+                Invoke(new Action<Guid, string>(OnJoystickConnected), guid, joystickName);
+                return;
             }
-            toolTip1.SetToolTip(b, text);
+            UpdateDevicesLabel();
+        }
+
+        private void OnJoystickDisconnected(Guid guid, string joystickName)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<Guid, string>(OnJoystickDisconnected), guid, joystickName);
+                return;
+            }
+            UpdateDevicesLabel();
+            MessageBox.Show($"Joystick {joystickName} with GUID: {guid} has been disconnected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void UpdateDevicesLabel()
+        {
+            var guids = JoystickService.GetJoystickGuids();
+            var stringBuilder = new StringBuilder();
+            foreach (var joyGuid in guids)
+            {
+                var name = JoystickService.GetJoystickName(joyGuid);
+                if (string.IsNullOrEmpty(name))
+                {
+                    continue;
+                }
+                if (stringBuilder.Length > 0)
+                {
+                    stringBuilder.Append(Environment.NewLine);
+                }
+                stringBuilder.Append(name);
+            }
+            toolTip1.SetToolTip(_devicesStatusLabel, stringBuilder.ToString());
+            toolTip1.SetToolTip(_devicesStatusImage, stringBuilder.ToString());
+            _devicesStatusLabel.Text = $"Joysticks: {guids.Length}";
+            _devicesStatusImage.Image = guids.Any() ? XRNeckSaferApp.Properties.Resources.green_circle : XRNeckSaferApp.Properties.Resources.red_circle;
         }
 
         private static string GetAssemblyProductVersion()
@@ -226,32 +256,19 @@ namespace XRNeckSafer
             return Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
         }
 
-        private void setLabelToolTip(Label l, ButtonConfig bc)
-        {
-            string Text = JoystickStuff.Instance.GetDeviceNameByGuid(bc.JoystickGUID) + ": " + bc.Button;
-            if (bc.UseModifier)
-            {
-                Text += "   +   " + JoystickStuff.Instance.GetDeviceNameByGuid(bc.ModJoystickGUID) + ": " + bc.ModButton;
-            }
-            toolTip1.SetToolTip(l, Text);
-        }
-
         private void OnYawRotationAngleChanged(object sender, EventArgs e)
         {
             Config.Instance.Angle = (int)angleNUD.Value;
-            Config.Instance.WriteConfig();
         }
 
         private void OnPitchTiltUpRotationChanged(object sender, EventArgs e)
         {
             Config.Instance.UpAngle = (int)upNUD.Value;
-            Config.Instance.WriteConfig();
         }
 
         private void OnPitchTiltDownRotationChanged(object sender, EventArgs e)
         {
             Config.Instance.DownAngle = (int)downNUD.Value;
-            Config.Instance.WriteConfig();
         }
 
         private void additivRB_CheckedChanged(object sender, EventArgs e)
@@ -263,26 +280,8 @@ namespace XRNeckSafer
             label15.Enabled = !additivRB.Checked;
             label16.Enabled = !additivRB.Checked;
             label17.Enabled = !additivRB.Checked;
-            Config.Instance.WriteConfig();
         }
 
-        private void setButtonColor(bool pressed, Button b)
-        {
-            System.Drawing.Color fc = SystemColors.ControlText;
-            System.Drawing.Color bc = SystemColors.Control;
-
-            if (pressed)
-            {
-                fc = System.Drawing.Color.LightGreen;
-                bc = SystemColors.ControlText;
-            }
-
-            if (b.ForeColor != fc)
-            {
-                b.ForeColor = fc;
-                b.BackColor = bc;
-            }
-        }
         void setLabelColor(bool pressed, Label l)
         {
             System.Drawing.Color fc = SystemColors.ControlText;
@@ -303,51 +302,21 @@ namespace XRNeckSafer
 
         private void loopTimer_Tick(object sender, EventArgs e)
         {
-            bool reset_pressed = SetResetButton.ActionPropertyValue;  //  JoystickStuff.Instance.IsButtonPressed(Config.Instance.ResetButton);
-            bool acc_res_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.AccuResetButton);
-            bool pitch_acc_res_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.PitchAccuResetButton);
-            bool l_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.LeftButton);
-            bool r_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.RightButton);
-            bool u_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.UpButton);
-            bool d_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.DownButton);
-            bool h_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.HoldButton1);
-            bool hp_pressed = JoystickStuff.Instance.IsButtonPressed(Config.Instance.PitchHoldButton1);
+            bool reset_pressed = SetResetButton.ActionPropertyValue;
+            bool acc_res_pressed = AccumReset.ActionPropertyValue;
+            bool pitch_acc_res_pressed = pAccumReset.ActionPropertyValue;
+            bool l_pressed = SetLeftButton.ActionPropertyValue;
+            bool r_pressed = SetRightButton.ActionPropertyValue;
+            bool u_pressed = SetUpButton.ActionPropertyValue;
+            bool d_pressed = SetDownButton.ActionPropertyValue;
+            bool h_pressed = YawAutorotationHoldButton.ActionPropertyValue;
+            bool hp_pressed = PitchAutorotationHoldButton.ActionPropertyValue;
             //            bool h_pressed = checkButtonPress(SetHoldButton1, conf.HoldButton1);
-            if (Config.Instance.MultipleLRbuttons)
-            {
-                l_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.LeftButton2);
-                l_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.LeftButton3);
-                r_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.RightButton2);
-                r_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.RightButton3);
-                u_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.UpButton2);
-                u_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.UpButton3);
-                d_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.DownButton2);
-                d_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.DownButton3);
-                reset_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.ResetButton2);
-                reset_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.ResetButton3);
-                acc_res_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.AccuResetButton2);
-                acc_res_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.AccuResetButton3);
-                pitch_acc_res_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.PitchAccuResetButton2);
-                pitch_acc_res_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.PitchAccuResetButton3);
-                h_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.HoldButton2);
-                h_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.HoldButton3);
-                hp_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.PitchHoldButton2);
-                hp_pressed |= JoystickStuff.Instance.IsButtonPressed(Config.Instance.PitchHoldButton3);
-            }
 
-            setButtonColor(l_pressed, SetLeftButton);
             setLabelColor(l_pressed, LeftLabel);
-            setButtonColor(r_pressed, SetRightButton);
             setLabelColor(r_pressed, RightLabel);
-            setButtonColor(u_pressed, SetUpButton);
             setLabelColor(u_pressed, UpLabel);
-            setButtonColor(d_pressed, SetDownButton);
             setLabelColor(d_pressed, DownLabel);
-            setButtonColor(reset_pressed, SetResetButton);
-            setButtonColor(acc_res_pressed, AccumReset);
-            setButtonColor(pitch_acc_res_pressed, pAccumReset);
-            setButtonColor(h_pressed, SetHoldButton1);
-            setButtonColor(hp_pressed, SetPitchHoldButton);
 
             bool pitchlimit = _vr.GetHmdPitch() - 90 > Config.Instance.PitchLimForAutorot;
 
@@ -640,16 +609,12 @@ namespace XRNeckSafer
 
         private void SetTransOffsetF(decimal value)
         {
-            // Config.Instance.TransF = (int)value;
             _transOffsetForward = (float)value / 100F;
-            // Config.Instance.WriteConfig();
         }
 
         private void SetTransOffsetLR(decimal value)
         {
-            // Config.Instance.TransLR = (int)value;
             _transOffsetLeftRight = (float)value / 100F;
-            // Config.Instance.WriteConfig();
         }
 
         private void OnYawForwardTranslationChanged(object sender, EventArgs e)
@@ -879,7 +844,6 @@ namespace XRNeckSafer
             if (good)
             {
                 Config.Instance.AutoSteps[e.RowIndex][e.ColumnIndex] = val;
-                Config.Instance.WriteConfig();
             }
 
             error_label.Visible = check_autorot_config();
@@ -899,7 +863,6 @@ namespace XRNeckSafer
             if (good)
             {
                 Config.Instance.UpAutoSteps[e.RowIndex][e.ColumnIndex] = val;
-                Config.Instance.WriteConfig();
             }
 
             upErrorLabel1.Visible = check_UP_autorot_config();
@@ -917,7 +880,6 @@ namespace XRNeckSafer
             if (good)
             {
                 Config.Instance.DownAutoSteps[e.RowIndex][e.ColumnIndex] = val;
-                Config.Instance.WriteConfig();
             }
 
             downErrorLabel1.Visible = check_DOWN_autorot_config();
@@ -927,8 +889,7 @@ namespace XRNeckSafer
         private void AutorotGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
-            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
-            Config.Instance.WriteConfig();
+            AutorotGridView.MaximumSize = new Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
         }
@@ -936,8 +897,7 @@ namespace XRNeckSafer
         private void AutorotGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
             AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
-            AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
-            Config.Instance.WriteConfig();
+            AutorotGridView.MaximumSize = new Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
         }
@@ -945,8 +905,7 @@ namespace XRNeckSafer
         {
             UpAutorotGridView.Height = UpAutorotGridView.RowCount * 22 + 20;
 
-            UpAutorotGridView.MaximumSize = new System.Drawing.Size(UpAutorotGridView.Width, stepwiseGroup.Height - 60);
-            Config.Instance.WriteConfig();
+            UpAutorotGridView.MaximumSize = new Size(UpAutorotGridView.Width, stepwiseGroup.Height - 60);
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
         }
@@ -954,16 +913,14 @@ namespace XRNeckSafer
         private void UpAutorotGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
             UpAutorotGridView.Height = UpAutorotGridView.RowCount * 22 + 20;
-            UpAutorotGridView.MaximumSize = new System.Drawing.Size(UpAutorotGridView.Width, stepwiseGroup.Height - 60);
-            Config.Instance.WriteConfig();
+            UpAutorotGridView.MaximumSize = new Size(UpAutorotGridView.Width, stepwiseGroup.Height - 60);
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
         }
         private void DownAutorotGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             DownAutorotGridView.Height = DownAutorotGridView.RowCount * 22 + 20;
-            DownAutorotGridView.MaximumSize = new System.Drawing.Size(DownAutorotGridView.Width, stepwiseGroup.Height - 60);
-            Config.Instance.WriteConfig();
+            DownAutorotGridView.MaximumSize = new Size(DownAutorotGridView.Width, stepwiseGroup.Height - 60);
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
         }
@@ -971,8 +928,7 @@ namespace XRNeckSafer
         private void DownAutorotGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
             DownAutorotGridView.Height = DownAutorotGridView.RowCount * 22 + 20;
-            DownAutorotGridView.MaximumSize = new System.Drawing.Size(DownAutorotGridView.Width, stepwiseGroup.Height - 60);
-            Config.Instance.WriteConfig();
+            DownAutorotGridView.MaximumSize = new Size(DownAutorotGridView.Width, stepwiseGroup.Height - 60);
             if (_graphForm != null)
                 _graphForm.Graph_ValuesChanged();
         }
@@ -980,116 +936,17 @@ namespace XRNeckSafer
         private void startMinimzedToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
         {
             Config.Instance.StartMinimized = startMinimzedToolStripMenuItem.Checked;
-            Config.Instance.WriteConfig();
         }
 
         private void minimizeToTrayToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
         {
             Config.Instance.MinimizeToTray = minimizeToTrayToolStripMenuItem.Checked;
-            Config.Instance.WriteConfig();
         }
 
-        private void SetLeftButton_Click(object sender, EventArgs e)
-        {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                using (var frm = new ButtonForm(Top, Right, "Button for Left Rotation:", Config.Instance.LeftButton))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            else
-            {
-                using (var frm = new MultiButtons(Top, Right, "Left", Config.Instance.LeftButton, Config.Instance.LeftButton2, Config.Instance.LeftButton3))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            setButtonToolTip(SetLeftButton, Config.Instance.LeftButton);
-            setLabelToolTip(LeftLabel, Config.Instance.LeftButton);
-        }
-
-        private void SetRightButton_Click(object sender, EventArgs e)
-        {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                using (var frm = new ButtonForm(Top, Right, "Button for Right Rotation:", Config.Instance.RightButton))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            else
-            {
-                using (var frm = new MultiButtons(Top, Right, "Right", Config.Instance.RightButton, Config.Instance.RightButton2, Config.Instance.RightButton3))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            setButtonToolTip(SetRightButton, Config.Instance.RightButton);
-            setLabelToolTip(RightLabel, Config.Instance.RightButton);
-        }
-
-        private void SetResetButton_Click(object sender, EventArgs e)
+        private void OnBooleanActionButtonClick(object sender, EventArgs e)
         {
             var button = (BooleanActionButton)sender;
-            // button.ActionPropertyName;
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                //using (var frm = new ButtonForm(Top, Right, "Reset Button:", Config.Instance.ResetButton))
-                //{
-                //    frm.ShowDialog();
-                //}
-                ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
-            }
-            //else
-            //{
-            //    using (var form = new ActionPropertiesForm(button.ActionPropertyName, Top, Right))
-            //    {
-            //        form.ShowDialog();
-            //    }
-            //    //using (var frm = new MultiButtons(Top, Right, "Reset", Config.Instance.ResetButton, Config.Instance.ResetButton2, Config.Instance.ResetButton3))
-            //    //{
-            //    //    frm.ShowDialog();
-            //    //}
-            //}
-        }
-
-        private void AccumReset_Click(object sender, EventArgs e)
-        {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                using (var frm = new ButtonForm(Top, Right, "Accum Reset Button:", Config.Instance.AccuResetButton))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            else
-            {
-                using (var frm = new MultiButtons(Top, Right, "Accum Reset", Config.Instance.AccuResetButton, Config.Instance.AccuResetButton2, Config.Instance.AccuResetButton3))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            setButtonToolTip(AccumReset, Config.Instance.AccuResetButton);
-        }
-
-        private void SetHoldButton1_Click(object sender, EventArgs e)
-        {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                using (var frm = new ButtonForm(Top, Right, "Hold Button:", Config.Instance.HoldButton1))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            else
-            {
-                using (var frm = new MultiButtons(Top, Right, "Hold Button", Config.Instance.HoldButton1, Config.Instance.HoldButton2, Config.Instance.HoldButton3))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            setButtonToolTip(SetHoldButton1, Config.Instance.HoldButton1);
+            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
         }
 
         void sizeChanged()
@@ -1103,7 +960,7 @@ namespace XRNeckSafer
                     YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
                     stepwiseGroup.Height = ARGroup.Height - 50;
                     AutorotGridView.Height = AutorotGridView.RowCount * 22 + 20;
-                    AutorotGridView.MaximumSize = new System.Drawing.Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
+                    AutorotGridView.MaximumSize = new Size(AutorotGridView.Width, stepwiseGroup.Height - 50);
 
                 }
             }
@@ -1115,9 +972,9 @@ namespace XRNeckSafer
                     YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
                     pStepwiseGroup.Height = pARGroup.Height - 48;
                     DownAutorotGridView.Height = DownAutorotGridView.RowCount * 22 + 20;
-                    DownAutorotGridView.MaximumSize = new System.Drawing.Size(DownAutorotGridView.Width, pStepwiseGroup.Height - 60);
+                    DownAutorotGridView.MaximumSize = new Size(DownAutorotGridView.Width, pStepwiseGroup.Height - 60);
                     UpAutorotGridView.Height = UpAutorotGridView.RowCount * 22 + 20;
-                    UpAutorotGridView.MaximumSize = new System.Drawing.Size(UpAutorotGridView.Width, pStepwiseGroup.Height - 60);
+                    UpAutorotGridView.MaximumSize = new Size(UpAutorotGridView.Width, pStepwiseGroup.Height - 60);
 
                 }
             }
@@ -1178,7 +1035,7 @@ namespace XRNeckSafer
         {
             startMinimzedToolStripMenuItem.Checked = Config.Instance.StartMinimized;
             minimizeToTrayToolStripMenuItem.Checked = Config.Instance.MinimizeToTray;
-            MultipleLRButtonsToolStripMenuItem.Checked = Config.Instance.MultipleLRbuttons;
+            // MultipleLRButtonsToolStripMenuItem.Checked = Config.Instance.MultipleLRbuttons;
             disableAllGUIOutputToolStripMenuItem.Checked = Config.Instance.DisableGUIOutput;
             disableJoystickAutoReconnectToolStripMenuItem.Checked = Config.Instance.DisableJoystickReconnect;
 
@@ -1193,8 +1050,7 @@ namespace XRNeckSafer
             Config.Instance.PitchLimForAutorot = 90;
             Config.Instance.DisableGUIOutput = false;
             Config.Instance.DisableJoystickReconnect = false;
-            Config.Instance.MultipleLRbuttons = false;
-            Config.Instance.WriteConfig();
+            // Config.Instance.MultipleLRbuttons = false;
             setMenuCheckmarks();
         }
 
@@ -1209,7 +1065,6 @@ namespace XRNeckSafer
             foreach (ToolStripMenuItem item in PitchLimToolStripMenuItem.DropDownItems) item.Checked = false;
             ((ToolStripMenuItem)e.ClickedItem).Checked = true;
             int.TryParse(e.ClickedItem.Text.Substring(0, 2), out Config.Instance.PitchLimForAutorot);
-            Config.Instance.WriteConfig();
         }
 
         private void moreLRButtonsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1217,20 +1072,16 @@ namespace XRNeckSafer
             if (MultipleLRButtonsToolStripMenuItem.Checked)
             {
                 MultipleLRButtonsToolStripMenuItem.Checked = false;
-                Config.Instance.MultipleLRbuttons = false;
-                Config.Instance.WriteConfig();
             }
             else
             {
                 MultipleLRButtonsToolStripMenuItem.Checked = true;
-                Config.Instance.MultipleLRbuttons = true;
-                Config.Instance.WriteConfig();
             }
         }
 
         private void listApiToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            List<String> LayerNames = _vr.ListApiLayers();
+            List<string> LayerNames = _vr.ListApiLayers();
 
             if (LayerNames[0] != "Error")
             {
@@ -1273,13 +1124,11 @@ namespace XRNeckSafer
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
             _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", Config.Instance.LinearLimL, Config.Instance.LinearLimR,
                 Config.Instance.LinearMultL, Config.Instance.LinearMultR);
-            Config.Instance.WriteConfig();
         }
         private void applyLinearSettings()
         {
             _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", Config.Instance.LinearLimL, Config.Instance.LinearLimR, Config.Instance.LinearMultL, Config.Instance.LinearMultR);
             _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear", Config.Instance.LinearLimU, Config.Instance.LinearLimD, Config.Instance.LinearMultU, Config.Instance.LinearMultD);
-            Config.Instance.WriteConfig();
         }
 
         private void numericUpDownMultLeft_ValueChanged(object sender, EventArgs e)
@@ -1400,7 +1249,7 @@ namespace XRNeckSafer
                 pStepwiseGroup.Visible = true;
                 pLinearGroup.Visible = false;
                 pARGroup.Height = 220;
-                pStepwiseGroup.Size = new System.Drawing.Size(236, 172);
+                pStepwiseGroup.Size = new Size(236, 172);
                 pStepwiseGroup.Location = new System.Drawing.Point(7, 40);
                 Config.Instance.PitchAutoMode = "stepwise";
             }
@@ -1409,7 +1258,6 @@ namespace XRNeckSafer
             _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear",
                 Config.Instance.LinearLimU, Config.Instance.LinearLimD,
                 Config.Instance.LinearMultU, Config.Instance.LinearMultD);
-            Config.Instance.WriteConfig();
 
         }
 
@@ -1426,85 +1274,6 @@ namespace XRNeckSafer
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
         }
 
-        private void SetDownButton_Click(object sender, EventArgs e)
-        {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                using (var frm = new ButtonForm(Top, Right, "Button for Down Rotation:", Config.Instance.DownButton))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            else
-            {
-                using (var frm = new MultiButtons(Top, Right, "Down", Config.Instance.DownButton, Config.Instance.DownButton2, Config.Instance.DownButton3))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            setButtonToolTip(SetDownButton, Config.Instance.DownButton);
-            setLabelToolTip(DownLabel, Config.Instance.DownButton);
-        }
-
-        private void SetUpButton_Click(object sender, EventArgs e)
-        {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                using (var frm = new ButtonForm(Top, Right, "Button for up Rotation:", Config.Instance.UpButton))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            else
-            {
-                using (var frm = new MultiButtons(Top, Right, "Down", Config.Instance.UpButton, Config.Instance.UpButton2, Config.Instance.UpButton3))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            setButtonToolTip(SetUpButton, Config.Instance.UpButton);
-            setLabelToolTip(UpLabel, Config.Instance.UpButton);
-
-        }
-
-        private void pAccumReset_Click(object sender, EventArgs e)
-        {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                using (var frm = new ButtonForm(Top, Right, "Pitch Accum Reset Button:", Config.Instance.PitchAccuResetButton))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            else
-            {
-                using (var frm = new MultiButtons(Top, Right, "Accum Reset", Config.Instance.PitchAccuResetButton, Config.Instance.PitchAccuResetButton2, Config.Instance.PitchAccuResetButton3))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            setButtonToolTip(pAccumReset, Config.Instance.PitchAccuResetButton);
-        }
-
-        private void SetPitchHoldButton_Click(object sender, EventArgs e)
-        {
-            if (!Config.Instance.MultipleLRbuttons)
-            {
-                using (var frm = new ButtonForm(Top, Right, "Pitch Hold Button:", Config.Instance.PitchHoldButton1))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            else
-            {
-                using (var frm = new MultiButtons(Top, Right, "Hold Button", Config.Instance.PitchHoldButton1, Config.Instance.PitchHoldButton2, Config.Instance.PitchHoldButton3))
-                {
-                    frm.ShowDialog();
-                }
-            }
-            setButtonToolTip(SetPitchHoldButton, Config.Instance.PitchHoldButton1);
-        }
-
         private void disableAllGUIOutputToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
         {
             Config.Instance.DisableGUIOutput = disableAllGUIOutputToolStripMenuItem.Checked;
@@ -1513,14 +1282,11 @@ namespace XRNeckSafer
                 HMDYawLabel.Text = "     (HMD angle output disabled)";
                 Text = "XRNS";
             }
-            Config.Instance.WriteConfig();
         }
 
         private void disableJoystickAutoReconnectToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
         {
-            Config.Instance.DisableJoystickReconnect = disableAllGUIOutputToolStripMenuItem.Checked;
-            Config.Instance.WriteConfig();
-            JoystickStuff.Instance.DisableJoystickReconnect = Config.Instance.DisableJoystickReconnect;
+            // Config.Instance.WriteConfig();
         }
 
         /// <summary>
@@ -1536,13 +1302,7 @@ namespace XRNeckSafer
             base.Dispose(disposing);
         }
 
-        private void OnTranslationLeftRightDoubleClick(object sender, MouseEventArgs e)
-        {
-            var button = (NumericActionUpDown)sender;
-            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
-        }
-
-        private void OnTranslationForwardDoubleClick(object sender, MouseEventArgs e)
+        private void OnNumericActionUpDownDoubleClick(object sender, MouseEventArgs e)
         {
             var button = (NumericActionUpDown)sender;
             ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
@@ -1552,16 +1312,33 @@ namespace XRNeckSafer
         {
             // disable navigation on form using keyboard in order to avoid
             // mess up with actions which have these keys assigned
-            if (!msg.HWnd.Equals(Handle) && 
-                (keyData == Keys.Left 
-                || keyData == Keys.Right 
-                || keyData == Keys.Up 
+            if (!msg.HWnd.Equals(Handle) &&
+                (keyData == Keys.Left
+                || keyData == Keys.Right
+                || keyData == Keys.Up
                 || keyData == Keys.Down
-                || keyData == Keys.Tab))
+                || keyData == Keys.Tab
+                || keyData == Keys.Space
+                || keyData == Keys.Enter))
             {
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void OnFormLoaded(object sender, EventArgs e)
+        {
+            var splashScreen = new SplashScreen();
+            ElementHost.EnableModelessKeyboardInterop(splashScreen);
+            splashScreen.ShowDialog();
+            loopTimer.Start();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            JoystickService.DeviceDisconnected -= OnJoystickDisconnected;
+            JoystickService.DeviceConnected -= OnJoystickConnected;
+            base.OnClosing(e);
         }
     }
 }

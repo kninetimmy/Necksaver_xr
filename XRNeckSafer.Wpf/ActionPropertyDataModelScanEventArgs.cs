@@ -2,6 +2,6 @@
 {
     public class ActionPropertyDataModelEventArgs
     {
-        public ActionPropertyDataModel Model { get; set; }
+        public Input Model { get; set; }
     }
 }

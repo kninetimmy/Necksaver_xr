@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace XRNeckSafer
@@ -28,24 +29,36 @@ namespace XRNeckSafer
             MinimumSize = Size;
             MaximumSize = Size;
             _scanner = new JoystickKeyboardScanner(maxPressedButtonsCount);
-            _scanner.OnScanningComplete += OnScanningComplete; ;
+            _scanner.BeforeRelesed += OnScanningComplete;
             _scanner.OnCurrentlyPressedChanged += OnCurrentlyPressedChanged;
         }
 
         private void OnCurrentlyPressedChanged(JoystickKeyboardInput input, bool sameKeys)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<JoystickKeyboardInput, bool>(OnCurrentlyPressedChanged), input, sameKeys);
+                return;
+            }
             _pressedButtonsLabel.Text = input.ToString();
         }
 
         private void OnScanningComplete(JoystickKeyboardInput input)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<JoystickKeyboardInput>(OnScanningComplete), input);
+                return;
+            }
             _result = input.Clone();
             Close();
         }
 
-        private void OnCancelButtonClick(object sender, EventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
         {
-            Close();
+            _scanner.BeforeRelesed -= OnScanningComplete;
+            _scanner.OnCurrentlyPressedChanged -= OnCurrentlyPressedChanged;
+            base.OnClosing(e);
         }
 
         /// <summary>
@@ -60,6 +73,14 @@ namespace XRNeckSafer
                 _scanner.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private void OnFormKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
         }
     }
 }

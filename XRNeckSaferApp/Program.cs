@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
 
 namespace XRNeckSafer
 {
@@ -12,6 +13,7 @@ namespace XRNeckSafer
         [STAThread]
         static void Main()
         {
+            
             using (var mutex = new Mutex(false, "XRNeckSafer singleton application"))
             {
                 bool isAnotherInstanceOpen = !mutex.WaitOne(TimeSpan.Zero);
@@ -24,7 +26,7 @@ namespace XRNeckSafer
                 // main application entry point
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new SplashScreen());
+                JoystickService.Start();
                 KeyInterceptor.SetHook();
                 using (new ActionPropertyProcessor(Config.Instance.ActionProperties))
                 {

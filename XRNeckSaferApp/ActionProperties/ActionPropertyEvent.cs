@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace XRNeckSafer
 {
@@ -6,7 +7,7 @@ namespace XRNeckSafer
     public class ActionPropertyEvent
     {
         [DataMember]
-        public JoystickKeyboardInput InputCombination { get; set; }
+        public List<JoystickKeyboardInput> InputCombinations { get; set; }
 
         [DataMember]
         public string Name { get; set; }
