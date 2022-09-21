@@ -13,7 +13,7 @@ namespace XRNeckSafer
         public List<Keys> KeyboardKeys { get; set; } = new List<Keys>();
 
         [DataMember]
-        public List<JoyBut> JoystickButtons { get; set; } = new List<JoyBut>();
+        public List<JoystickButton> JoystickButtons { get; set; } = new List<JoystickButton>();
 
         public bool IsEqual(JoystickKeyboardInput input)
         {

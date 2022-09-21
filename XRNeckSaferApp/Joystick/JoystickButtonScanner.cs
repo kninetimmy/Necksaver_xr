@@ -6,23 +6,23 @@ namespace XRNeckSafer
 {
     public class JoystickButtonScanner : IDisposable
     {
-        private readonly Dictionary<string, JoyBut> _pressedButtons;
-        private readonly Dictionary<string, JoyBut> _pressedResultButtons;
+        private readonly Dictionary<string, JoystickButton> _pressedButtons;
+        private readonly Dictionary<string, JoystickButton> _pressedResultButtons;
         private readonly int _maxPressedButtonsCount;
-        private List<JoyBut> _excludeButtons = new List<JoyBut>();
+        private List<JoystickButton> _excludeButtons = new List<JoystickButton>();
 
-        public event Action<List<JoyBut>> CurrentlyPressedChanged;
-        public event Action<List<JoyBut>> BeforeButtonReleased;
+        public event Action<List<JoystickButton>> CurrentlyPressedChanged;
+        public event Action<List<JoystickButton>> BeforeButtonReleased;
 
         public JoystickButtonScanner(int maxPressedButtonsCount = 1)
         {
-            _pressedButtons = new Dictionary<string, JoyBut>();
-            _pressedResultButtons = new Dictionary<string, JoyBut>();
+            _pressedButtons = new Dictionary<string, JoystickButton>();
+            _pressedResultButtons = new Dictionary<string, JoystickButton>();
             _maxPressedButtonsCount = maxPressedButtonsCount;
             JoystickService.PressedButtonsUpdate += JoystickPollingPressedButtonsUpdate;
         }
 
-        private void JoystickPollingPressedButtonsUpdate(Guid guid, JoyBut joyBut, bool pressed)
+        private void JoystickPollingPressedButtonsUpdate(Guid guid, JoystickButton joyBut, bool pressed)
         {
             var isExcludedButton = _excludeButtons.Any(e => e.GetId() == joyBut.GetId());
             if (isExcludedButton)
@@ -71,7 +71,7 @@ namespace XRNeckSafer
             return _maxPressedButtonsCount <= _pressedResultButtons.Count;
         }
 
-        private bool AddResultButton(JoyBut button)
+        private bool AddResultButton(JoystickButton button)
         {
             lock (_pressedButtons)
             { 
@@ -94,7 +94,7 @@ namespace XRNeckSafer
             }
         }
 
-        private bool RemoveResultButton(JoyBut button)
+        private bool RemoveResultButton(JoystickButton button)
         {
             lock (_pressedButtons)
             {
@@ -139,8 +139,8 @@ namespace XRNeckSafer
         private void UnsubscribeAllHandlers()
         {
 
-            BeforeButtonReleased?.GetInvocationList().ToList().ForEach(d => BeforeButtonReleased -= d as Action<List<JoyBut>>);
-            CurrentlyPressedChanged?.GetInvocationList().ToList().ForEach(d => CurrentlyPressedChanged -= d as Action<List<JoyBut>>);
+            BeforeButtonReleased?.GetInvocationList().ToList().ForEach(d => BeforeButtonReleased -= d as Action<List<JoystickButton>>);
+            CurrentlyPressedChanged?.GetInvocationList().ToList().ForEach(d => CurrentlyPressedChanged -= d as Action<List<JoystickButton>>);
             JoystickService.PressedButtonsUpdate -= JoystickPollingPressedButtonsUpdate;
         }
 

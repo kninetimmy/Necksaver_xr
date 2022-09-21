@@ -77,7 +77,7 @@ namespace XRNeckSafer
             return added;
         }
 
-        private bool UpdateJoystickButtons(IEnumerable<JoyBut> buttons)
+        private bool UpdateJoystickButtons(IEnumerable<JoystickButton> buttons)
         {
             var updated = _result.JoystickButtons.Any() && !buttons.Any();
             lock (_result)
@@ -101,12 +101,12 @@ namespace XRNeckSafer
             return _result.KeyboardKeys.Count + _result.JoystickButtons.Count >= _maxPressedButtonsCount;
         }
 
-        private void OnBeforeJoystickButtonReleased(List<JoyBut> buttons)
+        private void OnBeforeJoystickButtonReleased(List<JoystickButton> buttons)
         {
             BeforeRelesed?.Invoke(_result);
         }
 
-        private void OnJoystickPressedChanged(List<JoyBut> buttons)
+        private void OnJoystickPressedChanged(List<JoystickButton> buttons)
         {
             if (UpdateJoystickButtons(buttons))
             {

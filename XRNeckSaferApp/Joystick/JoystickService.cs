@@ -11,7 +11,7 @@ namespace XRNeckSafer
         static readonly Dictionary<Guid, Joystick> _joysticGuids = new Dictionary<Guid, Joystick>();
         static readonly Dictionary<Guid, BackgroundWorker> _joystickWorkers = new Dictionary<Guid, BackgroundWorker>();
 
-        static readonly Dictionary<Guid, List<JoyBut>> _pressedJoystickButtons = new Dictionary<Guid, List<JoyBut>>();
+        static readonly Dictionary<Guid, List<JoystickButton>> _pressedJoystickButtons = new Dictionary<Guid, List<JoystickButton>>();
         static readonly List<JoystickOffset> _povOffsets = new List<JoystickOffset> 
         { 
             JoystickOffset.PointOfViewControllers0, 
@@ -20,7 +20,7 @@ namespace XRNeckSafer
             JoystickOffset.PointOfViewControllers3 
         };
 
-        public static event Action<Guid, JoyBut, bool> PressedButtonsUpdate;
+        public static event Action<Guid, JoystickButton, bool> PressedButtonsUpdate;
         public static event Action<Guid, string> DeviceDisconnected;
         public static event Action<Guid, string> DeviceConnected;
 
@@ -52,9 +52,9 @@ namespace XRNeckSafer
             return _joysticGuids.Keys.ToArray();
         }
 
-        public static List<JoyBut> GetPressedButtons()
+        public static List<JoystickButton> GetPressedButtons()
         {
-            var result = new List<JoyBut>();
+            var result = new List<JoystickButton>();
             lock (_pressedJoystickButtons)
             {
                 foreach (Guid guid in _pressedJoystickButtons.Keys)
@@ -66,10 +66,10 @@ namespace XRNeckSafer
             return result;
         }
 
-        public static JoyBut CreateJoyBut(Guid guid, JoystickOffset offset, int value)
+        public static JoystickButton CreateJoystickButton(Guid guid, JoystickOffset offset, int value)
         {
             var isPov = offset >= JoystickOffset.PointOfViewControllers0 && offset <= JoystickOffset.PointOfViewControllers3;
-            var button = new JoyBut
+            var button = new JoystickButton
             {
                 JoystickGuid = guid.ToString(),
                 Button = isPov ? value : (int)offset - 49
@@ -165,14 +165,14 @@ namespace XRNeckSafer
                     {
                         var isButton = state.Offset >= JoystickOffset.Buttons0 && state.Offset <= JoystickOffset.Buttons127;
                         var pressed = isButton ? state.Value > 0 : state.Value >= 0;
-                        var joyBut = CreateJoyBut(joystickGuid, state.Offset, state.Value);
+                        var joyBut = CreateJoystickButton(joystickGuid, state.Offset, state.Value);
                         lock (_pressedJoystickButtons)
                         {
                             if (pressed)
                             {
                                 if (!_pressedJoystickButtons.ContainsKey(joystickGuid))
                                 {
-                                    _pressedJoystickButtons.Add(joystickGuid, new List<JoyBut>());
+                                    _pressedJoystickButtons.Add(joystickGuid, new List<JoystickButton>());
                                 }
                                 _pressedJoystickButtons[joystickGuid].Add(joyBut);
                             }

@@ -181,7 +181,6 @@
       <DependentUpon>Graph.cs</DependentUpon>
     </Compile>
     <Compile Include="Joystick\JoystickButtonScanner.cs" />
-    <Compile Include="Joystick\JoyBut.cs" />
     <Compile Include="Joystick\JoystickButton.cs" />
     <Compile Include="Joystick\JoystickKeyboardScanner.cs" />
     <Compile Include="Joystick\JoystickService.cs" />
@@ -200,12 +199,6 @@
     </Compile>
     <Compile Include="ScanJoystickKeyboardForm.Designer.cs">
       <DependentUpon>ScanJoystickKeyboardForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ScanForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ScanForm.Designer.cs">
-      <DependentUpon>ScanForm.cs</DependentUpon>
     </Compile>
     <Compile Include="VRStuff.cs" />
     <EmbeddedResource Include="ActionPropertiesForm.resx">
@@ -229,9 +222,6 @@
     </Compile>
     <EmbeddedResource Include="ScanJoystickKeyboardForm.resx">
       <DependentUpon>ScanJoystickKeyboardForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ScanForm.resx">
-      <DependentUpon>ScanForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
