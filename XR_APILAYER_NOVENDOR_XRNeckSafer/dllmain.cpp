@@ -554,25 +554,20 @@ namespace {
         bool baseSpaceIsLocalSpace = isLocalSpace.count(baseSpace); 
 
         DebugLog("space: %d  bspace: %d\n", space, baseSpace);
+        
+        XrPosef pos1 = location->pose;
 
         if (shmValues.yawOffset != 0 || shmValues.pitchOffset != 0) {
-            // save current location
-            XrVector3f pos = location->pose.position;
-
-            if (baseSpaceIsStageSpace) {
-                pos = pos - centerHmdLocationStage.pose.position;
-            }
-//            if (baseSpaceIsLocalSpace) {
-//                pos = pos - centerHmdLocationLocal.pose.position;
-//            }
-
-            toMonitor("pos x", pos.x);
-            toMonitor("pos y", pos.y);
-            toMonitor("pos z", pos.z);
-
+ 
             DirectX::XMVECTOR vPitchAxis = { 1.f,0.f,0.f };
 
             if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
+                // save current location
+                XrVector3f pos = location->pose.position;
+
+                if (baseSpaceIsStageSpace) {
+                    pos = pos - centerHmdLocationStage.pose.position;
+                }
 
                 // we want to rotate around the center of the head
                 location->pose.position = { 0, 0, 0 };
@@ -594,10 +589,6 @@ namespace {
                     pos = pos + centerHmdLocationStage.pose.position;
                     StoreXrVector3(&trans, DirectX::XMVector3Rotate(LoadXrVector3(trans), LoadXrQuaternion(centerHmdLocationStage.pose.orientation)));
                 }
-//                if (baseSpaceIsLocalSpace) {
-//                    pos = pos + centerHmdLocationLocal.pose.position;
-//                }
-
 
                 location->pose.position = pos - trans;
             }
@@ -619,6 +610,12 @@ namespace {
             }
 
         }
+
+        XrPosef pos2 = location->pose;
+        XrPosef poseDelta = Pose::Multiply(Pose::Invert(pos1), pos2);
+        // safe pose for use in xrEndFrame
+        m_PoseCache.AddSample(time, poseDelta);
+
         DebugLog("<-- XRNeckSafer_xrLocateSpace %d\n", result);
         return result;
     }
