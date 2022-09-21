@@ -1,11 +1,14 @@
 ﻿using SharpDX;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
+using XRNeckSafer.Wpf;
 
 namespace XRNeckSafer
 {
@@ -47,8 +50,8 @@ namespace XRNeckSafer
             showToolStripMenuItem.Click += showToolStripMenuItem_Click;
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             JoystickService.DeviceDisconnected += OnJoystickDisconnected;
-
-            if (Config.Instance.StartMinimized) this.WindowState = FormWindowState.Minimized;
+            JoystickService.DeviceConnected += OnJoystickConnected;
+            if (Config.Instance.StartMinimized) WindowState = FormWindowState.Minimized;
 
             angleNUD.Value = Config.Instance.Angle;
             upNUD.Value = Config.Instance.UpAngle;
@@ -210,6 +213,17 @@ namespace XRNeckSafer
             _ARText = "Autorotation";
             _pARText = "Autorotation";
             _hmdtext = "";
+            UpdateDevicesLabel();
+        }
+
+        private void OnJoystickConnected(Guid guid, string joystickName)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<Guid, string>(OnJoystickConnected), guid, joystickName);
+                return;
+            }
+            UpdateDevicesLabel();
         }
 
         private void OnJoystickDisconnected(Guid guid, string joystickName)
@@ -219,7 +233,31 @@ namespace XRNeckSafer
                 Invoke(new Action<Guid, string>(OnJoystickDisconnected), guid, joystickName);
                 return;
             }
+            UpdateDevicesLabel();
             MessageBox.Show($"Joystick {joystickName} with GUID: {guid} has been disconnected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void UpdateDevicesLabel()
+        {
+            var guids = JoystickService.GetJoystickGuids();
+            var stringBuilder = new StringBuilder();
+            foreach (var joyGuid in guids)
+            {
+                var name = JoystickService.GetJoystickName(joyGuid);
+                if (string.IsNullOrEmpty(name))
+                {
+                    continue;
+                }
+                if (stringBuilder.Length > 0)
+                {
+                    stringBuilder.Append(Environment.NewLine);
+                }
+                stringBuilder.Append(name);
+            }
+            toolTip1.SetToolTip(_devicesStatusLabel, stringBuilder.ToString());
+            toolTip1.SetToolTip(_devicesStatusImage, stringBuilder.ToString());
+            _devicesStatusLabel.Text = $"Joysticks: {guids.Length}";
+            _devicesStatusImage.Image = guids.Any() ? XRNeckSaferApp.Properties.Resources.green_circle : XRNeckSaferApp.Properties.Resources.red_circle;
         }
 
         private static string GetAssemblyProductVersion()
@@ -1334,10 +1372,17 @@ namespace XRNeckSafer
 
         private void OnFormLoaded(object sender, EventArgs e)
         {
-            var splashScreen = new Wpf.SplashScreen();
+            var splashScreen = new SplashScreen();
             ElementHost.EnableModelessKeyboardInterop(splashScreen);
             splashScreen.ShowDialog();
             loopTimer.Start();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            JoystickService.DeviceDisconnected -= OnJoystickDisconnected;
+            JoystickService.DeviceConnected -= OnJoystickConnected;
+            base.OnClosing(e);
         }
     }
 }

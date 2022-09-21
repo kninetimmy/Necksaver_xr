@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace XRNeckSafer
 {
-    public class JoystickService
+    public static class JoystickService
     {
         static readonly Dictionary<Guid, Joystick> _joysticGuids = new Dictionary<Guid, Joystick>();
         static readonly Dictionary<Guid, BackgroundWorker> _joystickWorkers = new Dictionary<Guid, BackgroundWorker>();
@@ -33,9 +33,23 @@ namespace XRNeckSafer
             return joystick?.Properties?.InstanceName;
         }
 
+        public static string GetJoystickName(Guid guid)
+        {
+            if (!_joysticGuids.TryGetValue(guid, out Joystick joystick))
+            {
+                return null;
+            }
+            return joystick?.Properties?.InstanceName;
+        }
+
         public static void Start()
         {
             StartJoysticksWorker();
+        }
+
+        public static Guid[] GetJoystickGuids()
+        {
+            return _joysticGuids.Keys.ToArray();
         }
 
         public static List<JoyBut> GetPressedButtons()
@@ -91,9 +105,9 @@ namespace XRNeckSafer
                             var joystick = new Joystick(directInput, deviceInstance.InstanceGuid);
                             Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId}: Found Joystick with GUID: {deviceInstance.InstanceGuid}." +
                                 $" {joystick.Capabilities.ButtonCount} buttons, {joystick.Capabilities.PovCount} POVs");
-                            DeviceConnected?.Invoke(deviceInstance.InstanceGuid, joystick.Properties.InstanceName);
                             _joysticGuids.Add(deviceInstance.InstanceGuid, joystick);
                             _joystickWorkers.Add(deviceInstance.InstanceGuid, RunJoystickStatePoll(deviceInstance.InstanceGuid, joystick));
+                            DeviceConnected?.Invoke(deviceInstance.InstanceGuid, joystick.Properties.InstanceName);
                         }
                     }
                 }
