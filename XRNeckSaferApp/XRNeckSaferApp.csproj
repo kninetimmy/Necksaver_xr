@@ -262,9 +262,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="green-circle.png" />
     <Content Include="openxr_loader.dll" />
-    <None Include="red-circle.png" />
     <Content Include="XRNS.ico" />
     <None Include="Graph.png" />
   </ItemGroup>

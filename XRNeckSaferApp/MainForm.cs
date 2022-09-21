@@ -184,15 +184,6 @@ namespace XRNeckSafer
             DownAutorotGridView.Columns[2].HeaderCell.Style.ForeColor = System.Drawing.Color.Black;
             DownAutorotGridView.Columns[2].HeaderCell.Style.BackColor = System.Drawing.Color.LightGray;
 
-            // setButtonToolTip(SetLeftButton, Config.Instance.LeftButton);
-            // setButtonToolTip(SetRightButton, Config.Instance.RightButton);
-            // setButtonToolTip(SetResetButton, Config.Instance.ResetButton);
-            // setButtonToolTip(AccumReset, Config.Instance.AccuResetButton);
-            // setButtonToolTip(YawAutorotationHoldButton, Config.Instance.HoldButton1);
-
-            // setLabelToolTip(LeftLabel, Config.Instance.LeftButton);
-            // setLabelToolTip(RightLabel, Config.Instance.RightButton);
-
             error_label.Visible = check_autorot_config();
             error_label2.Visible = error_label.Visible;
             upErrorLabel1.Visible = check_autorot_config();
@@ -291,24 +282,6 @@ namespace XRNeckSafer
             label17.Enabled = !additivRB.Checked;
         }
 
-        //private void setButtonColor(bool pressed, Button b)
-        //{
-        //    System.Drawing.Color fc = SystemColors.ControlText;
-        //    System.Drawing.Color bc = SystemColors.Control;
-
-        //    if (pressed)
-        //    {
-        //        fc = System.Drawing.Color.LightGreen;
-        //        bc = SystemColors.ControlText;
-        //    }
-
-        //    if (b.ForeColor != fc)
-        //    {
-        //        b.ForeColor = fc;
-        //        b.BackColor = bc;
-        //    }
-        //}
-
         void setLabelColor(bool pressed, Label l)
         {
             System.Drawing.Color fc = SystemColors.ControlText;
@@ -339,18 +312,11 @@ namespace XRNeckSafer
             bool h_pressed = YawAutorotationHoldButton.ActionPropertyValue;
             bool hp_pressed = PitchAutorotationHoldButton.ActionPropertyValue;
             //            bool h_pressed = checkButtonPress(SetHoldButton1, conf.HoldButton1);
-            //if (Config.Instance.MultipleLRbuttons)
-            //{
-            //}
 
             setLabelColor(l_pressed, LeftLabel);
             setLabelColor(r_pressed, RightLabel);
             setLabelColor(u_pressed, UpLabel);
             setLabelColor(d_pressed, DownLabel);
-            // setButtonColor(acc_res_pressed, AccumReset);
-            //setButtonColor(pitch_acc_res_pressed, pAccumReset);
-            //setButtonColor(h_pressed, YawAutorotationHoldButton);
-            //setButtonColor(hp_pressed, PitchAutorotationHoldButton);
 
             bool pitchlimit = _vr.GetHmdPitch() - 90 > Config.Instance.PitchLimForAutorot;
 
