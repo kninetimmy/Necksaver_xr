@@ -5,3 +5,4 @@ external/*
 **/bin/
 **/obj/
 *.vcxproj.user
+/other/*
