@@ -60,7 +60,7 @@ namespace XRNeckSafer
         private bool GetUpdates(JoystickState updatedState, out List<JoystickPollingUpdate> updates)
         {
             updates = null;
-            for (var buttonIndex = 0; buttonIndex < 128; buttonIndex++)
+            for (var buttonIndex = 0; buttonIndex < _joystick.Capabilities.ButtonCount; buttonIndex++)
             {
                 if (updatedState.Buttons[buttonIndex] != _currentState.Buttons[buttonIndex])
                 {
@@ -76,7 +76,7 @@ namespace XRNeckSafer
                     updates.Add(update);
                 }
             }
-            for (var povIndex = 0; povIndex < 4; povIndex++)
+            for (var povIndex = 0; povIndex < _joystick.Capabilities.PovCount; povIndex++)
             {
                 if (updatedState.PointOfViewControllers[povIndex] != _currentState.PointOfViewControllers[povIndex])
                 {

@@ -1318,6 +1318,7 @@ namespace XRNeckSafer
             ElementHost.EnableModelessKeyboardInterop(splashScreen);
             splashScreen.ShowDialog();
             loopTimer.Start();
+            JoystickService.Start();
         }
 
         protected override void OnClosing(CancelEventArgs e)

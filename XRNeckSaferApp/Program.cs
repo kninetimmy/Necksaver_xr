@@ -26,7 +26,6 @@ namespace XRNeckSafer
                 // main application entry point
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                JoystickService.Start();
                 KeyInterceptor.SetHook();
                 using (new ActionPropertyProcessor(Config.Instance.ActionProperties))
                 {
