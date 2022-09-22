@@ -1037,7 +1037,6 @@ namespace XRNeckSafer
             minimizeToTrayToolStripMenuItem.Checked = Config.Instance.MinimizeToTray;
             // MultipleLRButtonsToolStripMenuItem.Checked = Config.Instance.MultipleLRbuttons;
             disableAllGUIOutputToolStripMenuItem.Checked = Config.Instance.DisableGUIOutput;
-            disableJoystickAutoReconnectToolStripMenuItem.Checked = Config.Instance.DisableJoystickReconnect;
 
             ToolStripMenuItem item = (ToolStripMenuItem)PitchLimToolStripMenuItem.DropDownItems[Config.Instance.PitchLimForAutorot / 10 - 1];
             item.Checked = true;
@@ -1049,7 +1048,6 @@ namespace XRNeckSafer
             Config.Instance.MinimizeToTray = false;
             Config.Instance.PitchLimForAutorot = 90;
             Config.Instance.DisableGUIOutput = false;
-            Config.Instance.DisableJoystickReconnect = false;
             // Config.Instance.MultipleLRbuttons = false;
             setMenuCheckmarks();
         }
@@ -1065,18 +1063,6 @@ namespace XRNeckSafer
             foreach (ToolStripMenuItem item in PitchLimToolStripMenuItem.DropDownItems) item.Checked = false;
             ((ToolStripMenuItem)e.ClickedItem).Checked = true;
             int.TryParse(e.ClickedItem.Text.Substring(0, 2), out Config.Instance.PitchLimForAutorot);
-        }
-
-        private void moreLRButtonsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (MultipleLRButtonsToolStripMenuItem.Checked)
-            {
-                MultipleLRButtonsToolStripMenuItem.Checked = false;
-            }
-            else
-            {
-                MultipleLRButtonsToolStripMenuItem.Checked = true;
-            }
         }
 
         private void listApiToolStripMenuItem_Click(object sender, EventArgs e)
