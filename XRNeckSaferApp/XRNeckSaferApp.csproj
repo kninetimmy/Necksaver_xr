@@ -183,6 +183,8 @@
     <Compile Include="Joystick\JoystickButtonScanner.cs" />
     <Compile Include="Joystick\JoystickButton.cs" />
     <Compile Include="Joystick\JoystickKeyboardScanner.cs" />
+    <Compile Include="Joystick\JoystickPollingService.cs" />
+    <Compile Include="Joystick\JoystickPollingUpdate.cs" />
     <Compile Include="Joystick\JoystickService.cs" />
     <Compile Include="Joystick\JoystickKeyboardInput.cs" />
     <Compile Include="KeyInterceptor.cs" />

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 
 namespace XRNeckSafer
 {
@@ -93,7 +94,7 @@ namespace XRNeckSafer
         {
             var worker = (BackgroundWorker)sender;
             var directInput = new DirectInput();
-            Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId}: Started scanning joysticks");
+            Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: Started scanning joysticks");
             while (!worker.CancellationPending)
             {
                 foreach (var deviceInstance in directInput.GetDevices(DeviceType.Joystick, DeviceEnumerationFlags.AttachedOnly))
@@ -103,7 +104,7 @@ namespace XRNeckSafer
                         if (!_joysticGuids.ContainsKey(deviceInstance.InstanceGuid))
                         {
                             var joystick = new Joystick(directInput, deviceInstance.InstanceGuid);
-                            Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId}: Found Joystick with GUID: {deviceInstance.InstanceGuid}." +
+                            Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: Found Joystick with GUID: {deviceInstance.InstanceGuid}." +
                                 $" {joystick.Capabilities.ButtonCount} buttons, {joystick.Capabilities.PovCount} POVs");
                             _joysticGuids.Add(deviceInstance.InstanceGuid, joystick);
                             _joystickWorkers.Add(deviceInstance.InstanceGuid, RunJoystickStatePoll(deviceInstance.InstanceGuid, joystick));
@@ -111,7 +112,7 @@ namespace XRNeckSafer
                         }
                     }
                 }
-                System.Threading.Thread.Sleep(10000);
+                Thread.Sleep(10000);
             }
             e.Cancel = true;
         }
@@ -128,7 +129,7 @@ namespace XRNeckSafer
         private static void JoystickPollComplete(object sender, RunWorkerCompletedEventArgs e)
         {
             Guid guid = (Guid)e.Result;
-            Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId}: Completed polling Joystick with GUID: {guid}");
+            Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: Completed polling Joystick with GUID: {guid}");
             var joystickName = GetJoystickName(guid.ToString());
             lock (_joysticGuids)
             {
@@ -141,7 +142,7 @@ namespace XRNeckSafer
                 _joystickWorkers[guid]?.Dispose();
                 _joystickWorkers.Remove(guid);
             }
-            Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId}: Removed Joystick with GUID: {guid}");
+            Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: Removed Joystick with GUID: {guid}");
             DeviceDisconnected?.Invoke(guid, joystickName);
         }
 
@@ -152,56 +153,57 @@ namespace XRNeckSafer
             Joystick joystick = tuple.Item2;
             Guid joystickGuid = tuple.Item1;
             e.Result = joystickGuid;
-            Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId}: Started polling Joystick with GUID: {joystickGuid}");
+            Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: Started polling Joystick with GUID: {joystickGuid}");
             try
             {
                 joystick.Properties.BufferSize = 128;
                 joystick.Acquire();
-                while (!worker.CancellationPending)
+                using (var pollingService = new JoystickPollingService(joystick, 10))
                 {
-                    joystick.Poll();
-                    var datas = joystick.GetBufferedData();
-                    foreach (JoystickUpdate state in datas.Where(d => d.Offset >= JoystickOffset.PointOfViewControllers0 && d.Offset <= JoystickOffset.Buttons127))
+                    while (!worker.CancellationPending)
                     {
-                        var isButton = state.Offset >= JoystickOffset.Buttons0 && state.Offset <= JoystickOffset.Buttons127;
-                        var pressed = isButton ? state.Value > 0 : state.Value >= 0;
-                        var joyBut = CreateJoystickButton(joystickGuid, state.Offset, state.Value);
-                        lock (_pressedJoystickButtons)
+                        pollingService.Poll();
+                        foreach (var state in pollingService.Updates)
                         {
-                            if (pressed)
+                            var isButton = state.Offset >= JoystickOffset.Buttons0 && state.Offset <= JoystickOffset.Buttons127;
+                            var pressed = isButton ? state.Value > 0 : state.Value >= 0;
+                            var joyBut = CreateJoystickButton(joystickGuid, state.Offset, state.Value);
+                            lock (_pressedJoystickButtons)
                             {
-                                if (!_pressedJoystickButtons.ContainsKey(joystickGuid))
+                                if (pressed)
                                 {
-                                    _pressedJoystickButtons.Add(joystickGuid, new List<JoystickButton>());
-                                }
-                                _pressedJoystickButtons[joystickGuid].Add(joyBut);
-                            }
-                            else
-                            {
-                                if (_pressedJoystickButtons.ContainsKey(joystickGuid))
-                                {
-                                    if (isButton)
+                                    if (!_pressedJoystickButtons.ContainsKey(joystickGuid))
                                     {
-                                        _pressedJoystickButtons[joystickGuid].RemoveAll(b => b.GetId() == joyBut.GetId());
-                                    } 
-                                    else
-                                    {
-                                        _pressedJoystickButtons[joystickGuid].RemoveAll(b => b.JoystickGuid == joyBut.JoystickGuid && b.POV == joyBut.POV);
+                                        _pressedJoystickButtons.Add(joystickGuid, new List<JoystickButton>());
                                     }
-                                    
+                                    _pressedJoystickButtons[joystickGuid].Add(joyBut);
+                                }
+                                else
+                                {
+                                    if (_pressedJoystickButtons.ContainsKey(joystickGuid))
+                                    {
+                                        if (isButton)
+                                        {
+                                            _pressedJoystickButtons[joystickGuid].RemoveAll(b => b.GetId() == joyBut.GetId());
+                                        }
+                                        else
+                                        {
+                                            _pressedJoystickButtons[joystickGuid].RemoveAll(b => b.JoystickGuid == joyBut.JoystickGuid && b.POV == joyBut.POV);
+                                        }
+
+                                    }
                                 }
                             }
+                            Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: {state}");
+                            PressedButtonsUpdate?.Invoke(joystickGuid, joyBut, pressed);
                         }
-                        // Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId}: {state}");
-                        PressedButtonsUpdate?.Invoke(joystickGuid, joyBut, pressed);
-                        // worker.ReportProgress(0, state);
                     }
                 }
                 e.Cancel = true;
             }
             catch (SharpDX.SharpDXException err)
             {
-                Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId}: ERROR {err.Message}");
+                Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: ERROR {err.Message}");
             }
         }
     }
