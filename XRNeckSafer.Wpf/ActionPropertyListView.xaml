@@ -24,27 +24,33 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="HeadersVisibility" Value="Column" />
         </Style>
+        <Style x:Key="_cell" TargetType="DataGridCell">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
         <local:BitmapToImageSourceConverter x:Key="BitmapToImageSourceConverter" />
     </UserControl.Resources>
-    <DataGrid Style="{StaticResource _dataGrid}" Name="_dataGrid" ItemsSource="{Binding ElementName=HostControl, Path=Properties}">
+    <DataGrid Style="{StaticResource _dataGrid}" Name="_dataGrid" ItemsSource="{Binding ElementName=HostControl, Path=Properties}" CellStyle="{StaticResource _cell}">
         <DataGrid.Columns>
             <DataGridTextColumn Header="Event Name" Binding="{Binding EventName}" ElementStyle="{StaticResource _textBlockVertical}" />
             <DataGridTemplateColumn Header="Key/Joystick mapping" Width="*">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <DataGrid x:Name="_inputsGrid" Style="{StaticResource _dataGrid}" ItemsSource="{Binding InputCombinations}" HeadersVisibility="None">
+                        <DataGrid x:Name="_inputsGrid" Style="{StaticResource _dataGrid}" ItemsSource="{Binding InputCombinations}" HeadersVisibility="None" CellStyle="{StaticResource _cell}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="*" Binding="{Binding InputCombination}" ElementStyle="{StaticResource _textBlockVertical}" />
                                 <DataGridTemplateColumn Header="Scan" Width="20">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel VerticalAlignment="Center">
-                                                <Button ToolTip="Assign key/joystick shortcut" Name="_scanTButton" Content=".." Click="OnScanButtonClick" Width="15" Height="15" />
+                                                <Button ToolTip="Assign key/joystick shortcut" Click="OnScanButtonClick" Background="Transparent" BorderBrush="Transparent">
+                                                    <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.scan}, Converter={StaticResource BitmapToImageSourceConverter}}" />
+                                                </Button>
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="Clear">
+                                <DataGridTemplateColumn Header="Clear" Width="20">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel VerticalAlignment="Center">
