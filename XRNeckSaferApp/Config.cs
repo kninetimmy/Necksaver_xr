@@ -26,7 +26,7 @@ namespace XRNeckSafer
         public bool MinimizeToTray;
         // public bool MultipleLRbuttons;
         public bool DisableGUIOutput;
-        public bool DisableJoystickReconnect;
+        // public bool DisableJoystickReconnect;
         public int PitchLimForAutorot;
         public static string configfilename;
         public string AutoMode;
@@ -61,7 +61,6 @@ namespace XRNeckSafer
             MinimizeToTray = false;
             // MultipleLRbuttons = false;
             DisableGUIOutput = false;
-            DisableJoystickReconnect = false;
             PitchLimForAutorot = 90;
             AutoMode = "Off";
             AutoSteps = new List<int[]>();
