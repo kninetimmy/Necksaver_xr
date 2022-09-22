@@ -156,7 +156,6 @@ namespace XRNeckSafer
             Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: Started polling Joystick with GUID: {joystickGuid}");
             try
             {
-                joystick.Properties.BufferSize = 128;
                 joystick.Acquire();
                 using (var pollingService = new JoystickPollingService(joystick, 10))
                 {

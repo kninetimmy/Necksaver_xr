@@ -31,6 +31,7 @@ namespace XRNeckSafer
                 worker.DoWork += DoWork;
                 worker.RunWorkerAsync();
                 _resetEvent.WaitOne();
+                worker.DoWork -= DoWork;
             }
             if (_error != null)
             {
