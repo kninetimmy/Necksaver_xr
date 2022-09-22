@@ -56,6 +56,7 @@
             <File Id="MICROSOFT.DOTNET.PLATFORMABSTRACTIONS.DLL" Name="Microsoft.DotNet.PlatformAbstractions.dll" Source="..\XRNeckSaferApp\bin\Release\Microsoft.DotNet.PlatformAbstractions.dll" />
             <File Id="MICROSOFT.EXTENSIONS.DEPENDENCYMODEL.DLL" Name="Microsoft.Extensions.DependencyModel.dll" Source="..\XRNeckSaferApp\bin\Release\Microsoft.Extensions.DependencyModel.dll" />
             <File Id="NEWTONSOFT.JSON.DLL" Name="Newtonsoft.Json.dll" Source="..\XRNeckSaferApp\bin\Release\Newtonsoft.Json.dll" />
+            <File Id="NLOG.DLL" Name="NLog.dll" Source="..\XRNeckSaferApp\bin\Release\NLog.dll" />
             <File Id="SHARPDX.DIRECTINPUT.DLL" Name="SharpDX.DirectInput.dll" Source="..\XRNeckSaferApp\bin\Release\SharpDX.DirectInput.dll" />
             <File Id="SHARPDX.DLL" Name="SharpDX.dll" Source="..\XRNeckSaferApp\bin\Release\SharpDX.dll" />
             <File Id="SHARPDX.MATHEMATICS.DLL" Name="SharpDX.Mathematics.dll" Source="..\XRNeckSaferApp\bin\Release\SharpDX.Mathematics.dll" />
@@ -74,6 +75,7 @@
             <File Id="OPENXR_LOADER.DLL" Name="openxr_loader.dll" Source="..\XRNeckSaferApp\openxr_loader.dll" />
             <File Id="XRNECKSAFER.WPF.DLL" Name="XRNeckSafer.Wpf.dll" Source="..\XRNeckSaferApp\bin\Release\XRNeckSafer.Wpf.dll" />
             <File Id="XRNECKSAFERAPP.EXE.CONFIG" Name="XRNeckSaferApp.exe.config" Source="..\XRNeckSaferApp\bin\Release\XRNeckSaferApp.exe.config" />
+            <File Id="NLOG.CONFIG" Name="NLog.config" Source="..\XRNeckSaferApp\bin\Release\NLog.config" />
           </Component>
         </Directory>
       </Directory>
