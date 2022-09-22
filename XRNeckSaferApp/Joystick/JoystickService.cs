@@ -194,7 +194,7 @@ namespace XRNeckSafer
                                     }
                                 }
                             }
-                            Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: {state}");
+                            // Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: {state}");
                             PressedButtonsUpdate?.Invoke(joystickGuid, joyBut, pressed);
                         }
                     }
