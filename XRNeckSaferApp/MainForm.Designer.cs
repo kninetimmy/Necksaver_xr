@@ -1983,7 +1983,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "XRNS (0 deg)";
             this.Load += new System.EventHandler(this.OnFormLoaded);
-            this.Shown += new System.EventHandler(this.MainForm_Shown);
+            this.Shown += new System.EventHandler(this.OnFormShown);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.stepwiseGroup.ResumeLayout(false);

@@ -50,6 +50,14 @@ namespace XRNeckSafer
             StartJoysticksWorker();
         }
 
+        public static void Stop()
+        {
+            foreach (var joystick in _joysticGuids.Values)
+            {
+                joystick.Unacquire();
+            }
+        }
+
         public static Guid[] GetJoystickGuids()
         {
             return _joysticGuids.Keys.ToArray();
@@ -101,18 +109,18 @@ namespace XRNeckSafer
             {
                 var devices = directInput.GetDevices(DeviceClass.GameControl, DeviceEnumerationFlags.AttachedOnly);
                 _logger.Trace($"[{Thread.CurrentThread.ManagedThreadId}]: {devices.Count} joysticks found");
-                foreach (var deviceInstance in devices)
+                foreach (DeviceInstance device in devices)
                 {
                     lock (_joysticGuids)
                     {
-                        if (!_joysticGuids.ContainsKey(deviceInstance.InstanceGuid))
+                        if (!_joysticGuids.ContainsKey(device.InstanceGuid))
                         {
-                            var joystick = new Joystick(directInput, deviceInstance.InstanceGuid);
-                            _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]: Found Joystick with GUID: {deviceInstance.InstanceGuid}." +
+                            var joystick = new Joystick(directInput, device.InstanceGuid);
+                            _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]: Found Joystick with GUID: {device.InstanceGuid}." +
                                 $" {joystick.Capabilities.ButtonCount} buttons, {joystick.Capabilities.PovCount} POVs");
-                            _joysticGuids.Add(deviceInstance.InstanceGuid, joystick);
-                            _joystickWorkers.Add(deviceInstance.InstanceGuid, RunJoystickStatePoll(deviceInstance.InstanceGuid, joystick));
-                            DeviceConnected?.Invoke(deviceInstance.InstanceGuid, joystick.Properties.InstanceName);
+                            _joysticGuids.Add(device.InstanceGuid, joystick);
+                            _joystickWorkers.Add(device.InstanceGuid, RunJoystickStatePoll(device.InstanceGuid, joystick));
+                            DeviceConnected?.Invoke(device.InstanceGuid, joystick.Properties.InstanceName);
                         }
                     }
                 }
@@ -126,6 +134,7 @@ namespace XRNeckSafer
             var worker = new BackgroundWorker();
             worker.DoWork += PollJoystickUpdate;
             worker.RunWorkerCompleted += JoystickPollComplete;
+            worker.WorkerSupportsCancellation = true;
             worker.RunWorkerAsync(new Tuple<Guid, Joystick>(guid, joystick));
             return worker;
         }
