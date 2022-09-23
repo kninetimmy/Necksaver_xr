@@ -3,6 +3,7 @@ using SharpDX.DirectInput;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
@@ -10,22 +11,28 @@ namespace XRNeckSafer
 {
     public static class JoystickService
     {
-        static readonly ILogger _logger = LogManager.GetLogger("JoystickService", typeof(JoystickService));
-        static readonly Dictionary<Guid, Joystick> _joysticGuids = new Dictionary<Guid, Joystick>();
-        static readonly Dictionary<Guid, BackgroundWorker> _joystickWorkers = new Dictionary<Guid, BackgroundWorker>();
+        private static readonly Stopwatch _devicesWatch = new Stopwatch();
+        private static readonly ILogger _logger = LogManager.GetLogger("JoystickService", typeof(JoystickService));
+        private static readonly Dictionary<Guid, Joystick> _joysticGuids = new Dictionary<Guid, Joystick>();
+        private static readonly Dictionary<Guid, JoystickState> _joystickStates = new Dictionary<Guid, JoystickState>();
 
-        static readonly Dictionary<Guid, List<JoystickButton>> _pressedJoystickButtons = new Dictionary<Guid, List<JoystickButton>>();
-        static readonly List<JoystickOffset> _povOffsets = new List<JoystickOffset> 
-        { 
-            JoystickOffset.PointOfViewControllers0, 
-            JoystickOffset.PointOfViewControllers1, 
-            JoystickOffset.PointOfViewControllers2, 
-            JoystickOffset.PointOfViewControllers3 
+        private static readonly Dictionary<Guid, List<JoystickButton>> _pressedJoystickButtons = new Dictionary<Guid, List<JoystickButton>>();
+        private static readonly List<JoystickOffset> _povOffsets = new List<JoystickOffset>
+        {
+            JoystickOffset.PointOfViewControllers0,
+            JoystickOffset.PointOfViewControllers1,
+            JoystickOffset.PointOfViewControllers2,
+            JoystickOffset.PointOfViewControllers3
         };
 
         public static event Action<Guid, JoystickButton, bool> PressedButtonsUpdate;
         public static event Action<Guid, string> DeviceDisconnected;
         public static event Action<Guid, string> DeviceConnected;
+
+        public static void Start()
+        {
+            StartJoysticksWorker();
+        }
 
         public static string GetJoystickName(string stringGuid)
         {
@@ -45,24 +52,6 @@ namespace XRNeckSafer
             return joystick?.Properties?.InstanceName;
         }
 
-        public static void Start()
-        {
-            StartJoysticksWorker();
-        }
-
-        public static void Stop()
-        {
-            foreach (var joystick in _joysticGuids.Values)
-            {
-                joystick.Unacquire();
-            }
-        }
-
-        public static Guid[] GetJoystickGuids()
-        {
-            return _joysticGuids.Keys.ToArray();
-        }
-
         public static List<JoystickButton> GetPressedButtons()
         {
             var result = new List<JoystickButton>();
@@ -77,19 +66,17 @@ namespace XRNeckSafer
             return result;
         }
 
-        public static JoystickButton CreateJoystickButton(Guid guid, JoystickOffset offset, int value)
+        public static Guid[] GetJoystickGuids()
         {
-            var isPov = offset >= JoystickOffset.PointOfViewControllers0 && offset <= JoystickOffset.PointOfViewControllers3;
-            var button = new JoystickButton
+            return _joysticGuids.Keys.ToArray();
+        }
+
+        public static void Stop()
+        {
+            foreach (var joystick in _joysticGuids.Values)
             {
-                JoystickGuid = guid.ToString(),
-                Button = isPov ? value : (int)offset - 49
-            };
-            if (isPov)
-            {
-                button.POV = _povOffsets.IndexOf(offset);
+                joystick.Unacquire();
             }
-            return button;
         }
 
         private static void StartJoysticksWorker()
@@ -107,41 +94,113 @@ namespace XRNeckSafer
             _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]: Started scanning joysticks");
             while (!worker.CancellationPending)
             {
-                var devices = directInput.GetDevices(DeviceClass.GameControl, DeviceEnumerationFlags.AttachedOnly);
-                _logger.Trace($"[{Thread.CurrentThread.ManagedThreadId}]: {devices.Count} joysticks found");
-                foreach (DeviceInstance device in devices)
+                PopulateJoysticks(directInput);
+                Guid[] guids = _joysticGuids.Keys.ToArray();
+                foreach (Guid guid in guids)
                 {
-                    lock (_joysticGuids)
-                    {
-                        if (!_joysticGuids.ContainsKey(device.InstanceGuid))
-                        {
-                            var joystick = new Joystick(directInput, device.InstanceGuid);
-                            _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]: Found Joystick with GUID: {device.InstanceGuid}." +
-                                $" {joystick.Capabilities.ButtonCount} buttons, {joystick.Capabilities.PovCount} POVs");
-                            _joysticGuids.Add(device.InstanceGuid, joystick);
-                            _joystickWorkers.Add(device.InstanceGuid, RunJoystickStatePoll(device.InstanceGuid, joystick));
-                            DeviceConnected?.Invoke(device.InstanceGuid, joystick.Properties.InstanceName);
-                        }
-                    }
+                    CheckJoystickUpdates(guid);
                 }
-                Thread.Sleep(10000);
+                Thread.Sleep(10);
             }
             e.Cancel = true;
         }
 
-        private static BackgroundWorker RunJoystickStatePoll(Guid guid, Joystick joystick)
+        private static void PopulateJoysticks(DirectInput directInput)
         {
-            var worker = new BackgroundWorker();
-            worker.DoWork += PollJoystickUpdate;
-            worker.RunWorkerCompleted += JoystickPollComplete;
-            worker.WorkerSupportsCancellation = true;
-            worker.RunWorkerAsync(new Tuple<Guid, Joystick>(guid, joystick));
-            return worker;
+            if (_devicesWatch.IsRunning && _devicesWatch.Elapsed < TimeSpan.FromSeconds(10))
+            {
+                return;
+            }
+            _devicesWatch.Restart();
+            var devices = directInput.GetDevices(DeviceClass.GameControl, DeviceEnumerationFlags.AttachedOnly);
+            _logger.Trace($"[{Thread.CurrentThread.ManagedThreadId}]: {devices.Count} joysticks found");
+            foreach (DeviceInstance device in devices)
+            {
+                lock (_joysticGuids)
+                {
+                    if (!_joysticGuids.ContainsKey(device.InstanceGuid))
+                    {
+                        var joystick = new Joystick(directInput, device.InstanceGuid);
+                        _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]: Found Joystick with GUID: {device.InstanceGuid}." +
+                            $" {joystick.Capabilities.ButtonCount} buttons, {joystick.Capabilities.PovCount} POVs");
+                        _joysticGuids.Add(device.InstanceGuid, joystick);
+                        joystick.Acquire();
+                        _joystickStates.Add(device.InstanceGuid, joystick.GetCurrentState());
+                        DeviceConnected?.Invoke(device.InstanceGuid, joystick.Properties.InstanceName);
+                    }
+                }
+            }
         }
 
-        private static void JoystickPollComplete(object sender, RunWorkerCompletedEventArgs e)
+        public static JoystickButton CreateJoystickButton(Guid guid, JoystickOffset offset, int value)
         {
-            Guid guid = (Guid)e.Result;
+            var isPov = offset >= JoystickOffset.PointOfViewControllers0 && offset <= JoystickOffset.PointOfViewControllers3;
+            var button = new JoystickButton
+            {
+                JoystickGuid = guid.ToString(),
+                Button = isPov ? value : (int)offset - 49
+            };
+            if (isPov)
+            {
+                button.POV = _povOffsets.IndexOf(offset);
+            }
+            return button;
+        }
+
+        private static void CheckJoystickUpdates(Guid guid)
+        {
+            _logger.Trace($"[{Thread.CurrentThread.ManagedThreadId}]: Started polling Joystick with GUID: {guid}");
+            try
+            {
+                List<JoystickPollingUpdate> updates = GetUpdates(guid);
+                if (updates == null)
+                {
+                    return;
+                }
+                foreach (JoystickPollingUpdate state in updates)
+                {
+                    var isButton = state.Offset >= JoystickOffset.Buttons0 && state.Offset <= JoystickOffset.Buttons127;
+                    var pressed = isButton ? state.Value > 0 : state.Value >= 0;
+                    var joyBut = CreateJoystickButton(guid, state.Offset, state.Value);
+                    lock (_pressedJoystickButtons)
+                    {
+                        if (pressed)
+                        {
+                            if (!_pressedJoystickButtons.ContainsKey(guid))
+                            {
+                                _pressedJoystickButtons.Add(guid, new List<JoystickButton>());
+                            }
+                            _pressedJoystickButtons[guid].Add(joyBut);
+                        }
+                        else
+                        {
+                            if (_pressedJoystickButtons.ContainsKey(guid))
+                            {
+                                if (isButton)
+                                {
+                                    _pressedJoystickButtons[guid].RemoveAll(b => b.GetId() == joyBut.GetId());
+                                }
+                                else
+                                {
+                                    _pressedJoystickButtons[guid].RemoveAll(b => b.JoystickGuid == joyBut.JoystickGuid && b.POV == joyBut.POV);
+                                }
+
+                            }
+                        }
+                    }
+                    _logger.Trace($"[{Thread.CurrentThread.ManagedThreadId}]: {state}");
+                    PressedButtonsUpdate?.Invoke(guid, joyBut, pressed);
+                }
+            }
+            catch (SharpDX.SharpDXException err)
+            {
+                _logger.Error($"[{Thread.CurrentThread.ManagedThreadId}]: ERROR {err.Message}");
+                StopJoystickPolling(guid);
+            }
+        }
+
+        private static void StopJoystickPolling(Guid guid)
+        {
             _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]: Completed polling Joystick with GUID: {guid}");
             var joystickName = GetJoystickName(guid.ToString());
             lock (_joysticGuids)
@@ -152,71 +211,74 @@ namespace XRNeckSafer
                 }
                 _pressedJoystickButtons.Remove(guid);
                 _joysticGuids.Remove(guid);
-                _joystickWorkers[guid]?.Dispose();
-                _joystickWorkers.Remove(guid);
+                _joystickStates.Remove(guid);
             }
             _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]:  Removed Joystick with GUID: {guid}");
             DeviceDisconnected?.Invoke(guid, joystickName);
         }
 
-        private static void PollJoystickUpdate(object sender, DoWorkEventArgs e)
+        private static List<JoystickPollingUpdate> GetUpdates(Guid guid)
         {
-            var worker = (BackgroundWorker)sender; 
-            var tuple = (Tuple<Guid, Joystick>)e.Argument;
-            Joystick joystick = tuple.Item2;
-            Guid joystickGuid = tuple.Item1;
-            e.Result = joystickGuid;
-            _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]: Started polling Joystick with GUID: {joystickGuid}");
-            try
+            List<JoystickPollingUpdate> updates = null;
+            Joystick joystick = GetJoystick(guid);
+            if (joystick == null)
             {
-                joystick.Acquire();
-                using (var pollingService = new JoystickPollingService(joystick, 10))
+                return updates;
+            }
+            JoystickState currentState = GetJoystickState(guid);
+            JoystickState updatedState = joystick.GetCurrentState();
+            for (var buttonIndex = 0; buttonIndex < joystick.Capabilities.ButtonCount; buttonIndex++)
+            {
+                if (updatedState.Buttons[buttonIndex] != currentState.Buttons[buttonIndex])
                 {
-                    while (!worker.CancellationPending)
+                    var update = new JoystickPollingUpdate
                     {
-                        pollingService.Poll();
-                        foreach (var state in pollingService.Updates)
-                        {
-                            var isButton = state.Offset >= JoystickOffset.Buttons0 && state.Offset <= JoystickOffset.Buttons127;
-                            var pressed = isButton ? state.Value > 0 : state.Value >= 0;
-                            var joyBut = CreateJoystickButton(joystickGuid, state.Offset, state.Value);
-                            lock (_pressedJoystickButtons)
-                            {
-                                if (pressed)
-                                {
-                                    if (!_pressedJoystickButtons.ContainsKey(joystickGuid))
-                                    {
-                                        _pressedJoystickButtons.Add(joystickGuid, new List<JoystickButton>());
-                                    }
-                                    _pressedJoystickButtons[joystickGuid].Add(joyBut);
-                                }
-                                else
-                                {
-                                    if (_pressedJoystickButtons.ContainsKey(joystickGuid))
-                                    {
-                                        if (isButton)
-                                        {
-                                            _pressedJoystickButtons[joystickGuid].RemoveAll(b => b.GetId() == joyBut.GetId());
-                                        }
-                                        else
-                                        {
-                                            _pressedJoystickButtons[joystickGuid].RemoveAll(b => b.JoystickGuid == joyBut.JoystickGuid && b.POV == joyBut.POV);
-                                        }
-
-                                    }
-                                }
-                            }
-                            _logger.Trace($"[{Thread.CurrentThread.ManagedThreadId}]: {state}");
-                            PressedButtonsUpdate?.Invoke(joystickGuid, joyBut, pressed);
-                        }
+                        RawOffset = buttonIndex + (int)JoystickOffset.Buttons0,
+                        Value = updatedState.Buttons[buttonIndex] ? 128 : 0,
+                    };
+                    if (updates == null)
+                    {
+                        updates = new List<JoystickPollingUpdate>();
                     }
+                    updates.Add(update);
                 }
-                e.Cancel = true;
             }
-            catch (SharpDX.SharpDXException err)
+            for (var povIndex = 0; povIndex < joystick.Capabilities.PovCount; povIndex++)
             {
-                _logger.Error($"[{Thread.CurrentThread.ManagedThreadId}]: ERROR {err.Message}");
+                if (updatedState.PointOfViewControllers[povIndex] != currentState.PointOfViewControllers[povIndex])
+                {
+                    var update = new JoystickPollingUpdate
+                    {
+                        RawOffset = 4 * povIndex + (int)JoystickOffset.PointOfViewControllers0,
+                        Value = updatedState.PointOfViewControllers[povIndex]
+                    };
+                    if (updates == null)
+                    {
+                        updates = new List<JoystickPollingUpdate>();
+                    }
+                    updates.Add(update);
+                }
             }
+            if (updates != null)
+            {
+                lock (_joystickStates)
+                {
+                    _joystickStates[guid] = updatedState;
+                }
+            }
+            return updates;
+        }
+
+        private static Joystick GetJoystick(Guid guid)
+        {
+            _joysticGuids.TryGetValue(guid, out Joystick joystick);
+            return joystick;
+        }
+
+        private static JoystickState GetJoystickState(Guid guid)
+        {
+            _joystickStates.TryGetValue(guid, out JoystickState state);
+            return state;
         }
     }
 }
