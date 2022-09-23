@@ -11,11 +11,14 @@ namespace XRNeckSafer
 {
     public static class JoystickService
     {
+        private static BackgroundWorker _worker;
+        private static readonly AutoResetEvent _waitHandle = new AutoResetEvent(false);
         private static readonly ILogger _logger = LogManager.GetLogger("JoystickService", typeof(JoystickService));
+
         private static readonly Dictionary<Guid, Joystick> _joysticGuids = new Dictionary<Guid, Joystick>();
         private static readonly Dictionary<Guid, JoystickState> _joystickStates = new Dictionary<Guid, JoystickState>();
-
         private static readonly Dictionary<Guid, List<JoystickButton>> _pressedJoystickButtons = new Dictionary<Guid, List<JoystickButton>>();
+
         private static readonly List<JoystickOffset> _povOffsets = new List<JoystickOffset>
         {
             JoystickOffset.PointOfViewControllers0,
@@ -72,18 +75,37 @@ namespace XRNeckSafer
 
         public static void Stop()
         {
-            foreach (var joystick in _joysticGuids.Values)
-            {
-                joystick.Unacquire();
-            }
+            _worker.CancelAsync();
+            _waitHandle.WaitOne();
+            _worker.Dispose();
+            _worker = null;
         }
 
         private static void StartJoysticksWorker()
         {
-            var worker = new BackgroundWorker();
-            worker.DoWork += ScanConnectedDevicesWork;
-            worker.WorkerSupportsCancellation = true;
-            worker.RunWorkerAsync();
+            _worker = new BackgroundWorker();
+            _worker.DoWork += ScanConnectedDevicesWork;
+            _worker.WorkerSupportsCancellation = true;
+            _worker.RunWorkerCompleted += JoystickWorkerCompleted;
+            _worker.RunWorkerAsync();
+        }
+
+        private static void JoystickWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            lock (_joysticGuids)
+            {
+                foreach (var joystick in _joysticGuids.Values.ToArray())
+                {
+                    joystick.Unacquire();
+                    joystick.Dispose();
+                }
+                _joysticGuids.Clear();
+                _joystickStates.Clear();
+                _pressedJoystickButtons.Clear();
+            }
+            _worker.DoWork -= ScanConnectedDevicesWork;
+            _worker.RunWorkerCompleted -= JoystickWorkerCompleted;
+            _waitHandle.Set();
         }
 
         private static void ScanConnectedDevicesWork(object sender, DoWorkEventArgs e)
@@ -102,7 +124,6 @@ namespace XRNeckSafer
                 }
                 Thread.Sleep(10);
             }
-            e.Cancel = true;
         }
 
         private static void PopulateJoysticks(DirectInput directInput, Stopwatch stopwatch)
