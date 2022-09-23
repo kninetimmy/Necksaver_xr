@@ -11,7 +11,6 @@ namespace XRNeckSafer
 {
     public static class JoystickService
     {
-        private static readonly Stopwatch _devicesWatch = new Stopwatch();
         private static readonly ILogger _logger = LogManager.GetLogger("JoystickService", typeof(JoystickService));
         private static readonly Dictionary<Guid, Joystick> _joysticGuids = new Dictionary<Guid, Joystick>();
         private static readonly Dictionary<Guid, JoystickState> _joystickStates = new Dictionary<Guid, JoystickState>();
@@ -91,10 +90,11 @@ namespace XRNeckSafer
         {
             var worker = (BackgroundWorker)sender;
             var directInput = new DirectInput();
+            var stopwatch = new Stopwatch();
             _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]: Started scanning joysticks");
             while (!worker.CancellationPending)
             {
-                PopulateJoysticks(directInput);
+                PopulateJoysticks(directInput, stopwatch);
                 Guid[] guids = _joysticGuids.Keys.ToArray();
                 foreach (Guid guid in guids)
                 {
@@ -105,13 +105,13 @@ namespace XRNeckSafer
             e.Cancel = true;
         }
 
-        private static void PopulateJoysticks(DirectInput directInput)
+        private static void PopulateJoysticks(DirectInput directInput, Stopwatch stopwatch)
         {
-            if (_devicesWatch.IsRunning && _devicesWatch.Elapsed < TimeSpan.FromSeconds(10))
+            if (stopwatch.IsRunning && stopwatch.Elapsed < TimeSpan.FromSeconds(10))
             {
                 return;
             }
-            _devicesWatch.Restart();
+            stopwatch.Restart();
             var devices = directInput.GetDevices(DeviceClass.GameControl, DeviceEnumerationFlags.AttachedOnly);
             _logger.Trace($"[{Thread.CurrentThread.ManagedThreadId}]: {devices.Count} joysticks found");
             foreach (DeviceInstance device in devices)
