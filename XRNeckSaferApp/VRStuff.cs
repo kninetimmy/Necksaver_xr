@@ -1,4 +1,5 @@
-﻿using SharpDX;
+﻿using NLog;
+using SharpDX;
 using Silk.NET.Core.Native;
 using Silk.NET.OpenXR;
 using System;

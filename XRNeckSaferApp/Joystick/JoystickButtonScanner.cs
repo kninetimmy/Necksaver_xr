@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,6 +7,7 @@ namespace XRNeckSafer
 {
     public class JoystickButtonScanner : IDisposable
     {
+        private static readonly ILogger _logger = LogManager.GetLogger("JoystickButtonScanner", typeof(JoystickButtonScanner));
         private readonly Dictionary<string, JoystickButton> _pressedButtons;
         private readonly Dictionary<string, JoystickButton> _pressedResultButtons;
         private readonly int _maxPressedButtonsCount;
@@ -33,9 +35,8 @@ namespace XRNeckSafer
             {
                 if (AddResultButton(joyBut))
                 {
-                    // Console.WriteLine($"Pressed result buttons - {DebugPressedButtons()}");
+                    _logger.Trace(DebugPressedButtons());
                     CurrentlyPressedChanged?.Invoke(_pressedResultButtons.Values.ToList());
-
                 }
                 return;
             }
@@ -46,8 +47,8 @@ namespace XRNeckSafer
             }
             if (RemoveResultButton(joyBut))
             {
+                _logger.Trace(DebugPressedButtons());
                 CurrentlyPressedChanged?.Invoke(_pressedResultButtons.Values.ToList());
-                // Console.WriteLine($"Pressed result buttons - {DebugPressedButtons()}");
             }
         }
 
@@ -87,7 +88,6 @@ namespace XRNeckSafer
                 if (_maxPressedButtonsCount > _pressedResultButtons.Count && !_pressedResultButtons.ContainsKey(id))
                 {
                     _pressedResultButtons.Add(id, button);
-                    // Console.WriteLine($"Added button - {button.GetId()}");
                     return true;
                 }
                 return false;
@@ -144,19 +144,19 @@ namespace XRNeckSafer
             JoystickService.PressedButtonsUpdate -= JoystickPollingPressedButtonsUpdate;
         }
 
-        //private string DebugPressedButtons()
-        //{
-        //    var builder = new System.Text.StringBuilder();
-        //    foreach (var key in _pressedButtons.Keys)
-        //    {
-        //        if (builder.Length > 0)
-        //        {
-        //            builder.Append("+");
-        //        }
-        //        builder.Append($"[{key}]");
-        //    }
-        //    return builder.ToString();
-        //}
+        private string DebugPressedButtons()
+        {
+            var builder = new System.Text.StringBuilder();
+            foreach (var key in _pressedButtons.Keys)
+            {
+                if (builder.Length > 0)
+                {
+                    builder.Append("+");
+                }
+                builder.Append($"[{key}]");
+            }
+            return builder.ToString();
+        }
 
         //private string DebugButtons(List<JoyBut> buttons)
         //{

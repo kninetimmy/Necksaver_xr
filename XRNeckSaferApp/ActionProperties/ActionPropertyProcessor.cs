@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,6 +7,7 @@ namespace XRNeckSafer
 {
     public class ActionPropertyProcessor : IDisposable
     {
+        private static readonly ILogger _logger = LogManager.GetLogger("ActionPropertyProcessor", typeof(ActionPropertyProcessor));
         private JoystickKeyboardScanner _scanner;
         private readonly List<ActionProperty> _properties;
 
@@ -18,7 +20,7 @@ namespace XRNeckSafer
 
         private void OnCurrentlyPressedChanged(JoystickKeyboardInput input, bool sameKeys)
         {
-            // Console.WriteLine($"Accessor: same - {sameKeys} {input}");
+            _logger.Trace($" {input}");
             foreach (ActionProperty prop in _properties)
             {
                 foreach (ActionPropertyEvent propEvent in prop.Events)

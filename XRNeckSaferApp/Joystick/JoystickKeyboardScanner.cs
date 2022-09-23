@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -10,6 +11,7 @@ namespace XRNeckSafer
     /// </summary>
     public class JoystickKeyboardScanner : IDisposable
     {
+        private static readonly ILogger _logger = LogManager.GetLogger("JoystickKeyboardScanner", typeof(JoystickKeyboardScanner));
         private JoystickButtonScanner _joystickScanner;
         private readonly JoystickKeyboardInput _result;
         private readonly int _maxPressedButtonsCount;
@@ -45,13 +47,13 @@ namespace XRNeckSafer
                 }
                 if (AddKeys(_filteredKeys))
                 {
-                    // Console.WriteLine("OnCurrentlyPressedChanged: " + _result.ToString() + " Same key(s):" + sameKeysPressed);
+                    _logger.Trace("OnCurrentlyPressedChanged: " + _result.ToString() + " Same key(s):" + sameKeysPressed);
                     OnCurrentlyPressedChanged?.Invoke(_result, sameKeysPressed);
                     return;
                 }
                 if (!sameKeysPressed)
                 {
-                    // Console.WriteLine("OnCurrentlyPressedChanged: " + _result.ToString());
+                    _logger.Trace("OnCurrentlyPressedChanged: " + _result.ToString() + " Same key(s):" + sameKeysPressed);
                     OnCurrentlyPressedChanged?.Invoke(_result, sameKeysPressed);
                 }
             }
@@ -110,7 +112,7 @@ namespace XRNeckSafer
         {
             if (UpdateJoystickButtons(buttons))
             {
-                // Console.WriteLine("OnCurrentlyPressedChanged: " + _result.ToString());
+                _logger.Trace("OnCurrentlyPressedChanged: " + _result.ToString());
                 OnCurrentlyPressedChanged?.Invoke(_result, false);
             }
         }

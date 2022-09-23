@@ -1319,14 +1319,12 @@ namespace XRNeckSafer
                 WindowState = FormWindowState.Minimized;
                 Hide();
             }
-            JoystickService.Start();
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
             JoystickService.DeviceDisconnected -= OnJoystickDisconnected;
             JoystickService.DeviceConnected -= OnJoystickConnected;
-            JoystickService.Stop();
             base.OnClosing(e);
         }
     }

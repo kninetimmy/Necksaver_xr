@@ -194,7 +194,7 @@ namespace XRNeckSafer
             }
             catch (SharpDX.SharpDXException err)
             {
-                _logger.Error($"[{Thread.CurrentThread.ManagedThreadId}]: ERROR {err.Message}");
+                _logger.Error($"[{Thread.CurrentThread.ManagedThreadId}]: {err.Message}");
                 StopJoystickPolling(guid);
             }
         }
@@ -213,7 +213,7 @@ namespace XRNeckSafer
                 _joysticGuids.Remove(guid);
                 _joystickStates.Remove(guid);
             }
-            _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]:  Removed Joystick with GUID: {guid}");
+            _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]: Removed Joystick with GUID: {guid}");
             DeviceDisconnected?.Invoke(guid, joystickName);
         }
 
