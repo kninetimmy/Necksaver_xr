@@ -19,21 +19,35 @@ namespace XRNeckSafer.Wpf
     public class Input : INotifyPropertyChanged
     {
         private string _inputCombination;
+        private bool _canAdd;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string InputCombination 
-        { 
+        public string InputCombination
+        {
             get => _inputCombination;
-            set 
+            set
             {
                 if (_inputCombination != value)
                 {
-                    _inputCombination = value; 
+                    _inputCombination = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InputCombination)));
                 }
-            } 
+            }
         }
         public object NewInputCombination { get; set; }
+
+        public bool CanAdd 
+        { 
+            get => _canAdd;
+            set
+            {
+                if (_canAdd != value)
+                {
+                    _canAdd = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanAdd)));
+                }
+            }
+        }
     }
 }
