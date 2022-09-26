@@ -83,7 +83,8 @@ namespace XRNeckSafer
                         {
                             string layerName = SilkMarshal.PtrToString(new IntPtr(nptr));
                             LayerNameList.Add(layerName);
-                            found = layerName.Equals(XRNECKSAFER_LAYER_NAME, StringComparison.Ordinal);
+                            if (layerName.Equals(XRNECKSAFER_LAYER_NAME, StringComparison.Ordinal))
+                                found = true;
                         }
                     }
                     if (!found)
