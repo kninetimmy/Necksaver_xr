@@ -94,7 +94,7 @@ Smooth Autorotation gives a linear amplification of your head rotation, beginnin
 2. Go to  %ProgramFiles%\OpenXrApiLayer folder and run "Uninstall-XR_APILAYER_NOVENDOR_XRNeckSafer.ps1" as a PowerShell script 
    (right click on it and select "Execute with PowerShell"). This will uninstall the API Layer.
 3. If the API layer was uninstalled correctly (check with Show active OpenXR API Layers menu item in XRNeckSaferApp.exe) you can delete the %ProgramFiles%\OpenXrApiLayer folder
-4. Now you can delete the folder with 
+4. Now you can delete the folder containing XRNeckSaferApp.exe
 
 **Installation of older versions (before beta4. Only if you really want to! Better use the newest version!)**
 
