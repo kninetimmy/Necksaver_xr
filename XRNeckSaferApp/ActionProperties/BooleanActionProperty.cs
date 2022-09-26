@@ -59,8 +59,6 @@ namespace XRNeckSafer
                     {
                         Name = SWITCH_EVENT_NAME,
                         InputCombinations = new List<JoystickKeyboardInput> { 
-                            new JoystickKeyboardInput(),
-                            new JoystickKeyboardInput(),
                             new JoystickKeyboardInput()
                         },
                         Toggle = false

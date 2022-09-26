@@ -30,6 +30,28 @@ namespace XRNeckSafer
             MinimumSize = Size;
             _wpfList.ScanClick += OnScanClick;
             _wpfList.ClearClick += OnClearClick;
+            _wpfList.AddInputClick += OnAddInputClick;
+            _wpfList.RemoveInputClick += OnRemoveInputClick;
+        }
+
+        private void OnRemoveInputClick(ActionPropertyDataModelEventArgs args)
+        {
+            var actionProperty = _wpfList.Properties.FirstOrDefault(p => p.InputCombinations.Any(i => i == args.Model));
+            if (actionProperty == null)
+            {
+                return;
+            }
+            actionProperty.InputCombinations.Remove(args.Model);
+        }
+
+        private void OnAddInputClick(ActionPropertyDataModelEventArgs args)
+        {
+            var actionProperty = _wpfList.Properties.FirstOrDefault(p => p.InputCombinations.Any(i => i == args.Model));
+            if (actionProperty == null)
+            {
+                return;
+            }
+            actionProperty.InputCombinations.Add(new Input { NewInputCombination = new JoystickKeyboardInput() });
         }
 
         private void OnClearClick(ActionPropertyDataModelEventArgs args)
@@ -66,11 +88,7 @@ namespace XRNeckSafer
                     var toggleAction = actionEvent as ActionPropertyToggleEvent;
                     var dataModel = new ActionPropertyDataModel
                     {
-                        InputCombinations = new ObservableCollection<Input>(actionEvent.InputCombinations
-                            .Select(i => new Input
-                            { 
-                                InputCombination = i.ToString()
-                            })),
+                        InputCombinations = new ObservableCollection<Input>(),
                         ActionPropertyName = prop.Name,
                         EventName = actionEvent.Name,
                         IsToggleEnabled = toggleAction != null,
@@ -80,6 +98,15 @@ namespace XRNeckSafer
                         Selected = currentProperty,
                         Event = actionEvent,
                     };
+                    for (var index = 0; index < actionEvent.InputCombinations.Count; index++)
+                    {
+                        var input = new Input
+                        {
+                            InputCombination = actionEvent.InputCombinations[index].ToString(),
+                            CanAdd = index == 0
+                        };
+                        dataModel.InputCombinations.Add(input);
+                    }
                     props.Add(dataModel);
                 }
             });
@@ -95,16 +122,29 @@ namespace XRNeckSafer
                 {
                     continue;
                 }
+                var newInputsCount = model.InputCombinations.Count;
                 var actionEvent = (ActionPropertyEvent)model.Event;
-                for (int index = 0; index < model.InputCombinations.Count; index++)
+                var resultInputs = new List<JoystickKeyboardInput>();
+                for (int index = 0; index < newInputsCount; index++)
                 {
                     Input input = model.InputCombinations[index];
                     var newInput = input.NewInputCombination as JoystickKeyboardInput;
                     if (newInput != null)
                     {
-                        actionEvent.InputCombinations[index] = newInput;
+                        resultInputs.Add(newInput);
+                        continue;
+                    }
+                    var existingInput = actionEvent.InputCombinations.FirstOrDefault(i => i.ToString() == input.InputCombination);
+                    if (existingInput != null)
+                    {
+                        resultInputs.Add(existingInput);
+                    }
+                    else if (string.IsNullOrEmpty(input.InputCombination))
+                    {
+                        resultInputs.Add(new JoystickKeyboardInput());
                     }
                 }
+                actionEvent.InputCombinations = resultInputs;
                 if (actionEvent is ActionPropertyToggleEvent toggleEvent && toggleEvent != null)
                 {
                     toggleEvent.Toggle = model.ToggleValue;

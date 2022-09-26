@@ -18,6 +18,8 @@ namespace XRNeckSafer.Wpf
         public event Action<ActionPropertyDataModelChangeEventArgs> Changed;
         public event Action<ActionPropertyDataModelEventArgs> ScanClick;
         public event Action<ActionPropertyDataModelEventArgs> ClearClick;
+        public event Action<ActionPropertyDataModelEventArgs> AddInputClick;
+        public event Action<ActionPropertyDataModelEventArgs> RemoveInputClick;
 
         public ActionPropertyListView()
         {
@@ -53,6 +55,17 @@ namespace XRNeckSafer.Wpf
         {
             var model = ((Button)e.OriginalSource).DataContext as Input;
             ScanClick?.Invoke(new ActionPropertyDataModelEventArgs { Model = model });
+        }
+
+        private void OnAddRemoveShortcutClick(object sender, RoutedEventArgs e)
+        {
+            var model = ((Button)e.OriginalSource).DataContext as Input;
+            if (model.CanAdd)
+            {
+                AddInputClick?.Invoke(new ActionPropertyDataModelEventArgs { Model = model });
+                return;
+            }
+            RemoveInputClick?.Invoke(new ActionPropertyDataModelEventArgs { Model = model });
         }
 
         private void OnInvertCheckBoxClick(object sender, RoutedEventArgs e)

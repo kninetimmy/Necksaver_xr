@@ -24,27 +24,72 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="HeadersVisibility" Value="Column" />
         </Style>
+        <Style x:Key="_cell" TargetType="DataGridCell">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
         <local:BitmapToImageSourceConverter x:Key="BitmapToImageSourceConverter" />
     </UserControl.Resources>
-    <DataGrid Style="{StaticResource _dataGrid}" Name="_dataGrid" ItemsSource="{Binding ElementName=HostControl, Path=Properties}">
+    <DataGrid Style="{StaticResource _dataGrid}" Name="_dataGrid" ItemsSource="{Binding ElementName=HostControl, Path=Properties}" CellStyle="{StaticResource _cell}">
         <DataGrid.Columns>
             <DataGridTextColumn Header="Event Name" Binding="{Binding EventName}" ElementStyle="{StaticResource _textBlockVertical}" />
             <DataGridTemplateColumn Header="Key/Joystick mapping" Width="*">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <DataGrid x:Name="_inputsGrid" Style="{StaticResource _dataGrid}" ItemsSource="{Binding InputCombinations}" HeadersVisibility="None">
+                        <DataGrid x:Name="_inputsGrid" Style="{StaticResource _dataGrid}" ItemsSource="{Binding InputCombinations}" HeadersVisibility="None" CellStyle="{StaticResource _cell}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="*" Binding="{Binding InputCombination}" ElementStyle="{StaticResource _textBlockVertical}" />
                                 <DataGridTemplateColumn Header="Scan" Width="20">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel VerticalAlignment="Center">
-                                                <Button ToolTip="Assign key/joystick shortcut" Name="_scanTButton" Content=".." Click="OnScanButtonClick" Width="15" Height="15" />
+                                                <Button Click="OnAddRemoveShortcutClick" Background="Transparent" BorderBrush="Transparent" ToolTip="Add key/joystick shortcut">
+                                                    <Button.Style>
+                                                        <Style TargetType="Button">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding CanAdd}" Value="False">
+                                                                    <Setter Property="Height" Value="0" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+                                                    <Border BorderThickness="1" BorderBrush="Green" Background="Green" CornerRadius="7" Width="15" Height="15">
+                                                        <Grid>
+                                                            <Line X1="1" Y1="6.5" X2="12" Y2="6.5" Stroke="White" StrokeThickness="3" />
+                                                            <Line X1="6.5" Y1="1" X2="6.5" Y2="12" Stroke="White" StrokeThickness="3" />
+                                                        </Grid>
+                                                    </Border>
+                                                </Button>
+                                                <Button Click="OnAddRemoveShortcutClick" Background="Transparent" BorderBrush="Transparent" ToolTip="Remove key/joystick shortcut">
+                                                    <Button.Style>
+                                                        <Style TargetType="Button">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding CanAdd}" Value="True">
+                                                                    <Setter Property="Height" Value="0" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+                                                    <Border BorderThickness="1" BorderBrush="Red" Background="Red" CornerRadius="7" Width="15" Height="15">
+                                                        <Line X1="2" Y1="6.5" Stroke="White" StrokeThickness="3" X2="11" Y2="6.5" />
+                                                    </Border>
+                                                </Button>
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="Clear">
+                                <DataGridTemplateColumn Header="Scan" Width="20">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center">
+                                                <Button ToolTip="Assign key/joystick shortcut" Click="OnScanButtonClick" Background="Transparent" BorderBrush="Transparent">
+                                                    <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.scan}, Converter={StaticResource BitmapToImageSourceConverter}}" />
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Clear" Width="20">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel VerticalAlignment="Center">

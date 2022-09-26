@@ -204,6 +204,7 @@ namespace XRNeckSafer
             _ARText = "Autorotation";
             _pARText = "Autorotation";
             _hmdtext = "";
+            loopTimer.Start();
             UpdateDevicesLabel();
         }
 
@@ -1022,14 +1023,6 @@ namespace XRNeckSafer
         {
             Application.Exit();
         }
-        private void MainForm_Shown(object sender, EventArgs e)
-        {
-            if (Config.Instance.MinimizeToTray && Config.Instance.StartMinimized)
-            {
-                this.WindowState = FormWindowState.Minimized;
-                this.Hide();
-            }
-        }
 
         private void setMenuCheckmarks()
         {
@@ -1317,7 +1310,15 @@ namespace XRNeckSafer
             var splashScreen = new SplashScreen();
             ElementHost.EnableModelessKeyboardInterop(splashScreen);
             splashScreen.ShowDialog();
-            loopTimer.Start();
+        }
+
+        private void OnFormShown(object sender, EventArgs e)
+        {
+            if (Config.Instance.MinimizeToTray && Config.Instance.StartMinimized)
+            {
+                WindowState = FormWindowState.Minimized;
+                Hide();
+            }
         }
 
         protected override void OnClosing(CancelEventArgs e)
