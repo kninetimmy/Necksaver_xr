@@ -315,6 +315,8 @@ namespace {
 
 
         // from OXRMC
+        // making sure that all viewsmanipulations are reverted to make sure that reprojection doesn't run havoc 
+
         m_LastFrameTime = frameEndInfo->displayTime;
         std::vector<const XrCompositionLayerBaseHeader*> resetLayers{};
         std::vector<XrCompositionLayerProjection*> resetProjectionLayers{};
@@ -389,8 +391,7 @@ namespace {
             delete views;
         }
 
-
-
+        // End of views restoration
 
         XrSpaceLocation location;
         location.type = XR_TYPE_SPACE_LOCATION;
