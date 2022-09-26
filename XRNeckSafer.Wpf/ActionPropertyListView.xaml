@@ -43,6 +43,28 @@
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel VerticalAlignment="Center">
+                                                <Button ToolTip="Assign key/joystick shortcut" Click="OnScanButtonClick" Background="Transparent" BorderBrush="Transparent">
+                                                    <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.scan}, Converter={StaticResource BitmapToImageSourceConverter}}" />
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Clear" Width="20">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center">
+                                                <Button ToolTip="Clear key/joystick shortcut" Click="ClearEventClick" Background="Transparent" BorderBrush="Transparent">
+                                                    <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.deleteIcon}, Converter={StaticResource BitmapToImageSourceConverter}}" />
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Add/Remove" Width="20">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center">
                                                 <Button Click="OnAddRemoveShortcutClick" Background="Transparent" BorderBrush="Transparent" ToolTip="Add key/joystick shortcut">
                                                     <Button.Style>
                                                         <Style TargetType="Button">
@@ -73,28 +95,6 @@
                                                     <Border BorderThickness="1" BorderBrush="Red" Background="Red" CornerRadius="7" Width="15" Height="15">
                                                         <Line X1="2" Y1="6.5" Stroke="White" StrokeThickness="3" X2="11" Y2="6.5" />
                                                     </Border>
-                                                </Button>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="Scan" Width="20">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel VerticalAlignment="Center">
-                                                <Button ToolTip="Assign key/joystick shortcut" Click="OnScanButtonClick" Background="Transparent" BorderBrush="Transparent">
-                                                    <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.scan}, Converter={StaticResource BitmapToImageSourceConverter}}" />
-                                                </Button>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="Clear" Width="20">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel VerticalAlignment="Center">
-                                                <Button ToolTip="Clear key/joystick shortcut" Click="ClearEventClick" Background="Transparent" BorderBrush="Transparent">
-                                                    <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.deleteIcon}, Converter={StaticResource BitmapToImageSourceConverter}}" />
                                                 </Button>
                                             </StackPanel>
                                         </DataTemplate>
