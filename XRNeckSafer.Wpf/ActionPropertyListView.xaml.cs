@@ -32,9 +32,9 @@ namespace XRNeckSafer.Wpf
             var selected = Properties.FirstOrDefault(p => p.Selected);
             if (selected != null)
             {
-                var selectedIndex = Properties.IndexOf(selected);
-                _dataGrid.SelectedIndex = selectedIndex;
-                DataGridRow row = (DataGridRow)_dataGrid.ItemContainerGenerator.ContainerFromIndex(selectedIndex);
+                DataGridRow row = (DataGridRow)_dataGrid.ItemContainerGenerator.ContainerFromItem(selected);
+                var index = _dataGrid.ItemContainerGenerator.IndexFromContainer(row);
+                _dataGrid.SelectedIndex = index;
                 row.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             }
         }
@@ -47,25 +47,10 @@ namespace XRNeckSafer.Wpf
                 Properties.Add(model);
             }
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_dataGrid.ItemsSource);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("ActionPropertyName");
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("GroupName");
+            PropertyGroupDescription subGroupDescription = new PropertyGroupDescription("ActionPropertyNameText");
             view.GroupDescriptions.Add(groupDescription);
-        }
-
-        private void OnScanButtonClick(object sender, RoutedEventArgs e)
-        {
-            var model = ((Button)e.OriginalSource).DataContext as Input;
-            ScanClick?.Invoke(new ActionPropertyDataModelEventArgs { Model = model });
-        }
-
-        private void OnAddRemoveShortcutClick(object sender, RoutedEventArgs e)
-        {
-            var model = ((Button)e.OriginalSource).DataContext as Input;
-            if (model.CanAdd)
-            {
-                AddInputClick?.Invoke(new ActionPropertyDataModelEventArgs { Model = model });
-                return;
-            }
-            RemoveInputClick?.Invoke(new ActionPropertyDataModelEventArgs { Model = model });
+            view.GroupDescriptions.Add(subGroupDescription);
         }
 
         private void OnInvertCheckBoxClick(object sender, RoutedEventArgs e)
@@ -93,10 +78,24 @@ namespace XRNeckSafer.Wpf
             });
         }
 
-        private void ClearEventClick(object sender, RoutedEventArgs e)
+        private void OnAddClick(ActionPropertyDataModelEventArgs args)
         {
-            var model = ((Button)sender).DataContext as Input;
-            ClearClick?.Invoke(new ActionPropertyDataModelEventArgs { Model = model });
+            AddInputClick?.Invoke(args);
+        }
+
+        private void OnClearClick(ActionPropertyDataModelEventArgs obj)
+        {
+            ClearClick?.Invoke(obj);
+        }
+
+        private void OnScanClick(ActionPropertyDataModelEventArgs obj)
+        {
+            ScanClick?.Invoke(obj);
+        }
+
+        private void OnRemoveClick(ActionPropertyDataModelEventArgs obj)
+        {
+            RemoveInputClick?.Invoke(obj);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace XRNeckSafer
     [DataContract]
     public class BooleanActionProperty : ActionProperty<bool>
     {
-        const string SWITCH_EVENT_NAME = "Switch";
+        const string SWITCH_EVENT_NAME = "On/Off";
 
         [DataMember]
         [JsonProperty(Order = 1)]

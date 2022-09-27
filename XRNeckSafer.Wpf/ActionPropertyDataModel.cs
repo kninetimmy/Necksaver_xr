@@ -7,6 +7,9 @@ namespace XRNeckSafer.Wpf
     {
         public ObservableCollection<Input> InputCombinations { get; set; }
         public string ActionPropertyName { get; set; }
+        public string ActionPropertyNameText { get; set; }
+        public string Description { get; set; }
+        public string GroupName { get; set; }
         public bool ToggleValue { get; set; }
         public bool IsToggleEnabled { get; set; }
         public bool InvertValue { get; set; }

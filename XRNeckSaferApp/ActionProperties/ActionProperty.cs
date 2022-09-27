@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
@@ -11,6 +10,15 @@ namespace XRNeckSafer
     {
         [DataMember]
         public string Name { get; set; }
+
+        [DataMember]
+        public string NameText { get; set; }
+
+        [DataMember]
+        public string GroupName { get; set; }
+
+        [DataMember]
+        public string Description { get; set; }
 
         [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.All)]
         public ActionPropertyEvent[] Events { get; set; }

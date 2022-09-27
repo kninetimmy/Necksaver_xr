@@ -15,8 +15,11 @@ namespace XRNeckSafer
         private bool _firstTimeRendered;
         private bool _isActive;
         private string _actionPropertyName;
+        private string _actionPropertyNameText;
+        private string _actionPropertyDescription;
+        private string _actionPropertyGroup = "Miscellaneous";
 
-        [Category("ActionProperty"), Description("ActionProperty name")]
+        [Category("ActionProperty"), Description("ActionProperty ID")]
         public string ActionPropertyName 
         { 
             get => _actionPropertyName; 
@@ -28,6 +31,51 @@ namespace XRNeckSafer
                     return;
                 }
                 InitialiseActionProperty();
+            }
+        }
+
+        [Category("ActionProperty"), Description("ActionProperty user firendly name")]
+        public string ActionPropertyNameText
+        {
+            get => _actionPropertyNameText;
+            set
+            {
+                _actionPropertyNameText = value;
+                if (_actionProperty == null)
+                {
+                    return;
+                }
+                _actionProperty.NameText = _actionPropertyNameText;
+            }
+        }
+
+        [Category("ActionProperty"), Description("ActionProperty description")]
+        public string ActionPropertyDescription
+        {
+            get => _actionPropertyDescription;
+            set
+            {
+                _actionPropertyDescription = value;
+                if (_actionProperty == null)
+                {
+                    return;
+                }
+                _actionProperty.Description = _actionPropertyDescription;
+            }
+        }
+
+        [Category("ActionProperty"), Description("ActionProperty group name")]
+        public string ActionPropertyGroup
+        {
+            get => _actionPropertyGroup;
+            set
+            {
+                _actionPropertyGroup = value;
+                if (_actionProperty == null)
+                {
+                    return;
+                }
+                _actionProperty.GroupName = _actionPropertyGroup;
             }
         }
 
@@ -84,6 +132,9 @@ namespace XRNeckSafer
                 Config.Instance.ActionProperties.Add(_actionProperty);
             }
             _actionProperty.Triggered += ActionPropertyTriggered;
+            _actionProperty.NameText = _actionPropertyNameText;
+            _actionProperty.Description = _actionPropertyDescription;
+            _actionProperty.GroupName = _actionPropertyGroup;
             _isActive = _actionProperty.GetValue();
             SetButtonColor();
         }
