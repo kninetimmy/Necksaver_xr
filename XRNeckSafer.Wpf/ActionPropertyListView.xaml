@@ -57,7 +57,7 @@
                                         <Style TargetType="CheckBox">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding IsToggleEnabled}" Value="False">
-                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                    <Setter Property="Height" Value="0"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -78,7 +78,7 @@
                                         <Style TargetType="CheckBox">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding IsInvertEnabled}" Value="False">
-                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                    <Setter Property="Height" Value="0"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -128,7 +128,7 @@
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <Border BorderBrush="LightGray" BorderThickness="1,0,1,1">
-                                            <TextBlock Text="{Binding Name}" FontWeight="Bold" 
+                                            <TextBlock Text="{Binding Name}" FontWeight="Bold" HorizontalAlignment="Center"
                                                    Foreground="Black" FontSize="12" VerticalAlignment="Center" />
                                         </Border>
                                         <ItemsPresenter Grid.Column="1" />
