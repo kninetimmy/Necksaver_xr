@@ -17,17 +17,17 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.stepwiseGroup = new System.Windows.Forms.GroupBox();
             this.error_label2 = new System.Windows.Forms.Label();
             this.error_label = new System.Windows.Forms.Label();
@@ -99,10 +99,12 @@
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this._disableSplashScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disableAllGUIOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.resetOptionsToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showJoystickkeyConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.resetOptionsToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aPILayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableAPILayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listApiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -175,7 +177,6 @@
             this.loopTimer = new System.Windows.Forms.Timer(this.components);
             this._devicesStatusLabel = new System.Windows.Forms.Label();
             this._devicesStatusImage = new System.Windows.Forms.PictureBox();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.stepwiseGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AutorotGridView)).BeginInit();
             this.linearGroup.SuspendLayout();
@@ -283,8 +284,8 @@
             // act
             // 
             this.act.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.act.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.act.DefaultCellStyle = dataGridViewCellStyle1;
             this.act.Frozen = true;
             this.act.HeaderText = "act";
             this.act.MinimumWidth = 6;
@@ -297,8 +298,8 @@
             // deact
             // 
             this.deact.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deact.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deact.DefaultCellStyle = dataGridViewCellStyle2;
             this.deact.Frozen = true;
             this.deact.HeaderText = "deact";
             this.deact.MinimumWidth = 6;
@@ -311,8 +312,8 @@
             // rot
             // 
             this.rot.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rot.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rot.DefaultCellStyle = dataGridViewCellStyle3;
             this.rot.Frozen = true;
             this.rot.HeaderText = "rot";
             this.rot.MinimumWidth = 6;
@@ -324,8 +325,8 @@
             // 
             // LR
             // 
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LR.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LR.DefaultCellStyle = dataGridViewCellStyle4;
             this.LR.Frozen = true;
             this.LR.HeaderText = "L/R";
             this.LR.MinimumWidth = 6;
@@ -335,8 +336,8 @@
             // 
             // Fwd
             // 
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Fwd.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Fwd.DefaultCellStyle = dataGridViewCellStyle5;
             this.Fwd.Frozen = true;
             this.Fwd.HeaderText = "Fwd";
             this.Fwd.MinimumWidth = 6;
@@ -945,6 +946,7 @@
             this.toolStripSeparator1,
             this.PitchLimToolStripMenuItem,
             this.toolStripSeparator3,
+            this._disableSplashScreenToolStripMenuItem,
             this.disableAllGUIOutputToolStripMenuItem,
             this.toolStripSeparator2,
             this.showJoystickkeyConfigurationToolStripMenuItem,
@@ -1051,6 +1053,14 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(254, 6);
             // 
+            // _disableSplashScreenToolStripMenuItem
+            // 
+            this._disableSplashScreenToolStripMenuItem.CheckOnClick = true;
+            this._disableSplashScreenToolStripMenuItem.Name = "_disableSplashScreenToolStripMenuItem";
+            this._disableSplashScreenToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this._disableSplashScreenToolStripMenuItem.Text = "Disable Splash Screen";
+            this._disableSplashScreenToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.OnDisableSplashScreenCheckStateChanged);
+            // 
             // disableAllGUIOutputToolStripMenuItem
             // 
             this.disableAllGUIOutputToolStripMenuItem.CheckOnClick = true;
@@ -1064,19 +1074,24 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(254, 6);
             // 
-            // resetOptionsToDefaultToolStripMenuItem
-            // 
-            this.resetOptionsToDefaultToolStripMenuItem.Name = "resetOptionsToDefaultToolStripMenuItem";
-            this.resetOptionsToDefaultToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
-            this.resetOptionsToDefaultToolStripMenuItem.Text = "Reset options to default";
-            this.resetOptionsToDefaultToolStripMenuItem.Click += new System.EventHandler(this.resetOptionsToDefaultToolStripMenuItem_Click);
-            // 
             // showJoystickkeyConfigurationToolStripMenuItem
             // 
             this.showJoystickkeyConfigurationToolStripMenuItem.Name = "showJoystickkeyConfigurationToolStripMenuItem";
             this.showJoystickkeyConfigurationToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.showJoystickkeyConfigurationToolStripMenuItem.Text = "Show joystick/key mapping config";
             this.showJoystickkeyConfigurationToolStripMenuItem.Click += new System.EventHandler(this.OnShowJoystickKeyConfigMenuClick);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(254, 6);
+            // 
+            // resetOptionsToDefaultToolStripMenuItem
+            // 
+            this.resetOptionsToDefaultToolStripMenuItem.Name = "resetOptionsToDefaultToolStripMenuItem";
+            this.resetOptionsToDefaultToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.resetOptionsToDefaultToolStripMenuItem.Text = "Reset options to default";
+            this.resetOptionsToDefaultToolStripMenuItem.Click += new System.EventHandler(this.resetOptionsToDefaultToolStripMenuItem_Click);
             // 
             // aPILayerToolStripMenuItem
             // 
@@ -1585,8 +1600,8 @@
             // dataGridViewTextBoxColumn4
             // 
             this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewTextBoxColumn4.Frozen = true;
             this.dataGridViewTextBoxColumn4.HeaderText = "act";
             this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
@@ -1599,8 +1614,8 @@
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridViewTextBoxColumn5.Frozen = true;
             this.dataGridViewTextBoxColumn5.HeaderText = "deact";
             this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
@@ -1613,8 +1628,8 @@
             // dataGridViewTextBoxColumn6
             // 
             this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridViewTextBoxColumn6.Frozen = true;
             this.dataGridViewTextBoxColumn6.HeaderText = "rot";
             this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
@@ -1670,8 +1685,8 @@
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridViewTextBoxColumn1.Frozen = true;
             this.dataGridViewTextBoxColumn1.HeaderText = "act";
             this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
@@ -1684,8 +1699,8 @@
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridViewTextBoxColumn2.Frozen = true;
             this.dataGridViewTextBoxColumn2.HeaderText = "deact";
             this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
@@ -1698,8 +1713,8 @@
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle11;
             this.dataGridViewTextBoxColumn3.Frozen = true;
             this.dataGridViewTextBoxColumn3.HeaderText = "rot";
             this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
@@ -2007,11 +2022,6 @@
             this._devicesStatusImage.TabIndex = 59;
             this._devicesStatusImage.TabStop = false;
             // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(254, 6);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2231,6 +2241,7 @@
         private System.Windows.Forms.PictureBox _devicesStatusImage;
         private System.Windows.Forms.ToolStripMenuItem showJoystickkeyConfigurationToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem _disableSplashScreenToolStripMenuItem;
     }
 }
 

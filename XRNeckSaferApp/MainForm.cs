@@ -1027,8 +1027,8 @@ namespace XRNeckSafer
         {
             startMinimzedToolStripMenuItem.Checked = Config.Instance.StartMinimized;
             minimizeToTrayToolStripMenuItem.Checked = Config.Instance.MinimizeToTray;
-            // MultipleLRButtonsToolStripMenuItem.Checked = Config.Instance.MultipleLRbuttons;
             disableAllGUIOutputToolStripMenuItem.Checked = Config.Instance.DisableGUIOutput;
+            _disableSplashScreenToolStripMenuItem.Checked = Config.Instance.DisableSplashScreen;
 
             ToolStripMenuItem item = (ToolStripMenuItem)PitchLimToolStripMenuItem.DropDownItems[Config.Instance.PitchLimForAutorot / 10 - 1];
             item.Checked = true;
@@ -1306,6 +1306,10 @@ namespace XRNeckSafer
 
         private void OnFormLoaded(object sender, EventArgs e)
         {
+            if (Config.Instance.DisableSplashScreen)
+            {
+                return;
+            }
             var splashScreen = new SplashScreen();
             ElementHost.EnableModelessKeyboardInterop(splashScreen);
             splashScreen.ShowDialog();
@@ -1330,6 +1334,11 @@ namespace XRNeckSafer
         private void OnShowJoystickKeyConfigMenuClick(object sender, EventArgs e)
         {
             ActionPropertiesForm.ShowForm(null, Top, Right);
+        }
+
+        private void OnDisableSplashScreenCheckStateChanged(object sender, EventArgs e)
+        {
+            Config.Instance.DisableSplashScreen = _disableSplashScreenToolStripMenuItem.Checked;
         }
     }
 }

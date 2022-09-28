@@ -10,8 +10,6 @@ namespace XRNeckSafer
         public int Angle;
         public int UpAngle;
         public int DownAngle;
-        // public int TransLR; // replaced with ActionProperty
-        // public int TransF; // replaced with ActionProperty
         public int LinearLimL;
         public int LinearLimR;
         public int LinearMultL;
@@ -24,9 +22,8 @@ namespace XRNeckSafer
         public bool PitchAdditiv;
         public bool StartMinimized;
         public bool MinimizeToTray;
-        // public bool MultipleLRbuttons;
+        public bool DisableSplashScreen;
         public bool DisableGUIOutput;
-        // public bool DisableJoystickReconnect;
         public int PitchLimForAutorot;
         public static string configfilename;
         public string AutoMode;
@@ -59,8 +56,8 @@ namespace XRNeckSafer
             PitchAdditiv = false;
             StartMinimized = false;
             MinimizeToTray = false;
-            // MultipleLRbuttons = false;
             DisableGUIOutput = false;
+            DisableSplashScreen = false;
             PitchLimForAutorot = 90;
             AutoMode = "Off";
             AutoSteps = new List<int[]>();
