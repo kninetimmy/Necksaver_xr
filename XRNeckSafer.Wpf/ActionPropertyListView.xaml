@@ -86,7 +86,6 @@
                                 </CheckBox>
                             </StackPanel>
                         </StackPanel>
-
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>

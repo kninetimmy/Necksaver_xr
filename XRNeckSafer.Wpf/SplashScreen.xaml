@@ -10,9 +10,9 @@
         <Storyboard x:Key="StartAnimation">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image" Storyboard.TargetProperty="(FrameworkElement.Width)">
                 <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.7000000" Value="300"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:02" Value="300"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:02.3000000" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.7000000" Value="250"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:02" Value="250"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:02.3000000" Value="150"/>
                 <EasingDoubleKeyFrame KeyTime="00:00:02.6000000" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image" Storyboard.TargetProperty="(UIElement.Opacity)">
@@ -49,9 +49,9 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Window.Resources>
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="250">
         <Grid.RowDefinitions>
-            <RowDefinition Height="300"/>
+            <RowDefinition Height="250"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Image x:Name="image" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/XRNeckSafer.Wpf;component/XRNS_splash_icon.jpeg" RenderTransformOrigin="0.5,0.5">
