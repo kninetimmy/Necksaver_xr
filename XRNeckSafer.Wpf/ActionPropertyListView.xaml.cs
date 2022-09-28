@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace XRNeckSafer.Wpf
 {
@@ -96,6 +97,43 @@ namespace XRNeckSafer.Wpf
         private void OnRemoveClick(ActionPropertyDataModelEventArgs obj)
         {
             RemoveInputClick?.Invoke(obj);
+        }
+
+        private void OnDataGridLayoutUpdated(object sender, EventArgs e)
+        {
+            var scrollShown = HasVerticalScroll(_dataGrid);
+            if (scrollShown != HasVerticalScroll(_headersGrid))
+            {
+                _headersGrid.VerticalScrollBarVisibility = scrollShown ? ScrollBarVisibility.Visible : ScrollBarVisibility.Hidden;
+            }
+        }
+
+        private bool HasVerticalScroll(DataGrid dataGrid)
+        {
+            ScrollViewer scrollViewer = FindVisualChild<ScrollViewer>(dataGrid);
+            if (scrollViewer != null)
+            {
+                return scrollViewer.ComputedVerticalScrollBarVisibility == Visibility.Visible;
+            }
+            return false;
+        }
+
+        private T FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                if (child != null && child is T)
+                { 
+                    return (T)child; 
+                }
+                T childOfChild = FindVisualChild<T>(child);
+                if (childOfChild != null)
+                { 
+                    return childOfChild; 
+                }
+            }
+            return null;
         }
     }
 }
