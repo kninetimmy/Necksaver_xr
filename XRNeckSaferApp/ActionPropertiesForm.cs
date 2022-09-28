@@ -81,7 +81,7 @@ namespace XRNeckSafer
             var props = new ObservableCollection<ActionPropertyDataModel>();
             Config.Instance.ActionProperties.ForEach(prop =>
             {
-                var currentProperty = _actionPropertyName.Equals(prop.Name);
+                var currentProperty = _actionPropertyName?.Equals(prop.Name);
                 var boolProp = prop as BooleanActionProperty;
                 foreach (var actionEvent in prop.Events)
                 {
@@ -98,7 +98,7 @@ namespace XRNeckSafer
                         ToggleValue = toggleAction != null && toggleAction.Toggle,
                         IsInvertEnabled = boolProp != null,
                         InvertValue = boolProp?.Invert ?? false,
-                        Selected = currentProperty,
+                        Selected = currentProperty ?? false,
                         Event = actionEvent,
                     };
                     for (var index = 0; index < actionEvent.InputCombinations.Count; index++)

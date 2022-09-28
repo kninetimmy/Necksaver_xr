@@ -226,7 +226,6 @@ namespace XRNeckSafer
                 return;
             }
             UpdateDevicesLabel();
-            MessageBox.Show($"Joystick {joystickName} with GUID: {guid} has been disconnected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void UpdateDevicesLabel()
@@ -1326,6 +1325,11 @@ namespace XRNeckSafer
             JoystickService.DeviceDisconnected -= OnJoystickDisconnected;
             JoystickService.DeviceConnected -= OnJoystickConnected;
             base.OnClosing(e);
+        }
+
+        private void OnShowJoystickKeyConfigMenuClick(object sender, EventArgs e)
+        {
+            ActionPropertiesForm.ShowForm(null, Top, Right);
         }
     }
 }

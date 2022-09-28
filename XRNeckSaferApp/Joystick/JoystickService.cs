@@ -11,6 +11,7 @@ namespace XRNeckSafer
 {
     public static class JoystickService
     {
+        private const int SCAN_DELAY_INTERVAL_MSEC = 50;
         private static BackgroundWorker _worker;
         private static readonly AutoResetEvent _waitHandle = new AutoResetEvent(false);
         private static readonly ILogger _logger = LogManager.GetLogger("JoystickService", typeof(JoystickService));
@@ -122,7 +123,7 @@ namespace XRNeckSafer
                 {
                     CheckJoystickUpdates(guid);
                 }
-                Thread.Sleep(10);
+                Thread.Sleep(SCAN_DELAY_INTERVAL_MSEC);
             }
         }
 
@@ -248,7 +249,8 @@ namespace XRNeckSafer
             }
             JoystickState currentState = GetJoystickState(guid);
             JoystickState updatedState = joystick.GetCurrentState();
-            for (var buttonIndex = 0; buttonIndex < joystick.Capabilities.ButtonCount; buttonIndex++)
+            var buttonCount = joystick.Capabilities.ButtonCount;
+            for (var buttonIndex = 0; buttonIndex < buttonCount; buttonIndex++)
             {
                 if (updatedState.Buttons[buttonIndex] != currentState.Buttons[buttonIndex])
                 {
@@ -264,7 +266,8 @@ namespace XRNeckSafer
                     updates.Add(update);
                 }
             }
-            for (var povIndex = 0; povIndex < joystick.Capabilities.PovCount; povIndex++)
+            var povCount = joystick.Capabilities.PovCount;
+            for (var povIndex = 0; povIndex < povCount; povIndex++)
             {
                 if (updatedState.PointOfViewControllers[povIndex] != currentState.PointOfViewControllers[povIndex])
                 {
