@@ -49,8 +49,8 @@ namespace XRNeckSafer
             notifyIcon.ContextMenuStrip = contextMenuStrip;
             showToolStripMenuItem.Click += showToolStripMenuItem_Click;
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
-            JoystickService.DeviceDisconnected += OnJoystickDisconnected;
-            JoystickService.DeviceConnected += OnJoystickConnected;
+            JoystickService.DeviceDisconnected += OnJoysticksNumberChanged;
+            JoystickService.DeviceConnected += OnJoysticksNumberChanged;
             if (Config.Instance.StartMinimized) WindowState = FormWindowState.Minimized;
 
             angleNUD.Value = Config.Instance.Angle;
@@ -208,21 +208,11 @@ namespace XRNeckSafer
             UpdateDevicesLabel();
         }
 
-        private void OnJoystickConnected(Guid guid, string joystickName)
+        private void OnJoysticksNumberChanged(Guid guid, string joystickName)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action<Guid, string>(OnJoystickConnected), guid, joystickName);
-                return;
-            }
-            UpdateDevicesLabel();
-        }
-
-        private void OnJoystickDisconnected(Guid guid, string joystickName)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action<Guid, string>(OnJoystickDisconnected), guid, joystickName);
+                Invoke(new Action<Guid, string>(OnJoysticksNumberChanged), guid, joystickName);
                 return;
             }
             UpdateDevicesLabel();
@@ -1326,8 +1316,8 @@ namespace XRNeckSafer
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            JoystickService.DeviceDisconnected -= OnJoystickDisconnected;
-            JoystickService.DeviceConnected -= OnJoystickConnected;
+            JoystickService.DeviceDisconnected -= OnJoysticksNumberChanged;
+            JoystickService.DeviceConnected -= OnJoysticksNumberChanged;
             base.OnClosing(e);
         }
 
