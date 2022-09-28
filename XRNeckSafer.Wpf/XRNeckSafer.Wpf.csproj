@@ -50,6 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitmapToImageSourceConverter.cs" />
+    <Compile Include="InputCombinations.xaml.cs">
+      <DependentUpon>InputCombinations.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -69,6 +72,10 @@
       <DependentUpon>ActionPropertyListView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="InputCombinations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SplashScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

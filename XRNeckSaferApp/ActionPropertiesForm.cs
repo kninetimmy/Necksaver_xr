@@ -90,6 +90,9 @@ namespace XRNeckSafer
                     {
                         InputCombinations = new ObservableCollection<Input>(),
                         ActionPropertyName = prop.Name,
+                        ActionPropertyNameText = prop.NameText,
+                        Description = prop.Description,
+                        GroupName = prop.GroupName,
                         EventName = actionEvent.Name,
                         IsToggleEnabled = toggleAction != null,
                         ToggleValue = toggleAction != null && toggleAction.Toggle,

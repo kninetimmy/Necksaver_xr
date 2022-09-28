@@ -8,8 +8,9 @@
              Name="HostControl"
              d:DesignHeight="365" d:DesignWidth="545" UseLayoutRounding="False">
     <UserControl.Resources>
-        <Style x:Key="_textBlockVertical" TargetType="TextBlock">
+        <Style x:Key="_textBlockCenter" TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
         <Style x:Key="_dataGrid" TargetType="DataGrid">
             <Setter Property="CanUserAddRows" Value="False" />
@@ -22,7 +23,7 @@
             <Setter Property="GridLinesVisibility" Value="Horizontal" />
             <Setter Property="HorizontalGridLinesBrush" Value="LightGray" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="HeadersVisibility" Value="Column" />
+            <Setter Property="HeadersVisibility" Value="None" />
         </Style>
         <Style x:Key="_cell" TargetType="DataGridCell">
             <Setter Property="BorderThickness" Value="0"/>
@@ -32,76 +33,17 @@
     </UserControl.Resources>
     <DataGrid Style="{StaticResource _dataGrid}" Name="_dataGrid" ItemsSource="{Binding ElementName=HostControl, Path=Properties}" CellStyle="{StaticResource _cell}">
         <DataGrid.Columns>
-            <DataGridTextColumn Header="Event Name" Binding="{Binding EventName}" ElementStyle="{StaticResource _textBlockVertical}" />
+            <DataGridTextColumn Header="Event Name" Binding="{Binding EventName}" ElementStyle="{StaticResource _textBlockCenter}" />
             <DataGridTemplateColumn Header="Key/Joystick mapping" Width="*">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <DataGrid x:Name="_inputsGrid" Style="{StaticResource _dataGrid}" ItemsSource="{Binding InputCombinations}" HeadersVisibility="None" CellStyle="{StaticResource _cell}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Width="*" Binding="{Binding InputCombination}" ElementStyle="{StaticResource _textBlockVertical}" />
-                                <DataGridTemplateColumn Header="Scan" Width="20">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel VerticalAlignment="Center">
-                                                <Button Click="OnAddRemoveShortcutClick" Background="Transparent" BorderBrush="Transparent" ToolTip="Add key/joystick shortcut">
-                                                    <Button.Style>
-                                                        <Style TargetType="Button">
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding CanAdd}" Value="False">
-                                                                    <Setter Property="Height" Value="0" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Button.Style>
-                                                    <Border BorderThickness="1" BorderBrush="Green" Background="Green" CornerRadius="7" Width="15" Height="15">
-                                                        <Grid>
-                                                            <Line X1="1" Y1="6.5" X2="12" Y2="6.5" Stroke="White" StrokeThickness="3" />
-                                                            <Line X1="6.5" Y1="1" X2="6.5" Y2="12" Stroke="White" StrokeThickness="3" />
-                                                        </Grid>
-                                                    </Border>
-                                                </Button>
-                                                <Button Click="OnAddRemoveShortcutClick" Background="Transparent" BorderBrush="Transparent" ToolTip="Remove key/joystick shortcut">
-                                                    <Button.Style>
-                                                        <Style TargetType="Button">
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding CanAdd}" Value="True">
-                                                                    <Setter Property="Height" Value="0" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Button.Style>
-                                                    <Border BorderThickness="1" BorderBrush="Red" Background="Red" CornerRadius="7" Width="15" Height="15">
-                                                        <Line X1="2" Y1="6.5" Stroke="White" StrokeThickness="3" X2="11" Y2="6.5" />
-                                                    </Border>
-                                                </Button>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="Scan" Width="20">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel VerticalAlignment="Center">
-                                                <Button ToolTip="Assign key/joystick shortcut" Click="OnScanButtonClick" Background="Transparent" BorderBrush="Transparent">
-                                                    <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.scan}, Converter={StaticResource BitmapToImageSourceConverter}}" />
-                                                </Button>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="Clear" Width="20">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel VerticalAlignment="Center">
-                                                <Button ToolTip="Clear key/joystick shortcut" Click="ClearEventClick" Background="Transparent" BorderBrush="Transparent">
-                                                    <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.deleteIcon}, Converter={StaticResource BitmapToImageSourceConverter}}" />
-                                                </Button>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
+                        <local:InputCombinations 
+                                                 Inputs="{Binding InputCombinations}"
+                                                 AddInputClick="OnAddClick"
+                                                 RemoveInputClick="OnRemoveClick"
+                                                 ClearClick="OnClearClick"
+                                                 ScanClick="OnScanClick"
+                                                 />
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
@@ -110,12 +52,12 @@
                     <DataTemplate>
                         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <StackPanel HorizontalAlignment="Center">
-                                <CheckBox Name="_toggleCheckBox" IsChecked="{Binding ToggleValue}" Checked="OnToggleCheckboxClick" Unchecked="OnToggleCheckboxClick">
+                                <CheckBox Name="_toggleCheckBox" ToolTip="Toggle value" IsChecked="{Binding ToggleValue}" Checked="OnToggleCheckboxClick" Unchecked="OnToggleCheckboxClick">
                                     <CheckBox.Style>
                                         <Style TargetType="CheckBox">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding IsToggleEnabled}" Value="False">
-                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                    <Setter Property="Height" Value="0"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -131,12 +73,12 @@
                     <DataTemplate>
                         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <StackPanel HorizontalAlignment="Center" >
-                                <CheckBox Name="_invertCheckBox" IsChecked="{Binding InvertValue}" Checked="OnInvertCheckBoxClick" Unchecked="OnInvertCheckBoxClick">
+                                <CheckBox Name="_invertCheckBox" ToolTip="Invert value" IsChecked="{Binding InvertValue}" Checked="OnInvertCheckBoxClick" Unchecked="OnInvertCheckBoxClick">
                                     <CheckBox.Style>
                                         <Style TargetType="CheckBox">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding IsInvertEnabled}" Value="False">
-                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                    <Setter Property="Height" Value="0"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -144,7 +86,6 @@
                                 </CheckBox>
                             </StackPanel>
                         </StackPanel>
-
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
@@ -162,12 +103,35 @@
                                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                                     <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="Black" FontSize="14" VerticalAlignment="Bottom" />
                                                     <TextBlock Text="{Binding ItemCount}" FontSize="14" Foreground="Green" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
-                                                    <TextBlock Text=" event(s)" FontSize="14" Foreground="Gray" FontStyle="Italic" VerticalAlignment="Bottom" />
+                                                    <TextBlock Text=" control(s)" FontSize="14" Foreground="Gray" FontStyle="Italic" VerticalAlignment="Bottom" />
                                                 </StackPanel>
                                             </StackPanel>
                                         </Expander.Header>
                                         <ItemsPresenter />
                                     </Expander>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </GroupStyle.ContainerStyle>
+            </GroupStyle>
+            <GroupStyle>
+                <GroupStyle.ContainerStyle>
+                    <Style TargetType="{x:Type GroupItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Grid Background="White">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border BorderBrush="LightGray" BorderThickness="1,0,1,1">
+                                            <TextBlock Text="{Binding Name}" Style="{StaticResource _textBlockCenter}" FontWeight="Bold"
+                                                   Foreground="Black" FontSize="12" />
+                                        </Border>
+                                        <ItemsPresenter Grid.Column="1" />
+                                    </Grid>
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
