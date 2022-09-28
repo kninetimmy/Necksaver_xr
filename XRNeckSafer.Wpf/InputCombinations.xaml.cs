@@ -15,8 +15,8 @@ namespace XRNeckSafer.Wpf
 
         public ObservableCollection<Input> Inputs
         {
-            get { return (ObservableCollection<Input>)GetValue(InputsProperty); }
-            set { SetValue(InputsProperty, value); }
+            get => (ObservableCollection<Input>)GetValue(InputsProperty);
+            set => SetValue(InputsProperty, value);
         }
 
         public event Action<ActionPropertyDataModelEventArgs> ScanClick;
