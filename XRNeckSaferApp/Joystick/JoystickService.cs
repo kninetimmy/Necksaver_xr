@@ -19,6 +19,7 @@ namespace XRNeckSafer
         private static readonly Dictionary<Guid, Joystick> _joysticGuids = new Dictionary<Guid, Joystick>();
         private static readonly Dictionary<Guid, JoystickState> _joystickStates = new Dictionary<Guid, JoystickState>();
         private static readonly Dictionary<Guid, List<JoystickButton>> _pressedJoystickButtons = new Dictionary<Guid, List<JoystickButton>>();
+        private static readonly Dictionary<Guid, Tuple<int, int>> _joysticButtonsPovCounts = new Dictionary<Guid, Tuple<int, int>>();
 
         private static readonly List<JoystickOffset> _povOffsets = new List<JoystickOffset>
         {
@@ -103,6 +104,7 @@ namespace XRNeckSafer
                 _joysticGuids.Clear();
                 _joystickStates.Clear();
                 _pressedJoystickButtons.Clear();
+                _joysticButtonsPovCounts.Clear();
             }
             _worker.DoWork -= ScanConnectedDevicesWork;
             _worker.RunWorkerCompleted -= JoystickWorkerCompleted;
@@ -143,9 +145,12 @@ namespace XRNeckSafer
                     if (!_joysticGuids.ContainsKey(device.InstanceGuid))
                     {
                         var joystick = new Joystick(directInput, device.InstanceGuid);
+                        var buttonCount = joystick.Capabilities.ButtonCount;
+                        var povCount = joystick.Capabilities.PovCount;
                         _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]: Found Joystick with GUID: {device.InstanceGuid}." +
-                            $" {joystick.Capabilities.ButtonCount} buttons, {joystick.Capabilities.PovCount} POVs");
+                            $" {buttonCount} buttons, {povCount} POVs");
                         _joysticGuids.Add(device.InstanceGuid, joystick);
+                        _joysticButtonsPovCounts.Add(device.InstanceGuid, new Tuple<int, int>(buttonCount, povCount));
                         joystick.Acquire();
                         _joystickStates.Add(device.InstanceGuid, joystick.GetCurrentState());
                         DeviceConnected?.Invoke(device.InstanceGuid, joystick.Properties.InstanceName);
@@ -234,6 +239,7 @@ namespace XRNeckSafer
                 _pressedJoystickButtons.Remove(guid);
                 _joysticGuids.Remove(guid);
                 _joystickStates.Remove(guid);
+                _joysticButtonsPovCounts.Remove(guid);
             }
             _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]: Removed Joystick with GUID: {guid}");
             DeviceDisconnected?.Invoke(guid, joystickName);
@@ -249,7 +255,7 @@ namespace XRNeckSafer
             }
             JoystickState currentState = GetJoystickState(guid);
             JoystickState updatedState = joystick.GetCurrentState();
-            var buttonCount = joystick.Capabilities.ButtonCount;
+            var buttonCount = _joysticButtonsPovCounts[guid].Item1;
             for (var buttonIndex = 0; buttonIndex < buttonCount; buttonIndex++)
             {
                 if (updatedState.Buttons[buttonIndex] != currentState.Buttons[buttonIndex])
@@ -266,7 +272,7 @@ namespace XRNeckSafer
                     updates.Add(update);
                 }
             }
-            var povCount = joystick.Capabilities.PovCount;
+            var povCount = _joysticButtonsPovCounts[guid].Item2;
             for (var povIndex = 0; povIndex < povCount; povIndex++)
             {
                 if (updatedState.PointOfViewControllers[povIndex] != currentState.PointOfViewControllers[povIndex])
