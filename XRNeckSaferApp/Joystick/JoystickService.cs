@@ -11,6 +11,7 @@ namespace XRNeckSafer
 {
     public static class JoystickService
     {
+        private const int SCAN_DELAY_INTERVAL_MSEC = 50;
         private static BackgroundWorker _worker;
         private static readonly AutoResetEvent _waitHandle = new AutoResetEvent(false);
         private static readonly ILogger _logger = LogManager.GetLogger("JoystickService", typeof(JoystickService));
@@ -122,7 +123,7 @@ namespace XRNeckSafer
                 {
                     CheckJoystickUpdates(guid);
                 }
-                Thread.Sleep(10);
+                Thread.Sleep(SCAN_DELAY_INTERVAL_MSEC);
             }
         }
 
