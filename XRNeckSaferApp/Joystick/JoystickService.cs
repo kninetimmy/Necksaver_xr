@@ -249,7 +249,8 @@ namespace XRNeckSafer
             }
             JoystickState currentState = GetJoystickState(guid);
             JoystickState updatedState = joystick.GetCurrentState();
-            for (var buttonIndex = 0; buttonIndex < joystick.Capabilities.ButtonCount; buttonIndex++)
+            var buttonCount = joystick.Capabilities.ButtonCount;
+            for (var buttonIndex = 0; buttonIndex < buttonCount; buttonIndex++)
             {
                 if (updatedState.Buttons[buttonIndex] != currentState.Buttons[buttonIndex])
                 {
@@ -265,7 +266,8 @@ namespace XRNeckSafer
                     updates.Add(update);
                 }
             }
-            for (var povIndex = 0; povIndex < joystick.Capabilities.PovCount; povIndex++)
+            var povCount = joystick.Capabilities.PovCount;
+            for (var povIndex = 0; povIndex < povCount; povIndex++)
             {
                 if (updatedState.PointOfViewControllers[povIndex] != currentState.PointOfViewControllers[povIndex])
                 {
