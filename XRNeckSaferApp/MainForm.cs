@@ -1326,5 +1326,10 @@ namespace XRNeckSafer
             JoystickService.DeviceConnected -= OnJoystickConnected;
             base.OnClosing(e);
         }
+
+        private void OnShowJoystickKeyConfigMenuClick(object sender, EventArgs e)
+        {
+            ActionPropertiesForm.ShowForm(null, Top, Right);
+        }
     }
 }
