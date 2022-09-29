@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace XRNeckSafer
 {
-    public class NumericActionUpDown : NumericUpDown, IActionPropertyGroups
+    public class NumericActionUpDown : NumericUpDown, IActionPropertyGroups, IActionPropertyName
     {
         private NumericUpDownActionProperty _actionProperty;
         private bool _firstTimeRendered;

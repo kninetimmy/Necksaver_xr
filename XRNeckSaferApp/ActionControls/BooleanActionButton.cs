@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace XRNeckSafer
 {
-    public class BooleanActionButton : Button, IActionPropertyGroups
+    public class BooleanActionButton : Button, IActionPropertyGroups, IActionPropertyName
     {
         private System.Drawing.Color _inactiveForeColour;
         private System.Drawing.Color _inactiveBackColour;
