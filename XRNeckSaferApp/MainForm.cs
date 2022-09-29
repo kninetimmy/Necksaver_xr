@@ -998,7 +998,6 @@ namespace XRNeckSafer
             Config.Instance.MinimizeToTray = false;
             Config.Instance.PitchLimForAutorot = 90;
             Config.Instance.DisableGUIOutput = false;
-            // Config.Instance.MultipleLRbuttons = false;
             setMenuCheckmarks();
         }
 
@@ -1074,7 +1073,6 @@ namespace XRNeckSafer
 
         private void numericUpDownMultRight_ValueChanged(object sender, EventArgs e)
         {
-            // Config.Instance.LinearMultR = (int)numericUpDownMultRight.Value;
             applyLinearSettings();
         }
 

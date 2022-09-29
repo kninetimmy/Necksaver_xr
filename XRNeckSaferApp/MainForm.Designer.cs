@@ -530,7 +530,7 @@
             this._numericUpDownMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.setJoystickkeyShortcutToolStripMenuItem});
             this._numericUpDownMenuStrip.Name = "_numericUpDownMenuStrip";
-            this._numericUpDownMenuStrip.Size = new System.Drawing.Size(235, 48);
+            this._numericUpDownMenuStrip.Size = new System.Drawing.Size(235, 26);
             // 
             // setJoystickkeyShortcutToolStripMenuItem
             // 
