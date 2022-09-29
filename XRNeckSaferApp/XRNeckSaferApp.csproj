@@ -172,9 +172,15 @@
     <Compile Include="ActionProperties\ActionProperty.cs" />
     <Compile Include="ActionProperties\ActionPropertyEvent.cs" />
     <Compile Include="ActionProperties\ActionPropertyEventArgs.cs" />
+    <Compile Include="ActionControls\Designer\ActionPropertyGroup.cs" />
+    <Compile Include="ActionControls\Designer\ActionPropertyGroups.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ActionControls\Designer\ActionPropertyGroupTypeEditor.cs" />
     <Compile Include="ActionProperties\ActionPropertyProcessor.cs" />
     <Compile Include="ActionProperties\ActionPropertyToggleEvent.cs" />
     <Compile Include="ActionProperties\BooleanActionProperty.cs" />
+    <Compile Include="ActionControls\Designer\IActionPropertyGroups.cs" />
     <Compile Include="ActionProperties\NumericUpDownActionProperty.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Extensions.cs" />

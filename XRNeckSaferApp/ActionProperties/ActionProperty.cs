@@ -14,8 +14,8 @@ namespace XRNeckSafer
         [DataMember]
         public string NameText { get; set; }
 
-        [DataMember]
-        public string GroupName { get; set; }
+        [JsonIgnore]
+        public ActionPropertyGroup Group { get; set; }
 
         [DataMember]
         public string Description { get; set; }

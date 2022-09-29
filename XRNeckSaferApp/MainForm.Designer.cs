@@ -17,17 +17,22 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup11 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup12 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup13 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup14 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup15 = new XRNeckSafer.ActionPropertyGroup();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
             this.stepwiseGroup = new System.Windows.Forms.GroupBox();
             this.error_label2 = new System.Windows.Forms.Label();
             this.error_label = new System.Windows.Forms.Label();
@@ -60,6 +65,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.SetResetButton = new XRNeckSafer.BooleanActionButton();
+            this._groups = new XRNeckSafer.ActionPropertyGroups();
             this.HMDYawLabel = new System.Windows.Forms.Label();
             this.VersionLabel = new System.Windows.Forms.Label();
             this.ManualGroup = new System.Windows.Forms.GroupBox();
@@ -284,8 +290,8 @@
             // act
             // 
             this.act.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.act.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.act.DefaultCellStyle = dataGridViewCellStyle23;
             this.act.Frozen = true;
             this.act.HeaderText = "act";
             this.act.MinimumWidth = 6;
@@ -298,8 +304,8 @@
             // deact
             // 
             this.deact.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deact.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deact.DefaultCellStyle = dataGridViewCellStyle24;
             this.deact.Frozen = true;
             this.deact.HeaderText = "deact";
             this.deact.MinimumWidth = 6;
@@ -312,8 +318,8 @@
             // rot
             // 
             this.rot.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rot.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rot.DefaultCellStyle = dataGridViewCellStyle25;
             this.rot.Frozen = true;
             this.rot.HeaderText = "rot";
             this.rot.MinimumWidth = 6;
@@ -325,8 +331,8 @@
             // 
             // LR
             // 
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LR.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LR.DefaultCellStyle = dataGridViewCellStyle26;
             this.LR.Frozen = true;
             this.LR.HeaderText = "L/R";
             this.LR.MinimumWidth = 6;
@@ -336,8 +342,8 @@
             // 
             // Fwd
             // 
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Fwd.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Fwd.DefaultCellStyle = dataGridViewCellStyle27;
             this.Fwd.Frozen = true;
             this.Fwd.HeaderText = "Fwd";
             this.Fwd.MinimumWidth = 6;
@@ -615,19 +621,39 @@
             // SetResetButton
             // 
             this.SetResetButton.ActionPropertyDescription = null;
-            this.SetResetButton.ActionPropertyGroup = "Reset";
             this.SetResetButton.ActionPropertyName = "SetResetCenter";
             this.SetResetButton.ActionPropertyNameText = "Center";
             this.SetResetButton.ActiveBackColour = System.Drawing.SystemColors.ControlText;
             this.SetResetButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.SetResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetResetButton.GroupsComponent = this._groups;
             this.SetResetButton.Location = new System.Drawing.Point(165, 51);
             this.SetResetButton.Name = "SetResetButton";
+            this.SetResetButton.SelectedGroup = actionPropertyGroup11;
             this.SetResetButton.Size = new System.Drawing.Size(71, 35);
             this.SetResetButton.TabIndex = 28;
             this.SetResetButton.Text = "Set Center Button";
             this.SetResetButton.UseVisualStyleBackColor = true;
             this.SetResetButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
+            // _groups
+            // 
+            actionPropertyGroup11.Name = "Reset Buttons";
+            actionPropertyGroup11.Order = 0;
+            actionPropertyGroup12.Name = "Manual Rotation Buttons";
+            actionPropertyGroup12.Order = 1;
+            actionPropertyGroup13.Name = "Hold Buttons";
+            actionPropertyGroup13.Order = 2;
+            actionPropertyGroup14.Name = "Manual Rotation Values";
+            actionPropertyGroup14.Order = 3;
+            actionPropertyGroup15.Name = "Smooth Autorotation Values";
+            actionPropertyGroup15.Order = 4;
+            this._groups.Groups = new XRNeckSafer.ActionPropertyGroup[] {
+        actionPropertyGroup11,
+        actionPropertyGroup12,
+        actionPropertyGroup13,
+        actionPropertyGroup14,
+        actionPropertyGroup15};
             // 
             // HMDYawLabel
             // 
@@ -683,14 +709,15 @@
             // AccumReset
             // 
             this.AccumReset.ActionPropertyDescription = null;
-            this.AccumReset.ActionPropertyGroup = "Reset";
             this.AccumReset.ActionPropertyName = "SetAccumResetYaw";
             this.AccumReset.ActionPropertyNameText = "Accum Yaw";
             this.AccumReset.ActiveBackColour = System.Drawing.Color.Black;
             this.AccumReset.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.AccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AccumReset.GroupsComponent = this._groups;
             this.AccumReset.Location = new System.Drawing.Point(69, 99);
             this.AccumReset.Name = "AccumReset";
+            this.AccumReset.SelectedGroup = actionPropertyGroup11;
             this.AccumReset.Size = new System.Drawing.Size(57, 34);
             this.AccumReset.TabIndex = 54;
             this.AccumReset.Text = "Set Acc. Reset";
@@ -710,10 +737,10 @@
             // transFNUP
             // 
             this.transFNUP.ActionPropertyDescription = null;
-            this.transFNUP.ActionPropertyGroup = "Manual Translation";
             this.transFNUP.ActionPropertyName = "TransitionOffsetForward";
             this.transFNUP.ActionPropertyNameText = "Fwd/Back";
             this.transFNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.transFNUP.GroupsComponent = this._groups;
             this.transFNUP.Location = new System.Drawing.Point(176, 87);
             this.transFNUP.Minimum = new decimal(new int[] {
             100,
@@ -721,6 +748,7 @@
             0,
             -2147483648});
             this.transFNUP.Name = "transFNUP";
+            this.transFNUP.SelectedGroup = actionPropertyGroup14;
             this.transFNUP.Size = new System.Drawing.Size(44, 20);
             this.transFNUP.TabIndex = 26;
             this.transFNUP.ValueChanged += new System.EventHandler(this.OnYawForwardTranslationChanged);
@@ -758,10 +786,10 @@
             // transLRNUP
             // 
             this.transLRNUP.ActionPropertyDescription = null;
-            this.transLRNUP.ActionPropertyGroup = "Manual Translation";
             this.transLRNUP.ActionPropertyName = "TransitionOffsetLeftRight";
             this.transLRNUP.ActionPropertyNameText = "Left/Right";
             this.transLRNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.transLRNUP.GroupsComponent = this._groups;
             this.transLRNUP.Location = new System.Drawing.Point(176, 63);
             this.transLRNUP.Minimum = new decimal(new int[] {
             100,
@@ -769,6 +797,7 @@
             0,
             -2147483648});
             this.transLRNUP.Name = "transLRNUP";
+            this.transLRNUP.SelectedGroup = actionPropertyGroup14;
             this.transLRNUP.Size = new System.Drawing.Size(44, 20);
             this.transLRNUP.TabIndex = 25;
             this.transLRNUP.ValueChanged += new System.EventHandler(this.OnYawLeftRightTranslationChanged);
@@ -872,14 +901,15 @@
             // SetLeftButton
             // 
             this.SetLeftButton.ActionPropertyDescription = null;
-            this.SetLeftButton.ActionPropertyGroup = "Manual Rotation";
             this.SetLeftButton.ActionPropertyName = "ManualRotationLeft";
             this.SetLeftButton.ActionPropertyNameText = "Left";
             this.SetLeftButton.ActiveBackColour = System.Drawing.Color.Black;
             this.SetLeftButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.SetLeftButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetLeftButton.GroupsComponent = this._groups;
             this.SetLeftButton.Location = new System.Drawing.Point(39, 20);
             this.SetLeftButton.Name = "SetLeftButton";
+            this.SetLeftButton.SelectedGroup = actionPropertyGroup12;
             this.SetLeftButton.Size = new System.Drawing.Size(72, 27);
             this.SetLeftButton.TabIndex = 36;
             this.SetLeftButton.Text = "Set Button";
@@ -889,14 +919,15 @@
             // SetRightButton
             // 
             this.SetRightButton.ActionPropertyDescription = null;
-            this.SetRightButton.ActionPropertyGroup = "Manual Rotation";
             this.SetRightButton.ActionPropertyName = "ManualRotationRight";
             this.SetRightButton.ActionPropertyNameText = "Right";
             this.SetRightButton.ActiveBackColour = System.Drawing.Color.Black;
             this.SetRightButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.SetRightButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetRightButton.GroupsComponent = this._groups;
             this.SetRightButton.Location = new System.Drawing.Point(167, 20);
             this.SetRightButton.Name = "SetRightButton";
+            this.SetRightButton.SelectedGroup = actionPropertyGroup12;
             this.SetRightButton.Size = new System.Drawing.Size(72, 27);
             this.SetRightButton.TabIndex = 37;
             this.SetRightButton.Text = "Set Button";
@@ -1202,14 +1233,15 @@
             // YawAutorotationHoldButton
             // 
             this.YawAutorotationHoldButton.ActionPropertyDescription = null;
-            this.YawAutorotationHoldButton.ActionPropertyGroup = "Hold";
             this.YawAutorotationHoldButton.ActionPropertyName = "YawAutorotationHold";
             this.YawAutorotationHoldButton.ActionPropertyNameText = "Yaw";
             this.YawAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
             this.YawAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.YawAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YawAutorotationHoldButton.GroupsComponent = this._groups;
             this.YawAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
             this.YawAutorotationHoldButton.Name = "YawAutorotationHoldButton";
+            this.YawAutorotationHoldButton.SelectedGroup = actionPropertyGroup13;
             this.YawAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
             this.YawAutorotationHoldButton.TabIndex = 42;
             this.YawAutorotationHoldButton.Text = "Hold";
@@ -1600,8 +1632,8 @@
             // dataGridViewTextBoxColumn4
             // 
             this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle28;
             this.dataGridViewTextBoxColumn4.Frozen = true;
             this.dataGridViewTextBoxColumn4.HeaderText = "act";
             this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
@@ -1614,8 +1646,8 @@
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle29.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle29;
             this.dataGridViewTextBoxColumn5.Frozen = true;
             this.dataGridViewTextBoxColumn5.HeaderText = "deact";
             this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
@@ -1628,8 +1660,8 @@
             // dataGridViewTextBoxColumn6
             // 
             this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle30.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle30;
             this.dataGridViewTextBoxColumn6.Frozen = true;
             this.dataGridViewTextBoxColumn6.HeaderText = "rot";
             this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
@@ -1685,8 +1717,8 @@
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle31.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle31;
             this.dataGridViewTextBoxColumn1.Frozen = true;
             this.dataGridViewTextBoxColumn1.HeaderText = "act";
             this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
@@ -1699,8 +1731,8 @@
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle32.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle32;
             this.dataGridViewTextBoxColumn2.Frozen = true;
             this.dataGridViewTextBoxColumn2.HeaderText = "deact";
             this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
@@ -1713,8 +1745,8 @@
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle33;
             this.dataGridViewTextBoxColumn3.Frozen = true;
             this.dataGridViewTextBoxColumn3.HeaderText = "rot";
             this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
@@ -1749,14 +1781,15 @@
             // PitchAutorotationHoldButton
             // 
             this.PitchAutorotationHoldButton.ActionPropertyDescription = null;
-            this.PitchAutorotationHoldButton.ActionPropertyGroup = "Hold";
             this.PitchAutorotationHoldButton.ActionPropertyName = "PitchAutorotationHold";
             this.PitchAutorotationHoldButton.ActionPropertyNameText = "Pitch";
             this.PitchAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
             this.PitchAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.PitchAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PitchAutorotationHoldButton.GroupsComponent = this._groups;
             this.PitchAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
             this.PitchAutorotationHoldButton.Name = "PitchAutorotationHoldButton";
+            this.PitchAutorotationHoldButton.SelectedGroup = actionPropertyGroup13;
             this.PitchAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
             this.PitchAutorotationHoldButton.TabIndex = 42;
             this.PitchAutorotationHoldButton.Text = "Hold";
@@ -1812,14 +1845,15 @@
             // pAccumReset
             // 
             this.pAccumReset.ActionPropertyDescription = null;
-            this.pAccumReset.ActionPropertyGroup = "Reset";
             this.pAccumReset.ActionPropertyName = "SetAccumResetPitch";
             this.pAccumReset.ActionPropertyNameText = "Accum Pitch";
             this.pAccumReset.ActiveBackColour = System.Drawing.Color.Black;
             this.pAccumReset.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.pAccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pAccumReset.GroupsComponent = this._groups;
             this.pAccumReset.Location = new System.Drawing.Point(69, 99);
             this.pAccumReset.Name = "pAccumReset";
+            this.pAccumReset.SelectedGroup = actionPropertyGroup11;
             this.pAccumReset.Size = new System.Drawing.Size(57, 34);
             this.pAccumReset.TabIndex = 54;
             this.pAccumReset.Text = "Set Acc. Reset";
@@ -1931,14 +1965,15 @@
             // SetUpButton
             // 
             this.SetUpButton.ActionPropertyDescription = null;
-            this.SetUpButton.ActionPropertyGroup = "Manual Rotation";
             this.SetUpButton.ActionPropertyName = "ManualRotationUp";
             this.SetUpButton.ActionPropertyNameText = "Up";
             this.SetUpButton.ActiveBackColour = System.Drawing.Color.Black;
             this.SetUpButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.SetUpButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetUpButton.GroupsComponent = this._groups;
             this.SetUpButton.Location = new System.Drawing.Point(39, 20);
             this.SetUpButton.Name = "SetUpButton";
+            this.SetUpButton.SelectedGroup = actionPropertyGroup12;
             this.SetUpButton.Size = new System.Drawing.Size(72, 27);
             this.SetUpButton.TabIndex = 36;
             this.SetUpButton.Text = "Set Button";
@@ -1948,14 +1983,15 @@
             // SetDownButton
             // 
             this.SetDownButton.ActionPropertyDescription = null;
-            this.SetDownButton.ActionPropertyGroup = "Manual Rotation";
             this.SetDownButton.ActionPropertyName = "ManualRotationDown";
             this.SetDownButton.ActionPropertyNameText = "Down";
             this.SetDownButton.ActiveBackColour = System.Drawing.Color.Black;
             this.SetDownButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.SetDownButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetDownButton.GroupsComponent = this._groups;
             this.SetDownButton.Location = new System.Drawing.Point(167, 20);
             this.SetDownButton.Name = "SetDownButton";
+            this.SetDownButton.SelectedGroup = actionPropertyGroup12;
             this.SetDownButton.Size = new System.Drawing.Size(72, 27);
             this.SetDownButton.TabIndex = 37;
             this.SetDownButton.Text = "Set Button";
@@ -2242,6 +2278,7 @@
         private System.Windows.Forms.ToolStripMenuItem showJoystickkeyConfigurationToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem _disableSplashScreenToolStripMenuItem;
+        private ActionPropertyGroups _groups;
     }
 }
 

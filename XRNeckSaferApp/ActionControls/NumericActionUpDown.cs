@@ -1,18 +1,37 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace XRNeckSafer
 {
-    public class NumericActionUpDown : NumericUpDown
+    public class NumericActionUpDown : NumericUpDown, IActionPropertyGroups
     {
         private NumericUpDownActionProperty _actionProperty;
         private bool _firstTimeRendered;
         private string _actionPropertyName;
         private string _actionPropertyNameText;
         private string _actionPropertyDescription;
-        private string _actionPropertyGroup = "Miscellaneous";
+        private ActionPropertyGroup _selectedGroup;
+
+        [Category("ActionProperty"), ImmutableObject(true)]
+        public ActionPropertyGroups GroupsComponent { get; set; }
+
+        [Category("ActionProperty"), ImmutableObject(true)]
+        [Editor(typeof(ActionPropertyGroupTypeEditor), typeof(UITypeEditor))]
+        public ActionPropertyGroup SelectedGroup
+        {
+            get => _selectedGroup;
+            set
+            {
+                _selectedGroup = value;
+                if (_actionProperty != null)
+                {
+                    _actionProperty.Group = value;
+                }
+            }
+        }
 
         [Category("ActionProperty"), Description("ActionProperty ID")]
         public string ActionPropertyName
@@ -56,21 +75,6 @@ namespace XRNeckSafer
                     return;
                 }
                 _actionProperty.Description = _actionPropertyDescription;
-            }
-        }
-
-        [Category("ActionProperty"), Description("ActionProperty group name")]
-        public string ActionPropertyGroup
-        {
-            get => _actionPropertyGroup;
-            set
-            {
-                _actionPropertyGroup = value;
-                if (_actionProperty == null)
-                {
-                    return;
-                }
-                _actionProperty.GroupName = _actionPropertyGroup;
             }
         }
 
@@ -123,7 +127,7 @@ namespace XRNeckSafer
             Value = _actionProperty.GetValue();
             _actionProperty.NameText = _actionPropertyNameText;
             _actionProperty.Description = _actionPropertyDescription;
-            _actionProperty.GroupName = _actionPropertyGroup;
+            _actionProperty.Group = SelectedGroup; // _actionPropertyGroup;
             _actionProperty.Triggered += ActionPropertyTriggered;
         }
 
