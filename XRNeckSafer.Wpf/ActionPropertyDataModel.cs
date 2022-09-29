@@ -6,8 +6,8 @@ namespace XRNeckSafer.Wpf
     public class ActionPropertyDataModel
     {
         public ObservableCollection<Input> InputCombinations { get; set; }
+        public string ActionPropertyId { get; set; }
         public string ActionPropertyName { get; set; }
-        public string ActionPropertyNameText { get; set; }
         public string Description { get; set; }
         public string GroupName { get; set; }
         public int GroupOrder { get; set; }

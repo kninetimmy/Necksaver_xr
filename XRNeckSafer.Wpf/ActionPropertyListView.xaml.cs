@@ -49,7 +49,7 @@ namespace XRNeckSafer.Wpf
             }
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_dataGrid.ItemsSource);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("GroupName");
-            PropertyGroupDescription subGroupDescription = new PropertyGroupDescription("ActionPropertyNameText");
+            PropertyGroupDescription subGroupDescription = new PropertyGroupDescription("ActionPropertyName");
             view.GroupDescriptions.Add(groupDescription);
             view.GroupDescriptions.Add(subGroupDescription);
         }

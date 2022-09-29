@@ -9,19 +9,19 @@ namespace XRNeckSafer
 {
     public partial class ActionPropertiesForm : Form
     {
-        private readonly string _actionPropertyName;
+        private readonly string _actionPropertyId;
 
-        public static void ShowForm(string actionPropertyName, int mainFormTop, int mainFormRight)
+        public static void ShowForm(string actionPropertyId, int mainFormTop, int mainFormRight)
         {
-            using (var form = new ActionPropertiesForm(actionPropertyName, mainFormTop, mainFormRight))
+            using (var form = new ActionPropertiesForm(actionPropertyId, mainFormTop, mainFormRight))
             {
                 form.ShowDialog();
             }
         }
 
-        private ActionPropertiesForm(string actionPropertyName, int mainFormTop, int mainFormRight)
+        private ActionPropertiesForm(string actionPropertyId, int mainFormTop, int mainFormRight)
         {
-            _actionPropertyName = actionPropertyName;
+            _actionPropertyId = actionPropertyId;
             InitializeComponent();
             StartPosition = FormStartPosition.Manual;
             Top = mainFormTop;
@@ -81,7 +81,7 @@ namespace XRNeckSafer
             var props = new ObservableCollection<ActionPropertyDataModel>();
             Config.Instance.ActionProperties.ForEach(prop =>
             {
-                var currentProperty = _actionPropertyName?.Equals(prop.Name);
+                var currentProperty = _actionPropertyId?.Equals(prop.Id);
                 var boolProp = prop as BooleanActionProperty;
                 foreach (var actionEvent in prop.Events)
                 {
@@ -89,8 +89,8 @@ namespace XRNeckSafer
                     var dataModel = new ActionPropertyDataModel
                     {
                         InputCombinations = new ObservableCollection<Input>(),
+                        ActionPropertyId = prop.Id,
                         ActionPropertyName = prop.Name,
-                        ActionPropertyNameText = prop.NameText,
                         Description = prop.Description,
                         GroupName = prop.Group?.Name ?? "Miscellaneous",
                         GroupOrder = prop.Group?.Order ?? int.MaxValue,
@@ -114,14 +114,14 @@ namespace XRNeckSafer
                     props.Add(dataModel);
                 }
             });
-            _wpfList.PopulateProperties(props.OrderBy(p => p.GroupOrder + p.ActionPropertyName));
+            _wpfList.PopulateProperties(props.OrderBy(p => p.GroupOrder + p.ActionPropertyId));
         }
 
         private void OnSaveButtonClick(object sender, EventArgs e)
         {
             foreach (ActionPropertyDataModel model in _wpfList.Properties)
             {
-                var configActionProperty = Config.Instance.ActionProperties.FirstOrDefault(p => p.Name.Equals(model.ActionPropertyName, StringComparison.Ordinal));
+                var configActionProperty = Config.Instance.ActionProperties.FirstOrDefault(p => p.Id.Equals(model.ActionPropertyId, StringComparison.Ordinal));
                 if (configActionProperty == null)
                 {
                     continue;

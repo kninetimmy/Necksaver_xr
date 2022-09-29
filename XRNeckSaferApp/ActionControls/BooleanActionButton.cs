@@ -15,8 +15,8 @@ namespace XRNeckSafer
         private BooleanActionProperty _actionProperty;
         private bool _firstTimeRendered;
         private bool _isActive;
+        private string _actionPropertyId;
         private string _actionPropertyName;
-        private string _actionPropertyNameText;
         private string _actionPropertyDescription;
         private ActionPropertyGroupItem _selectedGroup;
         private ActionPropertyGroups _groupsComponent;
@@ -50,13 +50,13 @@ namespace XRNeckSafer
             }
         }
 
-        [Category("ActionProperty"), Description("ActionProperty ID")]
-        public string ActionPropertyName
+        [Category("ActionProperty"), Description("ActionProperty ID"), DisplayName("ActionProperty ID")]
+        public string ActionPropertyId
         {
-            get => _actionPropertyName;
+            get => _actionPropertyId;
             set
             {
-                _actionPropertyName = value;
+                _actionPropertyId = value;
                 if (DesignMode)
                 {
                     return;
@@ -65,18 +65,18 @@ namespace XRNeckSafer
             }
         }
 
-        [Category("ActionProperty"), Description("ActionProperty user firendly name")]
-        public string ActionPropertyNameText
+        [Category("ActionProperty"), DisplayName("Action Property Name"), Description("ActionProperty user firendly name")]
+        public string ActionPropertyName
         {
-            get => _actionPropertyNameText;
+            get => _actionPropertyName;
             set
             {
-                _actionPropertyNameText = value;
+                _actionPropertyName = value;
                 if (_actionProperty == null)
                 {
                     return;
                 }
-                _actionProperty.NameText = _actionPropertyNameText;
+                _actionProperty.Name = _actionPropertyName;
             }
         }
 
@@ -137,18 +137,18 @@ namespace XRNeckSafer
             {
                 return;
             }
-            if (string.IsNullOrEmpty(ActionPropertyName))
+            if (string.IsNullOrEmpty(ActionPropertyId))
             {
-                throw new ArgumentException($"{nameof(ActionPropertyName)} can not be empty.");
+                throw new ArgumentException($"{nameof(ActionPropertyId)} can not be empty.");
             }
-            _actionProperty = Config.Instance.ActionProperties?.FirstOrDefault(p => p.Name == ActionPropertyName) as BooleanActionProperty;
+            _actionProperty = Config.Instance.ActionProperties?.FirstOrDefault(p => p.Id == ActionPropertyId) as BooleanActionProperty;
             if (_actionProperty == null)
             {
-                _actionProperty = BooleanActionProperty.CreateProperty(ActionPropertyName);
+                _actionProperty = BooleanActionProperty.CreateProperty(ActionPropertyId);
                 Config.Instance.ActionProperties.Add(_actionProperty);
             }
             _actionProperty.Triggered += ActionPropertyTriggered;
-            _actionProperty.NameText = _actionPropertyNameText;
+            _actionProperty.Name = _actionPropertyName;
             _actionProperty.Description = _actionPropertyDescription;
             _actionProperty.Group = SelectedGroup?.Tag;
             _isActive = _actionProperty.GetValue();

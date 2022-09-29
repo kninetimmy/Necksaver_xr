@@ -182,8 +182,7 @@ namespace XRNeckSafer
             downErrorLabel1.Visible = check_autorot_config();
             downErrorLabel2.Visible = downErrorLabel1.Visible;
 
-            _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", (int)numericUpDownStartLeft.Value, (int)numericUpDownStartRight.Value, (int)numericUpDownMultLeft.Value, (int)numericUpDownMultRight.Value);
-            _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear", (int)numericUpDownStartUp.Value, (int)numericUpDownStartDown.Value, (int)numericUpDownMultUp.Value, (int)numericUpDownMultDown.Value);
+            ApplyLinearSettings();
             _ARText = "Autorotation";
             _pARText = "Autorotation";
             _hmdtext = "";
@@ -329,8 +328,7 @@ namespace XRNeckSafer
             {
                 _vr.ResetHmdOrientation();
                 _joyOffsetAngle = 0;
-                _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", (int)numericUpDownStartLeft.Value, (int)numericUpDownStartRight.Value, (int)numericUpDownMultLeft.Value, (int)numericUpDownMultRight.Value);
-                _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear", (int)numericUpDownStartUp.Value, (int)numericUpDownStartDown.Value, (int)numericUpDownMultUp.Value, (int)numericUpDownMultDown.Value);
+                ApplyLinearSettings();
             }
 
             if (additivRB.Checked)
@@ -904,7 +902,7 @@ namespace XRNeckSafer
         private void OnBooleanActionButtonClick(object sender, EventArgs e)
         {
             var button = (BooleanActionButton)sender;
-            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
+            ActionPropertiesForm.ShowForm(button.ActionPropertyId, Top, Right);
         }
 
         void sizeChanged()
@@ -1057,53 +1055,65 @@ namespace XRNeckSafer
             }
             YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
-            _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", (int)numericUpDownStartLeft.Value,(int)numericUpDownStartRight.Value,
-                (int)numericUpDownMultLeft.Value, (int)numericUpDownMultRight.Value);
+            UpdateLinearRotationSettings();
         }
-        private void applyLinearSettings()
+
+        private void ApplyLinearSettings()
         {
-            _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", (int)numericUpDownStartLeft.Value, (int)numericUpDownStartRight.Value, (int)numericUpDownMultLeft.Value, (int)numericUpDownMultRight.Value);
-            _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear", (int)numericUpDownStartUp.Value, (int)numericUpDownStartDown.Value, (int)numericUpDownMultUp.Value, (int)numericUpDownMultDown.Value);
+            UpdateLinearRotationSettings();
+            UpdatePitchLinearRotationSettings();
+        }
+
+        private void UpdateLinearRotationSettings()
+        {
+            _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", (int)numericUpDownStartLeft.Value, 
+                (int)numericUpDownStartRight.Value, (int)numericUpDownMultLeft.Value, (int)numericUpDownMultRight.Value);
+        }
+
+        private void UpdatePitchLinearRotationSettings()
+        {
+            _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear", (int)numericUpDownStartUp.Value, 
+                (int)numericUpDownStartDown.Value, (int)numericUpDownMultUp.Value, (int)numericUpDownMultDown.Value);
         }
 
         private void numericUpDownMultLeft_ValueChanged(object sender, EventArgs e)
         {
-            applyLinearSettings();
+            ApplyLinearSettings();
         }
 
         private void numericUpDownMultRight_ValueChanged(object sender, EventArgs e)
         {
-            applyLinearSettings();
+            ApplyLinearSettings();
         }
 
         private void numericUpDownStartLeft_ValueChanged(object sender, EventArgs e)
         {
-            applyLinearSettings();
+            ApplyLinearSettings();
         }
 
         private void numericUpDownStartRight_ValueChanged(object sender, EventArgs e)
         {
-            applyLinearSettings();
+            ApplyLinearSettings();
         }
 
         private void numericUpDownStartUp_ValueChanged(object sender, EventArgs e)
         {
-            applyLinearSettings();
+            ApplyLinearSettings();
         }
 
         private void numericUpDownStartDown_ValueChanged(object sender, EventArgs e)
         {
-            applyLinearSettings();
+            ApplyLinearSettings();
         }
 
         private void numericUpDownMultUp_ValueChanged(object sender, EventArgs e)
         {
-            applyLinearSettings();
+            ApplyLinearSettings();
         }
 
         private void numericUpDownMultDown_ValueChanged(object sender, EventArgs e)
         {
-            applyLinearSettings();
+            ApplyLinearSettings();
         }
 
         private void pitchAutorotChanged(object sender, EventArgs e)
@@ -1135,9 +1145,7 @@ namespace XRNeckSafer
             }
             YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
-            _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear",
-                (int)numericUpDownStartUp.Value, (int)numericUpDownStartDown.Value,
-                (int)numericUpDownMultUp.Value, (int)numericUpDownMultDown.Value);
+            UpdatePitchLinearRotationSettings();
 
         }
 
@@ -1242,7 +1250,7 @@ namespace XRNeckSafer
             Control control = ((ContextMenuStrip)((ToolStripItem)sender).Owner).SourceControl;
             if (control is IActionPropertyName actionNameControl)
             {
-                ActionPropertiesForm.ShowForm(actionNameControl.ActionPropertyName, Top, Right);
+                ActionPropertiesForm.ShowForm(actionNameControl.ActionPropertyId, Top, Right);
             }
         }
     }
