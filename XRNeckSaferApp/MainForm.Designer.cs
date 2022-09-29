@@ -22,17 +22,28 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            XRNeckSafer.ActionPropertyGroup actionPropertyGroup11 = new XRNeckSafer.ActionPropertyGroup();
-            XRNeckSafer.ActionPropertyGroup actionPropertyGroup12 = new XRNeckSafer.ActionPropertyGroup();
-            XRNeckSafer.ActionPropertyGroup actionPropertyGroup13 = new XRNeckSafer.ActionPropertyGroup();
-            XRNeckSafer.ActionPropertyGroup actionPropertyGroup14 = new XRNeckSafer.ActionPropertyGroup();
-            XRNeckSafer.ActionPropertyGroup actionPropertyGroup15 = new XRNeckSafer.ActionPropertyGroup();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem4 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup11 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup12 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup13 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup14 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup15 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem1 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem2 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem6 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem7 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem3 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem8 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem9 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem10 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem11 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem12 = new XRNeckSafer.ActionPropertyGroupItem();
             this.stepwiseGroup = new System.Windows.Forms.GroupBox();
             this.error_label2 = new System.Windows.Forms.Label();
             this.error_label = new System.Windows.Forms.Label();
@@ -64,17 +75,12 @@
             this.HMDYawBox = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.SetResetButton = new XRNeckSafer.BooleanActionButton();
-            this._groups = new XRNeckSafer.ActionPropertyGroups();
             this.HMDYawLabel = new System.Windows.Forms.Label();
             this.VersionLabel = new System.Windows.Forms.Label();
             this.ManualGroup = new System.Windows.Forms.GroupBox();
-            this.AccumReset = new XRNeckSafer.BooleanActionButton();
             this.label25 = new System.Windows.Forms.Label();
-            this.transFNUP = new XRNeckSafer.NumericActionUpDown();
             this.label24 = new System.Windows.Forms.Label();
             this.angleNUD = new System.Windows.Forms.NumericUpDown();
-            this.transLRNUP = new XRNeckSafer.NumericActionUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -84,8 +90,6 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.SetLeftButton = new XRNeckSafer.BooleanActionButton();
-            this.SetRightButton = new XRNeckSafer.BooleanActionButton();
             this.RightLabel = new System.Windows.Forms.Label();
             this.LeftLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -122,7 +126,6 @@
             this.ARlinear = new System.Windows.Forms.RadioButton();
             this.ARstepwise = new System.Windows.Forms.RadioButton();
             this.AROffButton = new System.Windows.Forms.RadioButton();
-            this.YawAutorotationHoldButton = new XRNeckSafer.BooleanActionButton();
             this.YawPitchTab = new System.Windows.Forms.TabControl();
             this.YawTab = new System.Windows.Forms.TabPage();
             this.PitchTab = new System.Windows.Forms.TabPage();
@@ -162,11 +165,9 @@
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UpAddButton = new System.Windows.Forms.Button();
             this.UpDelButton = new System.Windows.Forms.Button();
-            this.PitchAutorotationHoldButton = new XRNeckSafer.BooleanActionButton();
             this.pManualGroup = new System.Windows.Forms.GroupBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.pAccumReset = new XRNeckSafer.BooleanActionButton();
             this.label19 = new System.Windows.Forms.Label();
             this.upNUD = new System.Windows.Forms.NumericUpDown();
             this.downNUD = new System.Windows.Forms.NumericUpDown();
@@ -175,14 +176,24 @@
             this.pSnapRP = new System.Windows.Forms.RadioButton();
             this.pAdditivRB = new System.Windows.Forms.RadioButton();
             this.label31 = new System.Windows.Forms.Label();
-            this.SetUpButton = new XRNeckSafer.BooleanActionButton();
-            this.SetDownButton = new XRNeckSafer.BooleanActionButton();
             this.DownLabel = new System.Windows.Forms.Label();
             this.UpLabel = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.loopTimer = new System.Windows.Forms.Timer(this.components);
             this._devicesStatusLabel = new System.Windows.Forms.Label();
             this._devicesStatusImage = new System.Windows.Forms.PictureBox();
+            this.YawAutorotationHoldButton = new XRNeckSafer.BooleanActionButton();
+            this._groups = new XRNeckSafer.ActionPropertyGroups();
+            this.AccumReset = new XRNeckSafer.BooleanActionButton();
+            this.transFNUP = new XRNeckSafer.NumericActionUpDown();
+            this.transLRNUP = new XRNeckSafer.NumericActionUpDown();
+            this.SetLeftButton = new XRNeckSafer.BooleanActionButton();
+            this.SetRightButton = new XRNeckSafer.BooleanActionButton();
+            this.PitchAutorotationHoldButton = new XRNeckSafer.BooleanActionButton();
+            this.pAccumReset = new XRNeckSafer.BooleanActionButton();
+            this.SetUpButton = new XRNeckSafer.BooleanActionButton();
+            this.SetDownButton = new XRNeckSafer.BooleanActionButton();
+            this.SetResetButton = new XRNeckSafer.BooleanActionButton();
             this.stepwiseGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AutorotGridView)).BeginInit();
             this.linearGroup.SuspendLayout();
@@ -192,9 +203,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLeft)).BeginInit();
             this.HMDYawBox.SuspendLayout();
             this.ManualGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.transFNUP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.angleNUD)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.transLRNUP)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.ARGroup.SuspendLayout();
@@ -214,6 +223,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.upNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.downNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._devicesStatusImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.transFNUP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.transLRNUP)).BeginInit();
             this.SuspendLayout();
             // 
             // stepwiseGroup
@@ -618,43 +629,6 @@
             this.label3.TabIndex = 54;
             this.label3.Text = "Calibration";
             // 
-            // SetResetButton
-            // 
-            this.SetResetButton.ActionPropertyDescription = null;
-            this.SetResetButton.ActionPropertyName = "SetResetCenter";
-            this.SetResetButton.ActionPropertyNameText = "Center";
-            this.SetResetButton.ActiveBackColour = System.Drawing.SystemColors.ControlText;
-            this.SetResetButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
-            this.SetResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetResetButton.GroupsComponent = this._groups;
-            this.SetResetButton.Location = new System.Drawing.Point(165, 51);
-            this.SetResetButton.Name = "SetResetButton";
-            this.SetResetButton.SelectedGroup = actionPropertyGroup11;
-            this.SetResetButton.Size = new System.Drawing.Size(71, 35);
-            this.SetResetButton.TabIndex = 28;
-            this.SetResetButton.Text = "Set Center Button";
-            this.SetResetButton.UseVisualStyleBackColor = true;
-            this.SetResetButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
-            // 
-            // _groups
-            // 
-            actionPropertyGroup11.Name = "Reset Buttons";
-            actionPropertyGroup11.Order = 0;
-            actionPropertyGroup12.Name = "Manual Rotation Buttons";
-            actionPropertyGroup12.Order = 1;
-            actionPropertyGroup13.Name = "Hold Buttons";
-            actionPropertyGroup13.Order = 2;
-            actionPropertyGroup14.Name = "Manual Rotation Values";
-            actionPropertyGroup14.Order = 3;
-            actionPropertyGroup15.Name = "Smooth Autorotation Values";
-            actionPropertyGroup15.Order = 4;
-            this._groups.Groups = new XRNeckSafer.ActionPropertyGroup[] {
-        actionPropertyGroup11,
-        actionPropertyGroup12,
-        actionPropertyGroup13,
-        actionPropertyGroup14,
-        actionPropertyGroup15};
-            // 
             // HMDYawLabel
             // 
             this.HMDYawLabel.AutoSize = true;
@@ -706,24 +680,6 @@
             this.ManualGroup.TabStop = false;
             this.ManualGroup.Text = "Manual Rotation";
             // 
-            // AccumReset
-            // 
-            this.AccumReset.ActionPropertyDescription = null;
-            this.AccumReset.ActionPropertyName = "SetAccumResetYaw";
-            this.AccumReset.ActionPropertyNameText = "Accum Yaw";
-            this.AccumReset.ActiveBackColour = System.Drawing.Color.Black;
-            this.AccumReset.ActiveForeColour = System.Drawing.Color.LimeGreen;
-            this.AccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AccumReset.GroupsComponent = this._groups;
-            this.AccumReset.Location = new System.Drawing.Point(69, 99);
-            this.AccumReset.Name = "AccumReset";
-            this.AccumReset.SelectedGroup = actionPropertyGroup11;
-            this.AccumReset.Size = new System.Drawing.Size(57, 34);
-            this.AccumReset.TabIndex = 54;
-            this.AccumReset.Text = "Set Acc. Reset";
-            this.AccumReset.UseVisualStyleBackColor = true;
-            this.AccumReset.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
-            // 
             // label25
             // 
             this.label25.AutoSize = true;
@@ -733,26 +689,6 @@
             this.label25.Size = new System.Drawing.Size(39, 15);
             this.label25.TabIndex = 53;
             this.label25.Text = "Mode";
-            // 
-            // transFNUP
-            // 
-            this.transFNUP.ActionPropertyDescription = null;
-            this.transFNUP.ActionPropertyName = "TransitionOffsetForward";
-            this.transFNUP.ActionPropertyNameText = "Fwd/Back";
-            this.transFNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.transFNUP.GroupsComponent = this._groups;
-            this.transFNUP.Location = new System.Drawing.Point(176, 87);
-            this.transFNUP.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            this.transFNUP.Name = "transFNUP";
-            this.transFNUP.SelectedGroup = actionPropertyGroup14;
-            this.transFNUP.Size = new System.Drawing.Size(44, 20);
-            this.transFNUP.TabIndex = 26;
-            this.transFNUP.ValueChanged += new System.EventHandler(this.OnYawForwardTranslationChanged);
-            this.transFNUP.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnNumericActionUpDownDoubleClick);
             // 
             // label24
             // 
@@ -782,26 +718,6 @@
             0,
             0});
             this.angleNUD.ValueChanged += new System.EventHandler(this.OnYawRotationAngleChanged);
-            // 
-            // transLRNUP
-            // 
-            this.transLRNUP.ActionPropertyDescription = null;
-            this.transLRNUP.ActionPropertyName = "TransitionOffsetLeftRight";
-            this.transLRNUP.ActionPropertyNameText = "Left/Right";
-            this.transLRNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.transLRNUP.GroupsComponent = this._groups;
-            this.transLRNUP.Location = new System.Drawing.Point(176, 63);
-            this.transLRNUP.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            this.transLRNUP.Name = "transLRNUP";
-            this.transLRNUP.SelectedGroup = actionPropertyGroup14;
-            this.transLRNUP.Size = new System.Drawing.Size(44, 20);
-            this.transLRNUP.TabIndex = 25;
-            this.transLRNUP.ValueChanged += new System.EventHandler(this.OnYawLeftRightTranslationChanged);
-            this.transLRNUP.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnNumericActionUpDownDoubleClick);
             // 
             // label8
             // 
@@ -897,42 +813,6 @@
             this.label15.Size = new System.Drawing.Size(21, 13);
             this.label15.TabIndex = 28;
             this.label15.Text = "cm";
-            // 
-            // SetLeftButton
-            // 
-            this.SetLeftButton.ActionPropertyDescription = null;
-            this.SetLeftButton.ActionPropertyName = "ManualRotationLeft";
-            this.SetLeftButton.ActionPropertyNameText = "Left";
-            this.SetLeftButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.SetLeftButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
-            this.SetLeftButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetLeftButton.GroupsComponent = this._groups;
-            this.SetLeftButton.Location = new System.Drawing.Point(39, 20);
-            this.SetLeftButton.Name = "SetLeftButton";
-            this.SetLeftButton.SelectedGroup = actionPropertyGroup12;
-            this.SetLeftButton.Size = new System.Drawing.Size(72, 27);
-            this.SetLeftButton.TabIndex = 36;
-            this.SetLeftButton.Text = "Set Button";
-            this.SetLeftButton.UseVisualStyleBackColor = true;
-            this.SetLeftButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
-            // 
-            // SetRightButton
-            // 
-            this.SetRightButton.ActionPropertyDescription = null;
-            this.SetRightButton.ActionPropertyName = "ManualRotationRight";
-            this.SetRightButton.ActionPropertyNameText = "Right";
-            this.SetRightButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.SetRightButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
-            this.SetRightButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetRightButton.GroupsComponent = this._groups;
-            this.SetRightButton.Location = new System.Drawing.Point(167, 20);
-            this.SetRightButton.Name = "SetRightButton";
-            this.SetRightButton.SelectedGroup = actionPropertyGroup12;
-            this.SetRightButton.Size = new System.Drawing.Size(72, 27);
-            this.SetRightButton.TabIndex = 37;
-            this.SetRightButton.Text = "Set Button";
-            this.SetRightButton.UseVisualStyleBackColor = false;
-            this.SetRightButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // RightLabel
             // 
@@ -1229,24 +1109,6 @@
             this.AROffButton.Text = "Off";
             this.AROffButton.UseVisualStyleBackColor = true;
             this.AROffButton.CheckedChanged += new System.EventHandler(this.autorot_changed);
-            // 
-            // YawAutorotationHoldButton
-            // 
-            this.YawAutorotationHoldButton.ActionPropertyDescription = null;
-            this.YawAutorotationHoldButton.ActionPropertyName = "YawAutorotationHold";
-            this.YawAutorotationHoldButton.ActionPropertyNameText = "Yaw";
-            this.YawAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.YawAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
-            this.YawAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.YawAutorotationHoldButton.GroupsComponent = this._groups;
-            this.YawAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
-            this.YawAutorotationHoldButton.Name = "YawAutorotationHoldButton";
-            this.YawAutorotationHoldButton.SelectedGroup = actionPropertyGroup13;
-            this.YawAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
-            this.YawAutorotationHoldButton.TabIndex = 42;
-            this.YawAutorotationHoldButton.Text = "Hold";
-            this.YawAutorotationHoldButton.UseVisualStyleBackColor = true;
-            this.YawAutorotationHoldButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // YawPitchTab
             // 
@@ -1778,24 +1640,6 @@
             this.UpDelButton.UseVisualStyleBackColor = true;
             this.UpDelButton.Click += new System.EventHandler(this.UpDeleteButton_Click);
             // 
-            // PitchAutorotationHoldButton
-            // 
-            this.PitchAutorotationHoldButton.ActionPropertyDescription = null;
-            this.PitchAutorotationHoldButton.ActionPropertyName = "PitchAutorotationHold";
-            this.PitchAutorotationHoldButton.ActionPropertyNameText = "Pitch";
-            this.PitchAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.PitchAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
-            this.PitchAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PitchAutorotationHoldButton.GroupsComponent = this._groups;
-            this.PitchAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
-            this.PitchAutorotationHoldButton.Name = "PitchAutorotationHoldButton";
-            this.PitchAutorotationHoldButton.SelectedGroup = actionPropertyGroup13;
-            this.PitchAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
-            this.PitchAutorotationHoldButton.TabIndex = 42;
-            this.PitchAutorotationHoldButton.Text = "Hold";
-            this.PitchAutorotationHoldButton.UseVisualStyleBackColor = true;
-            this.PitchAutorotationHoldButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
-            // 
             // pManualGroup
             // 
             this.pManualGroup.Controls.Add(this.label21);
@@ -1841,24 +1685,6 @@
             this.label27.Size = new System.Drawing.Size(37, 15);
             this.label27.TabIndex = 56;
             this.label27.Text = "down";
-            // 
-            // pAccumReset
-            // 
-            this.pAccumReset.ActionPropertyDescription = null;
-            this.pAccumReset.ActionPropertyName = "SetAccumResetPitch";
-            this.pAccumReset.ActionPropertyNameText = "Accum Pitch";
-            this.pAccumReset.ActiveBackColour = System.Drawing.Color.Black;
-            this.pAccumReset.ActiveForeColour = System.Drawing.Color.LimeGreen;
-            this.pAccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pAccumReset.GroupsComponent = this._groups;
-            this.pAccumReset.Location = new System.Drawing.Point(69, 99);
-            this.pAccumReset.Name = "pAccumReset";
-            this.pAccumReset.SelectedGroup = actionPropertyGroup11;
-            this.pAccumReset.Size = new System.Drawing.Size(57, 34);
-            this.pAccumReset.TabIndex = 54;
-            this.pAccumReset.Text = "Set Acc. Reset";
-            this.pAccumReset.UseVisualStyleBackColor = true;
-            this.pAccumReset.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // label19
             // 
@@ -1962,42 +1788,6 @@
             this.label31.TabIndex = 28;
             this.label31.Text = "deg";
             // 
-            // SetUpButton
-            // 
-            this.SetUpButton.ActionPropertyDescription = null;
-            this.SetUpButton.ActionPropertyName = "ManualRotationUp";
-            this.SetUpButton.ActionPropertyNameText = "Up";
-            this.SetUpButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.SetUpButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
-            this.SetUpButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetUpButton.GroupsComponent = this._groups;
-            this.SetUpButton.Location = new System.Drawing.Point(39, 20);
-            this.SetUpButton.Name = "SetUpButton";
-            this.SetUpButton.SelectedGroup = actionPropertyGroup12;
-            this.SetUpButton.Size = new System.Drawing.Size(72, 27);
-            this.SetUpButton.TabIndex = 36;
-            this.SetUpButton.Text = "Set Button";
-            this.SetUpButton.UseVisualStyleBackColor = true;
-            this.SetUpButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
-            // 
-            // SetDownButton
-            // 
-            this.SetDownButton.ActionPropertyDescription = null;
-            this.SetDownButton.ActionPropertyName = "ManualRotationDown";
-            this.SetDownButton.ActionPropertyNameText = "Down";
-            this.SetDownButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.SetDownButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
-            this.SetDownButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetDownButton.GroupsComponent = this._groups;
-            this.SetDownButton.Location = new System.Drawing.Point(167, 20);
-            this.SetDownButton.Name = "SetDownButton";
-            this.SetDownButton.SelectedGroup = actionPropertyGroup12;
-            this.SetDownButton.Size = new System.Drawing.Size(72, 27);
-            this.SetDownButton.TabIndex = 37;
-            this.SetDownButton.Text = "Set Button";
-            this.SetDownButton.UseVisualStyleBackColor = false;
-            this.SetDownButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
-            // 
             // DownLabel
             // 
             this.DownLabel.AutoSize = true;
@@ -2058,6 +1848,249 @@
             this._devicesStatusImage.TabIndex = 59;
             this._devicesStatusImage.TabStop = false;
             // 
+            // YawAutorotationHoldButton
+            // 
+            this.YawAutorotationHoldButton.ActionPropertyDescription = null;
+            this.YawAutorotationHoldButton.ActionPropertyName = "YawAutorotationHold";
+            this.YawAutorotationHoldButton.ActionPropertyNameText = "Yaw";
+            this.YawAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.YawAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.YawAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YawAutorotationHoldButton.GroupsComponent = this._groups;
+            this.YawAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
+            this.YawAutorotationHoldButton.Name = "YawAutorotationHoldButton";
+            actionPropertyGroupItem4.Name = "Hold Buttons";
+            actionPropertyGroupItem4.Tag = actionPropertyGroup13;
+            this.YawAutorotationHoldButton.SelectedGroup = actionPropertyGroupItem4;
+            this.YawAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
+            this.YawAutorotationHoldButton.TabIndex = 42;
+            this.YawAutorotationHoldButton.Text = "Hold";
+            this.YawAutorotationHoldButton.UseVisualStyleBackColor = true;
+            this.YawAutorotationHoldButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
+            // _groups
+            // 
+            actionPropertyGroup11.Name = "Reset Buttons";
+            actionPropertyGroup11.Order = 0;
+            actionPropertyGroup12.Name = "Manual Rotation Buttons";
+            actionPropertyGroup12.Order = 1;
+            actionPropertyGroup13.Name = "Hold Buttons";
+            actionPropertyGroup13.Order = 2;
+            actionPropertyGroup14.Name = "Manual Rotation Values";
+            actionPropertyGroup14.Order = 3;
+            actionPropertyGroup15.Name = "Smooth Autorotation Values";
+            actionPropertyGroup15.Order = 4;
+            this._groups.Groups = new XRNeckSafer.ActionPropertyGroup[] {
+        actionPropertyGroup11,
+        actionPropertyGroup12,
+        actionPropertyGroup13,
+        actionPropertyGroup14,
+        actionPropertyGroup15};
+            // 
+            // AccumReset
+            // 
+            this.AccumReset.ActionPropertyDescription = null;
+            this.AccumReset.ActionPropertyName = "SetAccumResetYaw";
+            this.AccumReset.ActionPropertyNameText = "Accum Yaw";
+            this.AccumReset.ActiveBackColour = System.Drawing.Color.Black;
+            this.AccumReset.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.AccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AccumReset.GroupsComponent = this._groups;
+            this.AccumReset.Location = new System.Drawing.Point(69, 99);
+            this.AccumReset.Name = "AccumReset";
+            actionPropertyGroupItem1.Name = "Reset Buttons";
+            actionPropertyGroupItem1.Tag = actionPropertyGroup11;
+            this.AccumReset.SelectedGroup = actionPropertyGroupItem1;
+            this.AccumReset.Size = new System.Drawing.Size(57, 34);
+            this.AccumReset.TabIndex = 54;
+            this.AccumReset.Text = "Set Acc. Reset";
+            this.AccumReset.UseVisualStyleBackColor = true;
+            this.AccumReset.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
+            // transFNUP
+            // 
+            this.transFNUP.ActionPropertyDescription = null;
+            this.transFNUP.ActionPropertyName = "TransitionOffsetForward";
+            this.transFNUP.ActionPropertyNameText = "Fwd/Back";
+            this.transFNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.transFNUP.GroupsComponent = this._groups;
+            this.transFNUP.Location = new System.Drawing.Point(176, 87);
+            this.transFNUP.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.transFNUP.Name = "transFNUP";
+            actionPropertyGroupItem2.Name = "Manual Rotation Values";
+            actionPropertyGroupItem2.Tag = actionPropertyGroup14;
+            this.transFNUP.SelectedGroup = actionPropertyGroupItem2;
+            this.transFNUP.Size = new System.Drawing.Size(44, 20);
+            this.transFNUP.TabIndex = 26;
+            this.transFNUP.ValueChanged += new System.EventHandler(this.OnYawForwardTranslationChanged);
+            this.transFNUP.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnNumericActionUpDownDoubleClick);
+            // 
+            // transLRNUP
+            // 
+            this.transLRNUP.ActionPropertyDescription = null;
+            this.transLRNUP.ActionPropertyName = "TransitionOffsetLeftRight";
+            this.transLRNUP.ActionPropertyNameText = "Left/Right";
+            this.transLRNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.transLRNUP.GroupsComponent = this._groups;
+            this.transLRNUP.Location = new System.Drawing.Point(176, 63);
+            this.transLRNUP.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.transLRNUP.Name = "transLRNUP";
+            actionPropertyGroupItem6.Name = "Manual Rotation Values";
+            actionPropertyGroupItem6.Tag = actionPropertyGroup14;
+            this.transLRNUP.SelectedGroup = actionPropertyGroupItem6;
+            this.transLRNUP.Size = new System.Drawing.Size(44, 20);
+            this.transLRNUP.TabIndex = 25;
+            this.transLRNUP.ValueChanged += new System.EventHandler(this.OnYawLeftRightTranslationChanged);
+            this.transLRNUP.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnNumericActionUpDownDoubleClick);
+            // 
+            // SetLeftButton
+            // 
+            this.SetLeftButton.ActionPropertyDescription = null;
+            this.SetLeftButton.ActionPropertyName = "ManualRotationLeft";
+            this.SetLeftButton.ActionPropertyNameText = "Left";
+            this.SetLeftButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.SetLeftButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.SetLeftButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetLeftButton.GroupsComponent = this._groups;
+            this.SetLeftButton.Location = new System.Drawing.Point(39, 20);
+            this.SetLeftButton.Name = "SetLeftButton";
+            actionPropertyGroupItem7.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem7.Tag = actionPropertyGroup12;
+            this.SetLeftButton.SelectedGroup = actionPropertyGroupItem7;
+            this.SetLeftButton.Size = new System.Drawing.Size(72, 27);
+            this.SetLeftButton.TabIndex = 36;
+            this.SetLeftButton.Text = "Set Button";
+            this.SetLeftButton.UseVisualStyleBackColor = true;
+            this.SetLeftButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
+            // SetRightButton
+            // 
+            this.SetRightButton.ActionPropertyDescription = null;
+            this.SetRightButton.ActionPropertyName = "ManualRotationRight";
+            this.SetRightButton.ActionPropertyNameText = "Right";
+            this.SetRightButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.SetRightButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.SetRightButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetRightButton.GroupsComponent = this._groups;
+            this.SetRightButton.Location = new System.Drawing.Point(167, 20);
+            this.SetRightButton.Name = "SetRightButton";
+            actionPropertyGroupItem3.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem3.Tag = actionPropertyGroup12;
+            this.SetRightButton.SelectedGroup = actionPropertyGroupItem3;
+            this.SetRightButton.Size = new System.Drawing.Size(72, 27);
+            this.SetRightButton.TabIndex = 37;
+            this.SetRightButton.Text = "Set Button";
+            this.SetRightButton.UseVisualStyleBackColor = false;
+            this.SetRightButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
+            // PitchAutorotationHoldButton
+            // 
+            this.PitchAutorotationHoldButton.ActionPropertyDescription = null;
+            this.PitchAutorotationHoldButton.ActionPropertyName = "PitchAutorotationHold";
+            this.PitchAutorotationHoldButton.ActionPropertyNameText = "Pitch";
+            this.PitchAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.PitchAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.PitchAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PitchAutorotationHoldButton.GroupsComponent = this._groups;
+            this.PitchAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
+            this.PitchAutorotationHoldButton.Name = "PitchAutorotationHoldButton";
+            actionPropertyGroupItem8.Name = "Hold Buttons";
+            actionPropertyGroupItem8.Tag = actionPropertyGroup13;
+            this.PitchAutorotationHoldButton.SelectedGroup = actionPropertyGroupItem8;
+            this.PitchAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
+            this.PitchAutorotationHoldButton.TabIndex = 42;
+            this.PitchAutorotationHoldButton.Text = "Hold";
+            this.PitchAutorotationHoldButton.UseVisualStyleBackColor = true;
+            this.PitchAutorotationHoldButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
+            // pAccumReset
+            // 
+            this.pAccumReset.ActionPropertyDescription = null;
+            this.pAccumReset.ActionPropertyName = "SetAccumResetPitch";
+            this.pAccumReset.ActionPropertyNameText = "Accum Pitch";
+            this.pAccumReset.ActiveBackColour = System.Drawing.Color.Black;
+            this.pAccumReset.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.pAccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pAccumReset.GroupsComponent = this._groups;
+            this.pAccumReset.Location = new System.Drawing.Point(69, 99);
+            this.pAccumReset.Name = "pAccumReset";
+            actionPropertyGroupItem9.Name = "Reset Buttons";
+            actionPropertyGroupItem9.Tag = actionPropertyGroup11;
+            this.pAccumReset.SelectedGroup = actionPropertyGroupItem9;
+            this.pAccumReset.Size = new System.Drawing.Size(57, 34);
+            this.pAccumReset.TabIndex = 54;
+            this.pAccumReset.Text = "Set Acc. Reset";
+            this.pAccumReset.UseVisualStyleBackColor = true;
+            this.pAccumReset.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
+            // SetUpButton
+            // 
+            this.SetUpButton.ActionPropertyDescription = null;
+            this.SetUpButton.ActionPropertyName = "ManualRotationUp";
+            this.SetUpButton.ActionPropertyNameText = "Up";
+            this.SetUpButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.SetUpButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.SetUpButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetUpButton.GroupsComponent = this._groups;
+            this.SetUpButton.Location = new System.Drawing.Point(39, 20);
+            this.SetUpButton.Name = "SetUpButton";
+            actionPropertyGroupItem10.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem10.Tag = actionPropertyGroup12;
+            this.SetUpButton.SelectedGroup = actionPropertyGroupItem10;
+            this.SetUpButton.Size = new System.Drawing.Size(72, 27);
+            this.SetUpButton.TabIndex = 36;
+            this.SetUpButton.Text = "Set Button";
+            this.SetUpButton.UseVisualStyleBackColor = true;
+            this.SetUpButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
+            // SetDownButton
+            // 
+            this.SetDownButton.ActionPropertyDescription = null;
+            this.SetDownButton.ActionPropertyName = "ManualRotationDown";
+            this.SetDownButton.ActionPropertyNameText = "Down";
+            this.SetDownButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.SetDownButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.SetDownButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetDownButton.GroupsComponent = this._groups;
+            this.SetDownButton.Location = new System.Drawing.Point(167, 20);
+            this.SetDownButton.Name = "SetDownButton";
+            actionPropertyGroupItem11.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem11.Tag = actionPropertyGroup12;
+            this.SetDownButton.SelectedGroup = actionPropertyGroupItem11;
+            this.SetDownButton.Size = new System.Drawing.Size(72, 27);
+            this.SetDownButton.TabIndex = 37;
+            this.SetDownButton.Text = "Set Button";
+            this.SetDownButton.UseVisualStyleBackColor = false;
+            this.SetDownButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
+            // SetResetButton
+            // 
+            this.SetResetButton.ActionPropertyDescription = null;
+            this.SetResetButton.ActionPropertyName = "SetResetCenter";
+            this.SetResetButton.ActionPropertyNameText = "Center";
+            this.SetResetButton.ActiveBackColour = System.Drawing.SystemColors.ControlText;
+            this.SetResetButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.SetResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetResetButton.GroupsComponent = this._groups;
+            this.SetResetButton.Location = new System.Drawing.Point(165, 51);
+            this.SetResetButton.Name = "SetResetButton";
+            actionPropertyGroupItem12.Name = "Reset Buttons";
+            actionPropertyGroupItem12.Tag = actionPropertyGroup11;
+            this.SetResetButton.SelectedGroup = actionPropertyGroupItem12;
+            this.SetResetButton.Size = new System.Drawing.Size(71, 35);
+            this.SetResetButton.TabIndex = 28;
+            this.SetResetButton.Text = "Set Center Button";
+            this.SetResetButton.UseVisualStyleBackColor = true;
+            this.SetResetButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2094,9 +2127,7 @@
             this.HMDYawBox.PerformLayout();
             this.ManualGroup.ResumeLayout(false);
             this.ManualGroup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.transFNUP)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.angleNUD)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.transLRNUP)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.contextMenuStrip.ResumeLayout(false);
@@ -2122,6 +2153,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.upNUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.downNUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._devicesStatusImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.transFNUP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.transLRNUP)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -13,14 +13,26 @@ namespace XRNeckSafer
         private string _actionPropertyName;
         private string _actionPropertyNameText;
         private string _actionPropertyDescription;
-        private ActionPropertyGroup _selectedGroup;
+        private ActionPropertyGroupItem _selectedGroup;
+        private ActionPropertyGroups _groupsComponent;
 
         [Category("ActionProperty"), ImmutableObject(true)]
-        public ActionPropertyGroups GroupsComponent { get; set; }
+        public ActionPropertyGroups GroupsComponent
+        {
+            get => _groupsComponent;
+            set
+            {
+                _groupsComponent = value;
+                if (_groupsComponent?.Groups?.Length < 1)
+                {
+                    SelectedGroup = null;
+                }
+            }
+        }
 
         [Category("ActionProperty"), ImmutableObject(true)]
         [Editor(typeof(ActionPropertyGroupTypeEditor), typeof(UITypeEditor))]
-        public ActionPropertyGroup SelectedGroup
+        public ActionPropertyGroupItem SelectedGroup
         {
             get => _selectedGroup;
             set
@@ -28,7 +40,7 @@ namespace XRNeckSafer
                 _selectedGroup = value;
                 if (_actionProperty != null)
                 {
-                    _actionProperty.Group = value;
+                    _actionProperty.Group = value?.Tag;
                 }
             }
         }
@@ -127,7 +139,7 @@ namespace XRNeckSafer
             Value = _actionProperty.GetValue();
             _actionProperty.NameText = _actionPropertyNameText;
             _actionProperty.Description = _actionPropertyDescription;
-            _actionProperty.Group = SelectedGroup; // _actionPropertyGroup;
+            _actionProperty.Group = SelectedGroup?.Tag;
             _actionProperty.Triggered += ActionPropertyTriggered;
         }
 

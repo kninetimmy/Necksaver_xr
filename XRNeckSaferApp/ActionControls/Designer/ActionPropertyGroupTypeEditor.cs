@@ -18,32 +18,30 @@ namespace XRNeckSafer
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
             _editorService = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
-
-            var listBox = new ListBox();
-            listBox.SelectionMode = SelectionMode.One;
+            var listBox = new ListBox
+            {
+                SelectionMode = SelectionMode.One
+            };
             listBox.SelectedValueChanged += OnListBoxSelectedValueChanged;
-            // listBox.DisplayMember = "Name";
+            var emptyItem = new ActionPropertyGroupItem { Name = "(none)" };
+            listBox.Items.Add(emptyItem);
+            listBox.DisplayMember = nameof(emptyItem.Name);
+            listBox.SelectedIndex = 0;
             IActionPropertyGroups control = (IActionPropertyGroups)context.Instance;
-            if (control.GroupsComponent?.Groups == null)
+            if (control?.GroupsComponent?.Groups != null)
             {
-                return value;
-            }
-            foreach (ActionPropertyGroup group in control.GroupsComponent.Groups)
-            {
-                // we store benchmarks objects directly in the listbox
-                int index = listBox.Items.Add(group);
-                if (group.Equals(value))
+                foreach (ActionPropertyGroup group in control.GroupsComponent.Groups)
                 {
-                    listBox.SelectedIndex = index;
-                }
-                if (string.IsNullOrEmpty(listBox.DisplayMember))
-                {
-                    listBox.DisplayMember = nameof(group.Name);
+                    int index = listBox.Items.Add(new ActionPropertyGroupItem { Name = group.Name, Tag = group });
+                    if (group.Equals(value))
+                    {
+                        listBox.SelectedIndex = index;
+                    }
                 }
             }
-
-            // show this model stuff
+            
             _editorService.DropDownControl(listBox);
+            listBox.SelectedValueChanged -= OnListBoxSelectedValueChanged;
             if (listBox.SelectedItem == null)
                 return value;
 

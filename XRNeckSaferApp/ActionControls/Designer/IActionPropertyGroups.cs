@@ -3,6 +3,6 @@
     public interface IActionPropertyGroups
     {
         ActionPropertyGroups GroupsComponent { get; set; }
-        ActionPropertyGroup SelectedGroup { get; set; }
+        ActionPropertyGroupItem SelectedGroup { get; set; }
     }
 }

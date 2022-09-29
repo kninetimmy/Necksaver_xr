@@ -160,6 +160,7 @@
     <Compile Include="ActionControls\BooleanActionButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ActionControls\Designer\ActionPropertyGroupItem.cs" />
     <Compile Include="ActionControls\NumericActionUpDown.cs">
       <SubType>Component</SubType>
     </Compile>
