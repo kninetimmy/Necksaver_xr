@@ -43,7 +43,7 @@
         <DataGrid Grid.Row="0" Style="{StaticResource _dataGrid}" Name="_headersGrid" HeadersVisibility="Column" CellStyle="{StaticResource _cell}" BorderThickness="1,1,1,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Control" HeaderStyle="{StaticResource _dataGridCenterHeader}" Width="100" ElementStyle="{StaticResource _textBlockCenter}" />
-                <DataGridTextColumn Header="Event Name" ElementStyle="{StaticResource _textBlockCenter}" />
+                <DataGridTextColumn Header="Action" Width="65" HeaderStyle="{StaticResource _dataGridCenterHeader}" ElementStyle="{StaticResource _textBlockCenter}" />
                 <DataGridTextColumn Header="Key/Joystick mapping" Width="*" ElementStyle="{StaticResource _textBlockCenter}" />
                 <DataGridTextColumn Header="Toggle" ElementStyle="{StaticResource _textBlockCenter}" />
                 <DataGridTextColumn Header="Invert" ElementStyle="{StaticResource _textBlockCenter}" />
@@ -51,7 +51,7 @@
         </DataGrid>
         <DataGrid Grid.Row="1" Style="{StaticResource _dataGrid}" Name="_dataGrid" ItemsSource="{Binding ElementName=HostControl, Path=Properties}" CellStyle="{StaticResource _cell}" LayoutUpdated="OnDataGridLayoutUpdated">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Event Name" Binding="{Binding EventName}" ElementStyle="{StaticResource _textBlockCenter}" />
+                <DataGridTextColumn Header="Action" Width="65" Binding="{Binding EventName}" ElementStyle="{StaticResource _textBlockCenter}" />
                 <DataGridTemplateColumn Header="Key/Joystick mapping" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
