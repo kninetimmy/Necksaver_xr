@@ -17,33 +17,36 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
-            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem4 = new XRNeckSafer.ActionPropertyGroupItem();
-            XRNeckSafer.ActionPropertyGroup actionPropertyGroup11 = new XRNeckSafer.ActionPropertyGroup();
-            XRNeckSafer.ActionPropertyGroup actionPropertyGroup12 = new XRNeckSafer.ActionPropertyGroup();
-            XRNeckSafer.ActionPropertyGroup actionPropertyGroup13 = new XRNeckSafer.ActionPropertyGroup();
-            XRNeckSafer.ActionPropertyGroup actionPropertyGroup14 = new XRNeckSafer.ActionPropertyGroup();
-            XRNeckSafer.ActionPropertyGroup actionPropertyGroup15 = new XRNeckSafer.ActionPropertyGroup();
-            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem1 = new XRNeckSafer.ActionPropertyGroupItem();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem8 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup1 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup2 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup3 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup4 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup5 = new XRNeckSafer.ActionPropertyGroup();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem2 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem3 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem4 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem5 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem6 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem7 = new XRNeckSafer.ActionPropertyGroupItem();
-            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem3 = new XRNeckSafer.ActionPropertyGroupItem();
-            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem8 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem9 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem10 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem11 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem12 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem13 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem14 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem1 = new XRNeckSafer.ActionPropertyGroupItem();
             this.stepwiseGroup = new System.Windows.Forms.GroupBox();
             this.error_label2 = new System.Windows.Forms.Label();
             this.error_label = new System.Windows.Forms.Label();
@@ -80,7 +83,6 @@
             this.ManualGroup = new System.Windows.Forms.GroupBox();
             this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.angleNUD = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -169,8 +171,6 @@
             this.label21 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.upNUD = new System.Windows.Forms.NumericUpDown();
-            this.downNUD = new System.Windows.Forms.NumericUpDown();
             this.label22 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.pSnapRP = new System.Windows.Forms.RadioButton();
@@ -186,11 +186,14 @@
             this._groups = new XRNeckSafer.ActionPropertyGroups();
             this.AccumReset = new XRNeckSafer.BooleanActionButton();
             this.transFNUP = new XRNeckSafer.NumericActionUpDown();
+            this.angleNUD = new XRNeckSafer.NumericActionUpDown();
             this.transLRNUP = new XRNeckSafer.NumericActionUpDown();
             this.SetLeftButton = new XRNeckSafer.BooleanActionButton();
             this.SetRightButton = new XRNeckSafer.BooleanActionButton();
             this.PitchAutorotationHoldButton = new XRNeckSafer.BooleanActionButton();
             this.pAccumReset = new XRNeckSafer.BooleanActionButton();
+            this.upNUD = new XRNeckSafer.NumericActionUpDown();
+            this.downNUD = new XRNeckSafer.NumericActionUpDown();
             this.SetUpButton = new XRNeckSafer.BooleanActionButton();
             this.SetDownButton = new XRNeckSafer.BooleanActionButton();
             this.SetResetButton = new XRNeckSafer.BooleanActionButton();
@@ -203,7 +206,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLeft)).BeginInit();
             this.HMDYawBox.SuspendLayout();
             this.ManualGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.angleNUD)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.ARGroup.SuspendLayout();
@@ -220,11 +222,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.DownAutorotGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UpAutorotGridView)).BeginInit();
             this.pManualGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.upNUD)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.downNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._devicesStatusImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.transFNUP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.angleNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.transLRNUP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.upNUD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.downNUD)).BeginInit();
             this.SuspendLayout();
             // 
             // stepwiseGroup
@@ -301,8 +304,8 @@
             // act
             // 
             this.act.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.act.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.act.DefaultCellStyle = dataGridViewCellStyle1;
             this.act.Frozen = true;
             this.act.HeaderText = "act";
             this.act.MinimumWidth = 6;
@@ -315,8 +318,8 @@
             // deact
             // 
             this.deact.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deact.DefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deact.DefaultCellStyle = dataGridViewCellStyle2;
             this.deact.Frozen = true;
             this.deact.HeaderText = "deact";
             this.deact.MinimumWidth = 6;
@@ -329,8 +332,8 @@
             // rot
             // 
             this.rot.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rot.DefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rot.DefaultCellStyle = dataGridViewCellStyle3;
             this.rot.Frozen = true;
             this.rot.HeaderText = "rot";
             this.rot.MinimumWidth = 6;
@@ -342,8 +345,8 @@
             // 
             // LR
             // 
-            dataGridViewCellStyle26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LR.DefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LR.DefaultCellStyle = dataGridViewCellStyle4;
             this.LR.Frozen = true;
             this.LR.HeaderText = "L/R";
             this.LR.MinimumWidth = 6;
@@ -353,8 +356,8 @@
             // 
             // Fwd
             // 
-            dataGridViewCellStyle27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Fwd.DefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Fwd.DefaultCellStyle = dataGridViewCellStyle5;
             this.Fwd.Frozen = true;
             this.Fwd.HeaderText = "Fwd";
             this.Fwd.MinimumWidth = 6;
@@ -699,25 +702,6 @@
             this.label24.Size = new System.Drawing.Size(68, 15);
             this.label24.TabIndex = 52;
             this.label24.Text = "Translation";
-            // 
-            // angleNUD
-            // 
-            this.angleNUD.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.angleNUD.Location = new System.Drawing.Point(34, 63);
-            this.angleNUD.Maximum = new decimal(new int[] {
-            360,
-            0,
-            0,
-            0});
-            this.angleNUD.Name = "angleNUD";
-            this.angleNUD.Size = new System.Drawing.Size(38, 20);
-            this.angleNUD.TabIndex = 9;
-            this.angleNUD.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.angleNUD.ValueChanged += new System.EventHandler(this.OnYawRotationAngleChanged);
             // 
             // label8
             // 
@@ -1494,8 +1478,8 @@
             // dataGridViewTextBoxColumn4
             // 
             this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewTextBoxColumn4.Frozen = true;
             this.dataGridViewTextBoxColumn4.HeaderText = "act";
             this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
@@ -1508,8 +1492,8 @@
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle29.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridViewTextBoxColumn5.Frozen = true;
             this.dataGridViewTextBoxColumn5.HeaderText = "deact";
             this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
@@ -1522,8 +1506,8 @@
             // dataGridViewTextBoxColumn6
             // 
             this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle30.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridViewTextBoxColumn6.Frozen = true;
             this.dataGridViewTextBoxColumn6.HeaderText = "rot";
             this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
@@ -1579,8 +1563,8 @@
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle31.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle31;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridViewTextBoxColumn1.Frozen = true;
             this.dataGridViewTextBoxColumn1.HeaderText = "act";
             this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
@@ -1593,8 +1577,8 @@
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle32.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle32;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridViewTextBoxColumn2.Frozen = true;
             this.dataGridViewTextBoxColumn2.HeaderText = "deact";
             this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
@@ -1607,8 +1591,8 @@
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle33;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle11;
             this.dataGridViewTextBoxColumn3.Frozen = true;
             this.dataGridViewTextBoxColumn3.HeaderText = "rot";
             this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
@@ -1695,44 +1679,6 @@
             this.label19.Size = new System.Drawing.Size(39, 15);
             this.label19.TabIndex = 53;
             this.label19.Text = "Mode";
-            // 
-            // upNUD
-            // 
-            this.upNUD.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.upNUD.Location = new System.Drawing.Point(42, 56);
-            this.upNUD.Maximum = new decimal(new int[] {
-            180,
-            0,
-            0,
-            0});
-            this.upNUD.Name = "upNUD";
-            this.upNUD.Size = new System.Drawing.Size(38, 20);
-            this.upNUD.TabIndex = 9;
-            this.upNUD.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.upNUD.ValueChanged += new System.EventHandler(this.OnPitchTiltUpRotationChanged);
-            // 
-            // downNUD
-            // 
-            this.downNUD.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.downNUD.Location = new System.Drawing.Point(173, 56);
-            this.downNUD.Maximum = new decimal(new int[] {
-            180,
-            0,
-            0,
-            0});
-            this.downNUD.Name = "downNUD";
-            this.downNUD.Size = new System.Drawing.Size(44, 20);
-            this.downNUD.TabIndex = 25;
-            this.downNUD.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.downNUD.ValueChanged += new System.EventHandler(this.OnPitchTiltDownRotationChanged);
             // 
             // label22
             // 
@@ -1859,9 +1805,9 @@
             this.YawAutorotationHoldButton.GroupsComponent = this._groups;
             this.YawAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
             this.YawAutorotationHoldButton.Name = "YawAutorotationHoldButton";
-            actionPropertyGroupItem4.Name = "Hold Buttons";
-            actionPropertyGroupItem4.Tag = actionPropertyGroup13;
-            this.YawAutorotationHoldButton.SelectedGroup = actionPropertyGroupItem4;
+            actionPropertyGroupItem8.Name = "Hold Buttons";
+            actionPropertyGroupItem8.Tag = actionPropertyGroup3;
+            this.YawAutorotationHoldButton.SelectedGroup = actionPropertyGroupItem8;
             this.YawAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
             this.YawAutorotationHoldButton.TabIndex = 42;
             this.YawAutorotationHoldButton.Text = "Hold";
@@ -1870,22 +1816,22 @@
             // 
             // _groups
             // 
-            actionPropertyGroup11.Name = "Reset Buttons";
-            actionPropertyGroup11.Order = 0;
-            actionPropertyGroup12.Name = "Manual Rotation Buttons";
-            actionPropertyGroup12.Order = 1;
-            actionPropertyGroup13.Name = "Hold Buttons";
-            actionPropertyGroup13.Order = 2;
-            actionPropertyGroup14.Name = "Manual Rotation Values";
-            actionPropertyGroup14.Order = 3;
-            actionPropertyGroup15.Name = "Smooth Autorotation Values";
-            actionPropertyGroup15.Order = 4;
+            actionPropertyGroup1.Name = "Reset Buttons";
+            actionPropertyGroup1.Order = 0;
+            actionPropertyGroup2.Name = "Manual Rotation Buttons";
+            actionPropertyGroup2.Order = 1;
+            actionPropertyGroup3.Name = "Hold Buttons";
+            actionPropertyGroup3.Order = 2;
+            actionPropertyGroup4.Name = "Manual Rotation Values";
+            actionPropertyGroup4.Order = 3;
+            actionPropertyGroup5.Name = "Smooth Autorotation Values";
+            actionPropertyGroup5.Order = 4;
             this._groups.Groups = new XRNeckSafer.ActionPropertyGroup[] {
-        actionPropertyGroup11,
-        actionPropertyGroup12,
-        actionPropertyGroup13,
-        actionPropertyGroup14,
-        actionPropertyGroup15};
+        actionPropertyGroup1,
+        actionPropertyGroup2,
+        actionPropertyGroup3,
+        actionPropertyGroup4,
+        actionPropertyGroup5};
             // 
             // AccumReset
             // 
@@ -1898,9 +1844,9 @@
             this.AccumReset.GroupsComponent = this._groups;
             this.AccumReset.Location = new System.Drawing.Point(69, 99);
             this.AccumReset.Name = "AccumReset";
-            actionPropertyGroupItem1.Name = "Reset Buttons";
-            actionPropertyGroupItem1.Tag = actionPropertyGroup11;
-            this.AccumReset.SelectedGroup = actionPropertyGroupItem1;
+            actionPropertyGroupItem2.Name = "Reset Buttons";
+            actionPropertyGroupItem2.Tag = actionPropertyGroup1;
+            this.AccumReset.SelectedGroup = actionPropertyGroupItem2;
             this.AccumReset.Size = new System.Drawing.Size(57, 34);
             this.AccumReset.TabIndex = 54;
             this.AccumReset.Text = "Set Acc. Reset";
@@ -1911,7 +1857,12 @@
             // 
             this.transFNUP.ActionPropertyDescription = null;
             this.transFNUP.ActionPropertyName = "TransitionOffsetForward";
-            this.transFNUP.ActionPropertyNameText = "Fwd/Back";
+            this.transFNUP.ActionPropertyNameText = "Translation Fwd";
+            this.transFNUP.DefaultValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.transFNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.transFNUP.GroupsComponent = this._groups;
             this.transFNUP.Location = new System.Drawing.Point(176, 87);
@@ -1921,19 +1872,50 @@
             0,
             -2147483648});
             this.transFNUP.Name = "transFNUP";
-            actionPropertyGroupItem2.Name = "Manual Rotation Values";
-            actionPropertyGroupItem2.Tag = actionPropertyGroup14;
-            this.transFNUP.SelectedGroup = actionPropertyGroupItem2;
+            actionPropertyGroupItem3.Name = "Manual Rotation Values";
+            actionPropertyGroupItem3.Tag = actionPropertyGroup4;
+            this.transFNUP.SelectedGroup = actionPropertyGroupItem3;
             this.transFNUP.Size = new System.Drawing.Size(44, 20);
             this.transFNUP.TabIndex = 26;
             this.transFNUP.ValueChanged += new System.EventHandler(this.OnYawForwardTranslationChanged);
             this.transFNUP.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnNumericActionUpDownDoubleClick);
             // 
+            // angleNUD
+            // 
+            this.angleNUD.ActionPropertyDescription = null;
+            this.angleNUD.ActionPropertyName = "YawRotationLR";
+            this.angleNUD.ActionPropertyNameText = "Yaw Rotation L/R";
+            this.angleNUD.DefaultValue = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            this.angleNUD.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.angleNUD.GroupsComponent = this._groups;
+            this.angleNUD.Location = new System.Drawing.Point(34, 63);
+            this.angleNUD.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.angleNUD.Name = "angleNUD";
+            actionPropertyGroupItem4.Name = "Manual Rotation Values";
+            actionPropertyGroupItem4.Tag = actionPropertyGroup4;
+            this.angleNUD.SelectedGroup = actionPropertyGroupItem4;
+            this.angleNUD.Size = new System.Drawing.Size(38, 20);
+            this.angleNUD.TabIndex = 9;
+            this.angleNUD.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnNumericActionUpDownDoubleClick);
+            // 
             // transLRNUP
             // 
             this.transLRNUP.ActionPropertyDescription = null;
             this.transLRNUP.ActionPropertyName = "TransitionOffsetLeftRight";
-            this.transLRNUP.ActionPropertyNameText = "Left/Right";
+            this.transLRNUP.ActionPropertyNameText = "Translation L/R";
+            this.transLRNUP.DefaultValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.transLRNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.transLRNUP.GroupsComponent = this._groups;
             this.transLRNUP.Location = new System.Drawing.Point(176, 63);
@@ -1943,9 +1925,9 @@
             0,
             -2147483648});
             this.transLRNUP.Name = "transLRNUP";
-            actionPropertyGroupItem6.Name = "Manual Rotation Values";
-            actionPropertyGroupItem6.Tag = actionPropertyGroup14;
-            this.transLRNUP.SelectedGroup = actionPropertyGroupItem6;
+            actionPropertyGroupItem5.Name = "Manual Rotation Values";
+            actionPropertyGroupItem5.Tag = actionPropertyGroup4;
+            this.transLRNUP.SelectedGroup = actionPropertyGroupItem5;
             this.transLRNUP.Size = new System.Drawing.Size(44, 20);
             this.transLRNUP.TabIndex = 25;
             this.transLRNUP.ValueChanged += new System.EventHandler(this.OnYawLeftRightTranslationChanged);
@@ -1962,9 +1944,9 @@
             this.SetLeftButton.GroupsComponent = this._groups;
             this.SetLeftButton.Location = new System.Drawing.Point(39, 20);
             this.SetLeftButton.Name = "SetLeftButton";
-            actionPropertyGroupItem7.Name = "Manual Rotation Buttons";
-            actionPropertyGroupItem7.Tag = actionPropertyGroup12;
-            this.SetLeftButton.SelectedGroup = actionPropertyGroupItem7;
+            actionPropertyGroupItem6.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem6.Tag = actionPropertyGroup2;
+            this.SetLeftButton.SelectedGroup = actionPropertyGroupItem6;
             this.SetLeftButton.Size = new System.Drawing.Size(72, 27);
             this.SetLeftButton.TabIndex = 36;
             this.SetLeftButton.Text = "Set Button";
@@ -1982,9 +1964,9 @@
             this.SetRightButton.GroupsComponent = this._groups;
             this.SetRightButton.Location = new System.Drawing.Point(167, 20);
             this.SetRightButton.Name = "SetRightButton";
-            actionPropertyGroupItem3.Name = "Manual Rotation Buttons";
-            actionPropertyGroupItem3.Tag = actionPropertyGroup12;
-            this.SetRightButton.SelectedGroup = actionPropertyGroupItem3;
+            actionPropertyGroupItem7.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem7.Tag = actionPropertyGroup2;
+            this.SetRightButton.SelectedGroup = actionPropertyGroupItem7;
             this.SetRightButton.Size = new System.Drawing.Size(72, 27);
             this.SetRightButton.TabIndex = 37;
             this.SetRightButton.Text = "Set Button";
@@ -2002,9 +1984,9 @@
             this.PitchAutorotationHoldButton.GroupsComponent = this._groups;
             this.PitchAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
             this.PitchAutorotationHoldButton.Name = "PitchAutorotationHoldButton";
-            actionPropertyGroupItem8.Name = "Hold Buttons";
-            actionPropertyGroupItem8.Tag = actionPropertyGroup13;
-            this.PitchAutorotationHoldButton.SelectedGroup = actionPropertyGroupItem8;
+            actionPropertyGroupItem9.Name = "Hold Buttons";
+            actionPropertyGroupItem9.Tag = actionPropertyGroup3;
+            this.PitchAutorotationHoldButton.SelectedGroup = actionPropertyGroupItem9;
             this.PitchAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
             this.PitchAutorotationHoldButton.TabIndex = 42;
             this.PitchAutorotationHoldButton.Text = "Hold";
@@ -2022,14 +2004,66 @@
             this.pAccumReset.GroupsComponent = this._groups;
             this.pAccumReset.Location = new System.Drawing.Point(69, 99);
             this.pAccumReset.Name = "pAccumReset";
-            actionPropertyGroupItem9.Name = "Reset Buttons";
-            actionPropertyGroupItem9.Tag = actionPropertyGroup11;
-            this.pAccumReset.SelectedGroup = actionPropertyGroupItem9;
+            actionPropertyGroupItem10.Name = "Reset Buttons";
+            actionPropertyGroupItem10.Tag = actionPropertyGroup1;
+            this.pAccumReset.SelectedGroup = actionPropertyGroupItem10;
             this.pAccumReset.Size = new System.Drawing.Size(57, 34);
             this.pAccumReset.TabIndex = 54;
             this.pAccumReset.Text = "Set Acc. Reset";
             this.pAccumReset.UseVisualStyleBackColor = true;
             this.pAccumReset.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
+            // upNUD
+            // 
+            this.upNUD.ActionPropertyDescription = null;
+            this.upNUD.ActionPropertyName = "ManualPitchUp";
+            this.upNUD.ActionPropertyNameText = "Pitch Up";
+            this.upNUD.DefaultValue = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.upNUD.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.upNUD.GroupsComponent = this._groups;
+            this.upNUD.Location = new System.Drawing.Point(42, 56);
+            this.upNUD.Maximum = new decimal(new int[] {
+            180,
+            0,
+            0,
+            0});
+            this.upNUD.Name = "upNUD";
+            actionPropertyGroupItem11.Name = "Manual Rotation Values";
+            actionPropertyGroupItem11.Tag = actionPropertyGroup4;
+            this.upNUD.SelectedGroup = actionPropertyGroupItem11;
+            this.upNUD.Size = new System.Drawing.Size(38, 20);
+            this.upNUD.TabIndex = 9;
+            this.upNUD.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnNumericActionUpDownDoubleClick);
+            // 
+            // downNUD
+            // 
+            this.downNUD.ActionPropertyDescription = null;
+            this.downNUD.ActionPropertyName = "ManualPitchDown";
+            this.downNUD.ActionPropertyNameText = "Pitch Down";
+            this.downNUD.DefaultValue = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.downNUD.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.downNUD.GroupsComponent = this._groups;
+            this.downNUD.Location = new System.Drawing.Point(173, 56);
+            this.downNUD.Maximum = new decimal(new int[] {
+            180,
+            0,
+            0,
+            0});
+            this.downNUD.Name = "downNUD";
+            actionPropertyGroupItem12.Name = "Manual Rotation Values";
+            actionPropertyGroupItem12.Tag = actionPropertyGroup4;
+            this.downNUD.SelectedGroup = actionPropertyGroupItem12;
+            this.downNUD.Size = new System.Drawing.Size(44, 20);
+            this.downNUD.TabIndex = 25;
+            this.downNUD.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnNumericActionUpDownDoubleClick);
             // 
             // SetUpButton
             // 
@@ -2042,9 +2076,9 @@
             this.SetUpButton.GroupsComponent = this._groups;
             this.SetUpButton.Location = new System.Drawing.Point(39, 20);
             this.SetUpButton.Name = "SetUpButton";
-            actionPropertyGroupItem10.Name = "Manual Rotation Buttons";
-            actionPropertyGroupItem10.Tag = actionPropertyGroup12;
-            this.SetUpButton.SelectedGroup = actionPropertyGroupItem10;
+            actionPropertyGroupItem13.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem13.Tag = actionPropertyGroup2;
+            this.SetUpButton.SelectedGroup = actionPropertyGroupItem13;
             this.SetUpButton.Size = new System.Drawing.Size(72, 27);
             this.SetUpButton.TabIndex = 36;
             this.SetUpButton.Text = "Set Button";
@@ -2062,9 +2096,9 @@
             this.SetDownButton.GroupsComponent = this._groups;
             this.SetDownButton.Location = new System.Drawing.Point(167, 20);
             this.SetDownButton.Name = "SetDownButton";
-            actionPropertyGroupItem11.Name = "Manual Rotation Buttons";
-            actionPropertyGroupItem11.Tag = actionPropertyGroup12;
-            this.SetDownButton.SelectedGroup = actionPropertyGroupItem11;
+            actionPropertyGroupItem14.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem14.Tag = actionPropertyGroup2;
+            this.SetDownButton.SelectedGroup = actionPropertyGroupItem14;
             this.SetDownButton.Size = new System.Drawing.Size(72, 27);
             this.SetDownButton.TabIndex = 37;
             this.SetDownButton.Text = "Set Button";
@@ -2082,9 +2116,9 @@
             this.SetResetButton.GroupsComponent = this._groups;
             this.SetResetButton.Location = new System.Drawing.Point(165, 51);
             this.SetResetButton.Name = "SetResetButton";
-            actionPropertyGroupItem12.Name = "Reset Buttons";
-            actionPropertyGroupItem12.Tag = actionPropertyGroup11;
-            this.SetResetButton.SelectedGroup = actionPropertyGroupItem12;
+            actionPropertyGroupItem1.Name = "Reset Buttons";
+            actionPropertyGroupItem1.Tag = actionPropertyGroup1;
+            this.SetResetButton.SelectedGroup = actionPropertyGroupItem1;
             this.SetResetButton.Size = new System.Drawing.Size(71, 35);
             this.SetResetButton.TabIndex = 28;
             this.SetResetButton.Text = "Set Center Button";
@@ -2127,7 +2161,6 @@
             this.HMDYawBox.PerformLayout();
             this.ManualGroup.ResumeLayout(false);
             this.ManualGroup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.angleNUD)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.contextMenuStrip.ResumeLayout(false);
@@ -2150,11 +2183,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.UpAutorotGridView)).EndInit();
             this.pManualGroup.ResumeLayout(false);
             this.pManualGroup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.upNUD)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.downNUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._devicesStatusImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.transFNUP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.angleNUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.transLRNUP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.upNUD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.downNUD)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2176,7 +2210,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.NumericUpDown angleNUD;
+        private NumericActionUpDown angleNUD;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private BooleanActionButton SetLeftButton;
@@ -2252,8 +2286,8 @@
         private System.Windows.Forms.Label label27;
         private BooleanActionButton pAccumReset;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.NumericUpDown upNUD;
-        private System.Windows.Forms.NumericUpDown downNUD;
+        private NumericActionUpDown upNUD;
+        private NumericActionUpDown downNUD;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.RadioButton pSnapRP;

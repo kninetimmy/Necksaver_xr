@@ -7,9 +7,9 @@ namespace XRNeckSafer
 {
     public class Config
     {
-        public int Angle;
-        public int UpAngle;
-        public int DownAngle;
+        // public int Angle;
+        // public int UpAngle;
+        // public int DownAngle;
         public int LinearLimL;
         public int LinearLimR;
         public int LinearMultL;
@@ -39,9 +39,9 @@ namespace XRNeckSafer
 
         private Config()
         {
-            Angle = 30;
-            UpAngle = 30;
-            DownAngle = 30;
+            // Angle = 30;
+            // UpAngle = 30;
+            // DownAngle = 30;
             //TransLR = 0;
             //TransF = 0;
             LinearLimL = 95;

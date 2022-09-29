@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace XRNeckSafer
@@ -20,11 +19,6 @@ namespace XRNeckSafer
                 return false;
             }
             return distinctKeysToCheck.All(k => pressedKeys.Contains(k));
-        }
-
-        public static bool InDesignerMode(this Control o)
-        {
-            return Assembly.GetCallingAssembly() != Assembly.GetEntryAssembly();
         }
     }
 }

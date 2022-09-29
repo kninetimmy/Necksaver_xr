@@ -15,6 +15,8 @@ namespace XRNeckSafer
         private string _actionPropertyDescription;
         private ActionPropertyGroupItem _selectedGroup;
         private ActionPropertyGroups _groupsComponent;
+        private decimal _defaultValue;
+        private bool _newProperty;
 
         [Category("ActionProperty"), ImmutableObject(true)]
         public ActionPropertyGroups GroupsComponent
@@ -52,7 +54,7 @@ namespace XRNeckSafer
             set
             {
                 _actionPropertyName = value;
-                if (this.InDesignerMode())
+                if (DesignMode)
                 {
                     return;
                 }
@@ -90,6 +92,27 @@ namespace XRNeckSafer
             }
         }
 
+        [Category("ActionProperty"), Description("ActionProperty default value")]
+        public decimal DefaultValue 
+        { 
+            get => _defaultValue; 
+            set 
+            { 
+                _defaultValue = value;
+                if (_newProperty || DesignMode)
+                {
+                    base.Value = _defaultValue;
+                }
+            }
+        }
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new decimal Value 
+        { 
+            get => base.Value;
+        }
+
         public NumericActionUpDown() : base()
         {
             Config.ConfigReloaded += OnConfigReloaded;
@@ -121,7 +144,7 @@ namespace XRNeckSafer
 
         protected void SubscribeActionProperty()
         {
-            if (this.InDesignerMode())
+            if (DesignMode)
             {
                 return;
             }
@@ -134,9 +157,11 @@ namespace XRNeckSafer
             {
                 _actionProperty = NumericUpDownActionProperty.CreateProperty(ActionPropertyName);
                 Config.Instance.ActionProperties.Add(_actionProperty);
+                _newProperty = true;
+                base.Value = DefaultValue;
             }
 
-            Value = _actionProperty.GetValue();
+            base.Value = _actionProperty.GetValue();
             _actionProperty.NameText = _actionPropertyNameText;
             _actionProperty.Description = _actionPropertyDescription;
             _actionProperty.Group = SelectedGroup?.Tag;
@@ -150,17 +175,7 @@ namespace XRNeckSafer
                 Invoke(new Action<ActionPropertyEventArgs<int>>(ActionPropertyTriggered), args);
                 return;
             }
-            Value = args.Value;
-        }
-
-        protected override void OnVisibleChanged(EventArgs e)
-        {
-            if (!_firstTimeRendered)
-            {
-                _firstTimeRendered = true;
-                SubscribeActionProperty();
-            }
-            base.OnVisibleChanged(e);
+            base.Value = args.Value;
         }
 
         protected override void Dispose(bool disposing)

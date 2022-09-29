@@ -57,7 +57,7 @@ namespace XRNeckSafer
             set
             {
                 _actionPropertyName = value;
-                if (this.InDesignerMode())
+                if (DesignMode)
                 {
                     return;
                 }
@@ -133,7 +133,7 @@ namespace XRNeckSafer
 
         protected void SubscribeActionProperty()
         {
-            if (this.InDesignerMode())
+            if (DesignMode)
             {
                 return;
             }

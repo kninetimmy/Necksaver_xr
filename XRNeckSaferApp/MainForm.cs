@@ -53,11 +53,6 @@ namespace XRNeckSafer
             JoystickService.DeviceConnected += OnJoysticksNumberChanged;
             if (Config.Instance.StartMinimized) WindowState = FormWindowState.Minimized;
 
-            angleNUD.Value = Config.Instance.Angle;
-            upNUD.Value = Config.Instance.UpAngle;
-            downNUD.Value = Config.Instance.DownAngle;
-            // transFNUP.Value = Config.Instance.TransF;
-            // transLRNUP.Value = Config.Instance.TransLR;
             additivRB.Checked = Config.Instance.Additiv;
             if (Config.Instance.AutoMode == "stepwise")
             {
@@ -244,21 +239,6 @@ namespace XRNeckSafer
         private static string GetAssemblyProductVersion()
         {
             return Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
-        }
-
-        private void OnYawRotationAngleChanged(object sender, EventArgs e)
-        {
-            Config.Instance.Angle = (int)angleNUD.Value;
-        }
-
-        private void OnPitchTiltUpRotationChanged(object sender, EventArgs e)
-        {
-            Config.Instance.UpAngle = (int)upNUD.Value;
-        }
-
-        private void OnPitchTiltDownRotationChanged(object sender, EventArgs e)
-        {
-            Config.Instance.DownAngle = (int)downNUD.Value;
         }
 
         private void additivRB_CheckedChanged(object sender, EventArgs e)
