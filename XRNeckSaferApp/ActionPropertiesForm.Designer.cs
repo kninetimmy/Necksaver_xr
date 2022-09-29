@@ -39,7 +39,7 @@ namespace XRNeckSafer
             // _saveButton
             // 
             this._saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._saveButton.Location = new System.Drawing.Point(382, 382);
+            this._saveButton.Location = new System.Drawing.Point(382, 530);
             this._saveButton.Name = "_saveButton";
             this._saveButton.Size = new System.Drawing.Size(75, 23);
             this._saveButton.TabIndex = 2;
@@ -50,7 +50,7 @@ namespace XRNeckSafer
             // _cancelButton
             // 
             this._cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._cancelButton.Location = new System.Drawing.Point(480, 382);
+            this._cancelButton.Location = new System.Drawing.Point(480, 530);
             this._cancelButton.Name = "_cancelButton";
             this._cancelButton.Size = new System.Drawing.Size(75, 23);
             this._cancelButton.TabIndex = 3;
@@ -65,7 +65,7 @@ namespace XRNeckSafer
             | System.Windows.Forms.AnchorStyles.Right)));
             this.elementHost1.Location = new System.Drawing.Point(3, 2);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(560, 363);
+            this.elementHost1.Size = new System.Drawing.Size(560, 511);
             this.elementHost1.TabIndex = 5;
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = this._wpfList;
@@ -74,7 +74,7 @@ namespace XRNeckSafer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(567, 416);
+            this.ClientSize = new System.Drawing.Size(567, 564);
             this.Controls.Add(this.elementHost1);
             this.Controls.Add(this._cancelButton);
             this.Controls.Add(this._saveButton);

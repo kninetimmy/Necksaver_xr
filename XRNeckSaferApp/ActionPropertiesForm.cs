@@ -92,7 +92,8 @@ namespace XRNeckSafer
                         ActionPropertyName = prop.Name,
                         ActionPropertyNameText = prop.NameText,
                         Description = prop.Description,
-                        GroupName = prop.GroupName,
+                        GroupName = prop.Group?.Name ?? "Miscellaneous",
+                        GroupOrder = prop.Group?.Order ?? int.MaxValue,
                         EventName = actionEvent.Name,
                         IsToggleEnabled = toggleAction != null,
                         ToggleValue = toggleAction != null && toggleAction.Toggle,
@@ -113,7 +114,7 @@ namespace XRNeckSafer
                     props.Add(dataModel);
                 }
             });
-            _wpfList.PopulateProperties(props.OrderBy(p => p.ActionPropertyName));
+            _wpfList.PopulateProperties(props.OrderBy(p => p.GroupOrder + p.ActionPropertyName));
         }
 
         private void OnSaveButtonClick(object sender, EventArgs e)

@@ -49,15 +49,10 @@ namespace XRNeckSafer
             notifyIcon.ContextMenuStrip = contextMenuStrip;
             showToolStripMenuItem.Click += showToolStripMenuItem_Click;
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
-            JoystickService.DeviceDisconnected += OnJoystickDisconnected;
-            JoystickService.DeviceConnected += OnJoystickConnected;
+            JoystickService.DeviceDisconnected += OnJoysticksNumberChanged;
+            JoystickService.DeviceConnected += OnJoysticksNumberChanged;
             if (Config.Instance.StartMinimized) WindowState = FormWindowState.Minimized;
 
-            angleNUD.Value = Config.Instance.Angle;
-            upNUD.Value = Config.Instance.UpAngle;
-            downNUD.Value = Config.Instance.DownAngle;
-            // transFNUP.Value = Config.Instance.TransF;
-            // transLRNUP.Value = Config.Instance.TransLR;
             additivRB.Checked = Config.Instance.Additiv;
             if (Config.Instance.AutoMode == "stepwise")
             {
@@ -89,10 +84,6 @@ namespace XRNeckSafer
             YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
 
-            numericUpDownStartLeft.Value = Config.Instance.LinearLimL;
-            numericUpDownStartRight.Value = Config.Instance.LinearLimR;
-            numericUpDownMultLeft.Value = Config.Instance.LinearMultL;
-            numericUpDownMultRight.Value = Config.Instance.LinearMultR;
 
             setMenuCheckmarks();
 
@@ -190,17 +181,9 @@ namespace XRNeckSafer
             upErrorLabel2.Visible = upErrorLabel1.Visible;
             downErrorLabel1.Visible = check_autorot_config();
             downErrorLabel2.Visible = downErrorLabel1.Visible;
-            numericUpDownStartLeft.Value = Config.Instance.LinearLimL;
-            numericUpDownStartRight.Value = Config.Instance.LinearLimR;
-            numericUpDownMultLeft.Value = Config.Instance.LinearMultL;
-            numericUpDownMultRight.Value = Config.Instance.LinearMultR;
-            numericUpDownStartUp.Value = Config.Instance.LinearLimU;
-            numericUpDownStartDown.Value = Config.Instance.LinearLimD;
-            numericUpDownMultUp.Value = Config.Instance.LinearMultU;
-            numericUpDownMultDown.Value = Config.Instance.LinearMultD;
 
-            _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", Config.Instance.LinearLimL, Config.Instance.LinearLimR, Config.Instance.LinearMultL, Config.Instance.LinearMultR);
-            _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear", Config.Instance.LinearLimU, Config.Instance.LinearLimD, Config.Instance.LinearMultU, Config.Instance.LinearMultD);
+            _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", (int)numericUpDownStartLeft.Value, (int)numericUpDownStartRight.Value, (int)numericUpDownMultLeft.Value, (int)numericUpDownMultRight.Value);
+            _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear", (int)numericUpDownStartUp.Value, (int)numericUpDownStartDown.Value, (int)numericUpDownMultUp.Value, (int)numericUpDownMultDown.Value);
             _ARText = "Autorotation";
             _pARText = "Autorotation";
             _hmdtext = "";
@@ -208,21 +191,11 @@ namespace XRNeckSafer
             UpdateDevicesLabel();
         }
 
-        private void OnJoystickConnected(Guid guid, string joystickName)
+        private void OnJoysticksNumberChanged(Guid guid, string joystickName)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action<Guid, string>(OnJoystickConnected), guid, joystickName);
-                return;
-            }
-            UpdateDevicesLabel();
-        }
-
-        private void OnJoystickDisconnected(Guid guid, string joystickName)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action<Guid, string>(OnJoystickDisconnected), guid, joystickName);
+                Invoke(new Action<Guid, string>(OnJoysticksNumberChanged), guid, joystickName);
                 return;
             }
             UpdateDevicesLabel();
@@ -254,21 +227,6 @@ namespace XRNeckSafer
         private static string GetAssemblyProductVersion()
         {
             return Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
-        }
-
-        private void OnYawRotationAngleChanged(object sender, EventArgs e)
-        {
-            Config.Instance.Angle = (int)angleNUD.Value;
-        }
-
-        private void OnPitchTiltUpRotationChanged(object sender, EventArgs e)
-        {
-            Config.Instance.UpAngle = (int)upNUD.Value;
-        }
-
-        private void OnPitchTiltDownRotationChanged(object sender, EventArgs e)
-        {
-            Config.Instance.DownAngle = (int)downNUD.Value;
         }
 
         private void additivRB_CheckedChanged(object sender, EventArgs e)
@@ -371,8 +329,8 @@ namespace XRNeckSafer
             {
                 _vr.ResetHmdOrientation();
                 _joyOffsetAngle = 0;
-                _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", Config.Instance.LinearLimL, Config.Instance.LinearLimR, Config.Instance.LinearMultL, Config.Instance.LinearMultR);
-                _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear", Config.Instance.LinearLimU, Config.Instance.LinearLimD, Config.Instance.LinearMultU, Config.Instance.LinearMultD);
+                _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", (int)numericUpDownStartLeft.Value, (int)numericUpDownStartRight.Value, (int)numericUpDownMultLeft.Value, (int)numericUpDownMultRight.Value);
+                _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear", (int)numericUpDownStartUp.Value, (int)numericUpDownStartDown.Value, (int)numericUpDownMultUp.Value, (int)numericUpDownMultDown.Value);
             }
 
             if (additivRB.Checked)
@@ -1027,8 +985,8 @@ namespace XRNeckSafer
         {
             startMinimzedToolStripMenuItem.Checked = Config.Instance.StartMinimized;
             minimizeToTrayToolStripMenuItem.Checked = Config.Instance.MinimizeToTray;
-            // MultipleLRButtonsToolStripMenuItem.Checked = Config.Instance.MultipleLRbuttons;
             disableAllGUIOutputToolStripMenuItem.Checked = Config.Instance.DisableGUIOutput;
+            _disableSplashScreenToolStripMenuItem.Checked = Config.Instance.DisableSplashScreen;
 
             ToolStripMenuItem item = (ToolStripMenuItem)PitchLimToolStripMenuItem.DropDownItems[Config.Instance.PitchLimForAutorot / 10 - 1];
             item.Checked = true;
@@ -1100,107 +1058,53 @@ namespace XRNeckSafer
             }
             YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
-            _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", Config.Instance.LinearLimL, Config.Instance.LinearLimR,
-                Config.Instance.LinearMultL, Config.Instance.LinearMultR);
+            _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", (int)numericUpDownStartLeft.Value,(int)numericUpDownStartRight.Value,
+                (int)numericUpDownMultLeft.Value, (int)numericUpDownMultRight.Value);
         }
         private void applyLinearSettings()
         {
-            _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", Config.Instance.LinearLimL, Config.Instance.LinearLimR, Config.Instance.LinearMultL, Config.Instance.LinearMultR);
-            _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear", Config.Instance.LinearLimU, Config.Instance.LinearLimD, Config.Instance.LinearMultU, Config.Instance.LinearMultD);
+            _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", (int)numericUpDownStartLeft.Value, (int)numericUpDownStartRight.Value, (int)numericUpDownMultLeft.Value, (int)numericUpDownMultRight.Value);
+            _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear", (int)numericUpDownStartUp.Value, (int)numericUpDownStartDown.Value, (int)numericUpDownMultUp.Value, (int)numericUpDownMultDown.Value);
         }
 
         private void numericUpDownMultLeft_ValueChanged(object sender, EventArgs e)
         {
-            Config.Instance.LinearMultL = (int)numericUpDownMultLeft.Value;
-            applyLinearSettings();
-        }
-
-        private void numericUpDownMultLeft_KeyUp(object sender, KeyEventArgs e)
-        {
-            Config.Instance.LinearMultL = (int)numericUpDownMultLeft.Value;
             applyLinearSettings();
         }
 
         private void numericUpDownMultRight_ValueChanged(object sender, EventArgs e)
         {
-            Config.Instance.LinearMultR = (int)numericUpDownMultRight.Value;
-            applyLinearSettings();
-        }
-
-        private void numericUpDownMultRight_KeyUp(object sender, KeyEventArgs e)
-        {
-            Config.Instance.LinearMultR = (int)numericUpDownMultRight.Value;
+            // Config.Instance.LinearMultR = (int)numericUpDownMultRight.Value;
             applyLinearSettings();
         }
 
         private void numericUpDownStartLeft_ValueChanged(object sender, EventArgs e)
         {
-            Config.Instance.LinearLimL = (int)numericUpDownStartLeft.Value;
-            applyLinearSettings();
-        }
-
-        private void numericUpDownStartLeft_KeyUp(object sender, KeyEventArgs e)
-        {
-            Config.Instance.LinearLimL = (int)numericUpDownStartLeft.Value;
             applyLinearSettings();
         }
 
         private void numericUpDownStartRight_ValueChanged(object sender, EventArgs e)
         {
-            Config.Instance.LinearLimR = (int)numericUpDownStartRight.Value;
-            applyLinearSettings();
-        }
-
-        private void numericUpDownStartRight_KeyUp(object sender, KeyEventArgs e)
-        {
-            Config.Instance.LinearLimR = (int)numericUpDownStartRight.Value;
             applyLinearSettings();
         }
 
         private void numericUpDownStartUp_ValueChanged(object sender, EventArgs e)
         {
-            Config.Instance.LinearLimU = (int)numericUpDownStartUp.Value;
             applyLinearSettings();
         }
 
         private void numericUpDownStartDown_ValueChanged(object sender, EventArgs e)
         {
-            Config.Instance.LinearLimD = (int)numericUpDownStartDown.Value;
             applyLinearSettings();
         }
 
         private void numericUpDownMultUp_ValueChanged(object sender, EventArgs e)
         {
-            Config.Instance.LinearMultU = (int)numericUpDownMultUp.Value;
             applyLinearSettings();
         }
 
         private void numericUpDownMultDown_ValueChanged(object sender, EventArgs e)
         {
-            Config.Instance.LinearMultD = (int)numericUpDownMultDown.Value;
-            applyLinearSettings();
-        }
-
-        private void numericUpDownStartUp_KeyUp(object sender, KeyEventArgs e)
-        {
-            Config.Instance.LinearLimU = (int)numericUpDownStartUp.Value;
-            applyLinearSettings();
-        }
-        private void numericUpDownStartDown_KeyUp(object sender, KeyEventArgs e)
-        {
-            Config.Instance.LinearLimD = (int)numericUpDownStartDown.Value;
-            applyLinearSettings();
-        }
-
-        private void numericUpDownMultUp_KeyUp(object sender, KeyEventArgs e)
-        {
-            Config.Instance.LinearMultU = (int)numericUpDownMultUp.Value;
-            applyLinearSettings();
-        }
-
-        private void numericUpDownMultDown_KeyUp(object sender, KeyEventArgs e)
-        {
-            Config.Instance.LinearMultD = (int)numericUpDownMultDown.Value;
             applyLinearSettings();
         }
 
@@ -1234,8 +1138,8 @@ namespace XRNeckSafer
             YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
             _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear",
-                Config.Instance.LinearLimU, Config.Instance.LinearLimD,
-                Config.Instance.LinearMultU, Config.Instance.LinearMultD);
+                (int)numericUpDownStartUp.Value, (int)numericUpDownStartDown.Value,
+                (int)numericUpDownMultUp.Value, (int)numericUpDownMultDown.Value);
 
         }
 
@@ -1280,12 +1184,6 @@ namespace XRNeckSafer
             base.Dispose(disposing);
         }
 
-        private void OnNumericActionUpDownDoubleClick(object sender, MouseEventArgs e)
-        {
-            var button = (NumericActionUpDown)sender;
-            ActionPropertiesForm.ShowForm(button.ActionPropertyName, Top, Right);
-        }
-
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             // disable navigation on form using keyboard in order to avoid
@@ -1306,6 +1204,10 @@ namespace XRNeckSafer
 
         private void OnFormLoaded(object sender, EventArgs e)
         {
+            if (Config.Instance.DisableSplashScreen)
+            {
+                return;
+            }
             var splashScreen = new SplashScreen();
             ElementHost.EnableModelessKeyboardInterop(splashScreen);
             splashScreen.ShowDialog();
@@ -1322,14 +1224,28 @@ namespace XRNeckSafer
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            JoystickService.DeviceDisconnected -= OnJoystickDisconnected;
-            JoystickService.DeviceConnected -= OnJoystickConnected;
+            JoystickService.DeviceDisconnected -= OnJoysticksNumberChanged;
+            JoystickService.DeviceConnected -= OnJoysticksNumberChanged;
             base.OnClosing(e);
         }
 
         private void OnShowJoystickKeyConfigMenuClick(object sender, EventArgs e)
         {
             ActionPropertiesForm.ShowForm(null, Top, Right);
+        }
+
+        private void OnDisableSplashScreenCheckStateChanged(object sender, EventArgs e)
+        {
+            Config.Instance.DisableSplashScreen = _disableSplashScreenToolStripMenuItem.Checked;
+        }
+
+        private void OnSetJoystickKeyShortcutMenuClick(object sender, EventArgs e)
+        {
+            Control control = ((ContextMenuStrip)((ToolStripItem)sender).Owner).SourceControl;
+            if (control is IActionPropertyName actionNameControl)
+            {
+                ActionPropertiesForm.ShowForm(actionNameControl.ActionPropertyName, Top, Right);
+            }
         }
     }
 }

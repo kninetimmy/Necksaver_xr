@@ -1,11 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace XRNeckSafer
 {
-    public class BooleanActionButton : Button
+    public class BooleanActionButton : Button, IActionPropertyGroups, IActionPropertyName
     {
         private System.Drawing.Color _inactiveForeColour;
         private System.Drawing.Color _inactiveBackColour;
@@ -17,16 +18,46 @@ namespace XRNeckSafer
         private string _actionPropertyName;
         private string _actionPropertyNameText;
         private string _actionPropertyDescription;
-        private string _actionPropertyGroup = "Miscellaneous";
+        private ActionPropertyGroupItem _selectedGroup;
+        private ActionPropertyGroups _groupsComponent;
 
-        [Category("ActionProperty"), Description("ActionProperty ID")]
-        public string ActionPropertyName 
+        [Category("ActionProperty"), ImmutableObject(true)]
+        public ActionPropertyGroups GroupsComponent 
         { 
-            get => _actionPropertyName; 
+            get => _groupsComponent; 
             set 
             { 
+                _groupsComponent = value;
+                if (_groupsComponent?.Groups?.Length < 1)
+                {
+                    SelectedGroup = null;
+                }
+            }
+        }
+
+        [Category("ActionProperty"), ImmutableObject(true)]
+        [Editor(typeof(ActionPropertyGroupTypeEditor), typeof(UITypeEditor))]
+        public ActionPropertyGroupItem SelectedGroup
+        {
+            get => _selectedGroup;
+            set
+            {
+                _selectedGroup = value;
+                if (_actionProperty != null)
+                {
+                    _actionProperty.Group = value?.Tag;
+                }
+            }
+        }
+
+        [Category("ActionProperty"), Description("ActionProperty ID")]
+        public string ActionPropertyName
+        {
+            get => _actionPropertyName;
+            set
+            {
                 _actionPropertyName = value;
-                if (this.InDesignerMode())
+                if (DesignMode)
                 {
                     return;
                 }
@@ -61,21 +92,6 @@ namespace XRNeckSafer
                     return;
                 }
                 _actionProperty.Description = _actionPropertyDescription;
-            }
-        }
-
-        [Category("ActionProperty"), Description("ActionProperty group name")]
-        public string ActionPropertyGroup
-        {
-            get => _actionPropertyGroup;
-            set
-            {
-                _actionPropertyGroup = value;
-                if (_actionProperty == null)
-                {
-                    return;
-                }
-                _actionProperty.GroupName = _actionPropertyGroup;
             }
         }
 
@@ -117,7 +133,7 @@ namespace XRNeckSafer
 
         protected void SubscribeActionProperty()
         {
-            if (this.InDesignerMode())
+            if (DesignMode)
             {
                 return;
             }
@@ -134,7 +150,7 @@ namespace XRNeckSafer
             _actionProperty.Triggered += ActionPropertyTriggered;
             _actionProperty.NameText = _actionPropertyNameText;
             _actionProperty.Description = _actionPropertyDescription;
-            _actionProperty.GroupName = _actionPropertyGroup;
+            _actionProperty.Group = SelectedGroup?.Tag;
             _isActive = _actionProperty.GetValue();
             SetButtonColor();
         }

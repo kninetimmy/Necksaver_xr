@@ -1,18 +1,51 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace XRNeckSafer
 {
-    public class NumericActionUpDown : NumericUpDown
+    public class NumericActionUpDown : NumericUpDown, IActionPropertyGroups, IActionPropertyName
     {
         private NumericUpDownActionProperty _actionProperty;
         private bool _firstTimeRendered;
         private string _actionPropertyName;
         private string _actionPropertyNameText;
         private string _actionPropertyDescription;
-        private string _actionPropertyGroup = "Miscellaneous";
+        private ActionPropertyGroupItem _selectedGroup;
+        private ActionPropertyGroups _groupsComponent;
+        private decimal _defaultValue;
+        private bool _newProperty;
+
+        [Category("ActionProperty"), ImmutableObject(true)]
+        public ActionPropertyGroups GroupsComponent
+        {
+            get => _groupsComponent;
+            set
+            {
+                _groupsComponent = value;
+                if (_groupsComponent?.Groups?.Length < 1)
+                {
+                    SelectedGroup = null;
+                }
+            }
+        }
+
+        [Category("ActionProperty"), ImmutableObject(true)]
+        [Editor(typeof(ActionPropertyGroupTypeEditor), typeof(UITypeEditor))]
+        public ActionPropertyGroupItem SelectedGroup
+        {
+            get => _selectedGroup;
+            set
+            {
+                _selectedGroup = value;
+                if (_actionProperty != null)
+                {
+                    _actionProperty.Group = value?.Tag;
+                }
+            }
+        }
 
         [Category("ActionProperty"), Description("ActionProperty ID")]
         public string ActionPropertyName
@@ -21,7 +54,7 @@ namespace XRNeckSafer
             set
             {
                 _actionPropertyName = value;
-                if (this.InDesignerMode())
+                if (DesignMode)
                 {
                     return;
                 }
@@ -59,19 +92,25 @@ namespace XRNeckSafer
             }
         }
 
-        [Category("ActionProperty"), Description("ActionProperty group name")]
-        public string ActionPropertyGroup
-        {
-            get => _actionPropertyGroup;
-            set
-            {
-                _actionPropertyGroup = value;
-                if (_actionProperty == null)
+        [Category("ActionProperty"), Description("ActionProperty default value")]
+        public decimal DefaultValue 
+        { 
+            get => _defaultValue; 
+            set 
+            { 
+                _defaultValue = value;
+                if (_newProperty || DesignMode)
                 {
-                    return;
+                    base.Value = _defaultValue;
                 }
-                _actionProperty.GroupName = _actionPropertyGroup;
             }
+        }
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new decimal Value 
+        { 
+            get => base.Value;
         }
 
         public NumericActionUpDown() : base()
@@ -105,7 +144,7 @@ namespace XRNeckSafer
 
         protected void SubscribeActionProperty()
         {
-            if (this.InDesignerMode())
+            if (DesignMode)
             {
                 return;
             }
@@ -118,12 +157,14 @@ namespace XRNeckSafer
             {
                 _actionProperty = NumericUpDownActionProperty.CreateProperty(ActionPropertyName);
                 Config.Instance.ActionProperties.Add(_actionProperty);
+                _newProperty = true;
+                base.Value = DefaultValue;
             }
 
-            Value = _actionProperty.GetValue();
+            base.Value = _actionProperty.GetValue();
             _actionProperty.NameText = _actionPropertyNameText;
             _actionProperty.Description = _actionPropertyDescription;
-            _actionProperty.GroupName = _actionPropertyGroup;
+            _actionProperty.Group = SelectedGroup?.Tag;
             _actionProperty.Triggered += ActionPropertyTriggered;
         }
 
@@ -134,17 +175,7 @@ namespace XRNeckSafer
                 Invoke(new Action<ActionPropertyEventArgs<int>>(ActionPropertyTriggered), args);
                 return;
             }
-            Value = args.Value;
-        }
-
-        protected override void OnVisibleChanged(EventArgs e)
-        {
-            if (!_firstTimeRendered)
-            {
-                _firstTimeRendered = true;
-                SubscribeActionProperty();
-            }
-            base.OnVisibleChanged(e);
+            base.Value = args.Value;
         }
 
         protected override void Dispose(bool disposing)
