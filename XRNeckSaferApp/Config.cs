@@ -7,17 +7,6 @@ namespace XRNeckSafer
 {
     public class Config
     {
-        // public int Angle;
-        // public int UpAngle;
-        // public int DownAngle;
-        // public int LinearLimL;
-        // public int LinearLimR;
-        // public int LinearMultL;
-        // public int LinearMultR;
-        public int LinearLimU;
-        public int LinearLimD;
-        public int LinearMultU;
-        public int LinearMultD;
         public bool Additiv;
         public bool PitchAdditiv;
         public bool StartMinimized;
@@ -39,19 +28,6 @@ namespace XRNeckSafer
 
         private Config()
         {
-            // Angle = 30;
-            // UpAngle = 30;
-            // DownAngle = 30;
-            //TransLR = 0;
-            //TransF = 0;
-            // LinearLimL = 95;
-            // LinearLimR = 95;
-            // LinearMultL = 120;
-            // LinearMultR = 120;
-            LinearLimU = 45;
-            LinearLimD = 30;
-            LinearMultU = 120;
-            LinearMultD = 120;
             Additiv = false;
             PitchAdditiv = false;
             StartMinimized = false;

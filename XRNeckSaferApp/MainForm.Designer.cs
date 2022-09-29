@@ -39,18 +39,22 @@
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem10 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem11 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem12 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem13 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem14 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem15 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem16 = new XRNeckSafer.ActionPropertyGroupItem();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem13 = new XRNeckSafer.ActionPropertyGroupItem();
-            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem14 = new XRNeckSafer.ActionPropertyGroupItem();
-            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem15 = new XRNeckSafer.ActionPropertyGroupItem();
-            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem16 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem17 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem18 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem19 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem20 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem21 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem22 = new XRNeckSafer.ActionPropertyGroupItem();
             this.stepwiseGroup = new System.Windows.Forms.GroupBox();
             this.error_label2 = new System.Windows.Forms.Label();
             this.error_label = new System.Windows.Forms.Label();
@@ -73,9 +77,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.numericUpDownMultRight = new XRNeckSafer.NumericActionUpDown();
-            this._groups = new XRNeckSafer.ActionPropertyGroups();
             this._numericUpDownMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setJoystickkeyShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._groups = new XRNeckSafer.ActionPropertyGroups();
             this.numericUpDownMultLeft = new XRNeckSafer.NumericActionUpDown();
             this.numericUpDownStartRight = new XRNeckSafer.NumericActionUpDown();
             this.numericUpDownStartLeft = new XRNeckSafer.NumericActionUpDown();
@@ -158,10 +162,10 @@
             this.label37 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
-            this.numericUpDownMultDown = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownMultUp = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownStartDown = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownStartUp = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMultDown = new XRNeckSafer.NumericActionUpDown();
+            this.numericUpDownMultUp = new XRNeckSafer.NumericActionUpDown();
+            this.numericUpDownStartDown = new XRNeckSafer.NumericActionUpDown();
+            this.numericUpDownStartUp = new XRNeckSafer.NumericActionUpDown();
             this.pAROffButton = new System.Windows.Forms.RadioButton();
             this.pStepwiseGroup = new System.Windows.Forms.GroupBox();
             this.label43 = new System.Windows.Forms.Label();
@@ -521,6 +525,20 @@
             this.numericUpDownMultRight.TabIndex = 29;
             this.numericUpDownMultRight.ValueChanged += new System.EventHandler(this.numericUpDownMultRight_ValueChanged);
             // 
+            // _numericUpDownMenuStrip
+            // 
+            this._numericUpDownMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setJoystickkeyShortcutToolStripMenuItem});
+            this._numericUpDownMenuStrip.Name = "_numericUpDownMenuStrip";
+            this._numericUpDownMenuStrip.Size = new System.Drawing.Size(235, 48);
+            // 
+            // setJoystickkeyShortcutToolStripMenuItem
+            // 
+            this.setJoystickkeyShortcutToolStripMenuItem.Name = "setJoystickkeyShortcutToolStripMenuItem";
+            this.setJoystickkeyShortcutToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
+            this.setJoystickkeyShortcutToolStripMenuItem.Text = "Set joystick/keyboard shortcut";
+            this.setJoystickkeyShortcutToolStripMenuItem.Click += new System.EventHandler(this.OnSetJoystickKeyShortcutMenuClick);
+            // 
             // _groups
             // 
             actionPropertyGroup1.Name = "Reset Buttons";
@@ -539,20 +557,6 @@
         actionPropertyGroup3,
         actionPropertyGroup4,
         actionPropertyGroup5};
-            // 
-            // _numericUpDownMenuStrip
-            // 
-            this._numericUpDownMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.setJoystickkeyShortcutToolStripMenuItem});
-            this._numericUpDownMenuStrip.Name = "_numericUpDownMenuStrip";
-            this._numericUpDownMenuStrip.Size = new System.Drawing.Size(204, 26);
-            // 
-            // setJoystickkeyShortcutToolStripMenuItem
-            // 
-            this.setJoystickkeyShortcutToolStripMenuItem.Name = "setJoystickkeyShortcutToolStripMenuItem";
-            this.setJoystickkeyShortcutToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-            this.setJoystickkeyShortcutToolStripMenuItem.Text = "Set joystick/key shortcut";
-            this.setJoystickkeyShortcutToolStripMenuItem.Click += new System.EventHandler(this.OnSetJoystickKeyShortcutMenuClick);
             // 
             // numericUpDownMultLeft
             // 
@@ -1522,7 +1526,17 @@
             // 
             // numericUpDownMultDown
             // 
+            this.numericUpDownMultDown.ActionPropertyDescription = null;
+            this.numericUpDownMultDown.ActionPropertyName = "AutorotationDAmplifyBy";
+            this.numericUpDownMultDown.ActionPropertyNameText = "D Amplify By";
+            this.numericUpDownMultDown.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownMultDown.DefaultValue = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
             this.numericUpDownMultDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMultDown.GroupsComponent = this._groups;
             this.numericUpDownMultDown.Location = new System.Drawing.Point(146, 57);
             this.numericUpDownMultDown.Maximum = new decimal(new int[] {
             300,
@@ -1530,19 +1544,26 @@
             0,
             0});
             this.numericUpDownMultDown.Name = "numericUpDownMultDown";
+            actionPropertyGroupItem13.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem13.Tag = actionPropertyGroup5;
+            this.numericUpDownMultDown.SelectedGroup = actionPropertyGroupItem13;
             this.numericUpDownMultDown.Size = new System.Drawing.Size(44, 20);
             this.numericUpDownMultDown.TabIndex = 29;
-            this.numericUpDownMultDown.Value = new decimal(new int[] {
+            this.numericUpDownMultDown.ValueChanged += new System.EventHandler(this.numericUpDownMultDown_ValueChanged);
+            // 
+            // numericUpDownMultUp
+            // 
+            this.numericUpDownMultUp.ActionPropertyDescription = null;
+            this.numericUpDownMultUp.ActionPropertyName = "AutorotationUAmplifyBy";
+            this.numericUpDownMultUp.ActionPropertyNameText = "U Amplify By";
+            this.numericUpDownMultUp.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownMultUp.DefaultValue = new decimal(new int[] {
             120,
             0,
             0,
             0});
-            this.numericUpDownMultDown.ValueChanged += new System.EventHandler(this.numericUpDownMultDown_ValueChanged);
-            this.numericUpDownMultDown.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownMultDown_KeyUp);
-            // 
-            // numericUpDownMultUp
-            // 
             this.numericUpDownMultUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMultUp.GroupsComponent = this._groups;
             this.numericUpDownMultUp.Location = new System.Drawing.Point(146, 31);
             this.numericUpDownMultUp.Maximum = new decimal(new int[] {
             300,
@@ -1550,19 +1571,26 @@
             0,
             0});
             this.numericUpDownMultUp.Name = "numericUpDownMultUp";
+            actionPropertyGroupItem14.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem14.Tag = actionPropertyGroup5;
+            this.numericUpDownMultUp.SelectedGroup = actionPropertyGroupItem14;
             this.numericUpDownMultUp.Size = new System.Drawing.Size(44, 20);
             this.numericUpDownMultUp.TabIndex = 28;
-            this.numericUpDownMultUp.Value = new decimal(new int[] {
-            120,
-            0,
-            0,
-            0});
             this.numericUpDownMultUp.ValueChanged += new System.EventHandler(this.numericUpDownMultUp_ValueChanged);
-            this.numericUpDownMultUp.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownMultUp_KeyUp);
             // 
             // numericUpDownStartDown
             // 
+            this.numericUpDownStartDown.ActionPropertyDescription = null;
+            this.numericUpDownStartDown.ActionPropertyName = "AutorotationDStartAt";
+            this.numericUpDownStartDown.ActionPropertyNameText = "D Start At";
+            this.numericUpDownStartDown.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownStartDown.DefaultValue = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
             this.numericUpDownStartDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownStartDown.GroupsComponent = this._groups;
             this.numericUpDownStartDown.Location = new System.Drawing.Point(47, 57);
             this.numericUpDownStartDown.Maximum = new decimal(new int[] {
             180,
@@ -1570,19 +1598,26 @@
             0,
             0});
             this.numericUpDownStartDown.Name = "numericUpDownStartDown";
+            actionPropertyGroupItem15.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem15.Tag = actionPropertyGroup5;
+            this.numericUpDownStartDown.SelectedGroup = actionPropertyGroupItem15;
             this.numericUpDownStartDown.Size = new System.Drawing.Size(44, 20);
             this.numericUpDownStartDown.TabIndex = 27;
-            this.numericUpDownStartDown.Value = new decimal(new int[] {
+            this.numericUpDownStartDown.ValueChanged += new System.EventHandler(this.numericUpDownStartDown_ValueChanged);
+            // 
+            // numericUpDownStartUp
+            // 
+            this.numericUpDownStartUp.ActionPropertyDescription = null;
+            this.numericUpDownStartUp.ActionPropertyName = "AutorotationUStartAt";
+            this.numericUpDownStartUp.ActionPropertyNameText = "U Start At";
+            this.numericUpDownStartUp.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownStartUp.DefaultValue = new decimal(new int[] {
             60,
             0,
             0,
             0});
-            this.numericUpDownStartDown.ValueChanged += new System.EventHandler(this.numericUpDownStartDown_ValueChanged);
-            this.numericUpDownStartDown.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownStartDown_KeyUp);
-            // 
-            // numericUpDownStartUp
-            // 
             this.numericUpDownStartUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownStartUp.GroupsComponent = this._groups;
             this.numericUpDownStartUp.Location = new System.Drawing.Point(47, 31);
             this.numericUpDownStartUp.Maximum = new decimal(new int[] {
             180,
@@ -1590,15 +1625,12 @@
             0,
             0});
             this.numericUpDownStartUp.Name = "numericUpDownStartUp";
+            actionPropertyGroupItem16.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem16.Tag = actionPropertyGroup5;
+            this.numericUpDownStartUp.SelectedGroup = actionPropertyGroupItem16;
             this.numericUpDownStartUp.Size = new System.Drawing.Size(44, 20);
             this.numericUpDownStartUp.TabIndex = 26;
-            this.numericUpDownStartUp.Value = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
             this.numericUpDownStartUp.ValueChanged += new System.EventHandler(this.numericUpDownStartUp_ValueChanged);
-            this.numericUpDownStartUp.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownStartUp_KeyUp);
             // 
             // pAROffButton
             // 
@@ -1883,9 +1915,9 @@
             this.PitchAutorotationHoldButton.GroupsComponent = this._groups;
             this.PitchAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
             this.PitchAutorotationHoldButton.Name = "PitchAutorotationHoldButton";
-            actionPropertyGroupItem13.Name = "Hold Buttons";
-            actionPropertyGroupItem13.Tag = actionPropertyGroup3;
-            this.PitchAutorotationHoldButton.SelectedGroup = actionPropertyGroupItem13;
+            actionPropertyGroupItem17.Name = "Hold Buttons";
+            actionPropertyGroupItem17.Tag = actionPropertyGroup3;
+            this.PitchAutorotationHoldButton.SelectedGroup = actionPropertyGroupItem17;
             this.PitchAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
             this.PitchAutorotationHoldButton.TabIndex = 42;
             this.PitchAutorotationHoldButton.Text = "Hold";
@@ -1949,9 +1981,9 @@
             this.pAccumReset.GroupsComponent = this._groups;
             this.pAccumReset.Location = new System.Drawing.Point(69, 99);
             this.pAccumReset.Name = "pAccumReset";
-            actionPropertyGroupItem14.Name = "Reset Buttons";
-            actionPropertyGroupItem14.Tag = actionPropertyGroup1;
-            this.pAccumReset.SelectedGroup = actionPropertyGroupItem14;
+            actionPropertyGroupItem18.Name = "Reset Buttons";
+            actionPropertyGroupItem18.Tag = actionPropertyGroup1;
+            this.pAccumReset.SelectedGroup = actionPropertyGroupItem18;
             this.pAccumReset.Size = new System.Drawing.Size(57, 34);
             this.pAccumReset.TabIndex = 54;
             this.pAccumReset.Text = "Set Acc. Reset";
@@ -1988,9 +2020,9 @@
             0,
             0});
             this.upNUD.Name = "upNUD";
-            actionPropertyGroupItem15.Name = "Manual Rotation Values";
-            actionPropertyGroupItem15.Tag = actionPropertyGroup4;
-            this.upNUD.SelectedGroup = actionPropertyGroupItem15;
+            actionPropertyGroupItem19.Name = "Manual Rotation Values";
+            actionPropertyGroupItem19.Tag = actionPropertyGroup4;
+            this.upNUD.SelectedGroup = actionPropertyGroupItem19;
             this.upNUD.Size = new System.Drawing.Size(38, 20);
             this.upNUD.TabIndex = 9;
             // 
@@ -2014,9 +2046,9 @@
             0,
             0});
             this.downNUD.Name = "downNUD";
-            actionPropertyGroupItem16.Name = "Manual Rotation Values";
-            actionPropertyGroupItem16.Tag = actionPropertyGroup4;
-            this.downNUD.SelectedGroup = actionPropertyGroupItem16;
+            actionPropertyGroupItem20.Name = "Manual Rotation Values";
+            actionPropertyGroupItem20.Tag = actionPropertyGroup4;
+            this.downNUD.SelectedGroup = actionPropertyGroupItem20;
             this.downNUD.Size = new System.Drawing.Size(44, 20);
             this.downNUD.TabIndex = 25;
             // 
@@ -2085,9 +2117,9 @@
             this.SetUpButton.GroupsComponent = this._groups;
             this.SetUpButton.Location = new System.Drawing.Point(39, 20);
             this.SetUpButton.Name = "SetUpButton";
-            actionPropertyGroupItem17.Name = "Manual Rotation Buttons";
-            actionPropertyGroupItem17.Tag = actionPropertyGroup2;
-            this.SetUpButton.SelectedGroup = actionPropertyGroupItem17;
+            actionPropertyGroupItem21.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem21.Tag = actionPropertyGroup2;
+            this.SetUpButton.SelectedGroup = actionPropertyGroupItem21;
             this.SetUpButton.Size = new System.Drawing.Size(72, 27);
             this.SetUpButton.TabIndex = 36;
             this.SetUpButton.Text = "Set Button";
@@ -2105,9 +2137,9 @@
             this.SetDownButton.GroupsComponent = this._groups;
             this.SetDownButton.Location = new System.Drawing.Point(167, 20);
             this.SetDownButton.Name = "SetDownButton";
-            actionPropertyGroupItem18.Name = "Manual Rotation Buttons";
-            actionPropertyGroupItem18.Tag = actionPropertyGroup2;
-            this.SetDownButton.SelectedGroup = actionPropertyGroupItem18;
+            actionPropertyGroupItem22.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem22.Tag = actionPropertyGroup2;
+            this.SetDownButton.SelectedGroup = actionPropertyGroupItem22;
             this.SetDownButton.Size = new System.Drawing.Size(72, 27);
             this.SetDownButton.TabIndex = 37;
             this.SetDownButton.Text = "Set Button";
@@ -2358,10 +2390,10 @@
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.NumericUpDown numericUpDownMultDown;
-        private System.Windows.Forms.NumericUpDown numericUpDownMultUp;
-        private System.Windows.Forms.NumericUpDown numericUpDownStartDown;
-        private System.Windows.Forms.NumericUpDown numericUpDownStartUp;
+        private NumericActionUpDown numericUpDownMultDown;
+        private NumericActionUpDown numericUpDownMultUp;
+        private NumericActionUpDown numericUpDownStartDown;
+        private NumericActionUpDown numericUpDownStartUp;
         private System.Windows.Forms.RadioButton pARlinear;
         private System.Windows.Forms.RadioButton pARstepwise;
         private System.Windows.Forms.RadioButton pAROffButton;

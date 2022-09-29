@@ -114,7 +114,7 @@ namespace XRNeckSafer
                     props.Add(dataModel);
                 }
             });
-            _wpfList.PopulateProperties(props.OrderBy(p => p.GroupOrder));
+            _wpfList.PopulateProperties(props.OrderBy(p => p.GroupOrder + p.ActionPropertyName));
         }
 
         private void OnSaveButtonClick(object sender, EventArgs e)
