@@ -206,7 +206,7 @@ namespace XRNeckSafer
             ActionPropertyValueChanged?.Invoke(_isActive);
         }
 
-        private void SetButtonColor()
+        public void SetButtonColor()
         {
             if (_isActive)
             {
