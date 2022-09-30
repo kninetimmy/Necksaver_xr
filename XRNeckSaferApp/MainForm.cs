@@ -54,11 +54,11 @@ namespace XRNeckSafer
             if (Config.Instance.StartMinimized) WindowState = FormWindowState.Minimized;
 
             additivRB.Checked = Config.Instance.Additiv;
-            if (Config.Instance.AutoMode == "stepwise")
+            if (Config.Instance.AutoMode == AutoMode.Stepwise)
             {
                 ARstepwise.Checked = true;
             }
-            else if (Config.Instance.AutoMode == "linear")
+            else if (Config.Instance.AutoMode == AutoMode.Linear)
             {
                 ARlinear.Checked = true;
             }
@@ -67,11 +67,11 @@ namespace XRNeckSafer
                 AROffButton.Checked = true;
             }
 
-            if (Config.Instance.PitchAutoMode == "stepwise")
+            if (Config.Instance.PitchAutoMode == AutoMode.Stepwise)
             {
                 pARstepwise.Checked = true;
             }
-            else if (Config.Instance.PitchAutoMode == "linear")
+            else if (Config.Instance.PitchAutoMode == AutoMode.Linear)
             {
                 pARlinear.Checked = true;
             }
@@ -393,7 +393,7 @@ namespace XRNeckSafer
                 else
                 {
                     _ARText = "Autorotation";
-                    if (Config.Instance.AutoMode == "stepwise")
+                    if (Config.Instance.AutoMode == AutoMode.Stepwise)
                     {
                         calcAutoRotAndTrans((int)hmdYaw, ref _autoOffsetAngle, ref _autoTransOffsetVector);
                     }
@@ -422,7 +422,7 @@ namespace XRNeckSafer
                 else
                 {
                     _pARText = "Autorotation";
-                    if (Config.Instance.PitchAutoMode == "stepwise")
+                    if (Config.Instance.PitchAutoMode == AutoMode.Stepwise)
                     {
                         calcAutoPitch((int)hmdPitch, ref _autoOffsetAnglePitch);
                     }
@@ -925,7 +925,7 @@ namespace XRNeckSafer
             VersionLabel.Location = new System.Drawing.Point(VersionLabel.Location.X, Size.Height - 56);
             if (YawPitchTab.SelectedTab.Text == "Yaw")
             {
-                if (Config.Instance.AutoMode == "stepwise")
+                if (Config.Instance.AutoMode == AutoMode.Stepwise)
                 {
                     ARGroup.Height = Height - 384;
                     YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
@@ -937,7 +937,7 @@ namespace XRNeckSafer
             }
             else
             {
-                if (Config.Instance.PitchAutoMode == "stepwise")
+                if (Config.Instance.PitchAutoMode == AutoMode.Stepwise)
                 {
                     pARGroup.Height = Height - 384;
                     YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
@@ -1049,7 +1049,7 @@ namespace XRNeckSafer
                 stepwiseGroup.Visible = false;
                 linearGroup.Visible = false;
                 ARGroup.Height = 45;
-                Config.Instance.AutoMode = "off";
+                Config.Instance.AutoMode = AutoMode.Off;
                 _autoOffsetAngle = 0;
             }
             if (ARlinear.Checked)
@@ -1058,7 +1058,7 @@ namespace XRNeckSafer
                 linearGroup.Visible = true;
                 ARGroup.Height = 140;
                 linearGroup.Location = new System.Drawing.Point(7, 40);
-                Config.Instance.AutoMode = "linear";
+                Config.Instance.AutoMode = AutoMode.Linear;
             }
             if (ARstepwise.Checked)
             {
@@ -1066,7 +1066,7 @@ namespace XRNeckSafer
                 linearGroup.Visible = false;
                 ARGroup.Height = 247;
                 stepwiseGroup.Location = new System.Drawing.Point(7, 40);
-                Config.Instance.AutoMode = "stepwise";
+                Config.Instance.AutoMode = AutoMode.Stepwise;
             }
             YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
@@ -1081,13 +1081,13 @@ namespace XRNeckSafer
 
         private void UpdateLinearRotationSettings()
         {
-            _vr.SetLinearRotationSettings(Config.Instance.AutoMode == "linear", (int)numericUpDownStartLeft.Value, 
+            _vr.SetLinearRotationSettings(Config.Instance.AutoMode == AutoMode.Linear, (int)numericUpDownStartLeft.Value, 
                 (int)numericUpDownStartRight.Value, (int)numericUpDownMultLeft.Value, (int)numericUpDownMultRight.Value);
         }
 
         private void UpdatePitchLinearRotationSettings()
         {
-            _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == "linear", (int)numericUpDownStartUp.Value, 
+            _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == AutoMode.Linear, (int)numericUpDownStartUp.Value, 
                 (int)numericUpDownStartDown.Value, (int)numericUpDownMultUp.Value, (int)numericUpDownMultDown.Value);
         }
 
@@ -1138,7 +1138,7 @@ namespace XRNeckSafer
                 pStepwiseGroup.Visible = false;
                 pLinearGroup.Visible = false;
                 pARGroup.Height = 45;
-                Config.Instance.PitchAutoMode = "off";
+                Config.Instance.PitchAutoMode = AutoMode.Off;
                 _autoOffsetAnglePitch = 0;
             }
             if (pARlinear.Checked)
@@ -1147,7 +1147,7 @@ namespace XRNeckSafer
                 pLinearGroup.Visible = true;
                 pARGroup.Height = 140;
                 pLinearGroup.Location = new System.Drawing.Point(7, 40);
-                Config.Instance.PitchAutoMode = "linear";
+                Config.Instance.PitchAutoMode = AutoMode.Linear;
             }
             if (pARstepwise.Checked)
             {
@@ -1156,7 +1156,7 @@ namespace XRNeckSafer
                 pARGroup.Height = 220;
                 pStepwiseGroup.Size = new Size(236, 172);
                 pStepwiseGroup.Location = new System.Drawing.Point(7, 40);
-                Config.Instance.PitchAutoMode = "stepwise";
+                Config.Instance.PitchAutoMode = AutoMode.Stepwise;
             }
             YawPitchTab.Height = ManualGroup.Height + pARGroup.Height + 50;
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;

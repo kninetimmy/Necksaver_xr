@@ -5,6 +5,13 @@ using System.IO;
 
 namespace XRNeckSafer
 {
+    public enum AutoMode
+    {
+        Off,
+        Linear,
+        Stepwise
+    }
+
     public class Config
     {
         public bool Additiv;
@@ -15,9 +22,9 @@ namespace XRNeckSafer
         public bool DisableGUIOutput;
         public int PitchLimForAutorot;
         public static string configfilename;
-        public string AutoMode;
+        public AutoMode AutoMode;
         public List<int[]> AutoSteps;
-        public string PitchAutoMode;
+        public AutoMode PitchAutoMode;
         public List<int[]> UpAutoSteps;
         public List<int[]> DownAutoSteps;
 
@@ -35,9 +42,9 @@ namespace XRNeckSafer
             DisableGUIOutput = false;
             DisableSplashScreen = false;
             PitchLimForAutorot = 90;
-            AutoMode = "Off";
+            AutoMode = AutoMode.Off;
             AutoSteps = new List<int[]>();
-            PitchAutoMode = "Off";
+            PitchAutoMode = AutoMode.Off;
             UpAutoSteps = new List<int[]>();
             DownAutoSteps = new List<int[]>();
         }
