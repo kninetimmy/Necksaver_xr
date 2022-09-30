@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Drawing.Design;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,10 +9,10 @@ namespace XRNeckSafer
 {
     public class BooleanActionButton : Button, IActionPropertyGroups, IActionPropertyName
     {
-        private System.Drawing.Color _inactiveForeColour;
-        private System.Drawing.Color _inactiveBackColour;
-        private System.Drawing.Color _activeForeColour = System.Drawing.Color.LightGreen;
-        private System.Drawing.Color _activeBackColour = System.Drawing.Color.Black;
+        private Color _inactiveForeColour;
+        private Color _inactiveBackColour;
+        private Color _activeForeColour = Color.LightGreen;
+        private Color _activeBackColour = Color.Black;
         private BooleanActionProperty _actionProperty;
         private bool _firstTimeRendered;
         private bool _isActive;
@@ -112,7 +113,7 @@ namespace XRNeckSafer
         }
 
         [Category("ActionProperty"), Description("Fore coulor of the button in active state")]
-        public System.Drawing.Color ActiveForeColour 
+        public Color ActiveForeColour 
         { 
             get => _activeForeColour; 
             set 
@@ -124,7 +125,7 @@ namespace XRNeckSafer
         }
 
         [Category("ActionProperty"), Description("Back coulor of the button in active state")]
-        public System.Drawing.Color ActiveBackColour 
+        public Color ActiveBackColour 
         { 
             get => _activeBackColour; 
             set 
@@ -136,7 +137,7 @@ namespace XRNeckSafer
         }
 
         [Category("ActionProperty"), Description("Fore coulor of the button in active state")]
-        public System.Drawing.Color InActiveForeColour
+        public Color InActiveForeColour
         {
             get => _inactiveForeColour;
             set
@@ -148,7 +149,7 @@ namespace XRNeckSafer
         }
 
         [Category("ActionProperty"), Description("Back coulor of the button in active state")]
-        public System.Drawing.Color InActiveBackColour
+        public Color InActiveBackColour
         {
             get => _inactiveBackColour;
             set
@@ -161,14 +162,14 @@ namespace XRNeckSafer
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new System.Drawing.Color ForeColor
+        public new Color ForeColor
         {
             get => base.ForeColor;
         }
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new System.Drawing.Color BackColor
+        public new Color BackColor
         {
             get => base.BackColor;
         }
