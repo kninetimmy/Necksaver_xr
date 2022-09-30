@@ -503,6 +503,7 @@
             this.numericUpDownMultRight.ActionPropertyDescription = null;
             this.numericUpDownMultRight.ActionPropertyId = "AutorotationRAmplifyBy";
             this.numericUpDownMultRight.ActionPropertyName = "R Amplify By";
+            this.numericUpDownMultRight.ActionPropertyOrder = 3;
             this.numericUpDownMultRight.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownMultRight.DefaultValue = new decimal(new int[] {
             120,
@@ -563,6 +564,7 @@
             this.numericUpDownMultLeft.ActionPropertyDescription = null;
             this.numericUpDownMultLeft.ActionPropertyId = "AutorotationLAmplifyBy";
             this.numericUpDownMultLeft.ActionPropertyName = "L Amplify By";
+            this.numericUpDownMultLeft.ActionPropertyOrder = 1;
             this.numericUpDownMultLeft.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownMultLeft.DefaultValue = new decimal(new int[] {
             120,
@@ -590,6 +592,7 @@
             this.numericUpDownStartRight.ActionPropertyDescription = null;
             this.numericUpDownStartRight.ActionPropertyId = "AutorotationRStartAt";
             this.numericUpDownStartRight.ActionPropertyName = "R Start At";
+            this.numericUpDownStartRight.ActionPropertyOrder = 2;
             this.numericUpDownStartRight.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownStartRight.DefaultValue = new decimal(new int[] {
             95,
@@ -617,6 +620,7 @@
             this.numericUpDownStartLeft.ActionPropertyDescription = null;
             this.numericUpDownStartLeft.ActionPropertyId = "AutorotationLStartAt";
             this.numericUpDownStartLeft.ActionPropertyName = "L Start At";
+            this.numericUpDownStartLeft.ActionPropertyOrder = 0;
             this.numericUpDownStartLeft.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownStartLeft.DefaultValue = new decimal(new int[] {
             95,
@@ -709,6 +713,7 @@
             this.SetResetButton.ActionPropertyDescription = null;
             this.SetResetButton.ActionPropertyId = "SetResetCenter";
             this.SetResetButton.ActionPropertyName = "Center";
+            this.SetResetButton.ActionPropertyOrder = 0;
             this.SetResetButton.ActiveBackColour = System.Drawing.SystemColors.ControlText;
             this.SetResetButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.SetResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -780,6 +785,7 @@
             this.AccumReset.ActionPropertyDescription = null;
             this.AccumReset.ActionPropertyId = "SetAccumResetYaw";
             this.AccumReset.ActionPropertyName = "Accum Yaw";
+            this.AccumReset.ActionPropertyOrder = 1;
             this.AccumReset.ActiveBackColour = System.Drawing.Color.Black;
             this.AccumReset.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.AccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -810,6 +816,7 @@
             this.transFNUP.ActionPropertyDescription = null;
             this.transFNUP.ActionPropertyId = "TransitionOffsetForward";
             this.transFNUP.ActionPropertyName = "Translation Fwd";
+            this.transFNUP.ActionPropertyOrder = 2;
             this.transFNUP.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.transFNUP.DefaultValue = new decimal(new int[] {
             0,
@@ -847,6 +854,7 @@
             this.angleNUD.ActionPropertyDescription = null;
             this.angleNUD.ActionPropertyId = "YawRotationLR";
             this.angleNUD.ActionPropertyName = "Yaw Rotation L/R";
+            this.angleNUD.ActionPropertyOrder = 0;
             this.angleNUD.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.angleNUD.DefaultValue = new decimal(new int[] {
             30,
@@ -873,6 +881,7 @@
             this.transLRNUP.ActionPropertyDescription = null;
             this.transLRNUP.ActionPropertyId = "TransitionOffsetLeftRight";
             this.transLRNUP.ActionPropertyName = "Translation L/R";
+            this.transLRNUP.ActionPropertyOrder = 1;
             this.transLRNUP.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.transLRNUP.DefaultValue = new decimal(new int[] {
             0,
@@ -995,6 +1004,7 @@
             this.SetLeftButton.ActionPropertyDescription = null;
             this.SetLeftButton.ActionPropertyId = "ManualRotationLeft";
             this.SetLeftButton.ActionPropertyName = "Left";
+            this.SetLeftButton.ActionPropertyOrder = 0;
             this.SetLeftButton.ActiveBackColour = System.Drawing.Color.Black;
             this.SetLeftButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.SetLeftButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1015,6 +1025,7 @@
             this.SetRightButton.ActionPropertyDescription = null;
             this.SetRightButton.ActionPropertyId = "ManualRotationRight";
             this.SetRightButton.ActionPropertyName = "Right";
+            this.SetRightButton.ActionPropertyOrder = 1;
             this.SetRightButton.ActiveBackColour = System.Drawing.Color.Black;
             this.SetRightButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.SetRightButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1331,6 +1342,7 @@
             this.YawAutorotationHoldButton.ActionPropertyDescription = null;
             this.YawAutorotationHoldButton.ActionPropertyId = "YawAutorotationHold";
             this.YawAutorotationHoldButton.ActionPropertyName = "Yaw";
+            this.YawAutorotationHoldButton.ActionPropertyOrder = 0;
             this.YawAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
             this.YawAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.YawAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1529,6 +1541,7 @@
             this.numericUpDownMultDown.ActionPropertyDescription = null;
             this.numericUpDownMultDown.ActionPropertyId = "AutorotationDAmplifyBy";
             this.numericUpDownMultDown.ActionPropertyName = "D Amplify By";
+            this.numericUpDownMultDown.ActionPropertyOrder = 7;
             this.numericUpDownMultDown.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownMultDown.DefaultValue = new decimal(new int[] {
             120,
@@ -1556,6 +1569,7 @@
             this.numericUpDownMultUp.ActionPropertyDescription = null;
             this.numericUpDownMultUp.ActionPropertyId = "AutorotationUAmplifyBy";
             this.numericUpDownMultUp.ActionPropertyName = "U Amplify By";
+            this.numericUpDownMultUp.ActionPropertyOrder = 5;
             this.numericUpDownMultUp.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownMultUp.DefaultValue = new decimal(new int[] {
             120,
@@ -1583,6 +1597,7 @@
             this.numericUpDownStartDown.ActionPropertyDescription = null;
             this.numericUpDownStartDown.ActionPropertyId = "AutorotationDStartAt";
             this.numericUpDownStartDown.ActionPropertyName = "D Start At";
+            this.numericUpDownStartDown.ActionPropertyOrder = 6;
             this.numericUpDownStartDown.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownStartDown.DefaultValue = new decimal(new int[] {
             60,
@@ -1610,6 +1625,7 @@
             this.numericUpDownStartUp.ActionPropertyDescription = null;
             this.numericUpDownStartUp.ActionPropertyId = "AutorotationUStartAt";
             this.numericUpDownStartUp.ActionPropertyName = "U Start At";
+            this.numericUpDownStartUp.ActionPropertyOrder = 4;
             this.numericUpDownStartUp.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownStartUp.DefaultValue = new decimal(new int[] {
             60,
@@ -1909,6 +1925,7 @@
             this.PitchAutorotationHoldButton.ActionPropertyDescription = null;
             this.PitchAutorotationHoldButton.ActionPropertyId = "PitchAutorotationHold";
             this.PitchAutorotationHoldButton.ActionPropertyName = "Pitch";
+            this.PitchAutorotationHoldButton.ActionPropertyOrder = 1;
             this.PitchAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
             this.PitchAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.PitchAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1975,6 +1992,7 @@
             this.pAccumReset.ActionPropertyDescription = null;
             this.pAccumReset.ActionPropertyId = "SetAccumResetPitch";
             this.pAccumReset.ActionPropertyName = "Accum Pitch";
+            this.pAccumReset.ActionPropertyOrder = 2;
             this.pAccumReset.ActiveBackColour = System.Drawing.Color.Black;
             this.pAccumReset.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.pAccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2005,6 +2023,7 @@
             this.upNUD.ActionPropertyDescription = null;
             this.upNUD.ActionPropertyId = "ManualPitchUp";
             this.upNUD.ActionPropertyName = "Pitch Up";
+            this.upNUD.ActionPropertyOrder = 3;
             this.upNUD.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.upNUD.DefaultValue = new decimal(new int[] {
             30,
@@ -2031,6 +2050,7 @@
             this.downNUD.ActionPropertyDescription = null;
             this.downNUD.ActionPropertyId = "ManualPitchDown";
             this.downNUD.ActionPropertyName = "Pitch Down";
+            this.downNUD.ActionPropertyOrder = 4;
             this.downNUD.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.downNUD.DefaultValue = new decimal(new int[] {
             30,
@@ -2111,6 +2131,7 @@
             this.SetUpButton.ActionPropertyDescription = null;
             this.SetUpButton.ActionPropertyId = "ManualRotationUp";
             this.SetUpButton.ActionPropertyName = "Up";
+            this.SetUpButton.ActionPropertyOrder = 2;
             this.SetUpButton.ActiveBackColour = System.Drawing.Color.Black;
             this.SetUpButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.SetUpButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2131,6 +2152,7 @@
             this.SetDownButton.ActionPropertyDescription = null;
             this.SetDownButton.ActionPropertyId = "ManualRotationDown";
             this.SetDownButton.ActionPropertyName = "Down";
+            this.SetDownButton.ActionPropertyOrder = 3;
             this.SetDownButton.ActiveBackColour = System.Drawing.Color.Black;
             this.SetDownButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
             this.SetDownButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

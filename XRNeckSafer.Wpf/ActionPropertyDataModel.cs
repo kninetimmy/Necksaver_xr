@@ -9,6 +9,7 @@ namespace XRNeckSafer.Wpf
         public string ActionPropertyId { get; set; }
         public string ActionPropertyName { get; set; }
         public string Description { get; set; }
+        public int ActionPropertyOrder { get; set; }
         public string GroupName { get; set; }
         public int GroupOrder { get; set; }
         public bool ToggleValue { get; set; }

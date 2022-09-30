@@ -13,6 +13,7 @@ namespace XRNeckSafer
         private string _actionPropertyId;
         private string _actionPropertyName;
         private string _actionPropertyDescription;
+        private int _actionPropertyOrder;
         private ActionPropertyGroupItem _selectedGroup;
         private ActionPropertyGroups _groupsComponent;
         private decimal _defaultValue;
@@ -92,6 +93,21 @@ namespace XRNeckSafer
             }
         }
 
+        [Category("ActionProperty"), Description("ActionProperty description")]
+        public int ActionPropertyOrder
+        {
+            get => _actionPropertyOrder;
+            set
+            {
+                _actionPropertyOrder = value;
+                if (_actionProperty == null)
+                {
+                    return;
+                }
+                _actionProperty.Order = _actionPropertyOrder;
+            }
+        }
+
         [Category("ActionProperty"), Description("ActionProperty default value")]
         public decimal DefaultValue 
         { 
@@ -164,6 +180,7 @@ namespace XRNeckSafer
             base.Value = _actionProperty.GetValue();
             _actionProperty.Name = _actionPropertyName;
             _actionProperty.Description = _actionPropertyDescription;
+            _actionProperty.Order = _actionPropertyOrder;
             _actionProperty.Group = SelectedGroup?.Tag;
             _actionProperty.Triggered += ActionPropertyTriggered;
         }

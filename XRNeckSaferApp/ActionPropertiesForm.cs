@@ -92,6 +92,7 @@ namespace XRNeckSafer
                         ActionPropertyId = prop.Id,
                         ActionPropertyName = prop.Name,
                         Description = prop.Description,
+                        ActionPropertyOrder = prop.Order,
                         GroupName = prop.Group?.Name ?? "Miscellaneous",
                         GroupOrder = prop.Group?.Order ?? int.MaxValue,
                         EventName = actionEvent.Name,
@@ -114,7 +115,7 @@ namespace XRNeckSafer
                     props.Add(dataModel);
                 }
             });
-            _wpfList.PopulateProperties(props.OrderBy(p => p.GroupOrder + p.ActionPropertyId));
+            _wpfList.PopulateProperties(props.OrderBy(p => p.GroupOrder * 100 + p.ActionPropertyOrder));
         }
 
         private void OnSaveButtonClick(object sender, EventArgs e)
