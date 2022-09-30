@@ -112,10 +112,28 @@ namespace XRNeckSafer
         }
 
         [Category("ActionProperty"), Description("Fore coulor of the button in active state")]
-        public System.Drawing.Color ActiveForeColour { get => _activeForeColour; set { _activeForeColour = value; Invalidate(); } }
+        public System.Drawing.Color ActiveForeColour 
+        { 
+            get => _activeForeColour; 
+            set 
+            { 
+                _activeForeColour = value; 
+                Invalidate();
+                SetButtonColor();
+            } 
+        }
 
         [Category("ActionProperty"), Description("Back coulor of the button in active state")]
-        public System.Drawing.Color ActiveBackColour { get => _activeBackColour; set { _activeBackColour = value; Invalidate(); } }
+        public System.Drawing.Color ActiveBackColour 
+        { 
+            get => _activeBackColour; 
+            set 
+            { 
+                _activeBackColour = value; 
+                Invalidate();
+                SetButtonColor();
+            } 
+        }
 
         [Category("ActionProperty"), Description("Fired when Active Property value changed")]
         public event Action<bool> ActionPropertyValueChanged;

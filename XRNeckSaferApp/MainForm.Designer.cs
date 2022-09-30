@@ -1018,6 +1018,7 @@
             this.SetLeftButton.TabIndex = 36;
             this.SetLeftButton.Text = "Set Button";
             this.SetLeftButton.UseVisualStyleBackColor = true;
+            this.SetLeftButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetLeftButtonActionPropertyValueChanged);
             this.SetLeftButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // SetRightButton
@@ -1039,6 +1040,7 @@
             this.SetRightButton.TabIndex = 37;
             this.SetRightButton.Text = "Set Button";
             this.SetRightButton.UseVisualStyleBackColor = false;
+            this.SetRightButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetRightButtonActionPropertyValueChanged);
             this.SetRightButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // RightLabel
@@ -2145,6 +2147,7 @@
             this.SetUpButton.TabIndex = 36;
             this.SetUpButton.Text = "Set Button";
             this.SetUpButton.UseVisualStyleBackColor = true;
+            this.SetUpButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetUpButtonActionPropertyValueChanged);
             this.SetUpButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // SetDownButton
@@ -2166,6 +2169,7 @@
             this.SetDownButton.TabIndex = 37;
             this.SetDownButton.Text = "Set Button";
             this.SetDownButton.UseVisualStyleBackColor = false;
+            this.SetDownButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetDownButtonActionPropertyValueChanged);
             this.SetDownButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // DownLabel

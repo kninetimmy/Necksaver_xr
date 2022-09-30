@@ -188,6 +188,10 @@ namespace XRNeckSafer
             _hmdtext = "";
             loopTimer.Start();
             UpdateDevicesLabel();
+            SetLabelColor(SetLeftButton.ActionPropertyValue, LeftLabel);
+            SetLabelColor(SetRightButton.ActionPropertyValue, RightLabel);
+            SetLabelColor(SetUpButton.ActionPropertyValue, UpLabel);
+            SetLabelColor(SetDownButton.ActionPropertyValue, DownLabel);
         }
 
         private void OnJoysticksNumberChanged(Guid guid, string joystickName)
@@ -239,21 +243,17 @@ namespace XRNeckSafer
             label17.Enabled = !additivRB.Checked;
         }
 
-        void setLabelColor(bool pressed, Label l)
+        private void SetLabelColor(bool pressed, Label label)
         {
-            System.Drawing.Color fc = SystemColors.ControlText;
-            System.Drawing.Color bc = SystemColors.Control;
-
-            if (pressed)
+            var foreColor = pressed ? System.Drawing.Color.LightGreen : SystemColors.ControlText;
+            var backColor = pressed ? SystemColors.ControlText : SystemColors.Control;
+            if (label.ForeColor != foreColor)
             {
-                fc = System.Drawing.Color.LightGreen;
-                bc = SystemColors.ControlText;
+                label.ForeColor = foreColor;
             }
-
-            if (l.ForeColor != fc)
+            if (label.BackColor != backColor)
             {
-                l.ForeColor = fc;
-                l.BackColor = bc;
+                label.BackColor = backColor;
             }
         }
 
@@ -269,11 +269,6 @@ namespace XRNeckSafer
             bool h_pressed = YawAutorotationHoldButton.ActionPropertyValue;
             bool hp_pressed = PitchAutorotationHoldButton.ActionPropertyValue;
             //            bool h_pressed = checkButtonPress(SetHoldButton1, conf.HoldButton1);
-
-            setLabelColor(l_pressed, LeftLabel);
-            setLabelColor(r_pressed, RightLabel);
-            setLabelColor(u_pressed, UpLabel);
-            setLabelColor(d_pressed, DownLabel);
 
             bool pitchlimit = _vr.GetHmdPitch() - 90 > Config.Instance.PitchLimForAutorot;
 
@@ -318,7 +313,7 @@ namespace XRNeckSafer
                 _hmdtext = "HMD yaw: (not centered in game yet)";
             }
 
-            if ((HMDYawLabel.Text != _hmdtext))
+            if (HMDYawLabel.Text != _hmdtext)
             {
                 HMDYawLabel.Location = new System.Drawing.Point(20, 18);
                 HMDYawLabel.Text = _hmdtext;
@@ -903,6 +898,26 @@ namespace XRNeckSafer
         {
             var button = (BooleanActionButton)sender;
             ActionPropertiesForm.ShowForm(button.ActionPropertyId, Top, Right);
+        }
+
+        private void OnSetLeftButtonActionPropertyValueChanged(bool value)
+        {
+            SetLabelColor(value, LeftLabel);
+        }
+
+        private void OnSetRightButtonActionPropertyValueChanged(bool value)
+        {
+            SetLabelColor(value, RightLabel);
+        }
+
+        private void OnSetUpButtonActionPropertyValueChanged(bool value)
+        {
+            SetLabelColor(value, UpLabel);
+        }
+
+        private void OnSetDownButtonActionPropertyValueChanged(bool value)
+        {
+            SetLabelColor(value, DownLabel);
         }
 
         void sizeChanged()
