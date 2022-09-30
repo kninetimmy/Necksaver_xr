@@ -405,10 +405,9 @@ namespace XRNeckSafer
             float hmdYaw = _vr.GetHmdYaw();
             float hmdPitch = -_vr.GetHmdPitch();
 
-
             while (hmdYaw < -180) hmdYaw += 360;
             while (hmdYaw > 180) hmdYaw -= 360;
-
+            
             if (_vr.HmdWasCentered())
             {
                 if (!Config.Instance.DisableGUIOutput)
@@ -428,6 +427,14 @@ namespace XRNeckSafer
             if ((HMDYawLabel.Text != _hmdtext))
             {
                 HMDYawLabel.Location = new System.Drawing.Point(20, 18);
+                if (_vr.HmdWasCentered())
+                {
+                    HMDYawLabel.ForeColor = SystemColors.ControlText;
+                }
+                else
+                {
+                    HMDYawLabel.ForeColor = System.Drawing.Color.Red;
+                }
                 HMDYawLabel.Text = _hmdtext;
             }
 
