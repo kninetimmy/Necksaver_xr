@@ -1187,11 +1187,6 @@ namespace XRNeckSafer
             }
         }
 
-        private void disableJoystickAutoReconnectToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
-        {
-            // Config.Instance.WriteConfig();
-        }
-
         /// <summary>
         /// Verwendete Ressourcen bereinigen.
         /// </summary>
