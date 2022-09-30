@@ -10,7 +10,7 @@ namespace XRNeckSafer
     {
         private System.Drawing.Color _inactiveForeColour;
         private System.Drawing.Color _inactiveBackColour;
-        private System.Drawing.Color _activeForeColour = System.Drawing.Color.LimeGreen;
+        private System.Drawing.Color _activeForeColour = System.Drawing.Color.LightGreen;
         private System.Drawing.Color _activeBackColour = System.Drawing.Color.Black;
         private BooleanActionProperty _actionProperty;
         private bool _firstTimeRendered;
@@ -135,6 +135,44 @@ namespace XRNeckSafer
             } 
         }
 
+        [Category("ActionProperty"), Description("Fore coulor of the button in active state")]
+        public System.Drawing.Color InActiveForeColour
+        {
+            get => _inactiveForeColour;
+            set
+            {
+                _inactiveForeColour = value;
+                Invalidate();
+                SetButtonColor();
+            }
+        }
+
+        [Category("ActionProperty"), Description("Back coulor of the button in active state")]
+        public System.Drawing.Color InActiveBackColour
+        {
+            get => _inactiveBackColour;
+            set
+            {
+                _inactiveBackColour = value;
+                Invalidate();
+                SetButtonColor();
+            }
+        }
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new System.Drawing.Color ForeColor
+        {
+            get => base.ForeColor;
+        }
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new System.Drawing.Color BackColor
+        {
+            get => base.BackColor;
+        }
+
         [Category("ActionProperty"), Description("Fired when Active Property value changed")]
         public event Action<bool> ActionPropertyValueChanged;
 
@@ -150,8 +188,6 @@ namespace XRNeckSafer
             if (!_firstTimeRendered)
             {
                 _firstTimeRendered = true;
-                _inactiveBackColour = BackColor;
-                _inactiveForeColour = ForeColor;
                 SubscribeActionProperty();
             }
         }
@@ -206,16 +242,16 @@ namespace XRNeckSafer
             ActionPropertyValueChanged?.Invoke(_isActive);
         }
 
-        public void SetButtonColor()
+        private void SetButtonColor()
         {
             if (_isActive)
             {
-                ForeColor = ActiveForeColour;
-                BackColor = ActiveBackColour;
+                base.ForeColor = ActiveForeColour;
+                base.BackColor = ActiveBackColour;
                 return;
             }
-            ForeColor = _inactiveForeColour;
-            BackColor = _inactiveBackColour;
+            base.ForeColor = _inactiveForeColour;
+            base.BackColor = _inactiveBackColour;
         }
 
         protected override void Dispose(bool disposing)

@@ -188,10 +188,6 @@ namespace XRNeckSafer
             _hmdtext = "";
             loopTimer.Start();
             UpdateDevicesLabel();
-            SetLeftButton.SetButtonColor();
-            SetRightButton.SetButtonColor();
-            SetUpButton.SetButtonColor();
-            SetDownButton.SetButtonColor();
             SetLabelColor(SetLeftButton.ActionPropertyValue, LeftLabel);
             SetLabelColor(SetRightButton.ActionPropertyValue, RightLabel);
             SetLabelColor(SetUpButton.ActionPropertyValue, UpLabel);
