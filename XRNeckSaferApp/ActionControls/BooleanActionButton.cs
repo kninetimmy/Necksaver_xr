@@ -251,8 +251,8 @@ namespace XRNeckSafer
                 base.BackColor = ActiveBackColour;
                 return;
             }
-            base.ForeColor = _inactiveForeColour;
-            base.BackColor = _inactiveBackColour;
+            base.ForeColor = InActiveForeColour;
+            base.BackColor = InActiveBackColour;
         }
 
         protected override void Dispose(bool disposing)
