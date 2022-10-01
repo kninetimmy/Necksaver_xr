@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -10,52 +11,53 @@ namespace XRNeckSafer
     /// </summary>
     public class JoystickKeyboardScanner : IDisposable
     {
+        private static readonly ILogger _logger = LogManager.GetLogger("JoystickKeyboardScanner", typeof(JoystickKeyboardScanner));
         private JoystickButtonScanner _joystickScanner;
         private readonly JoystickKeyboardInput _result;
-        private bool _joystickScanComplete = false;
-        private bool _keyboardScanComplete = false;
         private readonly int _maxPressedButtonsCount;
+        private readonly HashSet<Keys> _excludedButtons = new HashSet<Keys>
+        {
+            Keys.Apps, Keys.Enter, Keys.Escape, Keys.LWin, Keys.RWin, Keys.Tab, Keys.CapsLock
+        }; 
 
-        public event Action<JoystickKeyboardInput> OnScanningComplete;
-        public event Action<JoystickKeyboardInput> OnCurrentlyPressedChanged;
+        public event Action<JoystickKeyboardInput, bool> OnCurrentlyPressedChanged;
+        public event Action<JoystickKeyboardInput> BeforeRelesed;
 
-        public JoystickKeyboardScanner(int maxPressedButtonsCount = 1)
+        public JoystickKeyboardScanner(int maxPressedButtonsCount)
         {
             _maxPressedButtonsCount = maxPressedButtonsCount;
-            _result = new JoystickKeyboardInput { KeyboardKeys = new List<Keys>(), JoystickButtons = new List<JoyBut>() };
-            _joystickScanner = new JoystickButtonScanner(maxPressedButtonsCount);
-            _joystickScanner.OnCurrentlyPressedChanged += OnJoystickPressedChanged;
-            _joystickScanner.OnScanningComplete += OnJoystickScanningComplete;
+            _result = new JoystickKeyboardInput();
+            _joystickScanner = new JoystickButtonScanner(_maxPressedButtonsCount);
+            _joystickScanner.CurrentlyPressedChanged += OnJoystickPressedChanged;
+            _joystickScanner.BeforeButtonReleased += OnBeforeJoystickButtonReleased;
             KeyInterceptor.KeyPressed += OnKeyPressed;
             _joystickScanner.StartScan();
         }
 
         private void OnKeyPressed(Keys[] pressedKeys)
         {
-            var sameKeysPressed = _result.KeyboardKeys.Count == pressedKeys.Length && _result.KeyboardKeys.All(k => pressedKeys.Any(p => p.Equals(k)));
-            if (sameKeysPressed)
+            var _filteredKeys = pressedKeys.Where(p => !_excludedButtons.Any(e => e == p)).ToArray();
+            lock (_result)
             {
-                return;
+                var sameKeysPressed = _result.KeyboardKeys.Count == _filteredKeys.Length && _result.KeyboardKeys.All(k => _filteredKeys.Any(p => p.Equals(k)));
+                var someKeyReleased = _result.KeyboardKeys.Count > _filteredKeys.Length && !_filteredKeys.Any(p => !_result.KeyboardKeys.Any(k => p != k));
+                if (!sameKeysPressed && someKeyReleased)
+                {
+                    BeforeRelesed?.Invoke(_result);
+                }
+                if (AddKeys(_filteredKeys))
+                {
+                    _logger.Trace("OnCurrentlyPressedChanged: " + _result.ToString() + " Same key(s):" + sameKeysPressed);
+                    OnCurrentlyPressedChanged?.Invoke(_result, sameKeysPressed);
+                    return;
+                }
+                if (!sameKeysPressed)
+                {
+                    _logger.Trace("OnCurrentlyPressedChanged: " + _result.ToString() + " Same key(s):" + sameKeysPressed);
+                    OnCurrentlyPressedChanged?.Invoke(_result, sameKeysPressed);
+                }
             }
-            var someKeyReleased = _result.KeyboardKeys.Count > pressedKeys.Length && !pressedKeys.Any(p => !_result.KeyboardKeys.Any(k => p != k));
-            if (someKeyReleased)
-            {
-                _keyboardScanComplete = true;
-                TryFireCompleteEvent();
-                return;
-            }
-            var inconsistentSequence = _result.KeyboardKeys.Count < pressedKeys.Length && _result.KeyboardKeys.Any(p => !pressedKeys.Any(k => p != k));
-            if (inconsistentSequence)
-            {
-                _keyboardScanComplete = true;
-                TryFireCompleteEvent();
-                return;
-            }
-            if (AddKeys(pressedKeys))
-            {
-                // Console.WriteLine(CreatePressedButtonsText(_result));
-                OnCurrentlyPressedChanged?.Invoke(_result);
-            }
+            
         }
 
         private bool AddKeys(IEnumerable<Keys> pressedKeys)
@@ -64,7 +66,7 @@ namespace XRNeckSafer
             lock (_result)
             {
                 _result.KeyboardKeys.Clear();
-                foreach (var key in pressedKeys)
+                foreach (var key in pressedKeys.Where(k => !_excludedButtons.Any(e => e == k)))
                 {
                     if (IsLimitReached())
                     {
@@ -77,9 +79,9 @@ namespace XRNeckSafer
             return added;
         }
 
-        private bool AddJoystickButtons(IEnumerable<JoyBut> buttons)
+        private bool UpdateJoystickButtons(IEnumerable<JoystickButton> buttons)
         {
-            var added = false;
+            var updated = _result.JoystickButtons.Any() && !buttons.Any();
             lock (_result)
             {
                 _result.JoystickButtons.Clear();
@@ -89,11 +91,11 @@ namespace XRNeckSafer
                     {
                         break;
                     }
-                    added = true;
+                    updated = true;
                     _result.JoystickButtons.Add(button);
                 }
             }
-            return added;
+            return updated;
         }
 
         private bool IsLimitReached()
@@ -101,64 +103,37 @@ namespace XRNeckSafer
             return _result.KeyboardKeys.Count + _result.JoystickButtons.Count >= _maxPressedButtonsCount;
         }
 
-        private void OnJoystickScanningComplete(List<JoyBut> buttons)
+        private void OnBeforeJoystickButtonReleased(List<JoystickButton> buttons)
         {
-            AddJoystickButtons(buttons);
-            _joystickScanComplete = true;
-            TryFireCompleteEvent();
+            BeforeRelesed?.Invoke(_result);
         }
 
-        private void OnJoystickPressedChanged(List<JoyBut> buttons)
+        private void OnJoystickPressedChanged(List<JoystickButton> buttons)
         {
-            if (AddJoystickButtons(buttons))
+            if (UpdateJoystickButtons(buttons))
             {
-                OnCurrentlyPressedChanged?.Invoke(_result);
-            }
-        }
-
-        private void TryFireCompleteEvent()
-        {
-            var keyboardComplete = _keyboardScanComplete || !_result.KeyboardKeys.Any();
-            var joystickComplete = _joystickScanComplete || !_result.JoystickButtons.Any();
-            var somethingScanned = _result.JoystickButtons.Any() || _result.KeyboardKeys.Any();
-            if (somethingScanned && (keyboardComplete || joystickComplete))
-            {
-                OnScanningComplete?.Invoke(_result);
+                _logger.Trace("OnCurrentlyPressedChanged: " + _result.ToString());
+                OnCurrentlyPressedChanged?.Invoke(_result, false);
             }
         }
 
         public void Dispose()
         {
+            UnsubscribeAllHandlers();
             if (_joystickScanner != null)
             {
-                KeyInterceptor.KeyPressed -= OnKeyPressed;
                 _joystickScanner.Stop();
+
                 _joystickScanner.Dispose();
                 _joystickScanner = null;
             }
         }
 
-        //private string CreatePressedButtonsText(JoystickKeyboardInput input)
-        //{
-        //    var builder = new System.Text.StringBuilder();
-        //    foreach (var button in input.JoystickButtons)
-        //    {
-        //        if (builder.Length > 0)
-        //        {
-        //            builder.Append("+");
-        //        }
-        //        var stickItem = JoystickStuff.Instance.GetStickItemByGuid(button.JoystickGuid);
-        //        builder.Append($"[{stickItem.InstanceName} But:{button.Button + 1}]");
-        //    }
-        //    foreach (var key in input.KeyboardKeys)
-        //    {
-        //        if (builder.Length > 0)
-        //        {
-        //            builder.Append("+");
-        //        }
-        //        builder.Append($"[Key:{key}]");
-        //    }
-        //    return builder.ToString();
-        //}
+        private void UnsubscribeAllHandlers()
+        {
+            KeyInterceptor.KeyPressed -= OnKeyPressed;
+            BeforeRelesed?.GetInvocationList().ToList().ForEach(d => BeforeRelesed -= d as Action<JoystickKeyboardInput>);
+            OnCurrentlyPressedChanged?.GetInvocationList().ToList().ForEach(d => OnCurrentlyPressedChanged -= d as Action<JoystickKeyboardInput, bool>);
+        }
     }
 }

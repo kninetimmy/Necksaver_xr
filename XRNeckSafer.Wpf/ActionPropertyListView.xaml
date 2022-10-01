@@ -1,0 +1,163 @@
+﻿<UserControl x:Class="XRNeckSafer.Wpf.ActionPropertyListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:XRNeckSafer.Wpf"
+             mc:Ignorable="d"
+             Name="HostControl"
+             d:DesignHeight="365" d:DesignWidth="545" UseLayoutRounding="False">
+    <UserControl.Resources>
+        <Style x:Key="_textBlockCenter" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="_dataGrid" TargetType="DataGrid">
+            <Setter Property="CanUserAddRows" Value="False" />
+            <Setter Property="CanUserDeleteRows" Value="False" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="CanUserReorderColumns" Value="False" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="GridLinesVisibility" Value="Horizontal" />
+            <Setter Property="HorizontalGridLinesBrush" Value="LightGray" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HeadersVisibility" Value="None" />
+            <Setter Property="CanUserResizeColumns" Value="False" />
+        </Style>
+        <Style x:Key="_cell" TargetType="DataGridCell">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style x:Key="_dataGridCenterHeader" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+        <local:BitmapToImageSourceConverter x:Key="BitmapToImageSourceConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" Style="{StaticResource _dataGrid}" Name="_headersGrid" HeadersVisibility="Column" CellStyle="{StaticResource _cell}" BorderThickness="1,1,1,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Control" HeaderStyle="{StaticResource _dataGridCenterHeader}" Width="100" ElementStyle="{StaticResource _textBlockCenter}" />
+                <DataGridTextColumn Header="Action" Width="65" HeaderStyle="{StaticResource _dataGridCenterHeader}" ElementStyle="{StaticResource _textBlockCenter}" />
+                <DataGridTextColumn Header="Key/Joystick mapping" Width="*" ElementStyle="{StaticResource _textBlockCenter}" />
+                <DataGridTextColumn Header="Toggle" ElementStyle="{StaticResource _textBlockCenter}" />
+                <DataGridTextColumn Header="Invert" ElementStyle="{StaticResource _textBlockCenter}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Grid.Row="1" Style="{StaticResource _dataGrid}" Name="_dataGrid" ItemsSource="{Binding ElementName=HostControl, Path=Properties}" CellStyle="{StaticResource _cell}" LayoutUpdated="OnDataGridLayoutUpdated">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Action" Width="65" Binding="{Binding EventName}" ElementStyle="{StaticResource _textBlockCenter}" />
+                <DataGridTemplateColumn Header="Key/Joystick mapping" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <local:InputCombinations 
+                                                 Inputs="{Binding InputCombinations}"
+                                                 AddInputClick="OnAddClick"
+                                                 RemoveInputClick="OnRemoveClick"
+                                                 ClearClick="OnClearClick"
+                                                 ScanClick="OnScanClick"
+                                                 />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Toggle">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <CheckBox Name="_toggleCheckBox" ToolTip="Toggle value" IsChecked="{Binding ToggleValue}" Checked="OnToggleCheckboxClick" Unchecked="OnToggleCheckboxClick">
+                                        <CheckBox.Style>
+                                            <Style TargetType="CheckBox">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsToggleEnabled}" Value="False">
+                                                        <Setter Property="Height" Value="0"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </CheckBox.Style>
+                                    </CheckBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Invert">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                <StackPanel HorizontalAlignment="Center" >
+                                    <CheckBox Name="_invertCheckBox" ToolTip="Invert value" IsChecked="{Binding InvertValue}" Checked="OnInvertCheckBoxClick" Unchecked="OnInvertCheckBoxClick">
+                                        <CheckBox.Style>
+                                            <Style TargetType="CheckBox">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInvertEnabled}" Value="False">
+                                                        <Setter Property="Height" Value="0"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </CheckBox.Style>
+                                    </CheckBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander IsExpanded="True">
+                                            <Expander.Header>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Height="30">
+                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="Black" FontSize="14" VerticalAlignment="Bottom" />
+                                                        <!--<TextBlock Text="{Binding ItemCount}" FontSize="14" Foreground="Green" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                                                        <TextBlock Text=" control(s)" FontSize="14" Foreground="Gray" FontStyle="Italic" VerticalAlignment="Bottom" />-->
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Expander.Header>
+                                            <ItemsPresenter />
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Grid Background="White">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Border BorderBrush="LightGray" BorderThickness="0,0,1,1">
+                                                <TextBlock Text="{Binding Name}" Style="{StaticResource _textBlockCenter}" FontWeight="Bold"
+                                                   Foreground="Black" FontSize="12" />
+                                            </Border>
+                                            <ItemsPresenter Grid.Column="1" />
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+        </DataGrid>
+    </Grid>
+
+</UserControl>
