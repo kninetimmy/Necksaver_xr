@@ -1029,16 +1029,20 @@ namespace XRNeckSafer
 
         private void listApiToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            List<string> LayerNames = _vr.ListApiLayers();
+            var layerNames = _vr.ListApiLayers();
 
-            if (LayerNames[0] != "Error")
+            if (layerNames.Any() && layerNames.First() != "Error")
             {
-                string message = "";
-                foreach (string name in LayerNames)
+                var message = new StringBuilder();
+                foreach (string name in layerNames)
                 {
-                    message = message + "\n" + name;
+                    if (message.Length > 0)
+                    {
+                        message.Append(Environment.NewLine);
+                    }
+                    message.Append(name);
                 }
-                MessageBox.Show(message, "OpenXR API Layers");
+                MessageBox.Show(message.ToString(), "OpenXR API Layers", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

@@ -29,7 +29,7 @@ namespace XRNeckSafer
             MinimumSize = Size;
             MaximumSize = Size;
             _scanner = new JoystickKeyboardScanner(maxPressedButtonsCount);
-            _scanner.BeforeRelesed += OnScanningComplete;
+            _scanner.BeforeReleased += OnScanningComplete;
             _scanner.OnCurrentlyPressedChanged += OnCurrentlyPressedChanged;
         }
 
@@ -56,7 +56,7 @@ namespace XRNeckSafer
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            _scanner.BeforeRelesed -= OnScanningComplete;
+            _scanner.BeforeReleased -= OnScanningComplete;
             _scanner.OnCurrentlyPressedChanged -= OnCurrentlyPressedChanged;
             base.OnClosing(e);
         }
