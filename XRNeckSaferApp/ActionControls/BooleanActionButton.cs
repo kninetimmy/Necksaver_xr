@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Drawing.Design;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,16 +9,17 @@ namespace XRNeckSafer
 {
     public class BooleanActionButton : Button, IActionPropertyGroups, IActionPropertyName
     {
-        private System.Drawing.Color _inactiveForeColour;
-        private System.Drawing.Color _inactiveBackColour;
-        private System.Drawing.Color _activeForeColour = System.Drawing.Color.LimeGreen;
-        private System.Drawing.Color _activeBackColour = System.Drawing.Color.Black;
+        private Color _inactiveForeColour;
+        private Color _inactiveBackColour;
+        private Color _activeForeColour = Color.LightGreen;
+        private Color _activeBackColour = Color.Black;
         private BooleanActionProperty _actionProperty;
         private bool _firstTimeRendered;
         private bool _isActive;
+        private string _actionPropertyId;
         private string _actionPropertyName;
-        private string _actionPropertyNameText;
         private string _actionPropertyDescription;
+        private int _actionPropertyOrder;
         private ActionPropertyGroupItem _selectedGroup;
         private ActionPropertyGroups _groupsComponent;
 
@@ -50,13 +52,13 @@ namespace XRNeckSafer
             }
         }
 
-        [Category("ActionProperty"), Description("ActionProperty ID")]
-        public string ActionPropertyName
+        [Category("ActionProperty"), Description("ActionProperty ID"), DisplayName("ActionProperty ID")]
+        public string ActionPropertyId
         {
-            get => _actionPropertyName;
+            get => _actionPropertyId;
             set
             {
-                _actionPropertyName = value;
+                _actionPropertyId = value;
                 if (DesignMode)
                 {
                     return;
@@ -65,18 +67,18 @@ namespace XRNeckSafer
             }
         }
 
-        [Category("ActionProperty"), Description("ActionProperty user firendly name")]
-        public string ActionPropertyNameText
+        [Category("ActionProperty"), DisplayName("Action Property Name"), Description("ActionProperty user firendly name")]
+        public string ActionPropertyName
         {
-            get => _actionPropertyNameText;
+            get => _actionPropertyName;
             set
             {
-                _actionPropertyNameText = value;
+                _actionPropertyName = value;
                 if (_actionProperty == null)
                 {
                     return;
                 }
-                _actionProperty.NameText = _actionPropertyNameText;
+                _actionProperty.Name = _actionPropertyName;
             }
         }
 
@@ -95,11 +97,82 @@ namespace XRNeckSafer
             }
         }
 
+        [Category("ActionProperty"), Description("ActionProperty description")]
+        public int ActionPropertyOrder
+        {
+            get => _actionPropertyOrder;
+            set
+            {
+                _actionPropertyOrder = value;
+                if (_actionProperty == null)
+                {
+                    return;
+                }
+                _actionProperty.Order = _actionPropertyOrder;
+            }
+        }
+
         [Category("ActionProperty"), Description("Fore coulor of the button in active state")]
-        public System.Drawing.Color ActiveForeColour { get => _activeForeColour; set { _activeForeColour = value; Invalidate(); } }
+        public Color ActiveForeColour 
+        { 
+            get => _activeForeColour; 
+            set 
+            { 
+                _activeForeColour = value; 
+                Invalidate();
+                SetButtonColor();
+            } 
+        }
 
         [Category("ActionProperty"), Description("Back coulor of the button in active state")]
-        public System.Drawing.Color ActiveBackColour { get => _activeBackColour; set { _activeBackColour = value; Invalidate(); } }
+        public Color ActiveBackColour 
+        { 
+            get => _activeBackColour; 
+            set 
+            { 
+                _activeBackColour = value; 
+                Invalidate();
+                SetButtonColor();
+            } 
+        }
+
+        [Category("ActionProperty"), Description("Fore coulor of the button in active state")]
+        public Color InActiveForeColour
+        {
+            get => _inactiveForeColour;
+            set
+            {
+                _inactiveForeColour = value;
+                Invalidate();
+                SetButtonColor();
+            }
+        }
+
+        [Category("ActionProperty"), Description("Back coulor of the button in active state")]
+        public Color InActiveBackColour
+        {
+            get => _inactiveBackColour;
+            set
+            {
+                _inactiveBackColour = value;
+                Invalidate();
+                SetButtonColor();
+            }
+        }
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new Color ForeColor
+        {
+            get => base.ForeColor;
+        }
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new Color BackColor
+        {
+            get => base.BackColor;
+        }
 
         [Category("ActionProperty"), Description("Fired when Active Property value changed")]
         public event Action<bool> ActionPropertyValueChanged;
@@ -116,8 +189,6 @@ namespace XRNeckSafer
             if (!_firstTimeRendered)
             {
                 _firstTimeRendered = true;
-                _inactiveBackColour = BackColor;
-                _inactiveForeColour = ForeColor;
                 SubscribeActionProperty();
             }
         }
@@ -137,19 +208,20 @@ namespace XRNeckSafer
             {
                 return;
             }
-            if (string.IsNullOrEmpty(ActionPropertyName))
+            if (string.IsNullOrEmpty(ActionPropertyId))
             {
-                throw new ArgumentException($"{nameof(ActionPropertyName)} can not be empty.");
+                throw new ArgumentException($"{nameof(ActionPropertyId)} can not be empty.");
             }
-            _actionProperty = Config.Instance.ActionProperties?.FirstOrDefault(p => p.Name == ActionPropertyName) as BooleanActionProperty;
+            _actionProperty = Config.Instance.ActionProperties?.FirstOrDefault(p => p.Id == ActionPropertyId) as BooleanActionProperty;
             if (_actionProperty == null)
             {
-                _actionProperty = BooleanActionProperty.CreateProperty(ActionPropertyName);
+                _actionProperty = BooleanActionProperty.CreateProperty(ActionPropertyId);
                 Config.Instance.ActionProperties.Add(_actionProperty);
             }
             _actionProperty.Triggered += ActionPropertyTriggered;
-            _actionProperty.NameText = _actionPropertyNameText;
+            _actionProperty.Name = _actionPropertyName;
             _actionProperty.Description = _actionPropertyDescription;
+            _actionProperty.Order = _actionPropertyOrder;
             _actionProperty.Group = SelectedGroup?.Tag;
             _isActive = _actionProperty.GetValue();
             SetButtonColor();
@@ -175,12 +247,12 @@ namespace XRNeckSafer
         {
             if (_isActive)
             {
-                ForeColor = ActiveForeColour;
-                BackColor = ActiveBackColour;
+                base.ForeColor = ActiveForeColour;
+                base.BackColor = ActiveBackColour;
                 return;
             }
-            ForeColor = _inactiveForeColour;
-            BackColor = _inactiveBackColour;
+            base.ForeColor = InActiveForeColour;
+            base.BackColor = InActiveBackColour;
         }
 
         protected override void Dispose(bool disposing)

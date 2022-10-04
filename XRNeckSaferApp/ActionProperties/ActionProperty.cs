@@ -9,16 +9,19 @@ namespace XRNeckSafer
     public abstract class ActionProperty
     {
         [DataMember]
-        public string Name { get; set; }
+        public string Id { get; set; }
 
-        [DataMember]
-        public string NameText { get; set; }
+        [JsonIgnore]
+        public string Name { get; set; }
 
         [JsonIgnore]
         public ActionPropertyGroup Group { get; set; }
 
-        [DataMember]
+        [JsonIgnore]
         public string Description { get; set; }
+
+        [JsonIgnore]
+        public int Order { get; set; }
 
         [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.All)]
         public ActionPropertyEvent[] Events { get; set; }
@@ -35,7 +38,7 @@ namespace XRNeckSafer
 
         public bool Validate()
         {
-            if (string.IsNullOrEmpty(Name))
+            if (string.IsNullOrEmpty(Id))
             {
                 Valid = false;
                 ValidationError = "Name is missing";
@@ -48,7 +51,7 @@ namespace XRNeckSafer
                 if (!string.IsNullOrEmpty(invalidName))
                 {
                     Valid = false;
-                    ValidationError = $"Duplicate event name \"{invalidName}\" in \"{Name}\" action property";
+                    ValidationError = $"Duplicate event name \"{invalidName}\" in \"{Id}\" action property";
                     return Valid;
                 }
 

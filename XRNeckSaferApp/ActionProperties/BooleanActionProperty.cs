@@ -51,7 +51,7 @@ namespace XRNeckSafer
         {
             return new BooleanActionProperty
             {
-                Name = name,
+                Id = name,
                 Value = false,
                 Events = new[]
                 {

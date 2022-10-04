@@ -501,8 +501,9 @@
             // numericUpDownMultRight
             // 
             this.numericUpDownMultRight.ActionPropertyDescription = null;
-            this.numericUpDownMultRight.ActionPropertyName = "AutorotationRAmplifyBy";
-            this.numericUpDownMultRight.ActionPropertyNameText = "R Amplify By";
+            this.numericUpDownMultRight.ActionPropertyId = "AutorotationRAmplifyBy";
+            this.numericUpDownMultRight.ActionPropertyName = "R Amplify By";
+            this.numericUpDownMultRight.ActionPropertyOrder = 3;
             this.numericUpDownMultRight.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownMultRight.DefaultValue = new decimal(new int[] {
             120,
@@ -530,7 +531,7 @@
             this._numericUpDownMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.setJoystickkeyShortcutToolStripMenuItem});
             this._numericUpDownMenuStrip.Name = "_numericUpDownMenuStrip";
-            this._numericUpDownMenuStrip.Size = new System.Drawing.Size(235, 48);
+            this._numericUpDownMenuStrip.Size = new System.Drawing.Size(235, 26);
             // 
             // setJoystickkeyShortcutToolStripMenuItem
             // 
@@ -561,8 +562,9 @@
             // numericUpDownMultLeft
             // 
             this.numericUpDownMultLeft.ActionPropertyDescription = null;
-            this.numericUpDownMultLeft.ActionPropertyName = "AutorotationLAmplifyBy";
-            this.numericUpDownMultLeft.ActionPropertyNameText = "L Amplify By";
+            this.numericUpDownMultLeft.ActionPropertyId = "AutorotationLAmplifyBy";
+            this.numericUpDownMultLeft.ActionPropertyName = "L Amplify By";
+            this.numericUpDownMultLeft.ActionPropertyOrder = 1;
             this.numericUpDownMultLeft.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownMultLeft.DefaultValue = new decimal(new int[] {
             120,
@@ -588,8 +590,9 @@
             // numericUpDownStartRight
             // 
             this.numericUpDownStartRight.ActionPropertyDescription = null;
-            this.numericUpDownStartRight.ActionPropertyName = "AutorotationRStartAt";
-            this.numericUpDownStartRight.ActionPropertyNameText = "R Start At";
+            this.numericUpDownStartRight.ActionPropertyId = "AutorotationRStartAt";
+            this.numericUpDownStartRight.ActionPropertyName = "R Start At";
+            this.numericUpDownStartRight.ActionPropertyOrder = 2;
             this.numericUpDownStartRight.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownStartRight.DefaultValue = new decimal(new int[] {
             95,
@@ -615,8 +618,9 @@
             // numericUpDownStartLeft
             // 
             this.numericUpDownStartLeft.ActionPropertyDescription = null;
-            this.numericUpDownStartLeft.ActionPropertyName = "AutorotationLStartAt";
-            this.numericUpDownStartLeft.ActionPropertyNameText = "L Start At";
+            this.numericUpDownStartLeft.ActionPropertyId = "AutorotationLStartAt";
+            this.numericUpDownStartLeft.ActionPropertyName = "L Start At";
+            this.numericUpDownStartLeft.ActionPropertyOrder = 0;
             this.numericUpDownStartLeft.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownStartLeft.DefaultValue = new decimal(new int[] {
             95,
@@ -707,12 +711,15 @@
             // SetResetButton
             // 
             this.SetResetButton.ActionPropertyDescription = null;
-            this.SetResetButton.ActionPropertyName = "SetResetCenter";
-            this.SetResetButton.ActionPropertyNameText = "Center";
+            this.SetResetButton.ActionPropertyId = "SetResetCenter";
+            this.SetResetButton.ActionPropertyName = "Center";
+            this.SetResetButton.ActionPropertyOrder = 0;
             this.SetResetButton.ActiveBackColour = System.Drawing.SystemColors.ControlText;
-            this.SetResetButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.SetResetButton.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.SetResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SetResetButton.GroupsComponent = this._groups;
+            this.SetResetButton.InActiveBackColour = System.Drawing.Color.Empty;
+            this.SetResetButton.InActiveForeColour = System.Drawing.Color.Empty;
             this.SetResetButton.Location = new System.Drawing.Point(165, 51);
             this.SetResetButton.Name = "SetResetButton";
             actionPropertyGroupItem5.Name = "Reset Buttons";
@@ -778,12 +785,15 @@
             // AccumReset
             // 
             this.AccumReset.ActionPropertyDescription = null;
-            this.AccumReset.ActionPropertyName = "SetAccumResetYaw";
-            this.AccumReset.ActionPropertyNameText = "Accum Yaw";
+            this.AccumReset.ActionPropertyId = "SetAccumResetYaw";
+            this.AccumReset.ActionPropertyName = "Accum Yaw";
+            this.AccumReset.ActionPropertyOrder = 1;
             this.AccumReset.ActiveBackColour = System.Drawing.Color.Black;
-            this.AccumReset.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.AccumReset.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.AccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AccumReset.GroupsComponent = this._groups;
+            this.AccumReset.InActiveBackColour = System.Drawing.Color.Empty;
+            this.AccumReset.InActiveForeColour = System.Drawing.Color.Empty;
             this.AccumReset.Location = new System.Drawing.Point(69, 99);
             this.AccumReset.Name = "AccumReset";
             actionPropertyGroupItem6.Name = "Reset Buttons";
@@ -808,8 +818,9 @@
             // transFNUP
             // 
             this.transFNUP.ActionPropertyDescription = null;
-            this.transFNUP.ActionPropertyName = "TransitionOffsetForward";
-            this.transFNUP.ActionPropertyNameText = "Translation Fwd";
+            this.transFNUP.ActionPropertyId = "TransitionOffsetForward";
+            this.transFNUP.ActionPropertyName = "Translation Fwd";
+            this.transFNUP.ActionPropertyOrder = 2;
             this.transFNUP.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.transFNUP.DefaultValue = new decimal(new int[] {
             0,
@@ -845,8 +856,9 @@
             // angleNUD
             // 
             this.angleNUD.ActionPropertyDescription = null;
-            this.angleNUD.ActionPropertyName = "YawRotationLR";
-            this.angleNUD.ActionPropertyNameText = "Yaw Rotation L/R";
+            this.angleNUD.ActionPropertyId = "YawRotationLR";
+            this.angleNUD.ActionPropertyName = "Yaw Rotation L/R";
+            this.angleNUD.ActionPropertyOrder = 0;
             this.angleNUD.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.angleNUD.DefaultValue = new decimal(new int[] {
             30,
@@ -871,8 +883,9 @@
             // transLRNUP
             // 
             this.transLRNUP.ActionPropertyDescription = null;
-            this.transLRNUP.ActionPropertyName = "TransitionOffsetLeftRight";
-            this.transLRNUP.ActionPropertyNameText = "Translation L/R";
+            this.transLRNUP.ActionPropertyId = "TransitionOffsetLeftRight";
+            this.transLRNUP.ActionPropertyName = "Translation L/R";
+            this.transLRNUP.ActionPropertyOrder = 1;
             this.transLRNUP.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.transLRNUP.DefaultValue = new decimal(new int[] {
             0,
@@ -993,12 +1006,15 @@
             // SetLeftButton
             // 
             this.SetLeftButton.ActionPropertyDescription = null;
-            this.SetLeftButton.ActionPropertyName = "ManualRotationLeft";
-            this.SetLeftButton.ActionPropertyNameText = "Left";
+            this.SetLeftButton.ActionPropertyId = "ManualRotationLeft";
+            this.SetLeftButton.ActionPropertyName = "Left";
+            this.SetLeftButton.ActionPropertyOrder = 0;
             this.SetLeftButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.SetLeftButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.SetLeftButton.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.SetLeftButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SetLeftButton.GroupsComponent = this._groups;
+            this.SetLeftButton.InActiveBackColour = System.Drawing.SystemColors.Control;
+            this.SetLeftButton.InActiveForeColour = System.Drawing.SystemColors.ControlText;
             this.SetLeftButton.Location = new System.Drawing.Point(39, 20);
             this.SetLeftButton.Name = "SetLeftButton";
             actionPropertyGroupItem10.Name = "Manual Rotation Buttons";
@@ -1007,18 +1023,22 @@
             this.SetLeftButton.Size = new System.Drawing.Size(72, 27);
             this.SetLeftButton.TabIndex = 36;
             this.SetLeftButton.Text = "Set Button";
-            this.SetLeftButton.UseVisualStyleBackColor = true;
+            this.SetLeftButton.UseVisualStyleBackColor = false;
+            this.SetLeftButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetLeftButtonActionPropertyValueChanged);
             this.SetLeftButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // SetRightButton
             // 
             this.SetRightButton.ActionPropertyDescription = null;
-            this.SetRightButton.ActionPropertyName = "ManualRotationRight";
-            this.SetRightButton.ActionPropertyNameText = "Right";
+            this.SetRightButton.ActionPropertyId = "ManualRotationRight";
+            this.SetRightButton.ActionPropertyName = "Right";
+            this.SetRightButton.ActionPropertyOrder = 1;
             this.SetRightButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.SetRightButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.SetRightButton.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.SetRightButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SetRightButton.GroupsComponent = this._groups;
+            this.SetRightButton.InActiveBackColour = System.Drawing.SystemColors.Control;
+            this.SetRightButton.InActiveForeColour = System.Drawing.SystemColors.ControlText;
             this.SetRightButton.Location = new System.Drawing.Point(167, 20);
             this.SetRightButton.Name = "SetRightButton";
             actionPropertyGroupItem11.Name = "Manual Rotation Buttons";
@@ -1028,6 +1048,7 @@
             this.SetRightButton.TabIndex = 37;
             this.SetRightButton.Text = "Set Button";
             this.SetRightButton.UseVisualStyleBackColor = false;
+            this.SetRightButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetRightButtonActionPropertyValueChanged);
             this.SetRightButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // RightLabel
@@ -1329,12 +1350,15 @@
             // YawAutorotationHoldButton
             // 
             this.YawAutorotationHoldButton.ActionPropertyDescription = null;
-            this.YawAutorotationHoldButton.ActionPropertyName = "YawAutorotationHold";
-            this.YawAutorotationHoldButton.ActionPropertyNameText = "Yaw";
+            this.YawAutorotationHoldButton.ActionPropertyId = "YawAutorotationHold";
+            this.YawAutorotationHoldButton.ActionPropertyName = "Yaw";
+            this.YawAutorotationHoldButton.ActionPropertyOrder = 0;
             this.YawAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.YawAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.YawAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.YawAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.YawAutorotationHoldButton.GroupsComponent = this._groups;
+            this.YawAutorotationHoldButton.InActiveBackColour = System.Drawing.Color.Empty;
+            this.YawAutorotationHoldButton.InActiveForeColour = System.Drawing.Color.Empty;
             this.YawAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
             this.YawAutorotationHoldButton.Name = "YawAutorotationHoldButton";
             actionPropertyGroupItem12.Name = "Hold Buttons";
@@ -1527,8 +1551,9 @@
             // numericUpDownMultDown
             // 
             this.numericUpDownMultDown.ActionPropertyDescription = null;
-            this.numericUpDownMultDown.ActionPropertyName = "AutorotationDAmplifyBy";
-            this.numericUpDownMultDown.ActionPropertyNameText = "D Amplify By";
+            this.numericUpDownMultDown.ActionPropertyId = "AutorotationDAmplifyBy";
+            this.numericUpDownMultDown.ActionPropertyName = "D Amplify By";
+            this.numericUpDownMultDown.ActionPropertyOrder = 7;
             this.numericUpDownMultDown.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownMultDown.DefaultValue = new decimal(new int[] {
             120,
@@ -1554,8 +1579,9 @@
             // numericUpDownMultUp
             // 
             this.numericUpDownMultUp.ActionPropertyDescription = null;
-            this.numericUpDownMultUp.ActionPropertyName = "AutorotationUAmplifyBy";
-            this.numericUpDownMultUp.ActionPropertyNameText = "U Amplify By";
+            this.numericUpDownMultUp.ActionPropertyId = "AutorotationUAmplifyBy";
+            this.numericUpDownMultUp.ActionPropertyName = "U Amplify By";
+            this.numericUpDownMultUp.ActionPropertyOrder = 5;
             this.numericUpDownMultUp.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownMultUp.DefaultValue = new decimal(new int[] {
             120,
@@ -1581,8 +1607,9 @@
             // numericUpDownStartDown
             // 
             this.numericUpDownStartDown.ActionPropertyDescription = null;
-            this.numericUpDownStartDown.ActionPropertyName = "AutorotationDStartAt";
-            this.numericUpDownStartDown.ActionPropertyNameText = "D Start At";
+            this.numericUpDownStartDown.ActionPropertyId = "AutorotationDStartAt";
+            this.numericUpDownStartDown.ActionPropertyName = "D Start At";
+            this.numericUpDownStartDown.ActionPropertyOrder = 6;
             this.numericUpDownStartDown.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownStartDown.DefaultValue = new decimal(new int[] {
             60,
@@ -1608,8 +1635,9 @@
             // numericUpDownStartUp
             // 
             this.numericUpDownStartUp.ActionPropertyDescription = null;
-            this.numericUpDownStartUp.ActionPropertyName = "AutorotationUStartAt";
-            this.numericUpDownStartUp.ActionPropertyNameText = "U Start At";
+            this.numericUpDownStartUp.ActionPropertyId = "AutorotationUStartAt";
+            this.numericUpDownStartUp.ActionPropertyName = "U Start At";
+            this.numericUpDownStartUp.ActionPropertyOrder = 4;
             this.numericUpDownStartUp.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.numericUpDownStartUp.DefaultValue = new decimal(new int[] {
             60,
@@ -1907,12 +1935,15 @@
             // PitchAutorotationHoldButton
             // 
             this.PitchAutorotationHoldButton.ActionPropertyDescription = null;
-            this.PitchAutorotationHoldButton.ActionPropertyName = "PitchAutorotationHold";
-            this.PitchAutorotationHoldButton.ActionPropertyNameText = "Pitch";
+            this.PitchAutorotationHoldButton.ActionPropertyId = "PitchAutorotationHold";
+            this.PitchAutorotationHoldButton.ActionPropertyName = "Pitch";
+            this.PitchAutorotationHoldButton.ActionPropertyOrder = 1;
             this.PitchAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.PitchAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.PitchAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.PitchAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PitchAutorotationHoldButton.GroupsComponent = this._groups;
+            this.PitchAutorotationHoldButton.InActiveBackColour = System.Drawing.Color.Empty;
+            this.PitchAutorotationHoldButton.InActiveForeColour = System.Drawing.Color.Empty;
             this.PitchAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
             this.PitchAutorotationHoldButton.Name = "PitchAutorotationHoldButton";
             actionPropertyGroupItem17.Name = "Hold Buttons";
@@ -1973,12 +2004,15 @@
             // pAccumReset
             // 
             this.pAccumReset.ActionPropertyDescription = null;
-            this.pAccumReset.ActionPropertyName = "SetAccumResetPitch";
-            this.pAccumReset.ActionPropertyNameText = "Accum Pitch";
+            this.pAccumReset.ActionPropertyId = "SetAccumResetPitch";
+            this.pAccumReset.ActionPropertyName = "Accum Pitch";
+            this.pAccumReset.ActionPropertyOrder = 2;
             this.pAccumReset.ActiveBackColour = System.Drawing.Color.Black;
-            this.pAccumReset.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.pAccumReset.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.pAccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pAccumReset.GroupsComponent = this._groups;
+            this.pAccumReset.InActiveBackColour = System.Drawing.Color.Empty;
+            this.pAccumReset.InActiveForeColour = System.Drawing.Color.Empty;
             this.pAccumReset.Location = new System.Drawing.Point(69, 99);
             this.pAccumReset.Name = "pAccumReset";
             actionPropertyGroupItem18.Name = "Reset Buttons";
@@ -2003,8 +2037,9 @@
             // upNUD
             // 
             this.upNUD.ActionPropertyDescription = null;
-            this.upNUD.ActionPropertyName = "ManualPitchUp";
-            this.upNUD.ActionPropertyNameText = "Pitch Up";
+            this.upNUD.ActionPropertyId = "ManualPitchUp";
+            this.upNUD.ActionPropertyName = "Pitch Up";
+            this.upNUD.ActionPropertyOrder = 3;
             this.upNUD.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.upNUD.DefaultValue = new decimal(new int[] {
             30,
@@ -2029,8 +2064,9 @@
             // downNUD
             // 
             this.downNUD.ActionPropertyDescription = null;
-            this.downNUD.ActionPropertyName = "ManualPitchDown";
-            this.downNUD.ActionPropertyNameText = "Pitch Down";
+            this.downNUD.ActionPropertyId = "ManualPitchDown";
+            this.downNUD.ActionPropertyName = "Pitch Down";
+            this.downNUD.ActionPropertyOrder = 4;
             this.downNUD.ContextMenuStrip = this._numericUpDownMenuStrip;
             this.downNUD.DefaultValue = new decimal(new int[] {
             30,
@@ -2109,12 +2145,15 @@
             // SetUpButton
             // 
             this.SetUpButton.ActionPropertyDescription = null;
-            this.SetUpButton.ActionPropertyName = "ManualRotationUp";
-            this.SetUpButton.ActionPropertyNameText = "Up";
+            this.SetUpButton.ActionPropertyId = "ManualRotationUp";
+            this.SetUpButton.ActionPropertyName = "Up";
+            this.SetUpButton.ActionPropertyOrder = 2;
             this.SetUpButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.SetUpButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.SetUpButton.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.SetUpButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SetUpButton.GroupsComponent = this._groups;
+            this.SetUpButton.InActiveBackColour = System.Drawing.SystemColors.Control;
+            this.SetUpButton.InActiveForeColour = System.Drawing.SystemColors.ControlText;
             this.SetUpButton.Location = new System.Drawing.Point(39, 20);
             this.SetUpButton.Name = "SetUpButton";
             actionPropertyGroupItem21.Name = "Manual Rotation Buttons";
@@ -2123,18 +2162,22 @@
             this.SetUpButton.Size = new System.Drawing.Size(72, 27);
             this.SetUpButton.TabIndex = 36;
             this.SetUpButton.Text = "Set Button";
-            this.SetUpButton.UseVisualStyleBackColor = true;
+            this.SetUpButton.UseVisualStyleBackColor = false;
+            this.SetUpButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetUpButtonActionPropertyValueChanged);
             this.SetUpButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // SetDownButton
             // 
             this.SetDownButton.ActionPropertyDescription = null;
-            this.SetDownButton.ActionPropertyName = "ManualRotationDown";
-            this.SetDownButton.ActionPropertyNameText = "Down";
+            this.SetDownButton.ActionPropertyId = "ManualRotationDown";
+            this.SetDownButton.ActionPropertyName = "Down";
+            this.SetDownButton.ActionPropertyOrder = 3;
             this.SetDownButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.SetDownButton.ActiveForeColour = System.Drawing.Color.LimeGreen;
+            this.SetDownButton.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.SetDownButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SetDownButton.GroupsComponent = this._groups;
+            this.SetDownButton.InActiveBackColour = System.Drawing.SystemColors.Control;
+            this.SetDownButton.InActiveForeColour = System.Drawing.SystemColors.ControlText;
             this.SetDownButton.Location = new System.Drawing.Point(167, 20);
             this.SetDownButton.Name = "SetDownButton";
             actionPropertyGroupItem22.Name = "Manual Rotation Buttons";
@@ -2144,6 +2187,7 @@
             this.SetDownButton.TabIndex = 37;
             this.SetDownButton.Text = "Set Button";
             this.SetDownButton.UseVisualStyleBackColor = false;
+            this.SetDownButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetDownButtonActionPropertyValueChanged);
             this.SetDownButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // DownLabel

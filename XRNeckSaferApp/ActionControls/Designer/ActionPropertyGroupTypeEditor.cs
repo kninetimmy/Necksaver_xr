@@ -27,13 +27,14 @@ namespace XRNeckSafer
             listBox.Items.Add(emptyItem);
             listBox.DisplayMember = nameof(emptyItem.Name);
             listBox.SelectedIndex = 0;
+            var selectedGroup = (ActionPropertyGroupItem)value;
             IActionPropertyGroups control = (IActionPropertyGroups)context.Instance;
             if (control?.GroupsComponent?.Groups != null)
             {
                 foreach (ActionPropertyGroup group in control.GroupsComponent.Groups)
                 {
                     int index = listBox.Items.Add(new ActionPropertyGroupItem { Name = group.Name, Tag = group });
-                    if (group.Equals(value))
+                    if (group.Name == selectedGroup.Name)
                     {
                         listBox.SelectedIndex = index;
                     }

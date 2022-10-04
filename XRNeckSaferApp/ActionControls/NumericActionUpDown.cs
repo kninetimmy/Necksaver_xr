@@ -10,9 +10,10 @@ namespace XRNeckSafer
     {
         private NumericUpDownActionProperty _actionProperty;
         private bool _firstTimeRendered;
+        private string _actionPropertyId;
         private string _actionPropertyName;
-        private string _actionPropertyNameText;
         private string _actionPropertyDescription;
+        private int _actionPropertyOrder;
         private ActionPropertyGroupItem _selectedGroup;
         private ActionPropertyGroups _groupsComponent;
         private decimal _defaultValue;
@@ -47,13 +48,13 @@ namespace XRNeckSafer
             }
         }
 
-        [Category("ActionProperty"), Description("ActionProperty ID")]
-        public string ActionPropertyName
+        [Category("ActionProperty"), Description("ActionProperty ID"), DisplayName("ActionProperty ID")]
+        public string ActionPropertyId
         {
-            get => _actionPropertyName;
+            get => _actionPropertyId;
             set
             {
-                _actionPropertyName = value;
+                _actionPropertyId = value;
                 if (DesignMode)
                 {
                     return;
@@ -62,18 +63,18 @@ namespace XRNeckSafer
             }
         }
 
-        [Category("ActionProperty"), Description("ActionProperty user firendly name")]
-        public string ActionPropertyNameText
+        [Category("ActionProperty"), DisplayName("Action Property Name"), Description("ActionProperty user firendly name")]
+        public string ActionPropertyName
         {
-            get => _actionPropertyNameText;
+            get => _actionPropertyName;
             set
             {
-                _actionPropertyNameText = value;
+                _actionPropertyName = value;
                 if (_actionProperty == null)
                 {
                     return;
                 }
-                _actionProperty.NameText = _actionPropertyNameText;
+                _actionProperty.Name = _actionPropertyName;
             }
         }
 
@@ -89,6 +90,21 @@ namespace XRNeckSafer
                     return;
                 }
                 _actionProperty.Description = _actionPropertyDescription;
+            }
+        }
+
+        [Category("ActionProperty"), Description("ActionProperty description")]
+        public int ActionPropertyOrder
+        {
+            get => _actionPropertyOrder;
+            set
+            {
+                _actionPropertyOrder = value;
+                if (_actionProperty == null)
+                {
+                    return;
+                }
+                _actionProperty.Order = _actionPropertyOrder;
             }
         }
 
@@ -148,22 +164,23 @@ namespace XRNeckSafer
             {
                 return;
             }
-            if (string.IsNullOrEmpty(ActionPropertyName))
+            if (string.IsNullOrEmpty(ActionPropertyId))
             {
-                throw new ArgumentException($"{nameof(ActionPropertyName)} can not be empty.");
+                throw new ArgumentException($"{nameof(ActionPropertyId)} can not be empty.");
             }
-            _actionProperty = Config.Instance.ActionProperties?.FirstOrDefault(p => p.Name == ActionPropertyName) as NumericUpDownActionProperty;
+            _actionProperty = Config.Instance.ActionProperties?.FirstOrDefault(p => p.Id == ActionPropertyId) as NumericUpDownActionProperty;
             if (_actionProperty == null)
             {
-                _actionProperty = NumericUpDownActionProperty.CreateProperty(ActionPropertyName);
+                _actionProperty = NumericUpDownActionProperty.CreateProperty(ActionPropertyId);
                 Config.Instance.ActionProperties.Add(_actionProperty);
                 _newProperty = true;
                 base.Value = DefaultValue;
             }
 
             base.Value = _actionProperty.GetValue();
-            _actionProperty.NameText = _actionPropertyNameText;
+            _actionProperty.Name = _actionPropertyName;
             _actionProperty.Description = _actionPropertyDescription;
+            _actionProperty.Order = _actionPropertyOrder;
             _actionProperty.Group = SelectedGroup?.Tag;
             _actionProperty.Triggered += ActionPropertyTriggered;
         }

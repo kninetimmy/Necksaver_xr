@@ -2,6 +2,6 @@
 {
     public interface IActionPropertyName
     {
-        string ActionPropertyName { get; set; }
+        string ActionPropertyId { get; set; }
     }
 }

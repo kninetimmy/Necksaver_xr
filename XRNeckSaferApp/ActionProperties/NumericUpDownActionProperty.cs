@@ -32,7 +32,7 @@ namespace XRNeckSafer
         {
             return new NumericUpDownActionProperty
             {
-                Name = name,
+                Id = name,
                 Value = 0,
                 Events = new[]
                 {

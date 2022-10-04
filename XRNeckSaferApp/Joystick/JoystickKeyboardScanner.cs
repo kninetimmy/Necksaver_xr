@@ -21,7 +21,7 @@ namespace XRNeckSafer
         }; 
 
         public event Action<JoystickKeyboardInput, bool> OnCurrentlyPressedChanged;
-        public event Action<JoystickKeyboardInput> BeforeRelesed;
+        public event Action<JoystickKeyboardInput> BeforeReleased;
 
         public JoystickKeyboardScanner(int maxPressedButtonsCount)
         {
@@ -43,7 +43,7 @@ namespace XRNeckSafer
                 var someKeyReleased = _result.KeyboardKeys.Count > _filteredKeys.Length && !_filteredKeys.Any(p => !_result.KeyboardKeys.Any(k => p != k));
                 if (!sameKeysPressed && someKeyReleased)
                 {
-                    BeforeRelesed?.Invoke(_result);
+                    BeforeReleased?.Invoke(_result);
                 }
                 if (AddKeys(_filteredKeys))
                 {
@@ -105,7 +105,7 @@ namespace XRNeckSafer
 
         private void OnBeforeJoystickButtonReleased(List<JoystickButton> buttons)
         {
-            BeforeRelesed?.Invoke(_result);
+            BeforeReleased?.Invoke(_result);
         }
 
         private void OnJoystickPressedChanged(List<JoystickButton> buttons)
@@ -132,7 +132,7 @@ namespace XRNeckSafer
         private void UnsubscribeAllHandlers()
         {
             KeyInterceptor.KeyPressed -= OnKeyPressed;
-            BeforeRelesed?.GetInvocationList().ToList().ForEach(d => BeforeRelesed -= d as Action<JoystickKeyboardInput>);
+            BeforeReleased?.GetInvocationList().ToList().ForEach(d => BeforeReleased -= d as Action<JoystickKeyboardInput>);
             OnCurrentlyPressedChanged?.GetInvocationList().ToList().ForEach(d => OnCurrentlyPressedChanged -= d as Action<JoystickKeyboardInput, bool>);
         }
     }
