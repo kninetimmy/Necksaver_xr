@@ -5,3 +5,11 @@ external/*
 **/bin/
 **/obj/
 *.vcxproj.user
+/other/XRNS_splash_icon.JPG
+/other/XRNS.ico
+/other/XRNS-4.bmp
+/other/XRNS-3.bmp
+/other/XRNS-2.bmp
+/other/XRNS-1.jpg
+/other/XRNS-1.bmp
+/other/XR.docx
