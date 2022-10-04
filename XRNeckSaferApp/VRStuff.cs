@@ -180,7 +180,7 @@ namespace XRNeckSafer
 
         public void SetPitchLinearHold(bool h)
         {
-            _sharedMemoryData.holdLinearRotation = h;
+            _sharedMemoryData.holdLinearPitchRotation = h;
             _memoryAccessor.Write(0, ref _sharedMemoryData);
         }
 
