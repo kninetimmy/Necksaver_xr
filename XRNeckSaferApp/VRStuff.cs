@@ -193,14 +193,18 @@ namespace XRNeckSafer
                 _sharedMemoryMappedFile?.Dispose();
             }
         }
+
+        public int GetRegistryStatus()
+        {
+            string k1 = @"HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\OpenXR\1\ApiLayers\Implicit";
+            string k2 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "XRNeckSafer", "OpenXrApiLayer", "XR_APILAYER_NOVENDOR_XRNeckSafer.json");
+            return (int)Registry.GetValue(k1, k2, 99);
+        }
         public void DisableApiLayer()
         {
 
             try
             {
-                string k1 = @"HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\OpenXR\1\ApiLayers\Implicit";
-                string k2 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "XRNeckSafer", "OpenXrApiLayer", "XR_APILAYER_NOVENDOR_XRNeckSafer.json") ;
-                var aaa = Registry.GetValue(k1,k2,null);
                
                 //find all entries for xrns. disable all, including double or outdated entries.
                 List<string> regKeys = new List<string>();

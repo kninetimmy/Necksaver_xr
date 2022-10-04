@@ -193,6 +193,24 @@ namespace XRNeckSafer
             SetLabelColor(SetRightButton.ActionPropertyValue, RightLabel);
             SetLabelColor(SetUpButton.ActionPropertyValue, UpLabel);
             SetLabelColor(SetDownButton.ActionPropertyValue, DownLabel);
+
+            int regstat = _vr.GetRegistryStatus();
+            switch (regstat)
+            {
+                case 0:
+                    disableAPILayerToolStripMenuItem.Checked = false;
+                    break;
+                case 1:
+                    disableAPILayerToolStripMenuItem.Checked = true;
+                    break;
+                case 99:
+                    disableAPILayerToolStripMenuItem.Checked = true;
+                    disableAPILayerToolStripMenuItem.Enabled = false;
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         private void OnJoysticksNumberChanged(Guid guid, string joystickName)
@@ -311,12 +329,21 @@ namespace XRNeckSafer
             }
             else
             {
-                _hmdtext = "HMD yaw: (not centered in game yet)";
+                _hmdtext = "! NOT CENTERED IN GAME YET !";
             }
 
             if (HMDYawLabel.Text != _hmdtext)
             {
-                HMDYawLabel.Location = new System.Drawing.Point(20, 18);
+                if (_vr.HmdWasCentered())
+                {
+                    HMDYawLabel.ForeColor = SystemColors.ControlText;
+                }
+                else 
+                {
+                    HMDYawLabel.ForeColor = System.Drawing.Color.Red;
+                }
+
+                HMDYawLabel.Location = new System.Drawing.Point(25, 18);
                 HMDYawLabel.Text = _hmdtext;
             }
 
@@ -1269,7 +1296,7 @@ namespace XRNeckSafer
             }
         }
 
-        private void disableAPILayerToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
+        private void disableAPILayerToolStripMenuItem_Clicked(object sender, EventArgs e)
         {
             if (disableAPILayerToolStripMenuItem.Checked)
             {
