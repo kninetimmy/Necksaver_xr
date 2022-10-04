@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
   <?define wizardDialogTitle="[ProductName] ($(var.AssemblyProductVersion)) [Setup]"?>
-  <Product Id="AFDEC970-44FC-497D-BB61-1CEEEEA21272" Name="XRNeckSafer" Language="1033" Version="!(bind.fileVersion.XRNECKSAFERAPP.EXE)" Manufacturer="J2_NobiWan &amp; Nikoz" UpgradeCode="4C0C8660-B2A0-4862-8590-8352F6B36FFC" Codepage="1252">
+  <Product Id="*" Name="XRNeckSafer" Language="1033" Version="!(bind.fileVersion.XRNECKSAFERAPP.EXE)" Manufacturer="J2_NobiWan &amp; Nikoz" UpgradeCode="4C0C8660-B2A0-4862-8590-8352F6B36FFC" Codepage="1252">
     <Package Description="XRNeckSafer installer ($(var.AssemblyProductVersion))" Platform="x64" Comments="XRNeckSafer installer ($(var.AssemblyProductVersion))" InstallerVersion="200" Compressed="yes" SummaryCodepage="1252" Languages="1033" />
     <Property Id="INSTALLDESKTOPSHORTCUT" Secure="yes" Value="1" />
     <Property Id="INSTALLPROGRAMMENUSHORTCUT" Secure="yes" Value="1" />
@@ -10,6 +10,10 @@
     <Condition Message='This setup requires the .NET Framework 4.7.2 (or greater) to be installed.'>
       <![CDATA[Installed OR (WIXNETFX4RELEASEINSTALLED >= "#461808")]]>
     </Condition>
+    <MajorUpgrade
+      AllowDowngrades="yes"
+      IgnoreRemoveFailure="no"
+      Schedule="afterInstallInitialize"/>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="DesktopFolder" Name="Desktop">
         <Component Id="ApplicationDesktopShortcut" Guid="*">
@@ -1170,9 +1174,6 @@
     <Property Id="BannerBitmap"><![CDATA[bannrbmp]]></Property>
     <Property Id="DialogBitmap"><![CDATA[dlgbmp]]></Property>
     <AdminExecuteSequence />
-    <InstallExecuteSequence>
-      <RemoveExistingProducts After="InstallFinalize" />
-    </InstallExecuteSequence>
     <Binary Id="bannrbmp" SourceFile="Binary\bannrbmp.ibd" />
     <Binary Id="completi" SourceFile="Binary\completi.ibd" />
     <Binary Id="custicon" SourceFile="Binary\custicon.ibd" />
