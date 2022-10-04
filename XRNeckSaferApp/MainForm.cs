@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -1085,13 +1086,13 @@ namespace XRNeckSafer
 
         private void UpdateLinearRotationSettings()
         {
-            _vr.SetLinearRotationSettings(Config.Instance.AutoMode == AutoMode.Linear, (int)numericUpDownStartLeft.Value, 
+            _vr.SetLinearRotationSettings(Config.Instance.AutoMode == AutoMode.Linear, (int)numericUpDownStartLeft.Value,
                 (int)numericUpDownStartRight.Value, (int)numericUpDownMultLeft.Value, (int)numericUpDownMultRight.Value);
         }
 
         private void UpdatePitchLinearRotationSettings()
         {
-            _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == AutoMode.Linear, (int)numericUpDownStartUp.Value, 
+            _vr.SetPitchLinearRotationSettings(Config.Instance.PitchAutoMode == AutoMode.Linear, (int)numericUpDownStartUp.Value,
                 (int)numericUpDownStartDown.Value, (int)numericUpDownMultUp.Value, (int)numericUpDownMultDown.Value);
         }
 
@@ -1265,6 +1266,18 @@ namespace XRNeckSafer
             if (control is IActionPropertyName actionNameControl)
             {
                 ActionPropertiesForm.ShowForm(actionNameControl.ActionPropertyId, Top, Right);
+            }
+        }
+
+        private void disableAPILayerToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (disableAPILayerToolStripMenuItem.Checked)
+            {
+                _vr.DisableApiLayer();
+            }
+            else
+            {
+                _vr.EnableApiLayer();
             }
         }
     }
