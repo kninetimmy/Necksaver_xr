@@ -29,6 +29,7 @@ namespace XRNeckSafer
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Graph));
             this.OKbutton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -49,6 +50,7 @@ namespace XRNeckSafer
             this.ClientSize = new System.Drawing.Size(470, 685);
             this.Controls.Add(this.OKbutton);
             this.DoubleBuffered = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Graph";
             this.Text = "Graph";
             this.SizeChanged += new System.EventHandler(this.Graph_SizeChanged);

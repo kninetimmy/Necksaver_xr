@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="XRNeckSafer.Wpf.InputCombinations"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:XRNeckSafer.Wpf"
+             Name="_host"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="_textBlockVertical" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="_dataGrid" TargetType="DataGrid">
+            <Setter Property="CanUserAddRows" Value="False" />
+            <Setter Property="CanUserDeleteRows" Value="False" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="CanUserReorderColumns" Value="False" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="GridLinesVisibility" Value="Horizontal" />
+            <Setter Property="HorizontalGridLinesBrush" Value="LightGray" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HeadersVisibility" Value="Column" />
+        </Style>
+        <Style x:Key="_cell" TargetType="DataGridCell">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <local:BitmapToImageSourceConverter x:Key="BitmapToImageSourceConverter" />
+    </UserControl.Resources>
+    <DataGrid x:Name="_inputsGrid" Style="{StaticResource _dataGrid}" HeadersVisibility="None" ItemsSource="{Binding ElementName=_host, Path=Inputs}"  CellStyle="{StaticResource _cell}">
+        <DataGrid.Columns>
+            <DataGridTextColumn Width="*" Binding="{Binding InputCombination}" ElementStyle="{StaticResource _textBlockVertical}" />
+            <DataGridTemplateColumn Header="Scan" Width="20">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel VerticalAlignment="Center">
+                            <Button ToolTip="Assign key/joystick shortcut" Click="OnScanButtonClick" Background="Transparent" BorderBrush="Transparent">
+                                <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.scan}, Converter={StaticResource BitmapToImageSourceConverter}}" />
+                            </Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="Clear" Width="20">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel VerticalAlignment="Center">
+                            <Button ToolTip="Clear key/joystick shortcut" Click="ClearEventClick" Background="Transparent" BorderBrush="Transparent">
+                                <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.deleteIcon}, Converter={StaticResource BitmapToImageSourceConverter}}" />
+                            </Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="Add/Remove" Width="20">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel VerticalAlignment="Center">
+                            <Button Click="OnAddRemoveShortcutClick" Background="Transparent" BorderBrush="Transparent" ToolTip="Add key/joystick shortcut">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CanAdd}" Value="False">
+                                                <Setter Property="Height" Value="0" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Border BorderThickness="1" BorderBrush="Green" Background="Green" CornerRadius="7" Width="15" Height="15">
+                                    <Grid>
+                                        <Line X1="1" Y1="6.5" X2="12" Y2="6.5" Stroke="White" StrokeThickness="3" />
+                                        <Line X1="6.5" Y1="1" X2="6.5" Y2="12" Stroke="White" StrokeThickness="3" />
+                                    </Grid>
+                                </Border>
+                            </Button>
+                            <Button Click="OnAddRemoveShortcutClick" Background="Transparent" BorderBrush="Transparent" ToolTip="Remove key/joystick shortcut">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CanAdd}" Value="True">
+                                                <Setter Property="Height" Value="0" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Border BorderThickness="1" BorderBrush="Red" Background="Red" CornerRadius="7" Width="15" Height="15">
+                                    <Line X1="2" Y1="6.5" Stroke="White" StrokeThickness="3" X2="11" Y2="6.5" />
+                                </Border>
+                            </Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>

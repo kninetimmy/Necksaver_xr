@@ -15,19 +15,46 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this._components = new System.ComponentModel.Container();
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem1 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup1 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup2 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup3 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup4 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroup actionPropertyGroup5 = new XRNeckSafer.ActionPropertyGroup();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem2 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem3 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem4 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem5 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem6 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem7 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem8 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem9 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem10 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem11 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem12 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem13 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem14 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem15 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem16 = new XRNeckSafer.ActionPropertyGroupItem();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem17 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem18 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem19 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem20 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem21 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem22 = new XRNeckSafer.ActionPropertyGroupItem();
             this.stepwiseGroup = new System.Windows.Forms.GroupBox();
             this.error_label2 = new System.Windows.Forms.Label();
             this.error_label = new System.Windows.Forms.Label();
@@ -49,28 +76,29 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDownMultRight = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownMultLeft = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownStartRight = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownStartLeft = new System.Windows.Forms.NumericUpDown();
-            this.SetHoldButton1 = new System.Windows.Forms.Button();
+            this.numericUpDownMultRight = new XRNeckSafer.NumericActionUpDown();
+            this._numericUpDownMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.setJoystickkeyShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._groups = new XRNeckSafer.ActionPropertyGroups();
+            this.numericUpDownMultLeft = new XRNeckSafer.NumericActionUpDown();
+            this.numericUpDownStartRight = new XRNeckSafer.NumericActionUpDown();
+            this.numericUpDownStartLeft = new XRNeckSafer.NumericActionUpDown();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.loopTimer = new System.Windows.Forms.Timer(this._components);
             this.HMDYawBox = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.SetResetButton = new System.Windows.Forms.Button();
+            this.SetResetButton = new XRNeckSafer.BooleanActionButton();
             this.HMDYawLabel = new System.Windows.Forms.Label();
             this.VersionLabel = new System.Windows.Forms.Label();
             this.ManualGroup = new System.Windows.Forms.GroupBox();
-            this.AccumReset = new System.Windows.Forms.Button();
+            this.AccumReset = new XRNeckSafer.BooleanActionButton();
             this.label25 = new System.Windows.Forms.Label();
-            this.transFNUP = new System.Windows.Forms.NumericUpDown();
+            this.transFNUP = new XRNeckSafer.NumericActionUpDown();
             this.label24 = new System.Windows.Forms.Label();
-            this.angleNUD = new System.Windows.Forms.NumericUpDown();
-            this.transLRNUP = new System.Windows.Forms.NumericUpDown();
+            this.angleNUD = new XRNeckSafer.NumericActionUpDown();
+            this.transLRNUP = new XRNeckSafer.NumericActionUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -80,11 +108,11 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.SetLeftButton = new System.Windows.Forms.Button();
-            this.SetRightButton = new System.Windows.Forms.Button();
+            this.SetLeftButton = new XRNeckSafer.BooleanActionButton();
+            this.SetRightButton = new XRNeckSafer.BooleanActionButton();
             this.RightLabel = new System.Windows.Forms.Label();
             this.LeftLabel = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this._components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.advancedConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startMinimzedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,23 +128,25 @@
             this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
-            this.MultipleLRButtonsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this._disableSplashScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disableAllGUIOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.disableJoystickAutoReconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.showJoystickkeyConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.resetOptionsToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aPILayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableAPILayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listApiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this._components);
-            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this._components);
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ARGroup = new System.Windows.Forms.GroupBox();
             this.ARlinear = new System.Windows.Forms.RadioButton();
             this.ARstepwise = new System.Windows.Forms.RadioButton();
             this.AROffButton = new System.Windows.Forms.RadioButton();
+            this.YawAutorotationHoldButton = new XRNeckSafer.BooleanActionButton();
             this.YawPitchTab = new System.Windows.Forms.TabControl();
             this.YawTab = new System.Windows.Forms.TabPage();
             this.PitchTab = new System.Windows.Forms.TabPage();
@@ -132,10 +162,10 @@
             this.label37 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
-            this.numericUpDownMultDown = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownMultUp = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownStartDown = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownStartUp = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMultDown = new XRNeckSafer.NumericActionUpDown();
+            this.numericUpDownMultUp = new XRNeckSafer.NumericActionUpDown();
+            this.numericUpDownStartDown = new XRNeckSafer.NumericActionUpDown();
+            this.numericUpDownStartUp = new XRNeckSafer.NumericActionUpDown();
             this.pAROffButton = new System.Windows.Forms.RadioButton();
             this.pStepwiseGroup = new System.Windows.Forms.GroupBox();
             this.label43 = new System.Windows.Forms.Label();
@@ -156,28 +186,32 @@
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UpAddButton = new System.Windows.Forms.Button();
             this.UpDelButton = new System.Windows.Forms.Button();
-            this.SetPitchHoldButton = new System.Windows.Forms.Button();
+            this.PitchAutorotationHoldButton = new XRNeckSafer.BooleanActionButton();
             this.pManualGroup = new System.Windows.Forms.GroupBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.pAccumReset = new System.Windows.Forms.Button();
+            this.pAccumReset = new XRNeckSafer.BooleanActionButton();
             this.label19 = new System.Windows.Forms.Label();
-            this.upNUD = new System.Windows.Forms.NumericUpDown();
-            this.downNUD = new System.Windows.Forms.NumericUpDown();
+            this.upNUD = new XRNeckSafer.NumericActionUpDown();
+            this.downNUD = new XRNeckSafer.NumericActionUpDown();
             this.label22 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.pSnapRP = new System.Windows.Forms.RadioButton();
             this.pAdditivRB = new System.Windows.Forms.RadioButton();
             this.label31 = new System.Windows.Forms.Label();
-            this.SetUpButton = new System.Windows.Forms.Button();
-            this.SetDownButton = new System.Windows.Forms.Button();
+            this.SetUpButton = new XRNeckSafer.BooleanActionButton();
+            this.SetDownButton = new XRNeckSafer.BooleanActionButton();
             this.DownLabel = new System.Windows.Forms.Label();
             this.UpLabel = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
+            this.loopTimer = new System.Windows.Forms.Timer(this.components);
+            this._devicesStatusLabel = new System.Windows.Forms.Label();
+            this._devicesStatusImage = new System.Windows.Forms.PictureBox();
             this.stepwiseGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AutorotGridView)).BeginInit();
             this.linearGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultRight)).BeginInit();
+            this._numericUpDownMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLeft)).BeginInit();
@@ -204,6 +238,7 @@
             this.pManualGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.upNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.downNUD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._devicesStatusImage)).BeginInit();
             this.SuspendLayout();
             // 
             // stepwiseGroup
@@ -465,7 +500,18 @@
             // 
             // numericUpDownMultRight
             // 
+            this.numericUpDownMultRight.ActionPropertyDescription = null;
+            this.numericUpDownMultRight.ActionPropertyId = "AutorotationRAmplifyBy";
+            this.numericUpDownMultRight.ActionPropertyName = "R Amplify By";
+            this.numericUpDownMultRight.ActionPropertyOrder = 3;
+            this.numericUpDownMultRight.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownMultRight.DefaultValue = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
             this.numericUpDownMultRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMultRight.GroupsComponent = this._groups;
             this.numericUpDownMultRight.Location = new System.Drawing.Point(146, 57);
             this.numericUpDownMultRight.Maximum = new decimal(new int[] {
             300,
@@ -473,19 +519,60 @@
             0,
             0});
             this.numericUpDownMultRight.Name = "numericUpDownMultRight";
+            actionPropertyGroupItem1.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem1.Tag = actionPropertyGroup5;
+            this.numericUpDownMultRight.SelectedGroup = actionPropertyGroupItem1;
             this.numericUpDownMultRight.Size = new System.Drawing.Size(44, 20);
             this.numericUpDownMultRight.TabIndex = 29;
-            this.numericUpDownMultRight.Value = new decimal(new int[] {
+            this.numericUpDownMultRight.ValueChanged += new System.EventHandler(this.numericUpDownMultRight_ValueChanged);
+            // 
+            // _numericUpDownMenuStrip
+            // 
+            this._numericUpDownMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setJoystickkeyShortcutToolStripMenuItem});
+            this._numericUpDownMenuStrip.Name = "_numericUpDownMenuStrip";
+            this._numericUpDownMenuStrip.Size = new System.Drawing.Size(235, 26);
+            // 
+            // setJoystickkeyShortcutToolStripMenuItem
+            // 
+            this.setJoystickkeyShortcutToolStripMenuItem.Name = "setJoystickkeyShortcutToolStripMenuItem";
+            this.setJoystickkeyShortcutToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
+            this.setJoystickkeyShortcutToolStripMenuItem.Text = "Set joystick/keyboard shortcut";
+            this.setJoystickkeyShortcutToolStripMenuItem.Click += new System.EventHandler(this.OnSetJoystickKeyShortcutMenuClick);
+            // 
+            // _groups
+            // 
+            actionPropertyGroup1.Name = "Reset Buttons";
+            actionPropertyGroup1.Order = 0;
+            actionPropertyGroup2.Name = "Manual Rotation Buttons";
+            actionPropertyGroup2.Order = 1;
+            actionPropertyGroup3.Name = "Hold Buttons";
+            actionPropertyGroup3.Order = 2;
+            actionPropertyGroup4.Name = "Manual Rotation Values";
+            actionPropertyGroup4.Order = 3;
+            actionPropertyGroup5.Name = "Smooth Autorotation Values";
+            actionPropertyGroup5.Order = 4;
+            this._groups.Groups = new XRNeckSafer.ActionPropertyGroup[] {
+        actionPropertyGroup1,
+        actionPropertyGroup2,
+        actionPropertyGroup3,
+        actionPropertyGroup4,
+        actionPropertyGroup5};
+            // 
+            // numericUpDownMultLeft
+            // 
+            this.numericUpDownMultLeft.ActionPropertyDescription = null;
+            this.numericUpDownMultLeft.ActionPropertyId = "AutorotationLAmplifyBy";
+            this.numericUpDownMultLeft.ActionPropertyName = "L Amplify By";
+            this.numericUpDownMultLeft.ActionPropertyOrder = 1;
+            this.numericUpDownMultLeft.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownMultLeft.DefaultValue = new decimal(new int[] {
             120,
             0,
             0,
             0});
-            this.numericUpDownMultRight.ValueChanged += new System.EventHandler(this.numericUpDownMultRight_ValueChanged);
-            this.numericUpDownMultRight.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownMultRight_KeyUp);
-            // 
-            // numericUpDownMultLeft
-            // 
             this.numericUpDownMultLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMultLeft.GroupsComponent = this._groups;
             this.numericUpDownMultLeft.Location = new System.Drawing.Point(146, 31);
             this.numericUpDownMultLeft.Maximum = new decimal(new int[] {
             300,
@@ -493,19 +580,27 @@
             0,
             0});
             this.numericUpDownMultLeft.Name = "numericUpDownMultLeft";
+            actionPropertyGroupItem2.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem2.Tag = actionPropertyGroup5;
+            this.numericUpDownMultLeft.SelectedGroup = actionPropertyGroupItem2;
             this.numericUpDownMultLeft.Size = new System.Drawing.Size(44, 20);
             this.numericUpDownMultLeft.TabIndex = 28;
-            this.numericUpDownMultLeft.Value = new decimal(new int[] {
-            120,
-            0,
-            0,
-            0});
             this.numericUpDownMultLeft.ValueChanged += new System.EventHandler(this.numericUpDownMultLeft_ValueChanged);
-            this.numericUpDownMultLeft.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownMultLeft_KeyUp);
             // 
             // numericUpDownStartRight
             // 
+            this.numericUpDownStartRight.ActionPropertyDescription = null;
+            this.numericUpDownStartRight.ActionPropertyId = "AutorotationRStartAt";
+            this.numericUpDownStartRight.ActionPropertyName = "R Start At";
+            this.numericUpDownStartRight.ActionPropertyOrder = 2;
+            this.numericUpDownStartRight.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownStartRight.DefaultValue = new decimal(new int[] {
+            95,
+            0,
+            0,
+            0});
             this.numericUpDownStartRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownStartRight.GroupsComponent = this._groups;
             this.numericUpDownStartRight.Location = new System.Drawing.Point(47, 57);
             this.numericUpDownStartRight.Maximum = new decimal(new int[] {
             180,
@@ -513,19 +608,27 @@
             0,
             0});
             this.numericUpDownStartRight.Name = "numericUpDownStartRight";
+            actionPropertyGroupItem3.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem3.Tag = actionPropertyGroup5;
+            this.numericUpDownStartRight.SelectedGroup = actionPropertyGroupItem3;
             this.numericUpDownStartRight.Size = new System.Drawing.Size(44, 20);
             this.numericUpDownStartRight.TabIndex = 27;
-            this.numericUpDownStartRight.Value = new decimal(new int[] {
+            this.numericUpDownStartRight.ValueChanged += new System.EventHandler(this.numericUpDownStartRight_ValueChanged);
+            // 
+            // numericUpDownStartLeft
+            // 
+            this.numericUpDownStartLeft.ActionPropertyDescription = null;
+            this.numericUpDownStartLeft.ActionPropertyId = "AutorotationLStartAt";
+            this.numericUpDownStartLeft.ActionPropertyName = "L Start At";
+            this.numericUpDownStartLeft.ActionPropertyOrder = 0;
+            this.numericUpDownStartLeft.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownStartLeft.DefaultValue = new decimal(new int[] {
             95,
             0,
             0,
             0});
-            this.numericUpDownStartRight.ValueChanged += new System.EventHandler(this.numericUpDownStartRight_ValueChanged);
-            this.numericUpDownStartRight.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownStartRight_KeyUp);
-            // 
-            // numericUpDownStartLeft
-            // 
             this.numericUpDownStartLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownStartLeft.GroupsComponent = this._groups;
             this.numericUpDownStartLeft.Location = new System.Drawing.Point(47, 31);
             this.numericUpDownStartLeft.Maximum = new decimal(new int[] {
             180,
@@ -533,26 +636,12 @@
             0,
             0});
             this.numericUpDownStartLeft.Name = "numericUpDownStartLeft";
+            actionPropertyGroupItem4.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem4.Tag = actionPropertyGroup5;
+            this.numericUpDownStartLeft.SelectedGroup = actionPropertyGroupItem4;
             this.numericUpDownStartLeft.Size = new System.Drawing.Size(44, 20);
             this.numericUpDownStartLeft.TabIndex = 26;
-            this.numericUpDownStartLeft.Value = new decimal(new int[] {
-            95,
-            0,
-            0,
-            0});
             this.numericUpDownStartLeft.ValueChanged += new System.EventHandler(this.numericUpDownStartLeft_ValueChanged);
-            this.numericUpDownStartLeft.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownStartLeft_KeyUp);
-            // 
-            // SetHoldButton1
-            // 
-            this.SetHoldButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetHoldButton1.Location = new System.Drawing.Point(196, 15);
-            this.SetHoldButton1.Name = "SetHoldButton1";
-            this.SetHoldButton1.Size = new System.Drawing.Size(48, 22);
-            this.SetHoldButton1.TabIndex = 42;
-            this.SetHoldButton1.Text = "Hold";
-            this.SetHoldButton1.UseVisualStyleBackColor = true;
-            this.SetHoldButton1.Click += new System.EventHandler(this.SetHoldButton1_Click);
             // 
             // label12
             // 
@@ -584,11 +673,6 @@
             this.label10.TabIndex = 24;
             this.label10.Text = "-  DCS: \"recenter VR Headset\"";
             // 
-            // loopTimer
-            // 
-            this.loopTimer.Interval = 20;
-            this.loopTimer.Tick += new System.EventHandler(this.loopTimer_Tick);
-            // 
             // HMDYawBox
             // 
             this.HMDYawBox.Controls.Add(this.label1);
@@ -598,7 +682,7 @@
             this.HMDYawBox.Controls.Add(this.label11);
             this.HMDYawBox.Controls.Add(this.label12);
             this.HMDYawBox.Controls.Add(this.label10);
-            this.HMDYawBox.Location = new System.Drawing.Point(12, 21);
+            this.HMDYawBox.Location = new System.Drawing.Point(12, 25);
             this.HMDYawBox.Name = "HMDYawBox";
             this.HMDYawBox.Size = new System.Drawing.Size(256, 109);
             this.HMDYawBox.TabIndex = 31;
@@ -620,20 +704,32 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(5, -2);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(83, 16);
+            this.label3.Size = new System.Drawing.Size(82, 16);
             this.label3.TabIndex = 54;
             this.label3.Text = "Calibration";
             // 
             // SetResetButton
             // 
+            this.SetResetButton.ActionPropertyDescription = null;
+            this.SetResetButton.ActionPropertyId = "SetResetCenter";
+            this.SetResetButton.ActionPropertyName = "Center";
+            this.SetResetButton.ActionPropertyOrder = 0;
+            this.SetResetButton.ActiveBackColour = System.Drawing.SystemColors.ControlText;
+            this.SetResetButton.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.SetResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetResetButton.GroupsComponent = this._groups;
+            this.SetResetButton.InActiveBackColour = System.Drawing.Color.Empty;
+            this.SetResetButton.InActiveForeColour = System.Drawing.Color.Empty;
             this.SetResetButton.Location = new System.Drawing.Point(165, 51);
             this.SetResetButton.Name = "SetResetButton";
+            actionPropertyGroupItem5.Name = "Reset Buttons";
+            actionPropertyGroupItem5.Tag = actionPropertyGroup1;
+            this.SetResetButton.SelectedGroup = actionPropertyGroupItem5;
             this.SetResetButton.Size = new System.Drawing.Size(71, 35);
             this.SetResetButton.TabIndex = 28;
             this.SetResetButton.Text = "Set Center Button";
             this.SetResetButton.UseVisualStyleBackColor = true;
-            this.SetResetButton.Click += new System.EventHandler(this.SetResetButton_Click);
+            this.SetResetButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // HMDYawLabel
             // 
@@ -650,9 +746,8 @@
             // 
             this.VersionLabel.AutoSize = true;
             this.VersionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VersionLabel.Location = new System.Drawing.Point(237, 503);
+            this.VersionLabel.Location = new System.Drawing.Point(234, 829);
             this.VersionLabel.Name = "VersionLabel";
-            this.VersionLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.VersionLabel.Size = new System.Drawing.Size(34, 13);
             this.VersionLabel.TabIndex = 34;
             this.VersionLabel.Text = "beta3";
@@ -689,14 +784,26 @@
             // 
             // AccumReset
             // 
+            this.AccumReset.ActionPropertyDescription = null;
+            this.AccumReset.ActionPropertyId = "SetAccumResetYaw";
+            this.AccumReset.ActionPropertyName = "Accum Yaw";
+            this.AccumReset.ActionPropertyOrder = 1;
+            this.AccumReset.ActiveBackColour = System.Drawing.Color.Black;
+            this.AccumReset.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.AccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AccumReset.GroupsComponent = this._groups;
+            this.AccumReset.InActiveBackColour = System.Drawing.Color.Empty;
+            this.AccumReset.InActiveForeColour = System.Drawing.Color.Empty;
             this.AccumReset.Location = new System.Drawing.Point(69, 99);
             this.AccumReset.Name = "AccumReset";
+            actionPropertyGroupItem6.Name = "Reset Buttons";
+            actionPropertyGroupItem6.Tag = actionPropertyGroup1;
+            this.AccumReset.SelectedGroup = actionPropertyGroupItem6;
             this.AccumReset.Size = new System.Drawing.Size(57, 34);
             this.AccumReset.TabIndex = 54;
             this.AccumReset.Text = "Set Acc. Reset";
             this.AccumReset.UseVisualStyleBackColor = true;
-            this.AccumReset.Click += new System.EventHandler(this.AccumReset_Click);
+            this.AccumReset.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // label25
             // 
@@ -710,7 +817,18 @@
             // 
             // transFNUP
             // 
+            this.transFNUP.ActionPropertyDescription = null;
+            this.transFNUP.ActionPropertyId = "TransitionOffsetForward";
+            this.transFNUP.ActionPropertyName = "Translation Fwd";
+            this.transFNUP.ActionPropertyOrder = 2;
+            this.transFNUP.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.transFNUP.DefaultValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.transFNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.transFNUP.GroupsComponent = this._groups;
             this.transFNUP.Location = new System.Drawing.Point(176, 87);
             this.transFNUP.Minimum = new decimal(new int[] {
             100,
@@ -718,6 +836,9 @@
             0,
             -2147483648});
             this.transFNUP.Name = "transFNUP";
+            actionPropertyGroupItem7.Name = "Manual Rotation Values";
+            actionPropertyGroupItem7.Tag = actionPropertyGroup4;
+            this.transFNUP.SelectedGroup = actionPropertyGroupItem7;
             this.transFNUP.Size = new System.Drawing.Size(44, 20);
             this.transFNUP.TabIndex = 26;
             this.transFNUP.ValueChanged += new System.EventHandler(this.OnYawForwardTranslationChanged);
@@ -734,7 +855,18 @@
             // 
             // angleNUD
             // 
+            this.angleNUD.ActionPropertyDescription = null;
+            this.angleNUD.ActionPropertyId = "YawRotationLR";
+            this.angleNUD.ActionPropertyName = "Yaw Rotation L/R";
+            this.angleNUD.ActionPropertyOrder = 0;
+            this.angleNUD.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.angleNUD.DefaultValue = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
             this.angleNUD.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.angleNUD.GroupsComponent = this._groups;
             this.angleNUD.Location = new System.Drawing.Point(34, 63);
             this.angleNUD.Maximum = new decimal(new int[] {
             360,
@@ -742,18 +874,26 @@
             0,
             0});
             this.angleNUD.Name = "angleNUD";
+            actionPropertyGroupItem8.Name = "Manual Rotation Values";
+            actionPropertyGroupItem8.Tag = actionPropertyGroup4;
+            this.angleNUD.SelectedGroup = actionPropertyGroupItem8;
             this.angleNUD.Size = new System.Drawing.Size(38, 20);
             this.angleNUD.TabIndex = 9;
-            this.angleNUD.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.angleNUD.ValueChanged += new System.EventHandler(this.OnYawRotationAngleChanged);
             // 
             // transLRNUP
             // 
+            this.transLRNUP.ActionPropertyDescription = null;
+            this.transLRNUP.ActionPropertyId = "TransitionOffsetLeftRight";
+            this.transLRNUP.ActionPropertyName = "Translation L/R";
+            this.transLRNUP.ActionPropertyOrder = 1;
+            this.transLRNUP.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.transLRNUP.DefaultValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.transLRNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.transLRNUP.GroupsComponent = this._groups;
             this.transLRNUP.Location = new System.Drawing.Point(176, 63);
             this.transLRNUP.Minimum = new decimal(new int[] {
             100,
@@ -761,6 +901,9 @@
             0,
             -2147483648});
             this.transLRNUP.Name = "transLRNUP";
+            actionPropertyGroupItem9.Name = "Manual Rotation Values";
+            actionPropertyGroupItem9.Tag = actionPropertyGroup4;
+            this.transLRNUP.SelectedGroup = actionPropertyGroupItem9;
             this.transLRNUP.Size = new System.Drawing.Size(44, 20);
             this.transLRNUP.TabIndex = 25;
             this.transLRNUP.ValueChanged += new System.EventHandler(this.OnYawLeftRightTranslationChanged);
@@ -862,25 +1005,51 @@
             // 
             // SetLeftButton
             // 
+            this.SetLeftButton.ActionPropertyDescription = null;
+            this.SetLeftButton.ActionPropertyId = "ManualRotationLeft";
+            this.SetLeftButton.ActionPropertyName = "Left";
+            this.SetLeftButton.ActionPropertyOrder = 0;
+            this.SetLeftButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.SetLeftButton.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.SetLeftButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetLeftButton.GroupsComponent = this._groups;
+            this.SetLeftButton.InActiveBackColour = System.Drawing.SystemColors.Control;
+            this.SetLeftButton.InActiveForeColour = System.Drawing.SystemColors.ControlText;
             this.SetLeftButton.Location = new System.Drawing.Point(39, 20);
             this.SetLeftButton.Name = "SetLeftButton";
+            actionPropertyGroupItem10.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem10.Tag = actionPropertyGroup2;
+            this.SetLeftButton.SelectedGroup = actionPropertyGroupItem10;
             this.SetLeftButton.Size = new System.Drawing.Size(72, 27);
             this.SetLeftButton.TabIndex = 36;
             this.SetLeftButton.Text = "Set Button";
-            this.SetLeftButton.UseVisualStyleBackColor = true;
-            this.SetLeftButton.Click += new System.EventHandler(this.SetLeftButton_Click);
+            this.SetLeftButton.UseVisualStyleBackColor = false;
+            this.SetLeftButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetLeftButtonActionPropertyValueChanged);
+            this.SetLeftButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // SetRightButton
             // 
+            this.SetRightButton.ActionPropertyDescription = null;
+            this.SetRightButton.ActionPropertyId = "ManualRotationRight";
+            this.SetRightButton.ActionPropertyName = "Right";
+            this.SetRightButton.ActionPropertyOrder = 1;
+            this.SetRightButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.SetRightButton.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.SetRightButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetRightButton.GroupsComponent = this._groups;
+            this.SetRightButton.InActiveBackColour = System.Drawing.SystemColors.Control;
+            this.SetRightButton.InActiveForeColour = System.Drawing.SystemColors.ControlText;
             this.SetRightButton.Location = new System.Drawing.Point(167, 20);
             this.SetRightButton.Name = "SetRightButton";
+            actionPropertyGroupItem11.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem11.Tag = actionPropertyGroup2;
+            this.SetRightButton.SelectedGroup = actionPropertyGroupItem11;
             this.SetRightButton.Size = new System.Drawing.Size(72, 27);
             this.SetRightButton.TabIndex = 37;
             this.SetRightButton.Text = "Set Button";
             this.SetRightButton.UseVisualStyleBackColor = false;
-            this.SetRightButton.Click += new System.EventHandler(this.SetRightButton_Click);
+            this.SetRightButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetRightButtonActionPropertyValueChanged);
+            this.SetRightButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // RightLabel
             // 
@@ -924,11 +1093,12 @@
             this.minimizeToTrayToolStripMenuItem,
             this.toolStripSeparator1,
             this.PitchLimToolStripMenuItem,
-            this.MultipleLRButtonsToolStripMenuItem,
             this.toolStripSeparator3,
+            this._disableSplashScreenToolStripMenuItem,
             this.disableAllGUIOutputToolStripMenuItem,
-            this.disableJoystickAutoReconnectToolStripMenuItem,
             this.toolStripSeparator2,
+            this.showJoystickkeyConfigurationToolStripMenuItem,
+            this.toolStripSeparator4,
             this.resetOptionsToDefaultToolStripMenuItem});
             this.advancedConfigToolStripMenuItem.Name = "advancedConfigToolStripMenuItem";
             this.advancedConfigToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -938,7 +1108,7 @@
             // 
             this.startMinimzedToolStripMenuItem.CheckOnClick = true;
             this.startMinimzedToolStripMenuItem.Name = "startMinimzedToolStripMenuItem";
-            this.startMinimzedToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.startMinimzedToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.startMinimzedToolStripMenuItem.Text = "Start minimzed";
             this.startMinimzedToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.startMinimzedToolStripMenuItem_CheckStateChanged);
             // 
@@ -946,14 +1116,14 @@
             // 
             this.minimizeToTrayToolStripMenuItem.CheckOnClick = true;
             this.minimizeToTrayToolStripMenuItem.Name = "minimizeToTrayToolStripMenuItem";
-            this.minimizeToTrayToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.minimizeToTrayToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.minimizeToTrayToolStripMenuItem.Text = "Minimize to tray";
             this.minimizeToTrayToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.minimizeToTrayToolStripMenuItem_CheckStateChanged);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(235, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(254, 6);
             // 
             // PitchLimToolStripMenuItem
             // 
@@ -968,7 +1138,7 @@
             this.toolStripMenuItem10,
             this.toolStripMenuItem11});
             this.PitchLimToolStripMenuItem.Name = "PitchLimToolStripMenuItem";
-            this.PitchLimToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.PitchLimToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.PitchLimToolStripMenuItem.Text = "Pitch limit for Autorot";
             this.PitchLimToolStripMenuItem.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.PitchLimToolStripMenuItem_DropDownItemClicked);
             // 
@@ -1026,43 +1196,48 @@
             this.toolStripMenuItem11.Size = new System.Drawing.Size(109, 22);
             this.toolStripMenuItem11.Text = "90 deg";
             // 
-            // MultipleLRButtonsToolStripMenuItem
-            // 
-            this.MultipleLRButtonsToolStripMenuItem.Name = "MultipleLRButtonsToolStripMenuItem";
-            this.MultipleLRButtonsToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.MultipleLRButtonsToolStripMenuItem.Text = "Multiple L/R/Reset buttons";
-            this.MultipleLRButtonsToolStripMenuItem.Click += new System.EventHandler(this.moreLRButtonsToolStripMenuItem_Click);
-            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(235, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(254, 6);
+            // 
+            // _disableSplashScreenToolStripMenuItem
+            // 
+            this._disableSplashScreenToolStripMenuItem.CheckOnClick = true;
+            this._disableSplashScreenToolStripMenuItem.Name = "_disableSplashScreenToolStripMenuItem";
+            this._disableSplashScreenToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this._disableSplashScreenToolStripMenuItem.Text = "Disable Splash Screen";
+            this._disableSplashScreenToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.OnDisableSplashScreenCheckStateChanged);
             // 
             // disableAllGUIOutputToolStripMenuItem
             // 
             this.disableAllGUIOutputToolStripMenuItem.CheckOnClick = true;
             this.disableAllGUIOutputToolStripMenuItem.Name = "disableAllGUIOutputToolStripMenuItem";
-            this.disableAllGUIOutputToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.disableAllGUIOutputToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.disableAllGUIOutputToolStripMenuItem.Text = "Disable angle output in GUI";
             this.disableAllGUIOutputToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.disableAllGUIOutputToolStripMenuItem_CheckStateChanged);
-            // 
-            // disableJoystickAutoReconnectToolStripMenuItem
-            // 
-            this.disableJoystickAutoReconnectToolStripMenuItem.CheckOnClick = true;
-            this.disableJoystickAutoReconnectToolStripMenuItem.Name = "disableJoystickAutoReconnectToolStripMenuItem";
-            this.disableJoystickAutoReconnectToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.disableJoystickAutoReconnectToolStripMenuItem.Text = "Disable joystick auto reconnect";
-            this.disableJoystickAutoReconnectToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.disableJoystickAutoReconnectToolStripMenuItem_CheckStateChanged);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(235, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(254, 6);
+            // 
+            // showJoystickkeyConfigurationToolStripMenuItem
+            // 
+            this.showJoystickkeyConfigurationToolStripMenuItem.Name = "showJoystickkeyConfigurationToolStripMenuItem";
+            this.showJoystickkeyConfigurationToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.showJoystickkeyConfigurationToolStripMenuItem.Text = "Show joystick/key mapping config";
+            this.showJoystickkeyConfigurationToolStripMenuItem.Click += new System.EventHandler(this.OnShowJoystickKeyConfigMenuClick);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(254, 6);
             // 
             // resetOptionsToDefaultToolStripMenuItem
             // 
             this.resetOptionsToDefaultToolStripMenuItem.Name = "resetOptionsToDefaultToolStripMenuItem";
-            this.resetOptionsToDefaultToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.resetOptionsToDefaultToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.resetOptionsToDefaultToolStripMenuItem.Text = "Reset options to default";
             this.resetOptionsToDefaultToolStripMenuItem.Click += new System.EventHandler(this.resetOptionsToDefaultToolStripMenuItem_Click);
             // 
@@ -1125,7 +1300,7 @@
             this.ARGroup.Controls.Add(this.ARstepwise);
             this.ARGroup.Controls.Add(this.AROffButton);
             this.ARGroup.Controls.Add(this.stepwiseGroup);
-            this.ARGroup.Controls.Add(this.SetHoldButton1);
+            this.ARGroup.Controls.Add(this.YawAutorotationHoldButton);
             this.ARGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ARGroup.Location = new System.Drawing.Point(5, 152);
             this.ARGroup.Name = "ARGroup";
@@ -1172,12 +1347,35 @@
             this.AROffButton.UseVisualStyleBackColor = true;
             this.AROffButton.CheckedChanged += new System.EventHandler(this.autorot_changed);
             // 
+            // YawAutorotationHoldButton
+            // 
+            this.YawAutorotationHoldButton.ActionPropertyDescription = null;
+            this.YawAutorotationHoldButton.ActionPropertyId = "YawAutorotationHold";
+            this.YawAutorotationHoldButton.ActionPropertyName = "Yaw";
+            this.YawAutorotationHoldButton.ActionPropertyOrder = 0;
+            this.YawAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.YawAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LightGreen;
+            this.YawAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YawAutorotationHoldButton.GroupsComponent = this._groups;
+            this.YawAutorotationHoldButton.InActiveBackColour = System.Drawing.Color.Empty;
+            this.YawAutorotationHoldButton.InActiveForeColour = System.Drawing.Color.Empty;
+            this.YawAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
+            this.YawAutorotationHoldButton.Name = "YawAutorotationHoldButton";
+            actionPropertyGroupItem12.Name = "Hold Buttons";
+            actionPropertyGroupItem12.Tag = actionPropertyGroup3;
+            this.YawAutorotationHoldButton.SelectedGroup = actionPropertyGroupItem12;
+            this.YawAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
+            this.YawAutorotationHoldButton.TabIndex = 42;
+            this.YawAutorotationHoldButton.Text = "Hold";
+            this.YawAutorotationHoldButton.UseVisualStyleBackColor = true;
+            this.YawAutorotationHoldButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
             // YawPitchTab
             // 
             this.YawPitchTab.Controls.Add(this.YawTab);
             this.YawPitchTab.Controls.Add(this.PitchTab);
             this.YawPitchTab.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.YawPitchTab.Location = new System.Drawing.Point(6, 136);
+            this.YawPitchTab.Location = new System.Drawing.Point(6, 140);
             this.YawPitchTab.Name = "YawPitchTab";
             this.YawPitchTab.SelectedIndex = 0;
             this.YawPitchTab.Size = new System.Drawing.Size(268, 470);
@@ -1217,7 +1415,7 @@
             this.pARGroup.Controls.Add(this.pLinearGroup);
             this.pARGroup.Controls.Add(this.pAROffButton);
             this.pARGroup.Controls.Add(this.pStepwiseGroup);
-            this.pARGroup.Controls.Add(this.SetPitchHoldButton);
+            this.pARGroup.Controls.Add(this.PitchAutorotationHoldButton);
             this.pARGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pARGroup.Location = new System.Drawing.Point(5, 152);
             this.pARGroup.Name = "pARGroup";
@@ -1352,7 +1550,18 @@
             // 
             // numericUpDownMultDown
             // 
+            this.numericUpDownMultDown.ActionPropertyDescription = null;
+            this.numericUpDownMultDown.ActionPropertyId = "AutorotationDAmplifyBy";
+            this.numericUpDownMultDown.ActionPropertyName = "D Amplify By";
+            this.numericUpDownMultDown.ActionPropertyOrder = 7;
+            this.numericUpDownMultDown.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownMultDown.DefaultValue = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
             this.numericUpDownMultDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMultDown.GroupsComponent = this._groups;
             this.numericUpDownMultDown.Location = new System.Drawing.Point(146, 57);
             this.numericUpDownMultDown.Maximum = new decimal(new int[] {
             300,
@@ -1360,19 +1569,27 @@
             0,
             0});
             this.numericUpDownMultDown.Name = "numericUpDownMultDown";
+            actionPropertyGroupItem13.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem13.Tag = actionPropertyGroup5;
+            this.numericUpDownMultDown.SelectedGroup = actionPropertyGroupItem13;
             this.numericUpDownMultDown.Size = new System.Drawing.Size(44, 20);
             this.numericUpDownMultDown.TabIndex = 29;
-            this.numericUpDownMultDown.Value = new decimal(new int[] {
+            this.numericUpDownMultDown.ValueChanged += new System.EventHandler(this.numericUpDownMultDown_ValueChanged);
+            // 
+            // numericUpDownMultUp
+            // 
+            this.numericUpDownMultUp.ActionPropertyDescription = null;
+            this.numericUpDownMultUp.ActionPropertyId = "AutorotationUAmplifyBy";
+            this.numericUpDownMultUp.ActionPropertyName = "U Amplify By";
+            this.numericUpDownMultUp.ActionPropertyOrder = 5;
+            this.numericUpDownMultUp.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownMultUp.DefaultValue = new decimal(new int[] {
             120,
             0,
             0,
             0});
-            this.numericUpDownMultDown.ValueChanged += new System.EventHandler(this.numericUpDownMultDown_ValueChanged);
-            this.numericUpDownMultDown.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownMultDown_KeyUp);
-            // 
-            // numericUpDownMultUp
-            // 
             this.numericUpDownMultUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMultUp.GroupsComponent = this._groups;
             this.numericUpDownMultUp.Location = new System.Drawing.Point(146, 31);
             this.numericUpDownMultUp.Maximum = new decimal(new int[] {
             300,
@@ -1380,19 +1597,27 @@
             0,
             0});
             this.numericUpDownMultUp.Name = "numericUpDownMultUp";
+            actionPropertyGroupItem14.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem14.Tag = actionPropertyGroup5;
+            this.numericUpDownMultUp.SelectedGroup = actionPropertyGroupItem14;
             this.numericUpDownMultUp.Size = new System.Drawing.Size(44, 20);
             this.numericUpDownMultUp.TabIndex = 28;
-            this.numericUpDownMultUp.Value = new decimal(new int[] {
-            120,
-            0,
-            0,
-            0});
             this.numericUpDownMultUp.ValueChanged += new System.EventHandler(this.numericUpDownMultUp_ValueChanged);
-            this.numericUpDownMultUp.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownMultUp_KeyUp);
             // 
             // numericUpDownStartDown
             // 
+            this.numericUpDownStartDown.ActionPropertyDescription = null;
+            this.numericUpDownStartDown.ActionPropertyId = "AutorotationDStartAt";
+            this.numericUpDownStartDown.ActionPropertyName = "D Start At";
+            this.numericUpDownStartDown.ActionPropertyOrder = 6;
+            this.numericUpDownStartDown.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownStartDown.DefaultValue = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
             this.numericUpDownStartDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownStartDown.GroupsComponent = this._groups;
             this.numericUpDownStartDown.Location = new System.Drawing.Point(47, 57);
             this.numericUpDownStartDown.Maximum = new decimal(new int[] {
             180,
@@ -1400,19 +1625,27 @@
             0,
             0});
             this.numericUpDownStartDown.Name = "numericUpDownStartDown";
+            actionPropertyGroupItem15.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem15.Tag = actionPropertyGroup5;
+            this.numericUpDownStartDown.SelectedGroup = actionPropertyGroupItem15;
             this.numericUpDownStartDown.Size = new System.Drawing.Size(44, 20);
             this.numericUpDownStartDown.TabIndex = 27;
-            this.numericUpDownStartDown.Value = new decimal(new int[] {
+            this.numericUpDownStartDown.ValueChanged += new System.EventHandler(this.numericUpDownStartDown_ValueChanged);
+            // 
+            // numericUpDownStartUp
+            // 
+            this.numericUpDownStartUp.ActionPropertyDescription = null;
+            this.numericUpDownStartUp.ActionPropertyId = "AutorotationUStartAt";
+            this.numericUpDownStartUp.ActionPropertyName = "U Start At";
+            this.numericUpDownStartUp.ActionPropertyOrder = 4;
+            this.numericUpDownStartUp.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownStartUp.DefaultValue = new decimal(new int[] {
             60,
             0,
             0,
             0});
-            this.numericUpDownStartDown.ValueChanged += new System.EventHandler(this.numericUpDownStartDown_ValueChanged);
-            this.numericUpDownStartDown.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownStartDown_KeyUp);
-            // 
-            // numericUpDownStartUp
-            // 
             this.numericUpDownStartUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownStartUp.GroupsComponent = this._groups;
             this.numericUpDownStartUp.Location = new System.Drawing.Point(47, 31);
             this.numericUpDownStartUp.Maximum = new decimal(new int[] {
             180,
@@ -1420,15 +1653,12 @@
             0,
             0});
             this.numericUpDownStartUp.Name = "numericUpDownStartUp";
+            actionPropertyGroupItem16.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem16.Tag = actionPropertyGroup5;
+            this.numericUpDownStartUp.SelectedGroup = actionPropertyGroupItem16;
             this.numericUpDownStartUp.Size = new System.Drawing.Size(44, 20);
             this.numericUpDownStartUp.TabIndex = 26;
-            this.numericUpDownStartUp.Value = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
             this.numericUpDownStartUp.ValueChanged += new System.EventHandler(this.numericUpDownStartUp_ValueChanged);
-            this.numericUpDownStartUp.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDownStartUp_KeyUp);
             // 
             // pAROffButton
             // 
@@ -1473,7 +1703,7 @@
             this.label43.Location = new System.Drawing.Point(123, 15);
             this.label43.Name = "label43";
             this.label43.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label43.Size = new System.Drawing.Size(47, 16);
+            this.label43.Size = new System.Drawing.Size(46, 16);
             this.label43.TabIndex = 64;
             this.label43.Text = "Down";
             // 
@@ -1506,7 +1736,7 @@
             this.label32.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label32.Location = new System.Drawing.Point(7, 15);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(27, 16);
+            this.label32.Size = new System.Drawing.Size(26, 16);
             this.label32.TabIndex = 61;
             this.label32.Text = "Up";
             // 
@@ -1702,16 +1932,28 @@
             this.UpDelButton.UseVisualStyleBackColor = true;
             this.UpDelButton.Click += new System.EventHandler(this.UpDeleteButton_Click);
             // 
-            // SetPitchHoldButton
+            // PitchAutorotationHoldButton
             // 
-            this.SetPitchHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetPitchHoldButton.Location = new System.Drawing.Point(196, 15);
-            this.SetPitchHoldButton.Name = "SetPitchHoldButton";
-            this.SetPitchHoldButton.Size = new System.Drawing.Size(48, 22);
-            this.SetPitchHoldButton.TabIndex = 42;
-            this.SetPitchHoldButton.Text = "Hold";
-            this.SetPitchHoldButton.UseVisualStyleBackColor = true;
-            this.SetPitchHoldButton.Click += new System.EventHandler(this.SetPitchHoldButton_Click);
+            this.PitchAutorotationHoldButton.ActionPropertyDescription = null;
+            this.PitchAutorotationHoldButton.ActionPropertyId = "PitchAutorotationHold";
+            this.PitchAutorotationHoldButton.ActionPropertyName = "Pitch";
+            this.PitchAutorotationHoldButton.ActionPropertyOrder = 1;
+            this.PitchAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.PitchAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LightGreen;
+            this.PitchAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PitchAutorotationHoldButton.GroupsComponent = this._groups;
+            this.PitchAutorotationHoldButton.InActiveBackColour = System.Drawing.Color.Empty;
+            this.PitchAutorotationHoldButton.InActiveForeColour = System.Drawing.Color.Empty;
+            this.PitchAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
+            this.PitchAutorotationHoldButton.Name = "PitchAutorotationHoldButton";
+            actionPropertyGroupItem17.Name = "Hold Buttons";
+            actionPropertyGroupItem17.Tag = actionPropertyGroup3;
+            this.PitchAutorotationHoldButton.SelectedGroup = actionPropertyGroupItem17;
+            this.PitchAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
+            this.PitchAutorotationHoldButton.TabIndex = 42;
+            this.PitchAutorotationHoldButton.Text = "Hold";
+            this.PitchAutorotationHoldButton.UseVisualStyleBackColor = true;
+            this.PitchAutorotationHoldButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // pManualGroup
             // 
@@ -1761,14 +2003,26 @@
             // 
             // pAccumReset
             // 
+            this.pAccumReset.ActionPropertyDescription = null;
+            this.pAccumReset.ActionPropertyId = "SetAccumResetPitch";
+            this.pAccumReset.ActionPropertyName = "Accum Pitch";
+            this.pAccumReset.ActionPropertyOrder = 2;
+            this.pAccumReset.ActiveBackColour = System.Drawing.Color.Black;
+            this.pAccumReset.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.pAccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pAccumReset.GroupsComponent = this._groups;
+            this.pAccumReset.InActiveBackColour = System.Drawing.Color.Empty;
+            this.pAccumReset.InActiveForeColour = System.Drawing.Color.Empty;
             this.pAccumReset.Location = new System.Drawing.Point(69, 99);
             this.pAccumReset.Name = "pAccumReset";
+            actionPropertyGroupItem18.Name = "Reset Buttons";
+            actionPropertyGroupItem18.Tag = actionPropertyGroup1;
+            this.pAccumReset.SelectedGroup = actionPropertyGroupItem18;
             this.pAccumReset.Size = new System.Drawing.Size(57, 34);
             this.pAccumReset.TabIndex = 54;
             this.pAccumReset.Text = "Set Acc. Reset";
             this.pAccumReset.UseVisualStyleBackColor = true;
-            this.pAccumReset.Click += new System.EventHandler(this.pAccumReset_Click);
+            this.pAccumReset.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // label19
             // 
@@ -1782,7 +2036,18 @@
             // 
             // upNUD
             // 
+            this.upNUD.ActionPropertyDescription = null;
+            this.upNUD.ActionPropertyId = "ManualPitchUp";
+            this.upNUD.ActionPropertyName = "Pitch Up";
+            this.upNUD.ActionPropertyOrder = 3;
+            this.upNUD.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.upNUD.DefaultValue = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
             this.upNUD.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.upNUD.GroupsComponent = this._groups;
             this.upNUD.Location = new System.Drawing.Point(42, 56);
             this.upNUD.Maximum = new decimal(new int[] {
             180,
@@ -1790,18 +2055,26 @@
             0,
             0});
             this.upNUD.Name = "upNUD";
+            actionPropertyGroupItem19.Name = "Manual Rotation Values";
+            actionPropertyGroupItem19.Tag = actionPropertyGroup4;
+            this.upNUD.SelectedGroup = actionPropertyGroupItem19;
             this.upNUD.Size = new System.Drawing.Size(38, 20);
             this.upNUD.TabIndex = 9;
-            this.upNUD.Value = new decimal(new int[] {
+            // 
+            // downNUD
+            // 
+            this.downNUD.ActionPropertyDescription = null;
+            this.downNUD.ActionPropertyId = "ManualPitchDown";
+            this.downNUD.ActionPropertyName = "Pitch Down";
+            this.downNUD.ActionPropertyOrder = 4;
+            this.downNUD.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.downNUD.DefaultValue = new decimal(new int[] {
             30,
             0,
             0,
             0});
-            this.upNUD.ValueChanged += new System.EventHandler(this.OnPitchTiltUpRotationChanged);
-            // 
-            // downNUD
-            // 
             this.downNUD.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.downNUD.GroupsComponent = this._groups;
             this.downNUD.Location = new System.Drawing.Point(173, 56);
             this.downNUD.Maximum = new decimal(new int[] {
             180,
@@ -1809,14 +2082,11 @@
             0,
             0});
             this.downNUD.Name = "downNUD";
+            actionPropertyGroupItem20.Name = "Manual Rotation Values";
+            actionPropertyGroupItem20.Tag = actionPropertyGroup4;
+            this.downNUD.SelectedGroup = actionPropertyGroupItem20;
             this.downNUD.Size = new System.Drawing.Size(44, 20);
             this.downNUD.TabIndex = 25;
-            this.downNUD.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.downNUD.ValueChanged += new System.EventHandler(this.OnPitchTiltDownRotationChanged);
             // 
             // label22
             // 
@@ -1874,25 +2144,51 @@
             // 
             // SetUpButton
             // 
+            this.SetUpButton.ActionPropertyDescription = null;
+            this.SetUpButton.ActionPropertyId = "ManualRotationUp";
+            this.SetUpButton.ActionPropertyName = "Up";
+            this.SetUpButton.ActionPropertyOrder = 2;
+            this.SetUpButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.SetUpButton.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.SetUpButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetUpButton.GroupsComponent = this._groups;
+            this.SetUpButton.InActiveBackColour = System.Drawing.SystemColors.Control;
+            this.SetUpButton.InActiveForeColour = System.Drawing.SystemColors.ControlText;
             this.SetUpButton.Location = new System.Drawing.Point(39, 20);
             this.SetUpButton.Name = "SetUpButton";
+            actionPropertyGroupItem21.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem21.Tag = actionPropertyGroup2;
+            this.SetUpButton.SelectedGroup = actionPropertyGroupItem21;
             this.SetUpButton.Size = new System.Drawing.Size(72, 27);
             this.SetUpButton.TabIndex = 36;
             this.SetUpButton.Text = "Set Button";
-            this.SetUpButton.UseVisualStyleBackColor = true;
-            this.SetUpButton.Click += new System.EventHandler(this.SetUpButton_Click);
+            this.SetUpButton.UseVisualStyleBackColor = false;
+            this.SetUpButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetUpButtonActionPropertyValueChanged);
+            this.SetUpButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // SetDownButton
             // 
+            this.SetDownButton.ActionPropertyDescription = null;
+            this.SetDownButton.ActionPropertyId = "ManualRotationDown";
+            this.SetDownButton.ActionPropertyName = "Down";
+            this.SetDownButton.ActionPropertyOrder = 3;
+            this.SetDownButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.SetDownButton.ActiveForeColour = System.Drawing.Color.LightGreen;
             this.SetDownButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetDownButton.GroupsComponent = this._groups;
+            this.SetDownButton.InActiveBackColour = System.Drawing.SystemColors.Control;
+            this.SetDownButton.InActiveForeColour = System.Drawing.SystemColors.ControlText;
             this.SetDownButton.Location = new System.Drawing.Point(167, 20);
             this.SetDownButton.Name = "SetDownButton";
+            actionPropertyGroupItem22.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem22.Tag = actionPropertyGroup2;
+            this.SetDownButton.SelectedGroup = actionPropertyGroupItem22;
             this.SetDownButton.Size = new System.Drawing.Size(72, 27);
             this.SetDownButton.TabIndex = 37;
             this.SetDownButton.Text = "Set Button";
             this.SetDownButton.UseVisualStyleBackColor = false;
-            this.SetDownButton.Click += new System.EventHandler(this.SetDownButton_Click);
+            this.SetDownButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetDownButtonActionPropertyValueChanged);
+            this.SetDownButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // DownLabel
             // 
@@ -1926,11 +2222,41 @@
             this.label26.TabIndex = 55;
             this.label26.Text = "up";
             // 
+            // loopTimer
+            // 
+            this.loopTimer.Interval = 20;
+            this.loopTimer.Tick += new System.EventHandler(this.loopTimer_Tick);
+            // 
+            // _devicesStatusLabel
+            // 
+            this._devicesStatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._devicesStatusLabel.AutoSize = true;
+            this._devicesStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this._devicesStatusLabel.Location = new System.Drawing.Point(18, 831);
+            this._devicesStatusLabel.Name = "_devicesStatusLabel";
+            this._devicesStatusLabel.Size = new System.Drawing.Size(62, 13);
+            this._devicesStatusLabel.TabIndex = 58;
+            this._devicesStatusLabel.Text = "Joysticks: 0";
+            // 
+            // _devicesStatusImage
+            // 
+            this._devicesStatusImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._devicesStatusImage.Image = global::XRNeckSaferApp.Properties.Resources.red_circle;
+            this._devicesStatusImage.InitialImage = null;
+            this._devicesStatusImage.Location = new System.Drawing.Point(7, 833);
+            this._devicesStatusImage.Name = "_devicesStatusImage";
+            this._devicesStatusImage.Size = new System.Drawing.Size(10, 10);
+            this._devicesStatusImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this._devicesStatusImage.TabIndex = 59;
+            this._devicesStatusImage.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(276, 850);
+            this.Controls.Add(this._devicesStatusImage);
+            this.Controls.Add(this._devicesStatusLabel);
             this.Controls.Add(this.YawPitchTab);
             this.Controls.Add(this.HMDYawBox);
             this.Controls.Add(this.VersionLabel);
@@ -1941,8 +2267,10 @@
             this.MaximumSize = new System.Drawing.Size(292, 2837);
             this.MinimumSize = new System.Drawing.Size(292, 370);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "XRNS (0 deg)";
-            this.Shown += new System.EventHandler(this.MainForm_Shown);
+            this.Load += new System.EventHandler(this.OnFormLoaded);
+            this.Shown += new System.EventHandler(this.OnFormShown);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.stepwiseGroup.ResumeLayout(false);
@@ -1951,6 +2279,7 @@
             this.linearGroup.ResumeLayout(false);
             this.linearGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultRight)).EndInit();
+            this._numericUpDownMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultLeft)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartRight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLeft)).EndInit();
@@ -1985,6 +2314,7 @@
             this.pManualGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.upNUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.downNUD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._devicesStatusImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1992,7 +2322,6 @@
 
         #endregion
         private System.Windows.Forms.GroupBox stepwiseGroup;
-        private System.Windows.Forms.Timer loopTimer;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
@@ -2002,18 +2331,17 @@
         private System.Windows.Forms.GroupBox ManualGroup;
         private System.Windows.Forms.Label RightLabel;
         private System.Windows.Forms.Label LeftLabel;
-        private System.Windows.Forms.NumericUpDown transFNUP;
-        private System.Windows.Forms.NumericUpDown transLRNUP;
+        private XRNeckSafer.NumericActionUpDown transFNUP;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.NumericUpDown angleNUD;
+        private NumericActionUpDown angleNUD;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button SetLeftButton;
+        private BooleanActionButton SetLeftButton;
         private System.Windows.Forms.RadioButton additivRB;
-        private System.Windows.Forms.Button SetRightButton;
+        private BooleanActionButton SetRightButton;
         private System.Windows.Forms.RadioButton snapRB;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label24;
@@ -2022,8 +2350,8 @@
         private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.Button DeleteButton;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Button SetHoldButton1;
-        private System.Windows.Forms.Button SetResetButton;
+        private BooleanActionButton YawAutorotationHoldButton;
+        private BooleanActionButton SetResetButton;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem advancedConfigToolStripMenuItem;
@@ -2050,13 +2378,12 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem9;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem10;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem11;
-        private System.Windows.Forms.ToolStripMenuItem MultipleLRButtonsToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn act;
         private System.Windows.Forms.DataGridViewTextBoxColumn deact;
         private System.Windows.Forms.DataGridViewTextBoxColumn rot;
         private System.Windows.Forms.DataGridViewTextBoxColumn LR;
         private System.Windows.Forms.DataGridViewTextBoxColumn Fwd;
-        private System.Windows.Forms.Button AccumReset;
+        private XRNeckSafer.BooleanActionButton AccumReset;
         private System.Windows.Forms.ToolStripMenuItem aPILayerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableAPILayerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listApiToolStripMenuItem;
@@ -2066,10 +2393,10 @@
         private System.Windows.Forms.RadioButton AROffButton;
         private System.Windows.Forms.GroupBox linearGroup;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDownMultRight;
-        private System.Windows.Forms.NumericUpDown numericUpDownMultLeft;
-        private System.Windows.Forms.NumericUpDown numericUpDownStartRight;
-        private System.Windows.Forms.NumericUpDown numericUpDownStartLeft;
+        private NumericActionUpDown numericUpDownMultRight;
+        private NumericActionUpDown numericUpDownMultLeft;
+        private NumericActionUpDown numericUpDownStartRight;
+        private NumericActionUpDown numericUpDownStartLeft;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
@@ -2083,17 +2410,17 @@
         private System.Windows.Forms.GroupBox pManualGroup;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Button pAccumReset;
+        private BooleanActionButton pAccumReset;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.NumericUpDown upNUD;
-        private System.Windows.Forms.NumericUpDown downNUD;
+        private NumericActionUpDown upNUD;
+        private NumericActionUpDown downNUD;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.RadioButton pSnapRP;
         private System.Windows.Forms.RadioButton pAdditivRB;
         private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Button SetUpButton;
-        private System.Windows.Forms.Button SetDownButton;
+        private BooleanActionButton SetUpButton;
+        private BooleanActionButton SetDownButton;
         private System.Windows.Forms.Label DownLabel;
         private System.Windows.Forms.Label UpLabel;
         private System.Windows.Forms.Label label26;
@@ -2107,10 +2434,10 @@
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.NumericUpDown numericUpDownMultDown;
-        private System.Windows.Forms.NumericUpDown numericUpDownMultUp;
-        private System.Windows.Forms.NumericUpDown numericUpDownStartDown;
-        private System.Windows.Forms.NumericUpDown numericUpDownStartUp;
+        private NumericActionUpDown numericUpDownMultDown;
+        private NumericActionUpDown numericUpDownMultUp;
+        private NumericActionUpDown numericUpDownStartDown;
+        private NumericActionUpDown numericUpDownStartUp;
         private System.Windows.Forms.RadioButton pARlinear;
         private System.Windows.Forms.RadioButton pARstepwise;
         private System.Windows.Forms.RadioButton pAROffButton;
@@ -2120,7 +2447,6 @@
         private System.Windows.Forms.DataGridView UpAutorotGridView;
         private System.Windows.Forms.Button UpAddButton;
         private System.Windows.Forms.Button UpDelButton;
-        private System.Windows.Forms.Button SetPitchHoldButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
@@ -2135,8 +2461,19 @@
         private System.Windows.Forms.Label downErrorLabel1;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.ToolStripMenuItem disableAllGUIOutputToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem disableJoystickAutoReconnectToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.ComponentModel.IContainer components;
+        private NumericActionUpDown transLRNUP;
+        private System.Windows.Forms.Timer loopTimer;
+        private BooleanActionButton PitchAutorotationHoldButton;
+        private System.Windows.Forms.Label _devicesStatusLabel;
+        private System.Windows.Forms.PictureBox _devicesStatusImage;
+        private System.Windows.Forms.ToolStripMenuItem showJoystickkeyConfigurationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem _disableSplashScreenToolStripMenuItem;
+        private ActionPropertyGroups _groups;
+        private System.Windows.Forms.ContextMenuStrip _numericUpDownMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem setJoystickkeyShortcutToolStripMenuItem;
     }
 }
 

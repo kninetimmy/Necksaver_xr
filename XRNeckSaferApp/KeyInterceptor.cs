@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace XRNeckSafer
 {
     public static class KeyInterceptor
     {
+        private static readonly ILogger _logger = LogManager.GetLogger("KeyInterceptor", typeof(KeyInterceptor));
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101;
@@ -20,6 +22,7 @@ namespace XRNeckSafer
         private delegate IntPtr LowLevelKeyboardHandler(int nCode, IntPtr wParam, IntPtr lParam);
 
         public static event Action<Keys[]> KeyPressed;
+        public static event Action<Keys[]> BeforeKeyReleased;
 
         private static LowLevelKeyboardHandler _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
@@ -44,9 +47,16 @@ namespace XRNeckSafer
         {
             if (KeyPressed != null)
             {
-                foreach (var invokerDelegate in KeyPressed.GetInvocationList())
+                foreach (var invokerDelegate in KeyPressed?.GetInvocationList())
                 {
-                    KeyPressed -= (invokerDelegate as Action<Keys[]>);
+                    KeyPressed -= invokerDelegate as Action<Keys[]>;
+                }
+            }
+            if (BeforeKeyReleased != null)
+            {
+                foreach (var invokerDelegate in BeforeKeyReleased?.GetInvocationList())
+                {
+                    BeforeKeyReleased -= invokerDelegate as Action<Keys[]>;
                 }
             }
         }
@@ -77,33 +87,33 @@ namespace XRNeckSafer
                     }
                     if (keyUp)
                     {
+                        BeforeKeyReleased?.Invoke(_pressedKeys.ToArray());
                         _pressedKeys.Remove(key);
                     }
                 }
-                // LogPressedKeys(_pressedKeys);
+                LogPressedKeys(_pressedKeys);
                 KeyPressed?.Invoke(_pressedKeys.ToArray());
-                
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
 
-        //private static void LogPressedKeys(HashSet<Keys> keys)
-        //{
-        //    if (keys.Count == 0)
-        //    {
-        //        return;
-        //    }
-        //    var builder = new StringBuilder();
-        //    foreach(var key in keys)
-        //    {
-        //        if (builder.Length > 0)
-        //        {
-        //            builder.Append("+");
-        //        }
-        //        builder.Append(key);
-        //    }
-        //    Console.WriteLine(builder.ToString());
-        //}
+        private static void LogPressedKeys(HashSet<Keys> keys)
+        {
+            if (keys.Count == 0)
+            {
+                return;
+            }
+            var builder = new StringBuilder();
+            foreach (var key in keys)
+            {
+                if (builder.Length > 0)
+                {
+                    builder.Append("+");
+                }
+                builder.Append(key);
+            }
+            _logger.Trace(builder.ToString());
+        }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardHandler lpfn, IntPtr hMod, uint dwThreadId);
