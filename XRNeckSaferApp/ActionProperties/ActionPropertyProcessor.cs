@@ -7,7 +7,7 @@ namespace XRNeckSafer
 {
     public class ActionPropertyProcessor : IDisposable
     {
-        private static readonly ILogger _logger = LogManager.GetLogger(nameof(ActionPropertyProcessor), typeof(ActionPropertyProcessor));
+        private static readonly ILogger _logger = LogManager.GetLogger(nameof(ActionPropertyProcessor));
         private JoystickKeyboardScanner _scanner;
         private readonly List<ActionProperty> _properties;
 

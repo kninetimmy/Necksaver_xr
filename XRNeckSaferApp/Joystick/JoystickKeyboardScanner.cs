@@ -11,7 +11,7 @@ namespace XRNeckSafer
     /// </summary>
     public class JoystickKeyboardScanner : IDisposable
     {
-        private static readonly ILogger _logger = LogManager.GetLogger(nameof(JoystickKeyboardScanner), typeof(JoystickKeyboardScanner));
+        private static readonly ILogger _logger = LogManager.GetLogger(nameof(JoystickKeyboardScanner));
         private JoystickButtonScanner _joystickScanner;
         private readonly JoystickKeyboardInput _result;
         private readonly int _maxPressedButtonsCount;

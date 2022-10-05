@@ -14,7 +14,7 @@ namespace XRNeckSafer
         private const int SCAN_DELAY_INTERVAL_MSEC = 50;
         private static BackgroundWorker _worker;
         private static readonly AutoResetEvent _waitHandle = new AutoResetEvent(false);
-        private static readonly ILogger _logger = LogManager.GetLogger(nameof(JoystickService), typeof(JoystickService));
+        private static readonly ILogger _logger = LogManager.GetLogger(nameof(JoystickService));
 
         private static readonly Dictionary<Guid, Joystick> _joysticGuids = new Dictionary<Guid, Joystick>();
         private static readonly Dictionary<Guid, JoystickState> _joystickStates = new Dictionary<Guid, JoystickState>();
@@ -179,7 +179,6 @@ namespace XRNeckSafer
 
         private static void CheckJoystickUpdates(Guid guid)
         {
-            _logger.Trace($"Started polling Joystick with GUID: {guid}");
             try
             {
                 List<JoystickPollingUpdate> updates = GetUpdates(guid);

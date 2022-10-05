@@ -7,7 +7,7 @@ namespace XRNeckSafer
 {
     static class Program
     {
-        private static readonly ILogger _logger = LogManager.GetLogger(nameof(Program), typeof(Program));
+        private static readonly ILogger _logger = LogManager.GetLogger(nameof(Program));
 
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
