@@ -165,7 +165,7 @@ namespace XRNeckSafer
             var button = new JoystickButton
             {
                 JoystickGuid = guid.ToString(),
-                Button = isPov ? value : (int)offset - 49
+                Button = isPov ? value : (int)offset - (int)JoystickOffset.Buttons0,
             };
             if (isPov)
             {
