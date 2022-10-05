@@ -13,7 +13,7 @@ namespace XRNeckSafer
 
         public ActionPropertyProcessor(List<ActionProperty> properties)
         {
-            _scanner = new JoystickKeyboardScanner(2);
+            _scanner = new JoystickKeyboardScanner();
             _scanner.OnCurrentlyPressedChanged += OnCurrentlyPressedChanged;
             _properties = properties ?? new List<ActionProperty>();
         }

@@ -16,7 +16,7 @@ namespace XRNeckSafer
         public event Action<List<JoystickButton>> CurrentlyPressedChanged;
         public event Action<List<JoystickButton>> BeforeButtonReleased;
 
-        public JoystickButtonScanner(int maxPressedButtonsCount = 1)
+        public JoystickButtonScanner(int maxPressedButtonsCount = int.MaxValue)
         {
             _pressedButtons = new Dictionary<string, JoystickButton>();
             _pressedResultButtons = new Dictionary<string, JoystickButton>();

@@ -23,7 +23,7 @@ namespace XRNeckSafer
         public event Action<JoystickKeyboardInput, bool> OnCurrentlyPressedChanged;
         public event Action<JoystickKeyboardInput> BeforeReleased;
 
-        public JoystickKeyboardScanner(int maxPressedButtonsCount)
+        public JoystickKeyboardScanner(int maxPressedButtonsCount = int.MaxValue)
         {
             _maxPressedButtonsCount = maxPressedButtonsCount;
             _result = new JoystickKeyboardInput();
