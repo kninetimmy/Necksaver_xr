@@ -22,10 +22,11 @@ namespace XRNeckSafer
                     bool isAnotherInstanceOpen = !mutex.WaitOne(TimeSpan.Zero);
                     if (isAnotherInstanceOpen)
                     {
+                        _logger.Debug("XRNS already running");
                         MessageBox.Show("VRNS already running!", "XRNeckSafer - Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    // main application entry point
+                    _logger.Debug("Application starting.");
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
                     KeyInterceptor.SetHook();
@@ -44,7 +45,10 @@ namespace XRNeckSafer
             {
                 _logger.Error(e);
             }
-
+            finally
+            {
+                _logger.Debug("Application stopped.");
+            }
         }
     }
 }
