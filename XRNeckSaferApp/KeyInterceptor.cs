@@ -11,7 +11,7 @@ namespace XRNeckSafer
 {
     public static class KeyInterceptor
     {
-        private static readonly ILogger _logger = LogManager.GetLogger("KeyInterceptor", typeof(KeyInterceptor));
+        private static readonly ILogger _logger = LogManager.GetLogger(nameof(KeyInterceptor), typeof(KeyInterceptor));
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101;
