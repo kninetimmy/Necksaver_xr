@@ -77,10 +77,13 @@ namespace XRNeckSafer
 
         public static void Stop()
         {
-            _worker.CancelAsync();
-            _waitHandle.WaitOne();
-            _worker.Dispose();
-            _worker = null;
+            if (_worker != null)
+            {
+                _worker.CancelAsync();
+                _waitHandle.WaitOne();
+                _worker.Dispose();
+                _worker = null;
+            }
         }
 
         private static void StartJoysticksWorker()
