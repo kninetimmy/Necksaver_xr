@@ -116,7 +116,7 @@ namespace XRNeckSafer
             var worker = (BackgroundWorker)sender;
             var directInput = new DirectInput();
             var stopwatch = new Stopwatch();
-            _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]: Started scanning joysticks");
+            _logger.Debug($"Started scanning joysticks");
             while (!worker.CancellationPending)
             {
                 PopulateJoysticks(directInput, stopwatch);
@@ -137,7 +137,7 @@ namespace XRNeckSafer
             }
             stopwatch.Restart();
             var devices = directInput.GetDevices(DeviceClass.GameControl, DeviceEnumerationFlags.AttachedOnly);
-            _logger.Trace($"[{Thread.CurrentThread.ManagedThreadId}]: {devices.Count} joysticks found");
+            _logger.Trace($"{devices.Count} joysticks found");
             foreach (DeviceInstance device in devices)
             {
                 lock (_joysticGuids)
@@ -147,7 +147,7 @@ namespace XRNeckSafer
                         var joystick = new Joystick(directInput, device.InstanceGuid);
                         var buttonCount = joystick.Capabilities.ButtonCount;
                         var povCount = joystick.Capabilities.PovCount;
-                        _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]: Found Joystick with GUID: {device.InstanceGuid}." +
+                        _logger.Debug($"Found Joystick with GUID: {device.InstanceGuid}." +
                             $" {buttonCount} buttons, {povCount} POVs");
                         _joysticGuids.Add(device.InstanceGuid, joystick);
                         _joystickButtonPovCounts.Add(device.InstanceGuid, new Tuple<int, int>(buttonCount, povCount));
@@ -176,7 +176,7 @@ namespace XRNeckSafer
 
         private static void CheckJoystickUpdates(Guid guid)
         {
-            _logger.Trace($"[{Thread.CurrentThread.ManagedThreadId}]: Started polling Joystick with GUID: {guid}");
+            _logger.Trace($"Started polling Joystick with GUID: {guid}");
             try
             {
                 List<JoystickPollingUpdate> updates = GetUpdates(guid);
@@ -215,20 +215,20 @@ namespace XRNeckSafer
                             }
                         }
                     }
-                    _logger.Trace($"[{Thread.CurrentThread.ManagedThreadId}]: {state}");
+                    _logger.Trace(state.ToString());
                     PressedButtonsUpdate?.Invoke(guid, joyBut, pressed);
                 }
             }
             catch (SharpDX.SharpDXException err)
             {
-                _logger.Error($"[{Thread.CurrentThread.ManagedThreadId}]: {err.Message}");
+                _logger.Error(err.Message);
                 StopJoystickPolling(guid);
             }
         }
 
         private static void StopJoystickPolling(Guid guid)
         {
-            _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]: Completed polling Joystick with GUID: {guid}");
+            _logger.Debug($"Completed polling Joystick with GUID: {guid}");
             var joystickName = GetJoystickName(guid.ToString());
             lock (_joysticGuids)
             {
@@ -241,7 +241,7 @@ namespace XRNeckSafer
                 _joystickStates.Remove(guid);
                 _joystickButtonPovCounts.Remove(guid);
             }
-            _logger.Debug($"[{Thread.CurrentThread.ManagedThreadId}]: Removed Joystick with GUID: {guid}");
+            _logger.Debug($"Removed Joystick with GUID: {guid}");
             DeviceDisconnected?.Invoke(guid, joystickName);
         }
 
