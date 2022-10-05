@@ -11,7 +11,7 @@ namespace XRNeckSafer.Wpf
     public partial class InputCombinations : UserControl
     {
         private static readonly DependencyProperty InputsProperty = 
-            DependencyProperty.Register("Inputs", typeof(ObservableCollection<Input>), typeof(InputCombinations));
+            DependencyProperty.Register(nameof(Inputs), typeof(ObservableCollection<Input>), typeof(InputCombinations));
 
         public ObservableCollection<Input> Inputs
         {
