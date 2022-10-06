@@ -41,6 +41,11 @@ namespace XRNeckSafer
         {
             try
             {
+                if (GetRegistryStatus() == null)
+                {
+                    return;
+                }
+
                 var regKeys = new List<string>();
                 using (var process = new Process())
                 {
@@ -57,15 +62,14 @@ namespace XRNeckSafer
 
                         if (line.Contains("XRNeckSafer") && line.EndsWith("0x0"))
                         {
-                            regKeys.Add($"add {_fullKey} /v \""
-                                + line.Substring(0, line.IndexOf("REG_DWORD")).Trim() + "\" /t REG_DWORD /d 1 /f");
+                            regKeys.Add($"add {_fullKey} /v \"{line.Substring(0, line.IndexOf("REG_DWORD")).Trim()}\" /t REG_DWORD /d 1 /f");
                         }
                     }
 
                     process.WaitForExit();
                 }
 
-                foreach (string regKey in regKeys)
+                foreach (var regKey in regKeys)
                 {
                     using (var process = new Process())
                     {
@@ -92,9 +96,12 @@ namespace XRNeckSafer
         {
             try
             {
-                string regKey = $"add {_fullKey} /v \""
-                    + _jsonPath
-                    + "\" /t REG_DWORD /d 0 /f";
+                if (GetRegistryStatus() == null)
+                {
+                    return;
+                }
+
+                var regKey = $"add {_fullKey} /v \"{_jsonPath}\" /t REG_DWORD /d 0 /f";
 
                 using (var process = new Process())
                 {
