@@ -23,7 +23,7 @@ namespace XRNeckSafer
                     if (isAnotherInstanceOpen)
                     {
                         _logger.Debug("XRNS already running");
-                        MessageBox.Show("VRNS already running!", "XRNeckSafer - Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("XRNS already running!", "XRNeckSafer - Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     _logger.Debug("Application starting.");
