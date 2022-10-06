@@ -11,7 +11,7 @@ namespace XRNeckSafer
     /// </summary>
     public class JoystickKeyboardScanner : IDisposable
     {
-        private static readonly ILogger _logger = LogManager.GetLogger("JoystickKeyboardScanner", typeof(JoystickKeyboardScanner));
+        private static readonly ILogger _logger = LogManager.GetLogger(nameof(JoystickKeyboardScanner));
         private JoystickButtonScanner _joystickScanner;
         private readonly JoystickKeyboardInput _result;
         private readonly int _maxPressedButtonsCount;
@@ -23,7 +23,7 @@ namespace XRNeckSafer
         public event Action<JoystickKeyboardInput, bool> OnCurrentlyPressedChanged;
         public event Action<JoystickKeyboardInput> BeforeReleased;
 
-        public JoystickKeyboardScanner(int maxPressedButtonsCount)
+        public JoystickKeyboardScanner(int maxPressedButtonsCount = int.MaxValue)
         {
             _maxPressedButtonsCount = maxPressedButtonsCount;
             _result = new JoystickKeyboardInput();
@@ -47,13 +47,13 @@ namespace XRNeckSafer
                 }
                 if (AddKeys(_filteredKeys))
                 {
-                    _logger.Trace("OnCurrentlyPressedChanged: " + _result.ToString() + " Same key(s):" + sameKeysPressed);
+                    _logger.Trace(nameof(OnCurrentlyPressedChanged) + ": " + _result.ToString() + " Same key(s):" + sameKeysPressed);
                     OnCurrentlyPressedChanged?.Invoke(_result, sameKeysPressed);
                     return;
                 }
                 if (!sameKeysPressed)
                 {
-                    _logger.Trace("OnCurrentlyPressedChanged: " + _result.ToString() + " Same key(s):" + sameKeysPressed);
+                    _logger.Trace(nameof(OnCurrentlyPressedChanged) + ": " + _result.ToString() + " Same key(s):" + sameKeysPressed);
                     OnCurrentlyPressedChanged?.Invoke(_result, sameKeysPressed);
                 }
             }
@@ -112,7 +112,7 @@ namespace XRNeckSafer
         {
             if (UpdateJoystickButtons(buttons))
             {
-                _logger.Trace("OnCurrentlyPressedChanged: " + _result.ToString());
+                _logger.Trace(nameof(OnCurrentlyPressedChanged) + ": " + _result.ToString());
                 OnCurrentlyPressedChanged?.Invoke(_result, false);
             }
         }

@@ -7,7 +7,7 @@ namespace XRNeckSafer
 {
     public class JoystickButtonScanner : IDisposable
     {
-        private static readonly ILogger _logger = LogManager.GetLogger("JoystickButtonScanner", typeof(JoystickButtonScanner));
+        private static readonly ILogger _logger = LogManager.GetLogger(nameof(JoystickButtonScanner));
         private readonly Dictionary<string, JoystickButton> _pressedButtons;
         private readonly Dictionary<string, JoystickButton> _pressedResultButtons;
         private readonly int _maxPressedButtonsCount;
@@ -16,15 +16,15 @@ namespace XRNeckSafer
         public event Action<List<JoystickButton>> CurrentlyPressedChanged;
         public event Action<List<JoystickButton>> BeforeButtonReleased;
 
-        public JoystickButtonScanner(int maxPressedButtonsCount = 1)
+        public JoystickButtonScanner(int maxPressedButtonsCount = int.MaxValue)
         {
             _pressedButtons = new Dictionary<string, JoystickButton>();
             _pressedResultButtons = new Dictionary<string, JoystickButton>();
             _maxPressedButtonsCount = maxPressedButtonsCount;
-            JoystickService.PressedButtonsUpdate += JoystickPollingPressedButtonsUpdate;
+            JoystickService.PressedButtonsUpdate += OnJoystickPressedButtonsUpdate;
         }
 
-        private void JoystickPollingPressedButtonsUpdate(Guid guid, JoystickButton joyBut, bool pressed)
+        private void OnJoystickPressedButtonsUpdate(Guid guid, JoystickButton joyBut, bool pressed)
         {
             var isExcludedButton = _excludeButtons.Any(e => e.GetId() == joyBut.GetId());
             if (isExcludedButton)
@@ -141,7 +141,7 @@ namespace XRNeckSafer
 
             BeforeButtonReleased?.GetInvocationList().ToList().ForEach(d => BeforeButtonReleased -= d as Action<List<JoystickButton>>);
             CurrentlyPressedChanged?.GetInvocationList().ToList().ForEach(d => CurrentlyPressedChanged -= d as Action<List<JoystickButton>>);
-            JoystickService.PressedButtonsUpdate -= JoystickPollingPressedButtonsUpdate;
+            JoystickService.PressedButtonsUpdate -= OnJoystickPressedButtonsUpdate;
         }
 
         private string DebugPressedButtons()
