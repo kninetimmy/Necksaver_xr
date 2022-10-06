@@ -194,7 +194,7 @@ namespace XRNeckSafer
             SetLabelColor(SetUpButton.ActionPropertyValue, UpLabel);
             SetLabelColor(SetDownButton.ActionPropertyValue, DownLabel);
 
-            int regstat = _vr.GetRegistryStatus();
+            var regstat = RegistryService.GetRegistryStatus();
             switch (regstat)
             {
                 case 0:
@@ -203,7 +203,7 @@ namespace XRNeckSafer
                 case 1:
                     disableAPILayerToolStripMenuItem.Checked = true;
                     break;
-                case 99:
+                case null:
                     disableAPILayerToolStripMenuItem.Checked = true;
                     disableAPILayerToolStripMenuItem.Enabled = false;
                     break;
@@ -1295,16 +1295,14 @@ namespace XRNeckSafer
             }
         }
 
-        private void disableAPILayerToolStripMenuItem_Clicked(object sender, EventArgs e)
+        private void OnDisableAPILayerToolStripMenuItemClicked(object sender, EventArgs e)
         {
             if (disableAPILayerToolStripMenuItem.Checked)
             {
-                _vr.DisableApiLayer();
+                RegistryService.DisableApiLayer();
+                return;
             }
-            else
-            {
-                _vr.EnableApiLayer();
-            }
+            RegistryService.EnableApiLayer();
         }
     }
 }

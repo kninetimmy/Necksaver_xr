@@ -956,7 +956,7 @@
             this.disableAPILayerToolStripMenuItem.Name = "disableAPILayerToolStripMenuItem";
             this.disableAPILayerToolStripMenuItem.Size = new System.Drawing.Size(259, 22);
             this.disableAPILayerToolStripMenuItem.Text = "Deactivate XRNS OpenXR API Layer";
-            this.disableAPILayerToolStripMenuItem.Click += new System.EventHandler(this.disableAPILayerToolStripMenuItem_Clicked);
+            this.disableAPILayerToolStripMenuItem.Click += new System.EventHandler(this.OnDisableAPILayerToolStripMenuItemClicked);
             // 
             // notifyIcon
             // 

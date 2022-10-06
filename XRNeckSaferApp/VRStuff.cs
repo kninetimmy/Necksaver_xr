@@ -3,12 +3,9 @@ using Silk.NET.Core.Native;
 using Silk.NET.OpenXR;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO.MemoryMappedFiles;
-using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
-using Microsoft.Win32;
 
 namespace XRNeckSafer
 {
@@ -191,91 +188,6 @@ namespace XRNeckSafer
                 _memoryAccessor.Dispose();
                 _memoryAccessor = null;
                 _sharedMemoryMappedFile?.Dispose();
-            }
-        }
-
-        public int GetRegistryStatus()
-        {
-            string k1 = @"HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\OpenXR\1\ApiLayers\Implicit";
-            string k2 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "XRNeckSafer", "OpenXrApiLayer", "XR_APILAYER_NOVENDOR_XRNeckSafer.json");
-            return (int)Registry.GetValue(k1, k2, 99);
-        }
-        public void DisableApiLayer()
-        {
-
-            try
-            {
-               
-                //find all entries for xrns. disable all, including double or outdated entries.
-                List<string> regKeys = new List<string>();
-                using (var process = new Process())
-                {
-                    process.StartInfo.FileName = "reg.exe";
-                    process.StartInfo.Arguments = "query HKEY_LOCAL_MACHINE\\SOFTWARE\\Khronos\\OpenXR\\1\\ApiLayers\\Implicit";
-                    process.StartInfo.UseShellExecute = false;
-                    process.StartInfo.RedirectStandardOutput = true;
-                    process.StartInfo.CreateNoWindow = true;
-                    process.Start();
-
-                    while (!process.StandardOutput.EndOfStream)
-                    {
-                        var line = process.StandardOutput.ReadLine();
-
-                        if (line.Contains("XRNeckSafer") && line.EndsWith("0x0"))
-                        {
-                            regKeys.Add("add HKEY_LOCAL_MACHINE\\SOFTWARE\\Khronos\\OpenXR\\1\\ApiLayers\\Implicit /v \""
-                                + line.Substring(0, line.IndexOf("REG_DWORD")).Trim() + "\" /t REG_DWORD /d 1 /f");
-                        }
-                    }
-
-                    process.WaitForExit();
-                }
-
-                foreach (string regKey in regKeys)
-                {
-                    using (Process process = new Process())
-                    {
-                        process.StartInfo.FileName = "reg.exe";
-                        process.StartInfo.Arguments = regKey;
-                        process.StartInfo.Verb = "runas";
-                        process.Start();
-                        process.WaitForExit();
-                    }
-                }
-
-                if (regKeys.Count == 0)
-                {
-                    MessageBox.Show("No XRNeckSafer API Layer found!", "Deactivate XRNS OpenXr Api Layer", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error:" + Environment.NewLine + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-        }
-        public void EnableApiLayer()
-        {
-            try
-            {
-                string regKey = "add HKEY_LOCAL_MACHINE\\SOFTWARE\\Khronos\\OpenXR\\1\\ApiLayers\\Implicit /v \""
-                    + Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "XRNeckSafer", "OpenXrApiLayer", "XR_APILAYER_NOVENDOR_XRNeckSafer.json")
-                    + "\" /t REG_DWORD /d 0 /f";
-
-                using (Process process = new Process())
-                {
-                    process.StartInfo.FileName = "reg.exe";
-                    process.StartInfo.Arguments = regKey;
-                    process.StartInfo.Verb = "runas";
-                    process.Start();
-                    process.WaitForExit();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error:" + Environment.NewLine + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
