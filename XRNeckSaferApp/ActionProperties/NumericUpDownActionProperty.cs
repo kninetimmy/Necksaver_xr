@@ -4,10 +4,19 @@ using System.Runtime.Serialization;
 namespace XRNeckSafer
 {
     [DataContract]
-    public class NumericUpDownActionProperty : ActionProperty<int>
+    public class NumericUpDownActionProperty : ActionProperty<decimal>
     {
         const string UP_EVENT_NAME = "Up";
         const string DOWN_EVENT_NAME = "Down";
+
+        [IgnoreDataMember]
+        public decimal Minimum { get; set; } = decimal.MinValue;
+
+        [IgnoreDataMember]
+        public decimal Maximum { get; set; } = decimal.MaxValue;
+
+        [IgnoreDataMember]
+        public decimal Increment { get; set; } = 1;
 
         public override void DispatchEvent(ActionPropertyEvent actionEvent, JoystickKeyboardInput input, bool sameKeys, bool matched)
         {
@@ -18,11 +27,21 @@ namespace XRNeckSafer
             switch (actionEvent.Name)
             {
                 case UP_EVENT_NAME:
-                    Value++;
+                    var newValue = Value + Increment;
+                    if (newValue > Maximum)
+                    {
+                        break;
+                    }
+                    Value = newValue;
                     ProcessEvent(actionEvent, input);
                     break;
                 case DOWN_EVENT_NAME:
-                    Value--;
+                    var newVal = Value - Increment;
+                    if (newVal < Minimum)
+                    {
+                        break;
+                    }
+                    Value = newVal;
                     ProcessEvent(actionEvent, input);
                     break;
             }

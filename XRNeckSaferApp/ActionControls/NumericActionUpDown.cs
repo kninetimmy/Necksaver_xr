@@ -129,6 +129,45 @@ namespace XRNeckSafer
             get => base.Value;
         }
 
+        public new decimal Minimum
+        {
+            get => base.Minimum;
+            set
+            {
+                base.Minimum = value;
+                if (_actionProperty != null)
+                {
+                    _actionProperty.Minimum = value;
+                }
+            }
+        }
+
+        public new decimal Maximum
+        {
+            get => base.Maximum;
+            set
+            {
+                base.Maximum = value;
+                if (_actionProperty != null)
+                {
+                    _actionProperty.Maximum = value;
+                }
+            }
+        }
+
+        public new decimal Increment
+        {
+            get => base.Increment;
+            set
+            {
+                base.Increment = value;
+                if (_actionProperty != null)
+                {
+                    _actionProperty.Increment = value;
+                }
+            }
+        }
+
         public NumericActionUpDown() : base()
         {
             Config.ConfigReloaded += OnConfigReloaded;
@@ -182,14 +221,17 @@ namespace XRNeckSafer
             _actionProperty.Description = _actionPropertyDescription;
             _actionProperty.Order = _actionPropertyOrder;
             _actionProperty.Group = SelectedGroup?.Tag;
+            _actionProperty.Minimum = Minimum;
+            _actionProperty.Maximum = Maximum;
+            _actionProperty.Increment = Increment;
             _actionProperty.Triggered += ActionPropertyTriggered;
         }
 
-        private void ActionPropertyTriggered(ActionPropertyEventArgs<int> args)
+        private void ActionPropertyTriggered(ActionPropertyEventArgs<decimal> args)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action<ActionPropertyEventArgs<int>>(ActionPropertyTriggered), args);
+                Invoke(new Action<ActionPropertyEventArgs<decimal>>(ActionPropertyTriggered), args);
                 return;
             }
             base.Value = args.Value;
