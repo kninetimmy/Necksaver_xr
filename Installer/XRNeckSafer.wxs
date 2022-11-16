@@ -75,6 +75,7 @@
             <File Id="SYSTEM.THREADING.TASKS.EXTENSIONS.DLL" Name="System.Threading.Tasks.Extensions.dll" Source="..\XRNeckSaferApp\bin\Release\System.Threading.Tasks.Extensions.dll" />
             <File Id="SYSTEM.VALUETUPLE.DLL" Name="System.ValueTuple.dll" Source="..\XRNeckSaferApp\bin\Release\System.ValueTuple.dll" />
             <File Id="ULTZ.BCL.HALF.DLL" Name="Ultz.Bcl.Half.dll" Source="..\XRNeckSaferApp\bin\Release\Ultz.Bcl.Half.dll" />
+            <File Id="H.INPUTSIMULATOR.DLL" Name="H.InputSimulator.dll" Source="..\XRNeckSaferApp\bin\Release\H.InputSimulator.dll" />
             <File Id="OPENXR_LOADER.DLL" Name="openxr_loader.dll" Source="..\XRNeckSaferApp\openxr_loader.dll" />
             <File Id="XRNECKSAFER.WPF.DLL" Name="XRNeckSafer.Wpf.dll" Source="..\XRNeckSaferApp\bin\Release\XRNeckSafer.Wpf.dll" />
             <File Id="XRNECKSAFERAPP.EXE.CONFIG" Name="XRNeckSaferApp.exe.config" Source="..\XRNeckSaferApp\bin\Release\XRNeckSaferApp.exe.config" />

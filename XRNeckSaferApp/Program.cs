@@ -31,10 +31,13 @@ namespace XRNeckSafer
                     Application.SetCompatibleTextRenderingDefault(false);
                     KeyInterceptor.SetHook();
                     JoystickService.Start();
-                    using (new ActionPropertyProcessor(Config.Instance.ActionProperties))
+                    using (new JoystickKeyboardMapper(Config.Instance.JoystickToKeyboardMappings, 1))
                     {
-                        Application.Run(new MainForm());
-                        Config.Instance.WriteConfig();
+                        using (new ActionPropertyProcessor(Config.Instance.ActionProperties))
+                        {
+                            Application.Run(new MainForm());
+                            Config.Instance.WriteConfig();
+                        }
                     }
                     KeyInterceptor.RemoveHook();
                     JoystickService.Stop();

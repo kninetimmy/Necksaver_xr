@@ -1,4 +1,5 @@
-﻿using SharpDX;
+﻿using Microsoft.Build.Utilities;
+using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
