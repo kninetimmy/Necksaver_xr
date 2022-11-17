@@ -51,7 +51,7 @@ namespace XRNeckSafer.Wpf
             var someAdded = Mappings.Any();
             if (someAdded)
             {
-                Mappings.Last().CanAdd = true;
+                Mappings.First().CanAdd = true;
             }
         }
 
@@ -81,6 +81,15 @@ namespace XRNeckSafer.Wpf
         {
             var model = ((Button)e.OriginalSource).DataContext as KeyboardToJoysticAssignmentModel;
             ScanKeyboardClick?.Invoke(new ActionPropertyDataModelEventArgs { Model = model.KeyboardInput });
+        }
+
+        private void OnClearAssignmentClick(object sender, RoutedEventArgs e)
+        {
+            var model = ((Button)e.OriginalSource).DataContext as KeyboardToJoysticAssignmentModel;
+            model.JoystickInput.NewInputCombination = null;
+            model.JoystickInput.InputCombination = null;
+            model.KeyboardInput.NewInputCombination = null;
+            model.KeyboardInput.InputCombination = null;
         }
     }
 
