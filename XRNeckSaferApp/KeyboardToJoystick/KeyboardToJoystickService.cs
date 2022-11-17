@@ -5,14 +5,30 @@ using System.Linq;
 
 namespace XRNeckSafer
 {
-    public class JoystickKeyboardMapper : IDisposable
+    public class KeyboardToJoystickService : IDisposable
     {
         private JoystickButtonScanner _joystickScanner;
-        private readonly List<JoystickToKeyboardMapping> _mappings;
-        private static readonly ILogger _logger = LogManager.GetLogger(nameof(JoystickKeyboardMapper));
+        private readonly List<KeyboardToJoystickModel> _mappings;
+        private static readonly ILogger _logger = LogManager.GetLogger(nameof(KeyboardToJoystickService));
         private readonly List<JoystickButton> _pressedJoystickButtons = new List<JoystickButton>();
 
-        public JoystickKeyboardMapper(List<JoystickToKeyboardMapping> mappings, int maxPressedButtonsCount = int.MaxValue)
+        public bool Enabled { get; set; } = true;
+
+        private static KeyboardToJoystickService _instanse;
+
+        public static KeyboardToJoystickService Instanse
+        {
+            get
+            {
+                if (_instanse == null)
+                {
+                    _instanse = new KeyboardToJoystickService(Config.Instance.KeyboardToJoystickAssignments, 1);
+                }
+                return _instanse;
+            }
+        }
+
+        private KeyboardToJoystickService(List<KeyboardToJoystickModel> mappings, int maxPressedButtonsCount = int.MaxValue)
         {
             _joystickScanner = new JoystickButtonScanner(maxPressedButtonsCount);
             _joystickScanner.CurrentlyPressedChanged += OnJoystickPressedChanged;
@@ -22,6 +38,7 @@ namespace XRNeckSafer
 
         private void OnJoystickPressedChanged(List<JoystickButton> buttons)
         {
+            
             lock (_pressedJoystickButtons)
             {
                 var newPressedButtons = buttons.FindAll(b => !_pressedJoystickButtons.Any(p => p.GetId() == b.GetId()));
@@ -35,7 +52,11 @@ namespace XRNeckSafer
 
         private void PressButton(JoystickButton button)
         {
-            var mapping = _mappings.FirstOrDefault(m => m.JoystickButtonId.Equals(button.GetId()));
+            if (!Enabled)
+            {
+                return;
+            }
+            var mapping = _mappings.FirstOrDefault(m => m.JoystickButton.GetId().Equals(button.GetId()));
             if (mapping != null)
             {
                 KeyPressSimulator.PressKey(mapping.KeyboardButton);
@@ -45,7 +66,11 @@ namespace XRNeckSafer
 
         private void ReleaseButton(JoystickButton button)
         {
-            var mapping = _mappings.FirstOrDefault(m => m.JoystickButtonId.Equals(button.GetId()));
+            if (!Enabled)
+            {
+                return;
+            }
+            var mapping = _mappings.FirstOrDefault(m => m.JoystickButton.GetId().Equals(button.GetId()));
             if (mapping != null)
             {
                 KeyPressSimulator.ReleaseKey(mapping.KeyboardButton);

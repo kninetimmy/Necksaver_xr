@@ -4,10 +4,10 @@ using System.Windows.Forms;
 namespace XRNeckSafer
 {
     [DataContract]
-    public class JoystickToKeyboardMapping
+    public class KeyboardToJoystickModel
     {
         [DataMember]
-        public string JoystickButtonId { get; set; }
+        public JoystickButton JoystickButton { get; set; }
         [DataMember]
         public Keys KeyboardButton { get; set; }
     }

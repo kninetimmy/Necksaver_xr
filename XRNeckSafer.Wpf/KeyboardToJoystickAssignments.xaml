@@ -1,0 +1,128 @@
+﻿<UserControl x:Class="XRNeckSafer.Wpf.KeyboardToJoystickAssignments"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:XRNeckSafer.Wpf"
+             mc:Ignorable="d"
+             Name="HostControl"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="_textBlockCenter" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="_dataGrid" TargetType="DataGrid">
+            <Setter Property="CanUserAddRows" Value="False" />
+            <Setter Property="CanUserDeleteRows" Value="False" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="CanUserReorderColumns" Value="False" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="GridLinesVisibility" Value="Horizontal" />
+            <Setter Property="HorizontalGridLinesBrush" Value="LightGray" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HeadersVisibility" Value="None" />
+            <Setter Property="CanUserResizeColumns" Value="False" />
+        </Style>
+        <Style x:Key="_cell" TargetType="DataGridCell">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style x:Key="_dataGridCenterHeader" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+        <local:BitmapToImageSourceConverter x:Key="BitmapToImageSourceConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>-->
+        <DataGrid Grid.Row="0" Style="{StaticResource _dataGrid}" Name="_headersGrid" ItemsSource="{Binding ElementName=HostControl, Path=Mappings}" 
+                  HeadersVisibility="Column" CellStyle="{StaticResource _cell}" BorderThickness="1,1,1,1">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Keyboard key" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="20" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding KeyboardInput.InputCombination}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <Button ToolTip="Assign keyboard key" Click="OnScanKeyboardButtonClick" Background="Transparent" BorderBrush="Transparent">
+                                        <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.scan}, Converter={StaticResource BitmapToImageSourceConverter}}" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Joystick key" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="20" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding JoystickInput.InputCombination}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <Button ToolTip="Assign joystick key" Click="OnScanJoystickButtonClick" Background="Transparent" BorderBrush="Transparent">
+                                        <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.scan}, Converter={StaticResource BitmapToImageSourceConverter}}" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left">
+                                <Button Click="OnAddAssignmentClick" Background="Transparent" BorderBrush="Transparent" ToolTip="Add key/joystick shortcut">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding CanAdd}" Value="False">
+                                                    <Setter Property="Height" Value="0" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <Border BorderThickness="1" BorderBrush="Green" Background="Green" CornerRadius="7" Width="15" Height="15">
+                                        <Grid>
+                                            <Line X1="1" Y1="6.5" X2="12" Y2="6.5" Stroke="White" StrokeThickness="3" />
+                                            <Line X1="6.5" Y1="1" X2="6.5" Y2="12" Stroke="White" StrokeThickness="3" />
+                                        </Grid>
+                                    </Border>
+                                </Button>
+                                <Button Click="OnRemoveAssignmentClick" Background="Transparent" BorderBrush="Transparent" ToolTip="Remove key/joystick shortcut">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding CanAdd}" Value="True">
+                                                    <Setter Property="Height" Value="0" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <Border BorderThickness="1" BorderBrush="Red" Background="Red" CornerRadius="7" Width="15" Height="15">
+                                        <Line X1="2" Y1="6.5" Stroke="White" StrokeThickness="3" X2="11" Y2="6.5" />
+                                    </Border>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

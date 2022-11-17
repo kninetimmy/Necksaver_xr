@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace XRNeckSafer
 {
+
     public class JoystickButtonScanner : IDisposable
     {
         private static readonly ILogger _logger = LogManager.GetLogger(nameof(JoystickButtonScanner));

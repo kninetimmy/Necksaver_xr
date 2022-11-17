@@ -31,7 +31,7 @@ namespace XRNeckSafer
         [JsonProperty(ItemTypeNameHandling = TypeNameHandling.All)]
         public List<ActionProperty> ActionProperties { get; set; }
 
-        public List<JoystickToKeyboardMapping> JoystickToKeyboardMappings { get; set; }
+        public List<KeyboardToJoystickModel> KeyboardToJoystickAssignments { get; set; }
 
         public static event Action ConfigReloaded;
 
@@ -87,7 +87,7 @@ namespace XRNeckSafer
                 }
                 Config c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configfilename), new Newtonsoft.Json.Converters.StringEnumConverter());
                 if (c.ActionProperties == null) c.ActionProperties = new List<ActionProperty>();
-                if (c.JoystickToKeyboardMappings == null) c.JoystickToKeyboardMappings = new List<JoystickToKeyboardMapping>();
+                if (c.KeyboardToJoystickAssignments == null) c.KeyboardToJoystickAssignments = new List<KeyboardToJoystickModel>();
 
                 if (c.AutoSteps.Count == 0)
                 {

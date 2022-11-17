@@ -9,9 +9,14 @@ namespace XRNeckSafer
         private readonly JoystickKeyboardScanner _scanner;
         private JoystickKeyboardInput _result;
 
-        public static JoystickKeyboardInput ShowForm(FormStartPosition startPosition, int top, int left, int maxPressedButtonsCount = 1)
+        public static JoystickKeyboardInput ShowForm(
+            FormStartPosition startPosition, 
+            int top, 
+            int left, 
+            int maxPressedButtonsCount = 1, 
+            DeviceType deviceType = DeviceType.Keyboard | DeviceType.Joystick)
         {
-            using (var form = new ScanJoystickKeyboardForm(maxPressedButtonsCount)
+            using (var form = new ScanJoystickKeyboardForm(maxPressedButtonsCount, deviceType)
             {
                 StartPosition = startPosition,
                 Top = top,
@@ -23,14 +28,36 @@ namespace XRNeckSafer
             }
         }
 
-        private ScanJoystickKeyboardForm(int maxPressedButtonsCount = 1)
+        private ScanJoystickKeyboardForm(int maxPressedButtonsCount, DeviceType deviceType)
         {
             InitializeComponent();
             MinimumSize = Size;
             MaximumSize = Size;
-            _scanner = new JoystickKeyboardScanner(maxPressedButtonsCount);
+            SetFormHeaderText(maxPressedButtonsCount, deviceType);
+            _scanner = new JoystickKeyboardScanner(maxPressedButtonsCount, deviceType);
             _scanner.BeforeReleased += OnScanningComplete;
             _scanner.OnCurrentlyPressedChanged += OnCurrentlyPressedChanged;
+        }
+
+        private void SetFormHeaderText(int maxPressedButtonsCount, DeviceType deviceType)
+        {
+            if (deviceType.HasFlag(DeviceType.Keyboard | DeviceType.Joystick))
+            {
+                Text = $"Scanning joysticks and keys. Press key/button{(maxPressedButtonsCount > 1 ? "(s)" : "")} now...";
+                _scanText.Text = $"Pressed key/button{(maxPressedButtonsCount > 1 ? "(s)" : "")}:";
+                return;
+            }
+            if (deviceType.HasFlag(DeviceType.Keyboard))
+            {
+                Text = $"Scanning keyboard. Press key{(maxPressedButtonsCount > 1 ? "(s)" : "")} now...";
+                _scanText.Text = $"Pressed key{(maxPressedButtonsCount > 1 ? "(s)" : "")}:";
+                return;
+            }
+            if (deviceType.HasFlag(DeviceType.Joystick))
+            {
+                Text = $"Scanning joysticks. Press button{(maxPressedButtonsCount > 1 ? "(s)" : "")} now...";
+                _scanText.Text = $"Pressed button{(maxPressedButtonsCount > 1 ? "(s)" : "")}:";
+            }
         }
 
         private void OnCurrentlyPressedChanged(JoystickKeyboardInput input, bool sameKeys)

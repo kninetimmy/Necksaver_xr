@@ -31,7 +31,7 @@ namespace XRNeckSafer
                     Application.SetCompatibleTextRenderingDefault(false);
                     KeyInterceptor.SetHook();
                     JoystickService.Start();
-                    using (new JoystickKeyboardMapper(Config.Instance.JoystickToKeyboardMappings, 1))
+                    using (KeyboardToJoystickService.Instanse)
                     {
                         using (new ActionPropertyProcessor(Config.Instance.ActionProperties))
                         {

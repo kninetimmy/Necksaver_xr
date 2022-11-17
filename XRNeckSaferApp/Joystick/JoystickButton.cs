@@ -1,4 +1,6 @@
-﻿namespace XRNeckSafer
+﻿using System.Text;
+
+namespace XRNeckSafer
 {
     public class JoystickButton
     {
@@ -54,6 +56,19 @@
         private string GenerateId()
         {
             return $"{JoystickGuid}-{Button}-{POV}";
+        }
+
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+            var joystickName = JoystickService.GetJoystickName(JoystickGuid) ?? "UNPLUGGED";
+            if (POV != -1)
+            {
+                builder.Append($"[{joystickName} POV:{POV + 1} {Button / 100}°]");
+                return builder.ToString();
+            }
+            builder.Append($"[{joystickName} But:{Button + 1}]");
+            return builder.ToString();
         }
     }
 }

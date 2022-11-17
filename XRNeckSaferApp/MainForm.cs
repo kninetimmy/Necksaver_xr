@@ -11,6 +11,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using XRNeckSafer.Wpf;
+using XRNeckSaferApp;
 
 namespace XRNeckSafer
 {
@@ -1304,6 +1305,11 @@ namespace XRNeckSafer
                 return;
             }
             RegistryService.EnableApiLayer();
+        }
+
+        private void OnShowJoyKeyboardMapsClick(object sender, EventArgs e)
+        {
+            KeyboardToJoystickAssignForm.ShowForm(Top, Right);
         }
     }
 }

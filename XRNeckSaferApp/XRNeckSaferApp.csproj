@@ -195,8 +195,14 @@
     <Compile Include="Graph.Designer.cs">
       <DependentUpon>Graph.cs</DependentUpon>
     </Compile>
-    <Compile Include="JoystickKeyboardMapping\JoystickKeyboardMapper.cs" />
-    <Compile Include="JoystickKeyboardMapping\JoystickToKeyboardMapping.cs" />
+    <Compile Include="KeyboardToJoystick\KeyboardToJoystickAssignForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KeyboardToJoystick\KeyboardToJoystickAssignForm.Designer.cs">
+      <DependentUpon>KeyboardToJoystickAssignForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KeyboardToJoystick\KeyboardToJoystickService.cs" />
+    <Compile Include="KeyboardToJoystick\KeyboardToJoystickModel.cs" />
     <Compile Include="Joystick\JoystickButtonScanner.cs" />
     <Compile Include="Joystick\JoystickButton.cs" />
     <Compile Include="Joystick\JoystickKeyboardScanner.cs" />
@@ -226,6 +232,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Graph.resx">
       <DependentUpon>Graph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KeyboardToJoystick\KeyboardToJoystickAssignForm.resx">
+      <DependentUpon>KeyboardToJoystickAssignForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
