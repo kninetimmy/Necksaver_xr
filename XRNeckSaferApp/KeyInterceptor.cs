@@ -9,16 +9,19 @@ using System.Windows.Forms;
 
 namespace XRNeckSafer
 {
+    public enum KeyEvents
+    {
+        KeyDown = 0x0100,
+        KeyUp = 0x0101,
+        SKeyDown = 0x0104,
+        SKeyUp = 0x0105
+    }
+
     public static class KeyInterceptor
     {
         private static readonly ILogger _logger = LogManager.GetLogger(nameof(KeyInterceptor));
         private const int WH_KEYBOARD_LL = 13;
-        private const int WM_KEYDOWN = 0x0100;
-        private const int WM_KEYUP = 0x0101;
-        private static readonly IntPtr WM_KEYDOWN_POINTER = (IntPtr)WM_KEYDOWN;
-        private static readonly IntPtr WM_KEYUP_POINTER = (IntPtr)WM_KEYUP;
         private static readonly HashSet<Keys> _pressedKeys = new HashSet<Keys>();
-
         private delegate IntPtr LowLevelKeyboardHandler(int nCode, IntPtr wParam, IntPtr lParam);
 
         public static event Action<Keys[]> KeyPressed;
@@ -74,8 +77,9 @@ namespace XRNeckSafer
 
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            var keyDown = wParam == WM_KEYDOWN_POINTER;
-            var keyUp = wParam == WM_KEYUP_POINTER;
+            KeyEvents kEvent = (KeyEvents)wParam;
+            var keyDown = kEvent == KeyEvents.KeyDown || kEvent == KeyEvents.SKeyDown;
+            var keyUp = kEvent == KeyEvents.KeyUp || kEvent == KeyEvents.SKeyUp;
             if (nCode >= 0 && (keyDown || keyUp))
             {
                 var key = (Keys)Marshal.ReadInt32(lParam);
