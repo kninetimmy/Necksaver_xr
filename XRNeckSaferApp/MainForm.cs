@@ -1229,6 +1229,7 @@ namespace XRNeckSafer
             if (disposing)
             {
                 _components?.Dispose();
+                _vr.Dispose();
             }
             base.Dispose(disposing);
         }
