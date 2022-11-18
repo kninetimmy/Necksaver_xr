@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace XRNeckSafer
 {
-
     public class JoystickButtonScanner : IDisposable
     {
         private static readonly ILogger _logger = LogManager.GetLogger(nameof(JoystickButtonScanner));
@@ -36,7 +35,10 @@ namespace XRNeckSafer
             {
                 if (AddResultButton(joyBut))
                 {
-                    _logger.Trace(DebugPressedButtons());
+                    if (_logger.IsTraceEnabled)
+                    {
+                        _logger.Trace(DebugPressedButtons());
+                    }
                     CurrentlyPressedChanged?.Invoke(_pressedResultButtons.Values.ToList());
                 }
                 return;
@@ -48,7 +50,10 @@ namespace XRNeckSafer
             }
             if (RemoveResultButton(joyBut))
             {
-                _logger.Trace(DebugPressedButtons());
+                if (_logger.IsTraceEnabled)
+                {
+                    _logger.Trace(DebugPressedButtons());
+                }
                 CurrentlyPressedChanged?.Invoke(_pressedResultButtons.Values.ToList());
             }
         }

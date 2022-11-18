@@ -40,7 +40,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>-->
-        <DataGrid Grid.Row="0" Style="{StaticResource _dataGrid}" Name="_headersGrid" ItemsSource="{Binding ElementName=HostControl, Path=Mappings}" 
+        <DataGrid Grid.Row="0" Style="{StaticResource _dataGrid}" Name="_headersGrid" ItemsSource="{Binding ElementName=HostControl, Path=Assignments}" 
                   HeadersVisibility="Column" CellStyle="{StaticResource _cell}" BorderThickness="1,1,1,1">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Keyboard key" Width="*">
@@ -87,7 +87,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
-                                <Button Click="OnAddAssignmentClick" Background="Transparent" BorderBrush="Transparent" ToolTip="Add key/joystick shortcut">
+                                <Button Click="OnAddAssignmentClick" Background="Transparent" BorderBrush="Transparent" ToolTip="Add new key/joy assignment">
                                     <Button.Style>
                                         <Style TargetType="Button">
                                             <Style.Triggers>
@@ -104,7 +104,7 @@
                                         </Grid>
                                     </Border>
                                 </Button>
-                                <Button Click="OnRemoveAssignmentClick" Background="Transparent" BorderBrush="Transparent" ToolTip="Remove key/joystick shortcut">
+                                <Button Click="OnRemoveAssignmentClick" Background="Transparent" BorderBrush="Transparent" ToolTip="Remove key/joy assignment">
                                     <Button.Style>
                                         <Style TargetType="Button">
                                             <Style.Triggers>

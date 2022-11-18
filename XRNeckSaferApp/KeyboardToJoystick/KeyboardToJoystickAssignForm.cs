@@ -50,7 +50,7 @@ namespace XRNeckSaferApp
                 };
                 props.Add(dataModel);
             });
-            _wpfList.PopulateMappings(props);
+            _wpfList.PopulateAssignments(props);
         }
 
         private void OnScanKeyboardClick(ActionPropertyDataModelEventArgs args)
@@ -84,7 +84,7 @@ namespace XRNeckSaferApp
         private void OnSaveButtonClick(object sender, EventArgs e)
         {
             var result = new List<KeyboardToJoystickModel>();
-            foreach (var model in _wpfList.Mappings)
+            foreach (var model in _wpfList.Assignments)
             {
                 var keyboardInput = model.KeyboardInput;
                 var joystickInput = model.JoystickInput;

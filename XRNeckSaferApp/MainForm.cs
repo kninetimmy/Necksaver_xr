@@ -42,12 +42,12 @@ namespace XRNeckSafer
         private string _pARText;
         private string _hmdtext;
 
-        private readonly VRStuff _vr;
+        private readonly OpenXRApiLayerService _vr;
 
         public MainForm()
         {
             InitializeComponent();
-            _vr = new VRStuff();
+            _vr = new OpenXRApiLayerService();
             VersionLabel.Text = GetAssemblyProductVersion();
             notifyIcon.ContextMenuStrip = contextMenuStrip;
             showToolStripMenuItem.Click += showToolStripMenuItem_Click;

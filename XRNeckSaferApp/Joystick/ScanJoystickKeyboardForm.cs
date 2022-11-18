@@ -41,22 +41,23 @@ namespace XRNeckSafer
 
         private void SetFormHeaderText(int maxPressedButtonsCount, DeviceType deviceType)
         {
+            var multi = maxPressedButtonsCount > 1 ? "(s)" : "";
             if (deviceType.HasFlag(DeviceType.Keyboard | DeviceType.Joystick))
             {
-                Text = $"Scanning joysticks and keys. Press key/button{(maxPressedButtonsCount > 1 ? "(s)" : "")} now...";
-                _scanText.Text = $"Pressed key/button{(maxPressedButtonsCount > 1 ? "(s)" : "")}:";
+                Text = $"Scanning joysticks and keys. Press key/button{multi} now...";
+                _scanText.Text = $"Pressed key/button{multi}:";
                 return;
             }
             if (deviceType.HasFlag(DeviceType.Keyboard))
             {
-                Text = $"Scanning keyboard. Press key{(maxPressedButtonsCount > 1 ? "(s)" : "")} now...";
-                _scanText.Text = $"Pressed key{(maxPressedButtonsCount > 1 ? "(s)" : "")}:";
+                Text = $"Scanning keyboard. Press key{multi} now...";
+                _scanText.Text = $"Pressed key{multi}:";
                 return;
             }
             if (deviceType.HasFlag(DeviceType.Joystick))
             {
-                Text = $"Scanning joysticks. Press button{(maxPressedButtonsCount > 1 ? "(s)" : "")} now...";
-                _scanText.Text = $"Pressed button{(maxPressedButtonsCount > 1 ? "(s)" : "")}:";
+                Text = $"Scanning joysticks. Press button{multi} now...";
+                _scanText.Text = $"Pressed button{multi}:";
             }
         }
 

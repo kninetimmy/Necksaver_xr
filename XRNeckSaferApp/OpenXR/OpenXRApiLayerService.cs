@@ -9,31 +9,7 @@ using System.Windows.Forms;
 
 namespace XRNeckSafer
 {
-    public struct SharedMemoryData
-    {
-        public float hmdYawAngle;
-        public float hmdPitchAngle;
-        public float yawOffset;
-        public float pitchOffset;
-        public float lateralOffset;
-        public float longitudinalOffset;
-        public float rightMultiplier;
-        public float leftMultiplier;
-        public float upMultiplier;
-        public float downMultiplier;
-        public int leftStartAt;
-        public int rightStartAt;
-        public int upStartAt;
-        public int downStartAt;
-        public bool resetHmdOrientation;
-        public bool useLinearRotation;
-        public bool useLinearPitchRotation;
-        public bool holdLinearRotation;
-        public bool holdLinearPitchRotation;
-        public bool hasBeenCentered;
-    }
-
-    public class VRStuff : IDisposable
+    public class OpenXRApiLayerService : IDisposable
     {
         private const string XRNECKSAFER_LAYER_NAME = "XR_APILAYER_NOVENDOR_XRNeckSafer";
         private const string SHARED_MEMORY_FILE_NAME = "XRNeckSaferSHM";
@@ -42,7 +18,7 @@ namespace XRNeckSafer
         private MemoryMappedViewAccessor _memoryAccessor;
         private SharedMemoryData _sharedMemoryData;
 
-        public VRStuff()
+        public OpenXRApiLayerService()
         {
             _sharedMemoryMappedFile = MemoryMappedFile.CreateOrOpen(SHARED_MEMORY_FILE_NAME, SHARED_MEMORY_FILE_SIZE);
             _memoryAccessor = _sharedMemoryMappedFile.CreateViewAccessor();

@@ -168,10 +168,10 @@
     <Compile Include="ActionControls\NumericActionUpDown.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ActionPropertiesForm.cs">
+    <Compile Include="ActionProperties\ActionPropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ActionPropertiesForm.Designer.cs">
+    <Compile Include="ActionProperties\ActionPropertiesForm.Designer.cs">
       <DependentUpon>ActionPropertiesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ActionProperties\ActionProperty.cs" />
@@ -209,8 +209,9 @@
     <Compile Include="Joystick\JoystickPollingUpdate.cs" />
     <Compile Include="Joystick\JoystickService.cs" />
     <Compile Include="Joystick\JoystickKeyboardInput.cs" />
-    <Compile Include="KeyInterceptor.cs" />
-    <Compile Include="KeyPressSimulator.cs" />
+    <Compile Include="Keyboard\KeyEvents.cs" />
+    <Compile Include="Keyboard\KeyInterceptor.cs" />
+    <Compile Include="Keyboard\KeyPressSimulator.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -220,14 +221,15 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistryService.cs" />
-    <Compile Include="ScanJoystickKeyboardForm.cs">
+    <Compile Include="Joystick\ScanJoystickKeyboardForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ScanJoystickKeyboardForm.Designer.cs">
+    <Compile Include="Joystick\ScanJoystickKeyboardForm.Designer.cs">
       <DependentUpon>ScanJoystickKeyboardForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="VRStuff.cs" />
-    <EmbeddedResource Include="ActionPropertiesForm.resx">
+    <Compile Include="OpenXR\SharedMemoryData.cs" />
+    <Compile Include="OpenXR\OpenXRApiLayerService.cs" />
+    <EmbeddedResource Include="ActionProperties\ActionPropertiesForm.resx">
       <DependentUpon>ActionPropertiesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Graph.resx">
@@ -249,7 +251,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ScanJoystickKeyboardForm.resx">
+    <EmbeddedResource Include="Joystick\ScanJoystickKeyboardForm.resx">
       <DependentUpon>ScanJoystickKeyboardForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="NLog.config">

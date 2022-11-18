@@ -9,14 +9,6 @@ using System.Windows.Forms;
 
 namespace XRNeckSafer
 {
-    public enum KeyEvents
-    {
-        KeyDown = 0x0100,
-        KeyUp = 0x0101,
-        SKeyDown = 0x0104,
-        SKeyUp = 0x0105
-    }
-
     public static class KeyInterceptor
     {
         private static readonly ILogger _logger = LogManager.GetLogger(nameof(KeyInterceptor));
@@ -103,7 +95,7 @@ namespace XRNeckSafer
 
         private static void LogPressedKeys(HashSet<Keys> keys)
         {
-            if (keys.Count == 0)
+            if (keys.Count == 0 || !_logger.IsTraceEnabled)
             {
                 return;
             }

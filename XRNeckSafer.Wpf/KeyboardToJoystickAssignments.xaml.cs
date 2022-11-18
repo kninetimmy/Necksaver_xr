@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,27 +12,27 @@ namespace XRNeckSafer.Wpf
     /// </summary>
     public partial class KeyboardToJoystickAssignments : UserControl
     {
-        public ObservableCollection<KeyboardToJoysticAssignmentModel> Mappings { get; set; }
+        public ObservableCollection<KeyboardToJoysticAssignmentModel> Assignments { get; set; }
 
         public event Action<ActionPropertyDataModelEventArgs> ScanKeyboardClick;
         public event Action<ActionPropertyDataModelEventArgs> ScanJoystickClick;
 
         public KeyboardToJoystickAssignments()
         {
-            Mappings = new ObservableCollection<KeyboardToJoysticAssignmentModel>();
+            Assignments = new ObservableCollection<KeyboardToJoysticAssignmentModel>();
             InitializeComponent();
         }
 
-        public void PopulateMappings(IEnumerable<KeyboardToJoysticAssignmentModel> models)
+        public void PopulateAssignments(IEnumerable<KeyboardToJoysticAssignmentModel> models)
         {
-            Mappings.Clear();
+            Assignments.Clear();
             foreach (var model in models)
             {
-                Mappings.Add(model);
+                Assignments.Add(model);
             }
-            if (!Mappings.Any())
+            if (!Assignments.Any())
             {
-                Mappings.Add(new KeyboardToJoysticAssignmentModel
+                Assignments.Add(new KeyboardToJoysticAssignmentModel
                 {
                     JoystickInput = new Input(),
                     KeyboardInput = new Input()
@@ -44,20 +43,19 @@ namespace XRNeckSafer.Wpf
 
         private void PopulateCanAddFlags()
         {
-            foreach (var model in Mappings)
+            foreach (var model in Assignments)
             {
                 model.CanAdd = false;
             }
-            var someAdded = Mappings.Any();
-            if (someAdded)
+            if (Assignments.Any())
             {
-                Mappings.First().CanAdd = true;
+                Assignments.First().CanAdd = true;
             }
         }
 
         private void OnAddAssignmentClick(object sender, RoutedEventArgs e)
         {
-            Mappings.Add(new KeyboardToJoysticAssignmentModel
+            Assignments.Add(new KeyboardToJoysticAssignmentModel
             {
                 JoystickInput = new Input(),
                 KeyboardInput = new Input()
@@ -68,7 +66,7 @@ namespace XRNeckSafer.Wpf
         private void OnRemoveAssignmentClick(object sender, RoutedEventArgs e)
         {
             var model = ((Button)e.OriginalSource).DataContext as KeyboardToJoysticAssignmentModel;
-            Mappings.Remove(model);
+            Assignments.Remove(model);
         }
 
         private void OnScanJoystickButtonClick(object sender, RoutedEventArgs e)
@@ -90,29 +88,6 @@ namespace XRNeckSafer.Wpf
             model.JoystickInput.InputCombination = null;
             model.KeyboardInput.NewInputCombination = null;
             model.KeyboardInput.InputCombination = null;
-        }
-    }
-
-    public class KeyboardToJoysticAssignmentModel : INotifyPropertyChanged
-    {
-        public Input JoystickInput { get; set; }
-        public Input KeyboardInput { get; set; }
-
-        private bool _canAdd;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public bool CanAdd
-        {
-            get => _canAdd;
-            set
-            {
-                if (_canAdd != value)
-                {
-                    _canAdd = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanAdd)));
-                }
-            }
         }
     }
 }
