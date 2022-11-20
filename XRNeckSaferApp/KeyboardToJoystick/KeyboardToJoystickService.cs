@@ -59,8 +59,8 @@ namespace XRNeckSafer
             var mapping = _mappings.FirstOrDefault(m => m.JoystickButton.GetId().Equals(button.GetId()));
             if (mapping != null)
             {
-                KeyPressSimulator.PressKey(mapping.KeyboardButton);
-                _logger.Debug($"'{mapping.KeyboardButton}' pressed.");
+                KeyPressSimulator.PressKey(mapping.KeyboardKey);
+                _logger.Debug($"'{mapping.KeyboardKey}' pressed.");
             }
         }
 
@@ -73,8 +73,8 @@ namespace XRNeckSafer
             var mapping = _mappings.FirstOrDefault(m => m.JoystickButton.GetId().Equals(button.GetId()));
             if (mapping != null)
             {
-                KeyPressSimulator.ReleaseKey(mapping.KeyboardButton);
-                _logger.Debug($"'{mapping.KeyboardButton}' released.");
+                KeyPressSimulator.ReleaseKey(mapping.KeyboardKey);
+                _logger.Debug($"'{mapping.KeyboardKey}' released.");
             }
         }
 

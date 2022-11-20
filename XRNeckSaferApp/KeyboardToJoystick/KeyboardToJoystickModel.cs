@@ -9,6 +9,6 @@ namespace XRNeckSafer
         [DataMember]
         public JoystickButton JoystickButton { get; set; }
         [DataMember]
-        public Keys KeyboardButton { get; set; }
+        public Keys KeyboardKey { get; set; }
     }
 }

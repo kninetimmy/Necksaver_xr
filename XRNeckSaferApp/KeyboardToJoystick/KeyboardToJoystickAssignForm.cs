@@ -46,7 +46,7 @@ namespace XRNeckSaferApp
                 var dataModel = new KeyboardToJoysticAssignmentModel
                 {
                     JoystickInput = new Input { InputCombination = mapping.JoystickButton?.ToString() ?? string.Empty },
-                    KeyboardInput = new Input { InputCombination = mapping.KeyboardButton != Keys.None ? mapping.KeyboardButton.ToDisplayString() : string.Empty },
+                    KeyboardInput = new Input { InputCombination = mapping.KeyboardKey != Keys.None ? mapping.KeyboardKey.ToDisplayString() : string.Empty },
                 };
                 props.Add(dataModel);
             });
@@ -97,16 +97,16 @@ namespace XRNeckSaferApp
                 if (keyboardInput.NewInputCombination == null)
                 {
                     var existing = Config.Instance.KeyboardToJoystickAssignments.FirstOrDefault(m =>
-                        m.KeyboardButton.ToDisplayString() == keyboardInput.InputCombination);
+                        m.KeyboardKey.ToDisplayString() == keyboardInput.InputCombination);
                     if (existing != null)
                     {
-                        newMapping.KeyboardButton = existing.KeyboardButton;
+                        newMapping.KeyboardKey = existing.KeyboardKey;
                     }
                 } 
                 else
                 {
                     var newKeyboardInput = keyboardInput.NewInputCombination as JoystickKeyboardInput;
-                    newMapping.KeyboardButton = newKeyboardInput.KeyboardKeys.First();
+                    newMapping.KeyboardKey = newKeyboardInput.KeyboardKeys.First();
                 }
                 if (joystickInput.NewInputCombination == null)
                 {
