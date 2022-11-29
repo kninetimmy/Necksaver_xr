@@ -3,7 +3,8 @@
 #pragma once
 
 #include "pch.h"
-#include<map>
+#include <mutex>
+#include <map>
 
 namespace utility
 {
@@ -15,17 +16,22 @@ namespace utility
         std::map<XrTime, Sample> m_Cache{};
         Sample m_Fallback;
         XrTime m_Tolerance;
+        mutable std::mutex m_Mutex;
+
 
     public:
         Cache(XrTime tolerance, Sample fallback) : m_Tolerance(tolerance), m_Fallback(fallback) {};
 
         void AddSample(XrTime time, Sample sample)
         {
+            std::unique_lock lock(m_Mutex);
             m_Cache.insert({ time, sample });
         }
 
         Sample GetSample(XrTime time) const
         {
+            std::unique_lock lock(m_Mutex);
+
             auto it = m_Cache.lower_bound(time);
             bool itIsEnd = m_Cache.end() == it;
             if (!itIsEnd)
@@ -82,6 +88,7 @@ namespace utility
         // remove outdated entries
         void CleanUp(XrTime time)
         {
+            std::unique_lock lock(m_Mutex);
             auto it = m_Cache.lower_bound(time - m_Tolerance);
             if (m_Cache.end() != it && m_Cache.begin() != it)
             {
@@ -91,6 +98,7 @@ namespace utility
 
         bool empty()
         {
+            std::unique_lock lock(m_Mutex);
             return m_Cache.empty();
         }
 

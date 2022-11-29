@@ -51,7 +51,7 @@ namespace {
 //    XrSpaceLocation lastHmdLocation;
     XrVector3f delta;
     XrVector3f trans;
-    XrTime m_LastFrameTime{ 0 };
+//    XrTime m_LastFrameTime{ 0 };
     utility::Cache<XrPosef> m_PoseCache{ 2, xr::math::Pose::Identity() };
 
 
@@ -303,7 +303,9 @@ namespace {
         DebugLog("--> XRNeckSafer_xrEndFrame\n");
 
         // from OXRMC
-        m_LastFrameTime = frameEndInfo->displayTime;
+        // making sure that all viewsmanipulations are reverted to make sure that reprojection doesn't run havoc 
+
+        // m_LastFrameTime = frameEndInfo->displayTime;
         std::vector<const XrCompositionLayerBaseHeader*> resetLayers{};
         std::vector<XrCompositionLayerProjection*> resetProjectionLayers{};
         std::vector<std::vector<XrCompositionLayerProjectionView>*> resetViews{};
@@ -330,7 +332,6 @@ namespace {
                 memcpy(projectionViews->data(),
                     projectionLayer->views,
                     projectionLayer->viewCount * sizeof(XrCompositionLayerProjectionView));
-
 
                 for (uint32_t j = 0; j < projectionLayer->viewCount; j++)
                 {
