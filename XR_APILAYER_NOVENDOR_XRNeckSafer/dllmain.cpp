@@ -322,10 +322,14 @@ namespace {
         std::vector<XrCompositionLayerProjection*> resetProjectionLayers{};
         std::vector<std::vector<XrCompositionLayerProjectionView>*> resetViews{};
 
+        // use pose cache for reverse calculation
+        XrPosef reversedManipulation = Pose::Invert(m_PoseCache.GetSample(frameEndInfo->displayTime));
+        m_PoseCache.CleanUp(frameEndInfo->displayTime);
+
         for (uint32_t i = 0; i < frameEndInfo->layerCount; i++)
         {
             XrCompositionLayerBaseHeader baseHeader = *frameEndInfo->layers[i];
-            XrCompositionLayerBaseHeader* headerPtr{ nullptr };
+            XrCompositionLayerBaseHeader* resetBaseHeader{ nullptr };
             if (XR_TYPE_COMPOSITION_LAYER_PROJECTION == baseHeader.type)
             {
                 DebugLog("xrEndFrame: projection layer %u, space: %u\n", i, baseHeader.space);
@@ -340,10 +344,6 @@ namespace {
                 memcpy(projectionViews->data(),
                     projectionLayer->views,
                     projectionLayer->viewCount * sizeof(XrCompositionLayerProjectionView));
-
-                // use pose cache for reverse calculation
-                XrPosef reversedManipulation = Pose::Invert(m_PoseCache.GetSample(frameEndInfo->displayTime));
-                m_PoseCache.CleanUp(frameEndInfo->displayTime);
 
                 for (uint32_t j = 0; j < projectionLayer->viewCount; j++)
                 {
@@ -360,16 +360,15 @@ namespace {
                                                      projectionViews->data() };
 
                 resetProjectionLayers.push_back(resetProjectionLayer);
-                headerPtr = reinterpret_cast<XrCompositionLayerBaseHeader*>(resetProjectionLayer);
+                resetBaseHeader = reinterpret_cast<XrCompositionLayerBaseHeader*>(resetProjectionLayer);
             }
-            if (!headerPtr)
+            if (resetBaseHeader)
             {
-                resetLayers.push_back(frameEndInfo->layers[i]);
+                resetLayers.push_back(resetBaseHeader);
             }
             else
             {
-                const XrCompositionLayerBaseHeader* const baseHeaderPtr = headerPtr;
-                resetLayers.push_back(baseHeaderPtr);
+                resetLayers.push_back(frameEndInfo->layers[i]);
             }
         }
         XrFrameEndInfo resetFrameEndInfo{ frameEndInfo->type,
