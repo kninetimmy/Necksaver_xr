@@ -289,18 +289,7 @@ namespace {
         const XrResult resS = nextXrCreateReferenceSpace(*session, &referenceSpaceCreateInfo, &m_StageSpace);
         DebugLog("STAGE space: %d\n", m_StageSpace);
 
-//        lastHmdLocation.type = XR_TYPE_SPACE_LOCATION;
-//        lastHmdLocation.next = nullptr;
-
-        XrSpaceLocation startingLocation;
-
-        const XrResult result2 = nextXrLocateSpace(m_ViewSpace, m_LocalSpace, 0, &startingLocation);
-        centerHmdLocationLocal = startingLocation;
-        centerHmdLocationStage = startingLocation;
-        //        lastHmdLocation = startingLocation;
         holdYawOffsetValue = 0;
-
-        DebugLog("XrLocateSpace for HMD %d\n", result2);
 
         DebugLog("<-- XRNeckSafer_xrCreateSession %d\n", result);
 
@@ -313,17 +302,20 @@ namespace {
     {
         DebugLog("--> XRNeckSafer_xrEndFrame\n");
 
-
         // from OXRMC
         m_LastFrameTime = frameEndInfo->displayTime;
         std::vector<const XrCompositionLayerBaseHeader*> resetLayers{};
         std::vector<XrCompositionLayerProjection*> resetProjectionLayers{};
         std::vector<std::vector<XrCompositionLayerProjectionView>*> resetViews{};
 
+        // use pose cache for reverse calculation
+        XrPosef reversedManipulation = Pose::Invert(m_PoseCache.GetSample(frameEndInfo->displayTime));
+        m_PoseCache.CleanUp(frameEndInfo->displayTime);
+
         for (uint32_t i = 0; i < frameEndInfo->layerCount; i++)
         {
             XrCompositionLayerBaseHeader baseHeader = *frameEndInfo->layers[i];
-            XrCompositionLayerBaseHeader* headerPtr{ nullptr };
+            XrCompositionLayerBaseHeader* resetBaseHeader{ nullptr };
             if (XR_TYPE_COMPOSITION_LAYER_PROJECTION == baseHeader.type)
             {
                 DebugLog("xrEndFrame: projection layer %u, space: %u\n", i, baseHeader.space);
@@ -339,9 +331,6 @@ namespace {
                     projectionLayer->views,
                     projectionLayer->viewCount * sizeof(XrCompositionLayerProjectionView));
 
-                // use pose cache for reverse calculation
-                XrPosef reversedManipulation = Pose::Invert(m_PoseCache.GetSample(frameEndInfo->displayTime));
-                m_PoseCache.CleanUp(frameEndInfo->displayTime);
 
                 for (uint32_t j = 0; j < projectionLayer->viewCount; j++)
                 {
@@ -358,16 +347,15 @@ namespace {
                                                      projectionViews->data() };
 
                 resetProjectionLayers.push_back(resetProjectionLayer);
-                headerPtr = reinterpret_cast<XrCompositionLayerBaseHeader*>(resetProjectionLayer);
+                resetBaseHeader = reinterpret_cast<XrCompositionLayerBaseHeader*>(resetProjectionLayer);
             }
-            if (!headerPtr)
+            if (resetBaseHeader)
             {
-                resetLayers.push_back(frameEndInfo->layers[i]);
+                resetLayers.push_back(resetBaseHeader);
             }
             else
             {
-                const XrCompositionLayerBaseHeader* const baseHeaderPtr = headerPtr;
-                resetLayers.push_back(baseHeaderPtr);
+                resetLayers.push_back(frameEndInfo->layers[i]);
             }
         }
         XrFrameEndInfo resetFrameEndInfo{ frameEndInfo->type,
@@ -380,17 +368,16 @@ namespace {
         const XrResult result = nextXrEndFrame(session, &resetFrameEndInfo);
 
         // clean up memory
-        for (auto layer : resetProjectionLayers)
+        for (auto projection : resetProjectionLayers)
         {
-            delete layer;
+            delete projection;
         }
         for (auto views : resetViews)
         {
             delete views;
         }
 
-
-
+        // from OXRMC end -- Projection Layers should be restored 
 
         XrSpaceLocation location;
         location.type = XR_TYPE_SPACE_LOCATION;
@@ -450,7 +437,7 @@ namespace {
             buffer->hmdYawAngle = angles.yaw * 180.f / (float)M_PI;
             buffer->hmdPitchAngle = angles.pitch * 180.f / (float)M_PI;
 
-            toMonitor((char *)"angles.yaw",angles.yaw);
+            toMonitor((char*)"angles.yaw", angles.yaw);
 
             if (shmValues.useLinearRotation) {
                 shmValues.leftStartAt = buffer->leftStartAt;
@@ -503,6 +490,7 @@ namespace {
             qYawOffset = DirectX::XMQuaternionRotationRollPitchYaw(0.f, -shmValues.yawOffset, 0.f);
 
         }
+
         DebugLog("<-- XRNeckSafer_xrEndFrame %d\n", result);
 
         return result;
@@ -537,6 +525,44 @@ namespace {
         return result;
     }
 
+    XrPosef XRNeckSafer_ManipulatePose(XrPosef inPose, bool baseSpaceIsStageSpace) {
+        XrPosef outpose;
+
+        DirectX::XMVECTOR vPitchAxis = { 1.f,0.f,0.f };
+
+        // save current location
+        XrVector3f pos = inPose.position;
+
+        if (baseSpaceIsStageSpace) {
+            pos = pos - centerHmdLocationStage.pose.position;
+        }
+
+        // we want to rotate around the center of the head
+        inPose.position = { 0, 0, 0 };
+
+        // set yaw offset first, than rotate pitch around the hmd yaw + yaw offset lateral (x) axis
+        const DirectX::XMVECTOR qHMD = LoadXrQuaternion(inPose.orientation);
+        const DirectX::XMVECTOR qHMDwithYawOffset = DirectX::XMQuaternionMultiply(qHMD, qYawOffset);
+        if (DirectX::XMVector4Length(qHMDwithYawOffset).m128_f32[0] != 0) {
+            vPitchAxis = DirectX::XMVector3Rotate(vPitchAxis, qHMDwithYawOffset);
+        }
+        const DirectX::XMVECTOR qRotatedPitchOffset = DirectX::XMQuaternionRotationAxis(vPitchAxis, -shmValues.pitchOffset);
+        const DirectX::XMVECTOR qHMDwithOffset = DirectX::XMQuaternionMultiply(qHMDwithYawOffset, qRotatedPitchOffset);
+
+        StoreXrQuaternion(&outpose.orientation, qHMDwithOffset);
+
+        StoreXrVector3(&pos, DirectX::XMVector3Rotate(LoadXrVector3(pos), qYawOffset));
+
+        if (baseSpaceIsStageSpace) {
+            pos = pos + centerHmdLocationStage.pose.position;
+            StoreXrVector3(&trans, DirectX::XMVector3Rotate(LoadXrVector3(trans), LoadXrQuaternion(centerHmdLocationStage.pose.orientation)));
+        }
+
+        outpose.position = pos - trans;
+
+        return outpose;
+    }
+
     // Overrides the behavior of xrLocateSpace()
     XrResult XRNeckSafer_xrLocateSpace(
         XrSpace space,
@@ -544,71 +570,28 @@ namespace {
         XrTime time,
         XrSpaceLocation* location)
     {
-        DebugLog("--> XRNeckSafer_xrLocateSpace\n");
+        DebugLog("--> XRNeckSafer_xrLocateSpace ");
         // Call the chain to perform the actual operation.
         const XrResult result = nextXrLocateSpace(space, baseSpace, time, location);
 
         bool spaceIsViewSpace = isViewSpace.count(space);
         bool baseSpaceIsViewSpace = isViewSpace.count(baseSpace);
         bool baseSpaceIsStageSpace = isStageSpace.count(baseSpace); // IL2: true, DCS: false
-        bool baseSpaceIsLocalSpace = isLocalSpace.count(baseSpace); 
+        bool baseSpaceIsLocalSpace = isLocalSpace.count(baseSpace);
 
-        DebugLog("space: %d  bspace: %d\n", space, baseSpace);
-        
+        DebugLog("space: %d  bspace: %d ", space, baseSpace);
+
         XrPosef pos1 = location->pose;
 
         if (shmValues.yawOffset != 0 || shmValues.pitchOffset != 0) {
- 
-            DirectX::XMVECTOR vPitchAxis = { 1.f,0.f,0.f };
+
 
             if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
-                // save current location
-                XrVector3f pos = location->pose.position;
-
-                if (baseSpaceIsStageSpace) {
-                    pos = pos - centerHmdLocationStage.pose.position;
-                }
-
-                // we want to rotate around the center of the head
-                location->pose.position = { 0, 0, 0 };
-
-                // set yaw offset first, than rotate pitch around the hmd yaw + yaw offset lateral (x) axis
-                const DirectX::XMVECTOR qHMD = LoadXrQuaternion(location->pose.orientation);
-                const DirectX::XMVECTOR qHMDwithYawOffset = DirectX::XMQuaternionMultiply(qHMD, qYawOffset);
-                if (DirectX::XMVector4Length(qHMDwithYawOffset).m128_f32[0] != 0) {
-                    vPitchAxis = DirectX::XMVector3Rotate(vPitchAxis, qHMDwithYawOffset);
-                }
-                const DirectX::XMVECTOR qRotatedPitchOffset = DirectX::XMQuaternionRotationAxis(vPitchAxis, -shmValues.pitchOffset);
-                const DirectX::XMVECTOR qHMDwithOffset = DirectX::XMQuaternionMultiply(qHMDwithYawOffset, qRotatedPitchOffset);
-
-                StoreXrQuaternion(&location->pose.orientation, qHMDwithOffset);
-
-                StoreXrVector3(&pos, DirectX::XMVector3Rotate(LoadXrVector3(pos), qYawOffset));
-
-                if (baseSpaceIsStageSpace) {
-                    pos = pos + centerHmdLocationStage.pose.position;
-                    StoreXrVector3(&trans, DirectX::XMVector3Rotate(LoadXrVector3(trans), LoadXrQuaternion(centerHmdLocationStage.pose.orientation)));
-                }
-
-                location->pose.position = pos - trans;
+                location->pose = XRNeckSafer_ManipulatePose(location->pose, baseSpaceIsStageSpace);
             }
-
-
             if (baseSpaceIsViewSpace && !spaceIsViewSpace) {
-
-                //          location->pose.position = { 0, 0, 0 };
-
-                //           rotate pitch around the hmd yaw + yaw offset lateral (x) axis, then set yaw offset 
-
-                //           StoreXrPose(&location->pose,
-                //               XMMatrixMultiply(LoadXrPose(location->pose),
-                //                   DirectX::XMMatrixRotationRollPitchYaw(shmValues.pitchOffset, 0.f, 0.f)));
-                //           StoreXrPose(&location->pose,
-                //               XMMatrixMultiply(LoadXrPose(location->pose),
-                //                   DirectX::XMMatrixRotationRollPitchYaw(0.f, shmValues.yawOffset, 0.f)));
-                //           location->pose.position = pos - trans;
+                location->pose = Pose::Invert(XRNeckSafer_ManipulatePose(location->pose, baseSpaceIsStageSpace));
             }
-
         }
 
         XrPosef pos2 = location->pose;
@@ -629,11 +612,10 @@ namespace {
         uint32_t* const viewCountOutput,
         XrView* const views)
     {
-        DebugLog("--> XRNeckSafer_xrLocateViews\n");
+        DebugLog("--> XRNeckSafer_xrLocateViews ");
         // Call the chain to perform the actual operation.
         const XrResult result = nextXrLocateViews(session, viewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views);
-
-
+ 
         std::vector<XrPosef> originalEyePoses{};
         for (uint32_t i = 0; i < *viewCountOutput; i++)
         {
@@ -653,46 +635,11 @@ namespace {
         }
         // manipulate reference space location
         XrSpaceLocation location{ XR_TYPE_SPACE_LOCATION, nullptr };
-        CHECK_XRCMD(xrLocateSpace(m_ViewSpace, viewLocateInfo->space, viewLocateInfo->displayTime, &location));
+        CHECK_XRCMD(XRNeckSafer_xrLocateSpace(m_ViewSpace, viewLocateInfo->space, viewLocateInfo->displayTime, &location));
         for (uint32_t i = 0; i < *viewCountOutput; i++)
         {
             views[i].pose = Pose::Multiply(m_EyeOffsets[i].pose, location.pose);
         }
-//        // requested NOT for VIEW space: someone is actually asking for the views in a LOCAL/STAGE space
-//        if (!isViewSpace.count(viewLocateInfo->space)) {
-//
-//            // get already rotated head pose
-//            XrSpaceLocation headLocation{ XR_TYPE_SPACE_LOCATION, nullptr };
-//            headLocation.type = XR_TYPE_SPACE_LOCATION;
-//            headLocation.next = nullptr;
-//            XRNeckSafer_xrLocateSpace(m_ViewSpace, viewLocateInfo->space, viewLocateInfo->displayTime, &headLocation);
-//
-//            // get pose of views in VIEW space
-//            XrView v[2]{ {XR_TYPE_VIEW, nullptr}, {XR_TYPE_VIEW, nullptr} };
-//            const XrViewLocateInfo vinfo = {
-//                XR_TYPE_VIEW_LOCATE_INFO,
-//                nullptr,
-//                XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO,
-//                viewLocateInfo->displayTime,
-//                m_ViewSpace
-//            };
-//            const XrResult result2 = nextXrLocateViews(session, &vinfo, viewState, viewCapacityInput, viewCountOutput, v);
-//
-//            // rotate the views relative to center of head (base of VIEW space)
-//            StoreXrPose(&v[0].pose,
-//                XMMatrixMultiply(LoadXrPose(v[0].pose),
-//                    DirectX::XMMatrixRotationQuaternion(LoadXrQuaternion(headLocation.pose.orientation))));
-//            StoreXrPose(&v[1].pose,
-//                XMMatrixMultiply(LoadXrPose(v[1].pose),
-//                    DirectX::XMMatrixRotationQuaternion(LoadXrQuaternion(headLocation.pose.orientation))));
-//
-//            // add rotated eye positions to head position 
-//            views[0].pose.position = headLocation.pose.position + v[0].pose.position;
-//            views[1].pose.position = headLocation.pose.position + v[1].pose.position;
-//            // set eye orientation to rotated eye orientation
-//            views[0].pose.orientation = v[0].pose.orientation;
-//            views[1].pose.orientation = v[1].pose.orientation;
-//        }
 
         DebugLog("<-- XRNeckSafer_xrLocateViews %d\n", result);
 
