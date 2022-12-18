@@ -16,746 +16,796 @@
 
 #include "pch.h"
 #include "math.h"
+#include "utility.h"
 #include <set>
 
 #define MAXMONVAL 20
 
 namespace {
-    using namespace xr::math;
+	using namespace xr::math;
 
-    const std::string LayerName = "XR_APILAYER_NOVENDOR_XRNeckSafer";
+	const std::string LayerName = "XR_APILAYER_NOVENDOR_XRNeckSafer";
 
-    // The path where the DLL loads config files and stores logs.
-    std::string dllHome;
+	// The path where the DLL loads config files and stores logs.
+	std::string dllHome;
 
-    // The file logger.
-    std::ofstream logStream;
+	// The file logger.
+	std::ofstream logStream;
 
-    // Function pointers to interact with the next layers and/or the OpenXR runtime.
-    PFN_xrGetInstanceProcAddr nextXrGetInstanceProcAddr = nullptr;
-    PFN_xrLocateViews nextXrLocateViews = nullptr;
-    PFN_xrLocateSpace nextXrLocateSpace = nullptr;
-    PFN_xrCreateSession nextXrCreateSession = nullptr;
-    PFN_xrEndFrame nextXrEndFrame = nullptr;
+	// Function pointers to interact with the next layers and/or the OpenXR runtime.
+	PFN_xrGetInstanceProcAddr nextXrGetInstanceProcAddr = nullptr;
+	PFN_xrLocateViews nextXrLocateViews = nullptr;
+	PFN_xrLocateSpace nextXrLocateSpace = nullptr;
+	PFN_xrCreateSession nextXrCreateSession = nullptr;
+	PFN_xrEndFrame nextXrEndFrame = nullptr;
 
-    std::set<XrSpace> isViewSpace;
-    std::set<XrSpace> isLocalSpace;
-    std::set<XrSpace> isStageSpace;
+	std::set<XrSpace> isViewSpace;
+	std::set<XrSpace> isLocalSpace;
+	std::set<XrSpace> isStageSpace;
+	std::vector<XrView> m_EyeOffsets{};
 
-    PFN_xrCreateReferenceSpace nextXrCreateReferenceSpace = nullptr;
+	PFN_xrCreateReferenceSpace nextXrCreateReferenceSpace = nullptr;
 
-    XrSpaceLocation centerHmdLocationLocal;
-    XrSpaceLocation centerHmdLocationStage;
-//    XrSpaceLocation lastHmdLocation;
-    XrVector3f delta;
-    XrVector3f trans;
-
-    XrQuaternionf HmdOrientation;
-    DirectX::XMVECTOR qYawOffset;
-
-    // float csin, ccos;
+	XrSpaceLocation centerHmdLocationLocal;
+	XrSpaceLocation centerHmdLocationStage;
+	//    XrSpaceLocation lastHmdLocation;
+	XrVector3f delta;
+	XrVector3f trans;
+	//    XrTime m_LastFrameTime{ 0 };
+	utility::Cache<XrPosef> m_PoseCache{ 2, xr::math::Pose::Identity() };
 
 
-    void Log(const char* fmt, ...);
+	XrQuaternionf HmdOrientation;
+	DirectX::XMVECTOR qYawOffset;
 
-    struct shmVal_s {
-        float hmdYawAngle;
-        float hmdPitchAngle;
-        float yawOffset;
-        float pitchOffset;
-        float lateralOffset;
-        float longitudinalOffset;
-        float rightMultiplier;
-        float leftMultiplier;
-        float upMultiplier;
-        float downMultiplier;
-        int leftStartAt;
-        int rightStartAt;
-        int upStartAt;
-        int downStartAt;
-        bool resetHmdOrientation;
-        bool useLinearRotation;
-        bool useLinearPitchRotation;
-        bool holdLinearRotation;
-        bool holdLinearPitchRotation;
-        bool hasBeenCentered;
- 
-    } shmValues;
-
-    std::wstring m_memoryName = L"XRNeckSaferSHM";
-    std::wstring m_memoryNameDeb = L"XRNeckSaferDebSHM";
-
-    HANDLE m_shmHandler = 0;
-    HANDLE m_shmHandlerDeb = 0;
-    shmVal_s* buffer;
-
-    char* bufferDeb;
-
-    XrSpace m_LocalSpace{ XR_NULL_HANDLE };
-    XrSpace m_ViewSpace{ XR_NULL_HANDLE };
-    XrSpace m_StageSpace{ XR_NULL_HANDLE };
-    XrSession m_Session{ XR_NULL_HANDLE };
-
-    float holdYawOffsetValue;
-    float holdPitchOffsetValue;
-
-    struct EulerAngles {
-        float roll, pitch, yaw;
-    };
-
-    void prepareSHM() {
-        // prepare SHM
-        m_shmHandler = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, m_memoryName.c_str());
-
-        if (m_shmHandler) {
-            Log("XRNeckSafer shared memory found\n");
-        }
-        else {
-            m_shmHandler = CreateFileMapping(
-                INVALID_HANDLE_VALUE,
-                NULL,
-                PAGE_READWRITE,
-                0,
-                sizeof(shmValues),
-                m_memoryName.c_str());
-
-            Log("XRNeckSafer shared memory created\n");
-        }
-
-        if (m_shmHandler) {
-            buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
-            if (NULL != buffer) {
-                Log("XRNeckSafer shared memory ready\n");
-                buffer->hasBeenCentered = false;
-            }
-            else {
-                Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
-            }
-        }
-        else {
-            Log("Couldn't create XRNeckSafer shared memory\n");
-        }
+	// float csin, ccos;
 
 
-        if (m_shmHandler) {
-            buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
-            if (NULL != buffer) {
-                Log("XRNeckSafer shared memory ready\n");
-                buffer->hasBeenCentered = false;
-            }
-            else {
-                Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
-            }
-        }
-        else {
-            Log("Couldn't create XRNeckSafer shared memory\n");
-        }
+	void Log(const char* fmt, ...);
 
-#ifdef _DEBUG
-        if (m_shmHandlerDeb) {
-            Log("XRNeckSafer shared debug memory found\n");
-        }
-        else {
-            m_shmHandlerDeb = CreateFileMapping(
-                INVALID_HANDLE_VALUE,
-                NULL,
-                PAGE_READWRITE,
-                0,
-                40 * MAXMONVAL,
-                m_memoryNameDeb.c_str());
-            Log("XRNeckSafer shared debug memory created\n");
-        }
+	struct shmVal_s {
+		float hmdYawAngle;
+		float hmdPitchAngle;
+		float yawOffset;
+		float pitchOffset;
+		float lateralOffset;
+		float longitudinalOffset;
+		float rightMultiplier;
+		float leftMultiplier;
+		float upMultiplier;
+		float downMultiplier;
+		int leftStartAt;
+		int rightStartAt;
+		int upStartAt;
+		int downStartAt;
+		bool resetHmdOrientation;
+		bool useLinearRotation;
+		bool useLinearPitchRotation;
+		bool holdLinearRotation;
+		bool holdLinearPitchRotation;
+		bool hasBeenCentered;
 
-        if (m_shmHandlerDeb) {
-            bufferDeb = (char*)MapViewOfFile(m_shmHandlerDeb, FILE_MAP_ALL_ACCESS, 0, 0, MAXMONVAL * 40);
-            if (NULL != bufferDeb) {
-                Log("XRNeckSafer shared debug memory ready\n");
-                for (int i = 0; i < MAXMONVAL; i++) {
-                    strcpy(&bufferDeb[i * 40], "#                  ");
-                    strcpy(&bufferDeb[i * 40+20], "#                  ");
-                }
-            }
-            else {
-                Log("Cannot map XRNeckSafer shared debug memory: null buffer.\n");
-            }
-        }
-        else {
-            Log("Couldn't create XRNeckSafer shared debug memory\n");
-        }
-#endif
-    }
+	} shmValues;
 
-    auto toMonitor = [](const char* name, auto v) {
-#ifdef _DEBUG
-        for (int i = 0; i < MAXMONVAL; i++) {
-            if (strcmp(name, &bufferDeb[i * 40]) == 0) {
-                strcpy(&bufferDeb[i * 40 + 20], &(std::to_string(v)[0]));
-                return;
-            }
-            if ('#' == bufferDeb[i * 40]) {
-                strcpy(&bufferDeb[i * 40], name);
-                strcpy(&bufferDeb[i * 40 + 20], &(std::to_string(v)[0]));
-                return;
-            }
-        }
-#endif
-    };
+	std::wstring m_memoryName = L"XRNeckSaferSHM";
+	std::wstring m_memoryNameDeb = L"XRNeckSaferDebSHM";
+
+	HANDLE m_shmHandler = 0;
+	HANDLE m_shmHandlerDeb = 0;
+	shmVal_s* buffer;
+
+	char* bufferDeb;
+
+	XrSpace m_LocalSpace{ XR_NULL_HANDLE };
+	XrSpace m_ViewSpace{ XR_NULL_HANDLE };
+	XrSpace m_StageSpace{ XR_NULL_HANDLE };
+	XrSession m_Session{ XR_NULL_HANDLE };
+
+	float holdYawOffsetValue;
+	float holdPitchOffsetValue;
+
+	struct EulerAngles {
+		float roll, pitch, yaw;
+	};
+
+	void prepareSHM() {
+		// prepare SHM
+		m_shmHandler = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, m_memoryName.c_str());
+
+		if (m_shmHandler) {
+			Log("XRNeckSafer shared memory found\n");
+		}
+		else {
+			m_shmHandler = CreateFileMapping(
+				INVALID_HANDLE_VALUE,
+				NULL,
+				PAGE_READWRITE,
+				0,
+				sizeof(shmValues),
+				m_memoryName.c_str());
+
+			Log("XRNeckSafer shared memory created\n");
+		}
+
+		if (m_shmHandler) {
+			buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
+			if (NULL != buffer) {
+				Log("XRNeckSafer shared memory ready\n");
+				buffer->hasBeenCentered = false;
+			}
+			else {
+				Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
+			}
+		}
+		else {
+			Log("Couldn't create XRNeckSafer shared memory\n");
+		}
 
 
-    EulerAngles ToEulerAngles(XrQuaternionf q) {
-        EulerAngles angles;
-
-        // roll (x-axis rotation)
-        float sinr_cosp = 2 * (q.w * q.y + q.x * q.z);
-        float cosr_cosp = 1 - 2 * (q.x * q.x + q.y * q.y);
-        angles.yaw = -std::atan2f(sinr_cosp, cosr_cosp);
-
-        // pitch (y-axis rotation)
-        float sinp = 2 * (q.w * q.x - q.z * q.y);
-        if (std::fabs(sinp) >= 1)
-            angles.pitch = -std::copysignf((float)(M_PI / 2), sinp); // use 90 degrees if out of range
-        else
-            angles.pitch = -std::asinf(sinp);
-
-        // yaw (z-axis rotation)
-        float siny_cosp = 2 * (q.w * q.z + q.x * q.y);
-        float cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
-        angles.roll = std::atan2f(siny_cosp, cosy_cosp);
-
-        return angles;
-    }
-
-    // Utility logging function.
-    void InternalLog(const char* fmt, va_list va)
-    {
-        char buf[1024];
-        _vsnprintf_s(buf, sizeof(buf), fmt, va);
-        OutputDebugStringA(buf);
-        if (logStream.is_open())
-        {
-            logStream << buf;
-            logStream.flush();
-        }
-    }
-
-    // General logging function.
-    void Log(const char* fmt, ...)
-    {
-        va_list va;
-        va_start(va, fmt);
-        InternalLog(fmt, va);
-        va_end(va);
-    }
-
-    // Debug logging function. Can make things very slow (only enabled on Debug builds).
-    void DebugLog(const char* fmt, ...)
-    {
+		if (m_shmHandler) {
+			buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
+			if (NULL != buffer) {
+				Log("XRNeckSafer shared memory ready\n");
+				buffer->hasBeenCentered = false;
+			}
+			else {
+				Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
+			}
+		}
+		else {
+			Log("Couldn't create XRNeckSafer shared memory\n");
+		}
 
 #ifdef _DEBUG
-        va_list va;
-        va_start(va, fmt);
-        InternalLog(fmt, va);
-        va_end(va);
+		if (m_shmHandlerDeb) {
+			Log("XRNeckSafer shared debug memory found\n");
+		}
+		else {
+			m_shmHandlerDeb = CreateFileMapping(
+				INVALID_HANDLE_VALUE,
+				NULL,
+				PAGE_READWRITE,
+				0,
+				40 * MAXMONVAL,
+				m_memoryNameDeb.c_str());
+			Log("XRNeckSafer shared debug memory created\n");
+		}
+
+		if (m_shmHandlerDeb) {
+			bufferDeb = (char*)MapViewOfFile(m_shmHandlerDeb, FILE_MAP_ALL_ACCESS, 0, 0, MAXMONVAL * 40);
+			if (NULL != bufferDeb) {
+				Log("XRNeckSafer shared debug memory ready\n");
+				for (int i = 0; i < MAXMONVAL; i++) {
+					strcpy(&bufferDeb[i * 40], "#                  ");
+					strcpy(&bufferDeb[i * 40 + 20], "#                  ");
+				}
+			}
+			else {
+				Log("Cannot map XRNeckSafer shared debug memory: null buffer.\n");
+			}
+		}
+		else {
+			Log("Couldn't create XRNeckSafer shared debug memory\n");
+		}
 #endif
-    }
-
-    // Overrides the behavior of xrCreateSession().
-    XrResult XRNeckSafer_xrCreateSession(
-        XrInstance instance,
-        const XrSessionCreateInfo* createInfo,
-        XrSession* session)
-    {
-        DebugLog("--> XRNeckSafer_xrCreateSession\n");
-        // Call the chain to perform the actual operation.
-        const XrResult result = nextXrCreateSession(instance, createInfo, session);
-
-        m_Session = *session;
- 
-        XrReferenceSpaceCreateInfo referenceSpaceCreateInfo{ XR_TYPE_REFERENCE_SPACE_CREATE_INFO, nullptr };
-        referenceSpaceCreateInfo.poseInReferenceSpace = Pose::Identity();
-        referenceSpaceCreateInfo.referenceSpaceType = XR_REFERENCE_SPACE_TYPE_LOCAL;
-        const XrResult resL = nextXrCreateReferenceSpace(*session, &referenceSpaceCreateInfo, &m_LocalSpace);
-        DebugLog("LOCAL space: %d\n", m_LocalSpace);
-        referenceSpaceCreateInfo.referenceSpaceType = XR_REFERENCE_SPACE_TYPE_VIEW;
-        const XrResult resV = nextXrCreateReferenceSpace(*session, &referenceSpaceCreateInfo, &m_ViewSpace);
-        isViewSpace.insert(m_ViewSpace);
-        DebugLog("VIEW space: %d\n", m_ViewSpace);
-        referenceSpaceCreateInfo.referenceSpaceType = XR_REFERENCE_SPACE_TYPE_STAGE;
-        const XrResult resS = nextXrCreateReferenceSpace(*session, &referenceSpaceCreateInfo, &m_StageSpace);
-        DebugLog("STAGE space: %d\n", m_StageSpace);
-
-//        lastHmdLocation.type = XR_TYPE_SPACE_LOCATION;
-//        lastHmdLocation.next = nullptr;
-
-        XrSpaceLocation startingLocation;
-
-        const XrResult result2 = nextXrLocateSpace(m_ViewSpace, m_LocalSpace, 0, &startingLocation);
-        centerHmdLocationLocal = startingLocation;
-        centerHmdLocationStage = startingLocation;
-        //        lastHmdLocation = startingLocation;
-        holdYawOffsetValue = 0;
-
-        DebugLog("XrLocateSpace for HMD %d\n", result2);
-
-        DebugLog("<-- XRNeckSafer_xrCreateSession %d\n", result);
-
-        return result;
-    }
-
-    XrResult XRNeckSafer_xrEndFrame(
-        XrSession session,
-        const XrFrameEndInfo* frameEndInfo)
-    {
-        DebugLog("--> XRNeckSafer_xrEndFrame\n");
-        const XrResult result = nextXrEndFrame(session, frameEndInfo);
-
-        XrSpaceLocation location;
-        location.type = XR_TYPE_SPACE_LOCATION;
-        location.next = nullptr;
-
-        const XrResult result2 = nextXrLocateSpace(m_ViewSpace, m_LocalSpace, frameEndInfo->displayTime, &location);
-        DebugLog("XrLocateSpace for HMD %d\n", result2);
-
-        XrSpaceLocation locationStage;
-        locationStage.type = XR_TYPE_SPACE_LOCATION;
-        locationStage.next = nullptr;
-
-        const XrResult result3 = nextXrLocateSpace(m_ViewSpace, m_StageSpace, frameEndInfo->displayTime, &locationStage);
-        DebugLog("XrLocateSpace in STAGE for HMD %d\n", result3);
-
-        toMonitor("LOCAL x", location.pose.position.x);
-        toMonitor("LOCAL y", location.pose.position.y);
-        toMonitor("LOCAL z", location.pose.position.z);
-        toMonitor("STAGE x", locationStage.pose.position.x);
-        toMonitor("STAGE y", locationStage.pose.position.y);
-        toMonitor("STAGE z", locationStage.pose.position.z);
-
-        if (location.locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT) {
-
-            // center button pressed? -> current orientation gets center orientation
-            if (buffer->resetHmdOrientation) {
-                // EulerAngles centerAngles;
-                centerHmdLocationLocal = location;
-                centerHmdLocationStage = locationStage;
-                buffer->resetHmdOrientation = false;
-                shmValues.hasBeenCentered = true;
-                buffer->hasBeenCentered = shmValues.hasBeenCentered;
-            }
-
-            // refuse to do anything before centering
-            if (!shmValues.hasBeenCentered) return result2;
-
-            shmValues.yawOffset = buffer->yawOffset;
-            shmValues.pitchOffset = buffer->pitchOffset;
-            shmValues.longitudinalOffset = buffer->longitudinalOffset;
-            shmValues.lateralOffset = buffer->lateralOffset;
-            shmValues.useLinearRotation = buffer->useLinearRotation;
-            shmValues.holdLinearRotation = buffer->holdLinearRotation;
-            shmValues.useLinearPitchRotation = buffer->useLinearPitchRotation;
-            shmValues.holdLinearPitchRotation = buffer->holdLinearPitchRotation;
-
-
-            //substract center orientation from current orientation to get corrected relative HMD orientation
-            const DirectX::XMVECTOR orientation = LoadXrQuaternion(location.pose.orientation);
-            const DirectX::XMVECTOR centerOrientation = LoadXrQuaternion(centerHmdLocationLocal.pose.orientation);
-            const DirectX::XMVECTOR invertCenterOrientation = DirectX::XMQuaternionConjugate(centerOrientation);
-            const DirectX::XMVECTOR substractedOrientation = DirectX::XMQuaternionMultiply(orientation, invertCenterOrientation);
-            StoreXrQuaternion(&location.pose.orientation, substractedOrientation);
-            StoreXrQuaternion(&HmdOrientation, substractedOrientation);
-
-            EulerAngles angles = ToEulerAngles(location.pose.orientation);
-            buffer->hmdYawAngle = angles.yaw * 180.f / (float)M_PI;
-            buffer->hmdPitchAngle = angles.pitch * 180.f / (float)M_PI;
-
-            toMonitor((char *)"angles.yaw",angles.yaw);
-
-            if (shmValues.useLinearRotation) {
-                shmValues.leftStartAt = buffer->leftStartAt;
-                shmValues.rightStartAt = buffer->rightStartAt;
-                shmValues.leftMultiplier = buffer->leftMultiplier;
-                shmValues.rightMultiplier = buffer->rightMultiplier;
-
-                if (!shmValues.holdLinearRotation) {
-                    bool isright = angles.yaw > 0;
-                    float multiplier = isright ? shmValues.rightMultiplier : shmValues.leftMultiplier;
-                    int startangle = isright ? shmValues.rightStartAt : shmValues.leftStartAt;
-                    float startfrom = startangle * (float)M_PI / 180.f;
-                    if (abs(angles.yaw) >= startfrom) {
-                        shmValues.yawOffset = shmValues.yawOffset + (abs(angles.yaw) - startfrom) * multiplier * (isright ? 1 : -1);
-                    }
-                    holdYawOffsetValue = shmValues.yawOffset;
-                }
-                else {
-                    shmValues.yawOffset = holdYawOffsetValue;
-                }
-
-                trans = { 0 , 0, 0 };
-            }
-            else {
-                trans = { shmValues.lateralOffset , 0, shmValues.longitudinalOffset };
-            }
-
-            if (shmValues.useLinearPitchRotation) {
-                shmValues.upStartAt = buffer->upStartAt;
-                shmValues.downStartAt = buffer->downStartAt;
-                shmValues.upMultiplier = buffer->upMultiplier;
-                shmValues.downMultiplier = buffer->downMultiplier;
-
-                if (!shmValues.holdLinearPitchRotation) {
-                    bool isup = angles.pitch < 0;
-                    float multiplier = isup ? shmValues.upMultiplier : shmValues.downMultiplier;
-                    int startangle = isup ? shmValues.upStartAt : shmValues.downStartAt;
-                    float startfrom = abs(startangle * (float)M_PI / 180.f);
-                    if (abs(angles.pitch) >= startfrom) {
-                        shmValues.pitchOffset = shmValues.pitchOffset + (abs(angles.pitch) - startfrom) * multiplier * (isup ? -1 : 1);
-                    }
-                    holdPitchOffsetValue = shmValues.pitchOffset;
-                }
-                else {
-                    shmValues.pitchOffset = holdPitchOffsetValue;
-                }
-            }
-
-            // save yaw offset as quaternion for later use
-            qYawOffset = DirectX::XMQuaternionRotationRollPitchYaw(0.f, -shmValues.yawOffset, 0.f);
-
-        }
-        DebugLog("<-- XRNeckSafer_xrEndFrame %d\n", result);
-
-        return result;
-    }
-
-    // Overrides the behavior of xrCreateReferenceSpace().
-    XrResult XRNeckSafer_xrCreateReferenceSpace(
-        XrSession session,
-        const XrReferenceSpaceCreateInfo* createInfo,
-        XrSpace* space)
-    {
-        DebugLog("--> XRNeckSafer_xrCreateReferenceSpace\n");
-        // Call the chain to perform the actual operation.
-        const XrResult result = nextXrCreateReferenceSpace(session, createInfo, space);
-       
-        // keep record of all the VIEW spaces of the app
-        if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_VIEW) {
-            isViewSpace.insert(*space);
-            DebugLog("VIEW: %d\n", *space);
-        }
-        if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_LOCAL) {
-            isLocalSpace.insert(*space);
-            DebugLog("LOCAL: %d\n", *space);
-        }
-        if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_STAGE) {
-            DebugLog("STAGE: %d\n", *space);
-            isStageSpace.insert(*space);
-        }
-
-        DebugLog("<-- XRNeckSafer_xrCreateReferenceSpace %d\n", result);
-
-        return result;
-    }
-
-    // Overrides the behavior of xrLocateSpace()
-    XrResult XRNeckSafer_xrLocateSpace(
-        XrSpace space,
-        XrSpace baseSpace,
-        XrTime time,
-        XrSpaceLocation* location)
-    {
-        DebugLog("--> XRNeckSafer_xrLocateSpace\n");
-        // Call the chain to perform the actual operation.
-        const XrResult result = nextXrLocateSpace(space, baseSpace, time, location);
-
-        bool spaceIsViewSpace = isViewSpace.count(space);
-        bool baseSpaceIsViewSpace = isViewSpace.count(baseSpace);
-        bool baseSpaceIsStageSpace = isStageSpace.count(baseSpace); // IL2: true, DCS: false
-        bool baseSpaceIsLocalSpace = isLocalSpace.count(baseSpace); 
-
-        DebugLog("space: %d  bspace: %d\n", space, baseSpace);
-
-        if (shmValues.yawOffset != 0 || shmValues.pitchOffset != 0) {
-            // save current location
-            XrVector3f pos = location->pose.position;
-
-            if (baseSpaceIsStageSpace) {
-                pos = pos - centerHmdLocationStage.pose.position;
-            }
-//            if (baseSpaceIsLocalSpace) {
-//                pos = pos - centerHmdLocationLocal.pose.position;
-//            }
-
-            toMonitor("pos x", pos.x);
-            toMonitor("pos y", pos.y);
-            toMonitor("pos z", pos.z);
-
-            DirectX::XMVECTOR vPitchAxis = { 1.f,0.f,0.f };
-
-            if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
-
-                // we want to rotate around the center of the head
-                location->pose.position = { 0, 0, 0 };
-
-                // set yaw offset first, than rotate pitch around the hmd yaw + yaw offset lateral (x) axis
-                const DirectX::XMVECTOR qHMD = LoadXrQuaternion(location->pose.orientation);
-                const DirectX::XMVECTOR qHMDwithYawOffset = DirectX::XMQuaternionMultiply(qHMD, qYawOffset);
-                if (DirectX::XMVector4Length(qHMDwithYawOffset).m128_f32[0] != 0) {
-                    vPitchAxis = DirectX::XMVector3Rotate(vPitchAxis, qHMDwithYawOffset);
-                }
-                const DirectX::XMVECTOR qRotatedPitchOffset = DirectX::XMQuaternionRotationAxis(vPitchAxis, -shmValues.pitchOffset);
-                const DirectX::XMVECTOR qHMDwithOffset = DirectX::XMQuaternionMultiply(qHMDwithYawOffset, qRotatedPitchOffset);
-
-                StoreXrQuaternion(&location->pose.orientation, qHMDwithOffset);
-
-                StoreXrVector3(&pos, DirectX::XMVector3Rotate(LoadXrVector3(pos), qYawOffset));
-
-                if (baseSpaceIsStageSpace) {
-                    pos = pos + centerHmdLocationStage.pose.position;
-                    StoreXrVector3(&trans, DirectX::XMVector3Rotate(LoadXrVector3(trans), LoadXrQuaternion(centerHmdLocationStage.pose.orientation)));
-                }
-//                if (baseSpaceIsLocalSpace) {
-//                    pos = pos + centerHmdLocationLocal.pose.position;
-//                }
-
-
-                location->pose.position = pos - trans;
-            }
-
-
-            if (baseSpaceIsViewSpace && !spaceIsViewSpace) {
-
-                //          location->pose.position = { 0, 0, 0 };
-
-                //           rotate pitch around the hmd yaw + yaw offset lateral (x) axis, then set yaw offset 
-
-                //           StoreXrPose(&location->pose,
-                //               XMMatrixMultiply(LoadXrPose(location->pose),
-                //                   DirectX::XMMatrixRotationRollPitchYaw(shmValues.pitchOffset, 0.f, 0.f)));
-                //           StoreXrPose(&location->pose,
-                //               XMMatrixMultiply(LoadXrPose(location->pose),
-                //                   DirectX::XMMatrixRotationRollPitchYaw(0.f, shmValues.yawOffset, 0.f)));
-                //           location->pose.position = pos - trans;
-            }
-
-        }
-        DebugLog("<-- XRNeckSafer_xrLocateSpace %d\n", result);
-        return result;
-    }
-
-    // Overrides the behavior of xrLocateViews().
-    XrResult XRNeckSafer_xrLocateViews(
-        const XrSession session,
-        const XrViewLocateInfo* const viewLocateInfo,
-        XrViewState* const viewState,
-        const uint32_t viewCapacityInput,
-        uint32_t* const viewCountOutput,
-        XrView* const views)
-    {
-        DebugLog("--> XRNeckSafer_xrLocateViews\n");
-        // Call the chain to perform the actual operation.
-        const XrResult result = nextXrLocateViews(session, viewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views);
-
-//        // requested NOT for VIEW space: someone is actually asking for the views in a LOCAL/STAGE space
-//        if (!isViewSpace.count(viewLocateInfo->space)) {
-//
-//            // get already rotated head pose
-//            XrSpaceLocation headLocation{ XR_TYPE_SPACE_LOCATION, nullptr };
-//            headLocation.type = XR_TYPE_SPACE_LOCATION;
-//            headLocation.next = nullptr;
-//            XRNeckSafer_xrLocateSpace(m_ViewSpace, viewLocateInfo->space, viewLocateInfo->displayTime, &headLocation);
-//
-//            // get pose of views in VIEW space
-//            XrView v[2]{ {XR_TYPE_VIEW, nullptr}, {XR_TYPE_VIEW, nullptr} };
-//            const XrViewLocateInfo vinfo = {
-//                XR_TYPE_VIEW_LOCATE_INFO,
-//                nullptr,
-//                XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO,
-//                viewLocateInfo->displayTime,
-//                m_ViewSpace
-//            };
-//            const XrResult result2 = nextXrLocateViews(session, &vinfo, viewState, viewCapacityInput, viewCountOutput, v);
-//
-//            // rotate the views relative to center of head (base of VIEW space)
-//            StoreXrPose(&v[0].pose,
-//                XMMatrixMultiply(LoadXrPose(v[0].pose),
-//                    DirectX::XMMatrixRotationQuaternion(LoadXrQuaternion(headLocation.pose.orientation))));
-//            StoreXrPose(&v[1].pose,
-//                XMMatrixMultiply(LoadXrPose(v[1].pose),
-//                    DirectX::XMMatrixRotationQuaternion(LoadXrQuaternion(headLocation.pose.orientation))));
-//
-//            // add rotated eye positions to head position 
-//            views[0].pose.position = headLocation.pose.position + v[0].pose.position;
-//            views[1].pose.position = headLocation.pose.position + v[1].pose.position;
-//            // set eye orientation to rotated eye orientation
-//            views[0].pose.orientation = v[0].pose.orientation;
-//            views[1].pose.orientation = v[1].pose.orientation;
-//        }
-
-        DebugLog("<-- XRNeckSafer_xrLocateViews %d\n", result);
-
-        return result;
-    }
-
-    // Entry point for OpenXR calls.
-    XrResult XRNeckSafer_xrGetInstanceProcAddr(
-        const XrInstance instance,
-        const char* const name,
-        PFN_xrVoidFunction* const function)
-    {
-        DebugLog("--> XRNeckSafer_xrGetInstanceProcAddr \"%s\"\n", name);
-
-        // Call the chain to resolve the next function pointer.
-        const XrResult result = nextXrGetInstanceProcAddr(instance, name, function);
-        if (result == XR_SUCCESS)
-            if (result == XR_SUCCESS)
-            {
-            const std::string apiName(name);
-
-            // Intercept the calls handled by our layer.
-            if (apiName == "xrLocateViews") {
-                nextXrLocateViews = reinterpret_cast<PFN_xrLocateViews>(*function);
-                *function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrLocateViews);
-            }
-            if (apiName == "xrLocateSpace") {
-                nextXrLocateSpace = reinterpret_cast<PFN_xrLocateSpace>(*function);
-                *function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrLocateSpace);
-            }
-            if (apiName == "xrCreateSession") {
-                nextXrCreateSession = reinterpret_cast<PFN_xrCreateSession>(*function);
-                *function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrCreateSession);
-            }
-            if (apiName == "xrEndFrame") {
-                nextXrEndFrame = reinterpret_cast<PFN_xrEndFrame>(*function);
-                *function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrEndFrame);
-            }
-            if (apiName == "xrCreateReferenceSpace") {
-                *function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrCreateReferenceSpace);
-            }
-            
-            // Leave all unhandled calls to the next layer.
-        }
-
-        DebugLog("<-- XRNeckSafer_xrGetInstanceProcAddr %d\n", result);
-
-        return result;
-    }
-
-    // Entry point for creating the layer.
-    XrResult XRNeckSafer_xrCreateApiLayerInstance(
-        const XrInstanceCreateInfo* const instanceCreateInfo,
-        const struct XrApiLayerCreateInfo* const apiLayerInfo,
-        XrInstance* const instance)
-    {
-        DebugLog("--> XRNeckSafer_xrCreateApiLayerInstance\n");
-
-        if (!apiLayerInfo ||
-            apiLayerInfo->structType != XR_LOADER_INTERFACE_STRUCT_API_LAYER_CREATE_INFO ||
-            apiLayerInfo->structVersion != XR_API_LAYER_CREATE_INFO_STRUCT_VERSION ||
-            apiLayerInfo->structSize != sizeof(XrApiLayerCreateInfo) ||
-            !apiLayerInfo->nextInfo ||
-            apiLayerInfo->nextInfo->structType != XR_LOADER_INTERFACE_STRUCT_API_LAYER_NEXT_INFO ||
-            apiLayerInfo->nextInfo->structVersion != XR_API_LAYER_NEXT_INFO_STRUCT_VERSION ||
-            apiLayerInfo->nextInfo->structSize != sizeof(XrApiLayerNextInfo) ||
-            apiLayerInfo->nextInfo->layerName != LayerName ||
-            !apiLayerInfo->nextInfo->nextGetInstanceProcAddr ||
-            !apiLayerInfo->nextInfo->nextCreateApiLayerInstance)
-        {
-            Log("xrCreateApiLayerInstance validation failed\n");
-            return XR_ERROR_INITIALIZATION_FAILED;
-        }
-
-        // Store the next xrGetInstanceProcAddr to resolve the functions no handled by our layer.
-        nextXrGetInstanceProcAddr = apiLayerInfo->nextInfo->nextGetInstanceProcAddr;
-
-        // Call the chain to create the instance.
-        XrApiLayerCreateInfo chainApiLayerInfo = *apiLayerInfo;
-        chainApiLayerInfo.nextInfo = apiLayerInfo->nextInfo->next;
-        const XrResult result = apiLayerInfo->nextInfo->nextCreateApiLayerInstance(instanceCreateInfo, &chainApiLayerInfo, instance);
-
-        // doing this here because we need xrCreateReferenceSpace before it is intercepted
-        PFN_xrVoidFunction function = NULL;
-        const XrResult result2 = nextXrGetInstanceProcAddr(*instance, "xrCreateReferenceSpace", &function);
-        nextXrCreateReferenceSpace = reinterpret_cast<PFN_xrCreateReferenceSpace>(function);
-        function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrCreateReferenceSpace);
-
-        DebugLog("<-- XRNeckSafer_xrCreateApiLayerInstance %d\n", result);
-
-        return result;
-    }
+	}
+
+	auto toMonitor = [](const char* name, auto v) {
+#ifdef _DEBUG
+		for (int i = 0; i < MAXMONVAL; i++) {
+			if (strcmp(name, &bufferDeb[i * 40]) == 0) {
+				strcpy(&bufferDeb[i * 40 + 20], &(std::to_string(v)[0]));
+				return;
+			}
+			if ('#' == bufferDeb[i * 40]) {
+				strcpy(&bufferDeb[i * 40], name);
+				strcpy(&bufferDeb[i * 40 + 20], &(std::to_string(v)[0]));
+				return;
+			}
+		}
+#endif
+	};
+
+
+	EulerAngles ToEulerAngles(XrQuaternionf q) {
+		EulerAngles angles;
+
+		// roll (x-axis rotation)
+		float sinr_cosp = 2 * (q.w * q.y + q.x * q.z);
+		float cosr_cosp = 1 - 2 * (q.x * q.x + q.y * q.y);
+		angles.yaw = -std::atan2f(sinr_cosp, cosr_cosp);
+
+		// pitch (y-axis rotation)
+		float sinp = 2 * (q.w * q.x - q.z * q.y);
+		if (std::fabs(sinp) >= 1)
+			angles.pitch = -std::copysignf((float)(M_PI / 2), sinp); // use 90 degrees if out of range
+		else
+			angles.pitch = -std::asinf(sinp);
+
+		// yaw (z-axis rotation)
+		float siny_cosp = 2 * (q.w * q.z + q.x * q.y);
+		float cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
+		angles.roll = std::atan2f(siny_cosp, cosy_cosp);
+
+		return angles;
+	}
+
+	// Utility logging function.
+	void InternalLog(const char* fmt, va_list va)
+	{
+		char buf[1024];
+		_vsnprintf_s(buf, sizeof(buf), fmt, va);
+		OutputDebugStringA(buf);
+		if (logStream.is_open())
+		{
+			logStream << buf;
+			logStream.flush();
+		}
+	}
+
+	// General logging function.
+	void Log(const char* fmt, ...)
+	{
+		va_list va;
+		va_start(va, fmt);
+		InternalLog(fmt, va);
+		va_end(va);
+	}
+
+	// Debug logging function. Can make things very slow (only enabled on Debug builds).
+	void DebugLog(const char* fmt, ...)
+	{
+
+#ifdef _DEBUG
+		va_list va;
+		va_start(va, fmt);
+		InternalLog(fmt, va);
+		va_end(va);
+#endif
+	}
+
+	// Overrides the behavior of xrCreateSession().
+	XrResult XRNeckSafer_xrCreateSession(
+		XrInstance instance,
+		const XrSessionCreateInfo* createInfo,
+		XrSession* session)
+	{
+		DebugLog("--> XRNeckSafer_xrCreateSession\n");
+		// Call the chain to perform the actual operation.
+		const XrResult result = nextXrCreateSession(instance, createInfo, session);
+
+		m_Session = *session;
+
+		XrReferenceSpaceCreateInfo referenceSpaceCreateInfo{ XR_TYPE_REFERENCE_SPACE_CREATE_INFO, nullptr };
+		referenceSpaceCreateInfo.poseInReferenceSpace = Pose::Identity();
+		referenceSpaceCreateInfo.referenceSpaceType = XR_REFERENCE_SPACE_TYPE_LOCAL;
+		const XrResult resL = nextXrCreateReferenceSpace(*session, &referenceSpaceCreateInfo, &m_LocalSpace);
+		DebugLog("LOCAL space: %d\n", m_LocalSpace);
+		referenceSpaceCreateInfo.referenceSpaceType = XR_REFERENCE_SPACE_TYPE_VIEW;
+		const XrResult resV = nextXrCreateReferenceSpace(*session, &referenceSpaceCreateInfo, &m_ViewSpace);
+		isViewSpace.insert(m_ViewSpace);
+		DebugLog("VIEW space: %d\n", m_ViewSpace);
+		referenceSpaceCreateInfo.referenceSpaceType = XR_REFERENCE_SPACE_TYPE_STAGE;
+		const XrResult resS = nextXrCreateReferenceSpace(*session, &referenceSpaceCreateInfo, &m_StageSpace);
+		DebugLog("STAGE space: %d\n", m_StageSpace);
+
+		holdYawOffsetValue = 0;
+
+		DebugLog("<-- XRNeckSafer_xrCreateSession %d\n", result);
+
+		return result;
+	}
+
+	XrResult XRNeckSafer_xrEndFrame(
+		XrSession session,
+		const XrFrameEndInfo* frameEndInfo)
+	{
+		DebugLog("--> XRNeckSafer_xrEndFrame\n");
+
+		// from OXRMC
+		// making sure that all viewsmanipulations are reverted to make sure that reprojection doesn't run havoc 
+
+		// m_LastFrameTime = frameEndInfo->displayTime;
+		std::vector<const XrCompositionLayerBaseHeader*> resetLayers{};
+		std::vector<XrCompositionLayerProjection*> resetProjectionLayers{};
+		std::vector<std::vector<XrCompositionLayerProjectionView>*> resetViews{};
+
+		// use pose cache for reverse calculation
+		XrPosef reversedManipulation = Pose::Invert(m_PoseCache.GetSample(frameEndInfo->displayTime));
+		m_PoseCache.CleanUp(frameEndInfo->displayTime);
+
+		for (uint32_t i = 0; i < frameEndInfo->layerCount; i++)
+		{
+			XrCompositionLayerBaseHeader baseHeader = *frameEndInfo->layers[i];
+			XrCompositionLayerBaseHeader* resetBaseHeader{ nullptr };
+			if (XR_TYPE_COMPOSITION_LAYER_PROJECTION == baseHeader.type)
+			{
+				DebugLog("xrEndFrame: projection layer %u, space: %u\n", i, baseHeader.space);
+
+				const XrCompositionLayerProjection* projectionLayer =
+					reinterpret_cast<const XrCompositionLayerProjection*>(frameEndInfo->layers[i]);
+
+				std::vector<XrCompositionLayerProjectionView>* projectionViews =
+					new std::vector<XrCompositionLayerProjectionView>{};
+				resetViews.push_back(projectionViews);
+				projectionViews->resize(projectionLayer->viewCount);
+				memcpy(projectionViews->data(),
+					projectionLayer->views,
+					projectionLayer->viewCount * sizeof(XrCompositionLayerProjectionView));
+
+				for (uint32_t j = 0; j < projectionLayer->viewCount; j++)
+				{
+					(*projectionViews)[j].pose = Pose::Multiply((*projectionViews)[j].pose, reversedManipulation);
+				}
+
+				// create layer with reset view poses
+				XrCompositionLayerProjection* const resetProjectionLayer =
+					new XrCompositionLayerProjection{ projectionLayer->type,
+													 projectionLayer->next,
+													 projectionLayer->layerFlags,
+													 projectionLayer->space,
+													 projectionLayer->viewCount,
+													 projectionViews->data() };
+
+				resetProjectionLayers.push_back(resetProjectionLayer);
+				resetBaseHeader = reinterpret_cast<XrCompositionLayerBaseHeader*>(resetProjectionLayer);
+			}
+			if (resetBaseHeader)
+			{
+				resetLayers.push_back(resetBaseHeader);
+			}
+			else
+			{
+				resetLayers.push_back(frameEndInfo->layers[i]);
+			}
+		}
+		XrFrameEndInfo resetFrameEndInfo{ frameEndInfo->type,
+										 frameEndInfo->next,
+										 frameEndInfo->displayTime,
+										 frameEndInfo->environmentBlendMode,
+										 frameEndInfo->layerCount,
+										 resetLayers.data() };
+
+		const XrResult result = nextXrEndFrame(session, &resetFrameEndInfo);
+
+		// clean up memory
+		for (auto projection : resetProjectionLayers)
+		{
+			delete projection;
+		}
+		for (auto views : resetViews)
+		{
+			delete views;
+		}
+
+		// from OXRMC end -- Projection Layers should be restored 
+
+		XrSpaceLocation location;
+		location.type = XR_TYPE_SPACE_LOCATION;
+		location.next = nullptr;
+
+		const XrResult result2 = nextXrLocateSpace(m_ViewSpace, m_LocalSpace, frameEndInfo->displayTime, &location);
+		DebugLog("XrLocateSpace for HMD %d\n", result2);
+
+		XrSpaceLocation locationStage;
+		locationStage.type = XR_TYPE_SPACE_LOCATION;
+		locationStage.next = nullptr;
+
+		const XrResult result3 = nextXrLocateSpace(m_ViewSpace, m_StageSpace, frameEndInfo->displayTime, &locationStage);
+		DebugLog("XrLocateSpace in STAGE for HMD %d\n", result3);
+
+		toMonitor("LOCAL x", location.pose.position.x);
+		toMonitor("LOCAL y", location.pose.position.y);
+		toMonitor("LOCAL z", location.pose.position.z);
+		toMonitor("STAGE x", locationStage.pose.position.x);
+		toMonitor("STAGE y", locationStage.pose.position.y);
+		toMonitor("STAGE z", locationStage.pose.position.z);
+
+		if (location.locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT) {
+
+			// center button pressed? -> current orientation gets center orientation
+			if (buffer->resetHmdOrientation) {
+				// EulerAngles centerAngles;
+				centerHmdLocationLocal = location;
+				centerHmdLocationStage = locationStage;
+				buffer->resetHmdOrientation = false;
+				shmValues.hasBeenCentered = true;
+				buffer->hasBeenCentered = shmValues.hasBeenCentered;
+			}
+
+			// refuse to do anything before centering
+			if (!shmValues.hasBeenCentered) return result2;
+
+			shmValues.yawOffset = buffer->yawOffset;
+			shmValues.pitchOffset = buffer->pitchOffset;
+			shmValues.longitudinalOffset = buffer->longitudinalOffset;
+			shmValues.lateralOffset = buffer->lateralOffset;
+			shmValues.useLinearRotation = buffer->useLinearRotation;
+			shmValues.holdLinearRotation = buffer->holdLinearRotation;
+			shmValues.useLinearPitchRotation = buffer->useLinearPitchRotation;
+			shmValues.holdLinearPitchRotation = buffer->holdLinearPitchRotation;
+
+
+			//substract center orientation from current orientation to get corrected relative HMD orientation
+			const DirectX::XMVECTOR orientation = LoadXrQuaternion(location.pose.orientation);
+			const DirectX::XMVECTOR centerOrientation = LoadXrQuaternion(centerHmdLocationLocal.pose.orientation);
+			const DirectX::XMVECTOR invertCenterOrientation = DirectX::XMQuaternionConjugate(centerOrientation);
+			const DirectX::XMVECTOR substractedOrientation = DirectX::XMQuaternionMultiply(orientation, invertCenterOrientation);
+			StoreXrQuaternion(&location.pose.orientation, substractedOrientation);
+			StoreXrQuaternion(&HmdOrientation, substractedOrientation);
+
+			EulerAngles angles = ToEulerAngles(location.pose.orientation);
+			buffer->hmdYawAngle = angles.yaw * 180.f / (float)M_PI;
+			buffer->hmdPitchAngle = angles.pitch * 180.f / (float)M_PI;
+
+			toMonitor((char*)"angles.yaw", angles.yaw);
+
+			if (shmValues.useLinearRotation) {
+				shmValues.leftStartAt = buffer->leftStartAt;
+				shmValues.rightStartAt = buffer->rightStartAt;
+				shmValues.leftMultiplier = buffer->leftMultiplier;
+				shmValues.rightMultiplier = buffer->rightMultiplier;
+
+				if (!shmValues.holdLinearRotation) {
+					bool isright = angles.yaw > 0;
+					float multiplier = isright ? shmValues.rightMultiplier : shmValues.leftMultiplier;
+					int startangle = isright ? shmValues.rightStartAt : shmValues.leftStartAt;
+					float startfrom = startangle * (float)M_PI / 180.f;
+					if (abs(angles.yaw) >= startfrom) {
+						shmValues.yawOffset = shmValues.yawOffset + (abs(angles.yaw) - startfrom) * multiplier * (isright ? 1 : -1);
+					}
+					holdYawOffsetValue = shmValues.yawOffset;
+				}
+				else {
+					shmValues.yawOffset = holdYawOffsetValue;
+				}
+
+				trans = { 0 , 0, 0 };
+			}
+			else {
+				trans = { shmValues.lateralOffset , 0, shmValues.longitudinalOffset };
+			}
+
+			if (shmValues.useLinearPitchRotation) {
+				shmValues.upStartAt = buffer->upStartAt;
+				shmValues.downStartAt = buffer->downStartAt;
+				shmValues.upMultiplier = buffer->upMultiplier;
+				shmValues.downMultiplier = buffer->downMultiplier;
+
+				if (!shmValues.holdLinearPitchRotation) {
+					bool isup = angles.pitch < 0;
+					float multiplier = isup ? shmValues.upMultiplier : shmValues.downMultiplier;
+					int startangle = isup ? shmValues.upStartAt : shmValues.downStartAt;
+					float startfrom = abs(startangle * (float)M_PI / 180.f);
+					if (abs(angles.pitch) >= startfrom) {
+						shmValues.pitchOffset = shmValues.pitchOffset + (abs(angles.pitch) - startfrom) * multiplier * (isup ? -1 : 1);
+					}
+					holdPitchOffsetValue = shmValues.pitchOffset;
+				}
+				else {
+					shmValues.pitchOffset = holdPitchOffsetValue;
+				}
+			}
+
+			// save yaw offset as quaternion for later use
+			qYawOffset = DirectX::XMQuaternionRotationRollPitchYaw(0.f, -shmValues.yawOffset, 0.f);
+
+		}
+
+		DebugLog("<-- XRNeckSafer_xrEndFrame %d\n", result);
+
+		return result;
+	}
+
+	// Overrides the behavior of xrCreateReferenceSpace().
+	XrResult XRNeckSafer_xrCreateReferenceSpace(
+		XrSession session,
+		const XrReferenceSpaceCreateInfo* createInfo,
+		XrSpace* space)
+	{
+		DebugLog("--> XRNeckSafer_xrCreateReferenceSpace\n");
+		// Call the chain to perform the actual operation.
+		const XrResult result = nextXrCreateReferenceSpace(session, createInfo, space);
+
+		// keep record of all the VIEW spaces of the app
+		if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_VIEW) {
+			isViewSpace.insert(*space);
+			DebugLog("VIEW: %d\n", *space);
+		}
+		if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_LOCAL) {
+			isLocalSpace.insert(*space);
+			DebugLog("LOCAL: %d\n", *space);
+		}
+		if (createInfo->referenceSpaceType == XR_REFERENCE_SPACE_TYPE_STAGE) {
+			DebugLog("STAGE: %d\n", *space);
+			isStageSpace.insert(*space);
+		}
+
+		DebugLog("<-- XRNeckSafer_xrCreateReferenceSpace %d\n", result);
+
+		return result;
+	}
+
+	XrPosef XRNeckSafer_ManipulatePose(XrPosef inPose, bool baseSpaceIsStageSpace) {
+		XrPosef outpose;
+
+		DirectX::XMVECTOR vPitchAxis = { 1.f,0.f,0.f };
+
+		// save current location
+		XrVector3f pos = inPose.position;
+
+		if (baseSpaceIsStageSpace) {
+			pos = pos - centerHmdLocationStage.pose.position;
+		}
+
+		// set yaw offset first, than rotate pitch around the new hmd (yaw + yaw offset) lateral (x) axis
+		const DirectX::XMVECTOR qHMD = LoadXrQuaternion(inPose.orientation);
+		const DirectX::XMVECTOR qHMDwithYawOffset = DirectX::XMQuaternionMultiply(qHMD, qYawOffset);
+		if (DirectX::XMVector4Length(qHMDwithYawOffset).m128_f32[0] != 0) {
+			vPitchAxis = DirectX::XMVector3Rotate(vPitchAxis, qHMDwithYawOffset);
+		}
+		const DirectX::XMVECTOR qRotatedPitchOffset = DirectX::XMQuaternionRotationAxis(vPitchAxis, -shmValues.pitchOffset);
+		const DirectX::XMVECTOR qHMDwithOffset = DirectX::XMQuaternionMultiply(qHMDwithYawOffset, qRotatedPitchOffset);
+
+		StoreXrQuaternion(&outpose.orientation, qHMDwithOffset);
+
+		StoreXrVector3(&pos, DirectX::XMVector3Rotate(LoadXrVector3(pos), qYawOffset));
+
+		if (baseSpaceIsStageSpace) {
+			pos = pos + centerHmdLocationStage.pose.position;
+			StoreXrVector3(&trans, DirectX::XMVector3Rotate(LoadXrVector3(trans), LoadXrQuaternion(centerHmdLocationStage.pose.orientation)));
+		}
+
+		outpose.position = pos - trans;
+
+		return outpose;
+	}
+
+	// Overrides the behavior of xrLocateSpace()
+	XrResult XRNeckSafer_xrLocateSpace(
+		XrSpace space,
+		XrSpace baseSpace,
+		XrTime time,
+		XrSpaceLocation* location)
+	{
+		DebugLog("--> XRNeckSafer_xrLocateSpace ");
+		// Call the chain to perform the actual operation.
+		const XrResult result = nextXrLocateSpace(space, baseSpace, time, location);
+
+		bool spaceIsViewSpace = isViewSpace.count(space);
+		bool baseSpaceIsViewSpace = isViewSpace.count(baseSpace);
+		bool baseSpaceIsStageSpace = isStageSpace.count(baseSpace); // IL2: true, DCS: false
+		bool baseSpaceIsLocalSpace = isLocalSpace.count(baseSpace);
+
+		DebugLog("space: %d  bspace: %d ", space, baseSpace);
+
+		XrPosef pos1 = location->pose;
+
+		if (shmValues.yawOffset != 0 || shmValues.pitchOffset != 0) {
+
+
+			if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
+				location->pose = XRNeckSafer_ManipulatePose(location->pose, baseSpaceIsStageSpace);
+			}
+			if (baseSpaceIsViewSpace && !spaceIsViewSpace) {
+				location->pose = Pose::Invert(XRNeckSafer_ManipulatePose(location->pose, baseSpaceIsStageSpace));
+			}
+		}
+
+		XrPosef pos2 = location->pose;
+		XrPosef poseDelta = Pose::Multiply(Pose::Invert(pos1), pos2);
+		// safe pose for use in xrEndFrame
+		m_PoseCache.AddSample(time, poseDelta);
+
+		DebugLog("<-- XRNeckSafer_xrLocateSpace %d\n", result);
+		return result;
+	}
+
+	// Overrides the behavior of xrLocateViews().
+	XrResult XRNeckSafer_xrLocateViews(
+		const XrSession session,
+		const XrViewLocateInfo* const viewLocateInfo,
+		XrViewState* const viewState,
+		const uint32_t viewCapacityInput,
+		uint32_t* const viewCountOutput,
+		XrView* const views)
+	{
+		DebugLog("--> XRNeckSafer_xrLocateViews ");
+		// Call the chain to perform the actual operation.
+		const XrResult result = nextXrLocateViews(session, viewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views);
+
+		std::vector<XrPosef> originalEyePoses{};
+		for (uint32_t i = 0; i < *viewCountOutput; i++)
+		{
+			originalEyePoses.push_back(views[i].pose);
+		}
+
+		if (m_EyeOffsets.empty())
+		{
+			// determine eye poses
+			XrViewLocateInfo offsetViewLocateInfo{ viewLocateInfo->type, nullptr, viewLocateInfo->viewConfigurationType,viewLocateInfo->displayTime, m_ViewSpace };
+
+			CHECK_XRCMD(nextXrLocateViews(session, &offsetViewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views));
+			for (uint32_t i = 0; i < *viewCountOutput; i++)
+			{
+				m_EyeOffsets.push_back(views[i]);
+			}
+		}
+		// manipulate reference space location
+		XrSpaceLocation location{ XR_TYPE_SPACE_LOCATION, nullptr };
+		CHECK_XRCMD(XRNeckSafer_xrLocateSpace(m_ViewSpace, viewLocateInfo->space, viewLocateInfo->displayTime, &location));
+		for (uint32_t i = 0; i < *viewCountOutput; i++)
+		{
+			views[i].pose = Pose::Multiply(m_EyeOffsets[i].pose, location.pose);
+		}
+
+		DebugLog("<-- XRNeckSafer_xrLocateViews %d\n", result);
+
+		return result;
+	}
+
+	// Entry point for OpenXR calls.
+	XrResult XRNeckSafer_xrGetInstanceProcAddr(
+		const XrInstance instance,
+		const char* const name,
+		PFN_xrVoidFunction* const function)
+	{
+		DebugLog("--> XRNeckSafer_xrGetInstanceProcAddr \"%s\"\n", name);
+
+		// Call the chain to resolve the next function pointer.
+		const XrResult result = nextXrGetInstanceProcAddr(instance, name, function);
+		if (result == XR_SUCCESS)
+			if (result == XR_SUCCESS)
+			{
+				const std::string apiName(name);
+
+				// Intercept the calls handled by our layer.
+				if (apiName == "xrLocateViews") {
+					nextXrLocateViews = reinterpret_cast<PFN_xrLocateViews>(*function);
+					*function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrLocateViews);
+				}
+				if (apiName == "xrLocateSpace") {
+					nextXrLocateSpace = reinterpret_cast<PFN_xrLocateSpace>(*function);
+					*function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrLocateSpace);
+				}
+				if (apiName == "xrCreateSession") {
+					nextXrCreateSession = reinterpret_cast<PFN_xrCreateSession>(*function);
+					*function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrCreateSession);
+				}
+				if (apiName == "xrEndFrame") {
+					nextXrEndFrame = reinterpret_cast<PFN_xrEndFrame>(*function);
+					*function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrEndFrame);
+				}
+				if (apiName == "xrCreateReferenceSpace") {
+					*function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrCreateReferenceSpace);
+				}
+
+				// Leave all unhandled calls to the next layer.
+			}
+
+		DebugLog("<-- XRNeckSafer_xrGetInstanceProcAddr %d\n", result);
+
+		return result;
+	}
+
+	// Entry point for creating the layer.
+	XrResult XRNeckSafer_xrCreateApiLayerInstance(
+		const XrInstanceCreateInfo* const instanceCreateInfo,
+		const struct XrApiLayerCreateInfo* const apiLayerInfo,
+		XrInstance* const instance)
+	{
+		DebugLog("--> XRNeckSafer_xrCreateApiLayerInstance\n");
+
+		if (!apiLayerInfo ||
+			apiLayerInfo->structType != XR_LOADER_INTERFACE_STRUCT_API_LAYER_CREATE_INFO ||
+			apiLayerInfo->structVersion != XR_API_LAYER_CREATE_INFO_STRUCT_VERSION ||
+			apiLayerInfo->structSize != sizeof(XrApiLayerCreateInfo) ||
+			!apiLayerInfo->nextInfo ||
+			apiLayerInfo->nextInfo->structType != XR_LOADER_INTERFACE_STRUCT_API_LAYER_NEXT_INFO ||
+			apiLayerInfo->nextInfo->structVersion != XR_API_LAYER_NEXT_INFO_STRUCT_VERSION ||
+			apiLayerInfo->nextInfo->structSize != sizeof(XrApiLayerNextInfo) ||
+			apiLayerInfo->nextInfo->layerName != LayerName ||
+			!apiLayerInfo->nextInfo->nextGetInstanceProcAddr ||
+			!apiLayerInfo->nextInfo->nextCreateApiLayerInstance)
+		{
+			Log("xrCreateApiLayerInstance validation failed\n");
+			return XR_ERROR_INITIALIZATION_FAILED;
+		}
+
+		// Store the next xrGetInstanceProcAddr to resolve the functions no handled by our layer.
+		nextXrGetInstanceProcAddr = apiLayerInfo->nextInfo->nextGetInstanceProcAddr;
+
+		// Call the chain to create the instance.
+		XrApiLayerCreateInfo chainApiLayerInfo = *apiLayerInfo;
+		chainApiLayerInfo.nextInfo = apiLayerInfo->nextInfo->next;
+		const XrResult result = apiLayerInfo->nextInfo->nextCreateApiLayerInstance(instanceCreateInfo, &chainApiLayerInfo, instance);
+
+		// doing this here because we need xrCreateReferenceSpace before it is intercepted
+		PFN_xrVoidFunction function = NULL;
+		const XrResult result2 = nextXrGetInstanceProcAddr(*instance, "xrCreateReferenceSpace", &function);
+		nextXrCreateReferenceSpace = reinterpret_cast<PFN_xrCreateReferenceSpace>(function);
+		function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrCreateReferenceSpace);
+
+		DebugLog("<-- XRNeckSafer_xrCreateApiLayerInstance %d\n", result);
+
+		return result;
+	}
 }
 
 extern "C" {
 
-    // Entry point for the loader.
-    XrResult __declspec(dllexport) XRAPI_CALL XRNeckSafer_xrNegotiateLoaderApiLayerInterface(
-        const XrNegotiateLoaderInfo* const loaderInfo,
-        const char* const apiLayerName,
-        XrNegotiateApiLayerRequest* const apiLayerRequest)
-    {
-        DebugLog("--> (early) XRNeckSafer_xrNegotiateLoaderApiLayerInterface\n");
+	// Entry point for the loader.
+	XrResult __declspec(dllexport) XRAPI_CALL XRNeckSafer_xrNegotiateLoaderApiLayerInterface(
+		const XrNegotiateLoaderInfo* const loaderInfo,
+		const char* const apiLayerName,
+		XrNegotiateApiLayerRequest* const apiLayerRequest)
+	{
+		DebugLog("--> (early) XRNeckSafer_xrNegotiateLoaderApiLayerInterface\n");
 
-        // Retrieve the path of the DLL.
-        if (dllHome.empty())
-        {
-            HMODULE module;
-            if (GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR)&dllHome, &module))
-            {
-                char path[_MAX_PATH];
-                GetModuleFileNameA(module, path, sizeof(path));
-                dllHome = std::filesystem::path(path).parent_path().string();
-            }
-            else
-            {
-                // Falling back to loading config/writing logs to the current working directory.
-                DebugLog("Failed to locate DLL\n");
-            }            
-        }
+		// Retrieve the path of the DLL.
+		if (dllHome.empty())
+		{
+			HMODULE module;
+			if (GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR)&dllHome, &module))
+			{
+				char path[_MAX_PATH];
+				GetModuleFileNameA(module, path, sizeof(path));
+				dllHome = std::filesystem::path(path).parent_path().string();
+			}
+			else
+			{
+				// Falling back to loading config/writing logs to the current working directory.
+				DebugLog("Failed to locate DLL\n");
+			}
+		}
 
-        // Start logging to file.
-        if (!logStream.is_open())
-        {
-            std::string logFile = (std::filesystem::path(getenv("LOCALAPPDATA")) / std::filesystem::path(LayerName + ".log")).string();
-            logStream.open(logFile, std::ios_base::ate);
-            Log("dllHome is \"%s\"\n", dllHome.c_str());
-        }
+		// Start logging to file.
+		if (!logStream.is_open())
+		{
+			std::string logFile = (std::filesystem::path(getenv("LOCALAPPDATA")) / std::filesystem::path(LayerName + ".log")).string();
+			logStream.open(logFile, std::ios_base::ate);
+			Log("dllHome is \"%s\"\n", dllHome.c_str());
+		}
 
-        DebugLog("--> XRNeckSafer_xrNegotiateLoaderApiLayerInterface\n");
+		DebugLog("--> XRNeckSafer_xrNegotiateLoaderApiLayerInterface\n");
 
-        if (apiLayerName && apiLayerName != LayerName)
-        {
-            Log("Invalid apiLayerName \"%s\"\n", apiLayerName);
-            return XR_ERROR_INITIALIZATION_FAILED;
-        }
+		if (apiLayerName && apiLayerName != LayerName)
+		{
+			Log("Invalid apiLayerName \"%s\"\n", apiLayerName);
+			return XR_ERROR_INITIALIZATION_FAILED;
+		}
 
-        if (!loaderInfo ||
-            !apiLayerRequest ||
-            loaderInfo->structType != XR_LOADER_INTERFACE_STRUCT_LOADER_INFO ||
-            loaderInfo->structVersion != XR_LOADER_INFO_STRUCT_VERSION ||
-            loaderInfo->structSize != sizeof(XrNegotiateLoaderInfo) ||
-            apiLayerRequest->structType != XR_LOADER_INTERFACE_STRUCT_API_LAYER_REQUEST ||
-            apiLayerRequest->structVersion != XR_API_LAYER_INFO_STRUCT_VERSION ||
-            apiLayerRequest->structSize != sizeof(XrNegotiateApiLayerRequest) ||
-            loaderInfo->minInterfaceVersion > XR_CURRENT_LOADER_API_LAYER_VERSION ||
-            loaderInfo->maxInterfaceVersion < XR_CURRENT_LOADER_API_LAYER_VERSION ||
-            loaderInfo->maxInterfaceVersion > XR_CURRENT_LOADER_API_LAYER_VERSION ||
-            loaderInfo->maxApiVersion < XR_CURRENT_API_VERSION ||
-            loaderInfo->minApiVersion > XR_CURRENT_API_VERSION)
-        {
-            Log("xrNegotiateLoaderApiLayerInterface validation failed\n");
-            return XR_ERROR_INITIALIZATION_FAILED;
-        }
+		if (!loaderInfo ||
+			!apiLayerRequest ||
+			loaderInfo->structType != XR_LOADER_INTERFACE_STRUCT_LOADER_INFO ||
+			loaderInfo->structVersion != XR_LOADER_INFO_STRUCT_VERSION ||
+			loaderInfo->structSize != sizeof(XrNegotiateLoaderInfo) ||
+			apiLayerRequest->structType != XR_LOADER_INTERFACE_STRUCT_API_LAYER_REQUEST ||
+			apiLayerRequest->structVersion != XR_API_LAYER_INFO_STRUCT_VERSION ||
+			apiLayerRequest->structSize != sizeof(XrNegotiateApiLayerRequest) ||
+			loaderInfo->minInterfaceVersion > XR_CURRENT_LOADER_API_LAYER_VERSION ||
+			loaderInfo->maxInterfaceVersion < XR_CURRENT_LOADER_API_LAYER_VERSION ||
+			loaderInfo->maxInterfaceVersion > XR_CURRENT_LOADER_API_LAYER_VERSION ||
+			loaderInfo->maxApiVersion < XR_CURRENT_API_VERSION ||
+			loaderInfo->minApiVersion > XR_CURRENT_API_VERSION)
+		{
+			Log("xrNegotiateLoaderApiLayerInterface validation failed\n");
+			return XR_ERROR_INITIALIZATION_FAILED;
+		}
 
-        // Setup our layer to intercept OpenXR calls.
-        apiLayerRequest->layerInterfaceVersion = XR_CURRENT_LOADER_API_LAYER_VERSION;
-        apiLayerRequest->layerApiVersion = XR_CURRENT_API_VERSION;
-        apiLayerRequest->getInstanceProcAddr = reinterpret_cast<PFN_xrGetInstanceProcAddr>(XRNeckSafer_xrGetInstanceProcAddr);
-        apiLayerRequest->createApiLayerInstance = reinterpret_cast<PFN_xrCreateApiLayerInstance>(XRNeckSafer_xrCreateApiLayerInstance);
+		// Setup our layer to intercept OpenXR calls.
+		apiLayerRequest->layerInterfaceVersion = XR_CURRENT_LOADER_API_LAYER_VERSION;
+		apiLayerRequest->layerApiVersion = XR_CURRENT_API_VERSION;
+		apiLayerRequest->getInstanceProcAddr = reinterpret_cast<PFN_xrGetInstanceProcAddr>(XRNeckSafer_xrGetInstanceProcAddr);
+		apiLayerRequest->createApiLayerInstance = reinterpret_cast<PFN_xrCreateApiLayerInstance>(XRNeckSafer_xrCreateApiLayerInstance);
 
-        prepareSHM();
+		prepareSHM();
 
-        DebugLog("<-- XRNeckSafer_xrNegotiateLoaderApiLayerInterface\n");
+		DebugLog("<-- XRNeckSafer_xrNegotiateLoaderApiLayerInterface\n");
 
-        Log("%s layer is active\n", LayerName.c_str());
+		Log("%s layer is active\n", LayerName.c_str());
 
-        return XR_SUCCESS;
-    }
+		return XR_SUCCESS;
+	}
 
 }
