@@ -538,10 +538,7 @@ namespace {
 			pos = pos - centerHmdLocationStage.pose.position;
 		}
 
-		// we want to rotate around the center of the head
-		inPose.position = { 0, 0, 0 };
-
-		// set yaw offset first, than rotate pitch around the hmd yaw + yaw offset lateral (x) axis
+		// set yaw offset first, than rotate pitch around the new hmd (yaw + yaw offset) lateral (x) axis
 		const DirectX::XMVECTOR qHMD = LoadXrQuaternion(inPose.orientation);
 		const DirectX::XMVECTOR qHMDwithYawOffset = DirectX::XMQuaternionMultiply(qHMD, qYawOffset);
 		if (DirectX::XMVector4Length(qHMDwithYawOffset).m128_f32[0] != 0) {
