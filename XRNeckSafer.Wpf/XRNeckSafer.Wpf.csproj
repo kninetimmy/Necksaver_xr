@@ -53,6 +53,10 @@
     <Compile Include="InputCombinations.xaml.cs">
       <DependentUpon>InputCombinations.xaml</DependentUpon>
     </Compile>
+    <Compile Include="KeyboardToJoysticAssignmentModel.cs" />
+    <Compile Include="KeyboardToJoystickAssignments.xaml.cs">
+      <DependentUpon>KeyboardToJoystickAssignments.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -73,6 +77,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="InputCombinations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="KeyboardToJoystickAssignments.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

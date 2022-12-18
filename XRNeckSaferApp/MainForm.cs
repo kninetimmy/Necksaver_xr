@@ -1,4 +1,5 @@
-﻿using SharpDX;
+﻿using Microsoft.Build.Utilities;
+using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using XRNeckSafer.Wpf;
+using XRNeckSaferApp;
 
 namespace XRNeckSafer
 {
@@ -40,12 +42,12 @@ namespace XRNeckSafer
         private string _pARText;
         private string _hmdtext;
 
-        private readonly VRStuff _vr;
+        private readonly OpenXRApiLayerService _vr;
 
         public MainForm()
         {
             InitializeComponent();
-            _vr = new VRStuff();
+            _vr = new OpenXRApiLayerService();
             VersionLabel.Text = GetAssemblyProductVersion();
             notifyIcon.ContextMenuStrip = contextMenuStrip;
             showToolStripMenuItem.Click += showToolStripMenuItem_Click;
@@ -1227,6 +1229,7 @@ namespace XRNeckSafer
             if (disposing)
             {
                 _components?.Dispose();
+                _vr.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -1303,6 +1306,11 @@ namespace XRNeckSafer
                 return;
             }
             RegistryService.EnableApiLayer();
+        }
+
+        private void OnShowJoyKeyboardMapsClick(object sender, EventArgs e)
+        {
+            KeyboardToJoystickAssignForm.ShowForm(Top, Right);
         }
     }
 }

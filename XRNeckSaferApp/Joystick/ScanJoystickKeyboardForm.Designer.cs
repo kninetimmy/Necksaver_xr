@@ -17,22 +17,22 @@ namespace XRNeckSafer
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScanJoystickKeyboardForm));
-            this.label2 = new System.Windows.Forms.Label();
+            this._scanText = new System.Windows.Forms.Label();
             this._pressedButtonsLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label2
+            // _scanText
             // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(122, 7);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(161, 19);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Pressed key/button(s):";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._scanText.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this._scanText.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._scanText.Location = new System.Drawing.Point(122, 7);
+            this._scanText.Name = "_scanText";
+            this._scanText.Size = new System.Drawing.Size(161, 19);
+            this._scanText.TabIndex = 2;
+            this._scanText.Text = "Pressed key/button(s):";
+            this._scanText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // _pressedButtonsLabel
             // 
@@ -51,7 +51,7 @@ namespace XRNeckSafer
             this.tableLayoutPanel1.AutoSize = true;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this._scanText, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this._pressedButtonsLabel, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -83,7 +83,7 @@ namespace XRNeckSafer
         }
 
         #endregion
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label _scanText;
         private System.Windows.Forms.Label _pressedButtonsLabel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }

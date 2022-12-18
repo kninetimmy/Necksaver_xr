@@ -6,6 +6,14 @@ using System.Windows.Forms;
 
 namespace XRNeckSafer
 {
+    [Flags]
+    public enum DeviceType
+    {
+        None = 0,
+        Keyboard = 1,
+        Joystick = 2
+    }
+
     /// <summary>
     /// Aggregated scanner for Joystick + Keyboard input
     /// </summary>
@@ -23,15 +31,21 @@ namespace XRNeckSafer
         public event Action<JoystickKeyboardInput, bool> OnCurrentlyPressedChanged;
         public event Action<JoystickKeyboardInput> BeforeReleased;
 
-        public JoystickKeyboardScanner(int maxPressedButtonsCount = int.MaxValue)
+        public JoystickKeyboardScanner(int maxPressedButtonsCount = int.MaxValue, DeviceType deviceType = DeviceType.Keyboard | DeviceType.Joystick)
         {
             _maxPressedButtonsCount = maxPressedButtonsCount;
             _result = new JoystickKeyboardInput();
-            _joystickScanner = new JoystickButtonScanner(_maxPressedButtonsCount);
-            _joystickScanner.CurrentlyPressedChanged += OnJoystickPressedChanged;
-            _joystickScanner.BeforeButtonReleased += OnBeforeJoystickButtonReleased;
-            KeyInterceptor.KeyPressed += OnKeyPressed;
-            _joystickScanner.StartScan();
+            if (deviceType.HasFlag(DeviceType.Joystick))
+            {
+                _joystickScanner = new JoystickButtonScanner(_maxPressedButtonsCount);
+                _joystickScanner.CurrentlyPressedChanged += OnJoystickPressedChanged;
+                _joystickScanner.BeforeButtonReleased += OnBeforeJoystickButtonReleased;
+                _joystickScanner.StartScan();
+            }
+            if (deviceType.HasFlag(DeviceType.Keyboard))
+            {
+                KeyInterceptor.KeyPressed += OnKeyPressed;
+            }
         }
 
         private void OnKeyPressed(Keys[] pressedKeys)

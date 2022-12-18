@@ -41,13 +41,13 @@ namespace XRNeckSafer
                 {
                     builder.Append("+");
                 }
-                var joystickName = JoystickService.GetJoystickName(button.JoystickGuid) ?? "UNPLUGGED";
-                if (button.POV != -1)
-                {
-                    builder.Append($"[{joystickName} POV:{button.POV + 1} {button.Button / 100}°]");
-                    continue;
-                }
-                builder.Append($"[{joystickName} But:{button.Button + 1}]");
+                //var joystickName = JoystickService.GetJoystickName(button.JoystickGuid) ?? "UNPLUGGED";
+                //if (button.POV != -1)
+                //{
+                //    builder.Append($"[{joystickName} POV:{button.POV + 1} {button.Button / 100}°]");
+                //    continue;
+                //}
+                builder.Append(button.ToString());
             }
             foreach (var key in KeyboardKeys)
             {
@@ -55,7 +55,7 @@ namespace XRNeckSafer
                 {
                     builder.Append("+");
                 }
-                builder.Append($"[Key:{key}]");
+                builder.Append(key.ToDisplayString());
             }
             return builder.ToString();
         }

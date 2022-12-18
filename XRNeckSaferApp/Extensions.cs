@@ -20,5 +20,10 @@ namespace XRNeckSafer
             }
             return distinctKeysToCheck.All(k => pressedKeys.Contains(k));
         }
+
+        public static string ToDisplayString(this Keys key)
+        {
+            return $"[Key:{key}]";
+        }
     }
 }
