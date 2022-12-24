@@ -22,7 +22,7 @@ namespace XRNeckSafer
             {
                 if (_instanse == null)
                 {
-                    _instanse = new KeyboardToJoystickService(Config.Instance.KeyboardToJoystickAssignments, 1);
+                    _instanse = new KeyboardToJoystickService(Config.Instance.KeyboardToJoystickAssignments);
                 }
                 return _instanse;
             }
@@ -38,7 +38,6 @@ namespace XRNeckSafer
 
         private void OnJoystickPressedChanged(List<JoystickButton> buttons)
         {
-            
             lock (_pressedJoystickButtons)
             {
                 var newPressedButtons = buttons.FindAll(b => !_pressedJoystickButtons.Any(p => p.GetId() == b.GetId()));
