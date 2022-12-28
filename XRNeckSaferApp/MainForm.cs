@@ -57,6 +57,7 @@ namespace XRNeckSafer
             if (Config.Instance.StartMinimized) WindowState = FormWindowState.Minimized;
 
             additivRB.Checked = Config.Instance.Additiv;
+            pAdditivRB.Checked = Config.Instance.PitchAdditiv;
             if (Config.Instance.AutoMode == AutoMode.Stepwise)
             {
                 ARstepwise.Checked = true;
@@ -263,6 +264,10 @@ namespace XRNeckSafer
             label16.Enabled = !additivRB.Checked;
             label17.Enabled = !additivRB.Checked;
         }
+        private void pAdditivRB_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.Instance.PitchAdditiv = pAdditivRB.Checked;
+        }
 
         private void SetLabelColor(bool pressed, Label label)
         {
@@ -330,7 +335,7 @@ namespace XRNeckSafer
             }
             else
             {
-                _hmdtext = "! NOT CENTERED IN GAME YET !";
+                _hmdtext = " NOT YET CENTERED IN GAME ";
             }
 
             if (HMDYawLabel.Text != _hmdtext)
@@ -369,12 +374,14 @@ namespace XRNeckSafer
                 if (l_pressed)
                 {
                     _joyOffsetAngle = -(int)angleNUD.Value;
+                    updateTransValues();
                     _transOffsetVector.X = _transOffsetLeftRight;
                     _transOffsetVector.Z = _transOffsetForward;
                 }
                 else if (r_pressed)
                 {
                     _joyOffsetAngle = (int)angleNUD.Value;
+                    updateTransValues();
                     _transOffsetVector.X = -_transOffsetLeftRight;
                     _transOffsetVector.Z = _transOffsetForward;
                 }
@@ -391,8 +398,8 @@ namespace XRNeckSafer
                 if (u_pressed && !_lastPitchPressed)
                     _joyOffsetAnglePitch += (int)upNUD.Value;
                 if (d_pressed && !_lastPitchPressed)
-                    _joyOffsetAnglePitch += (int)downNUD.Value;
-                if (acc_res_pressed)
+                    _joyOffsetAnglePitch -= (int)downNUD.Value;
+                if (pitch_acc_res_pressed)
                     _joyOffsetAnglePitch = 0;
             }
             else
@@ -597,6 +604,11 @@ namespace XRNeckSafer
             _transOffsetLeftRight = (float)value / 100F;
         }
 
+        private void updateTransValues()
+        {
+            OnYawForwardTranslationChanged(new object(), new EventArgs());
+            OnYawLeftRightTranslationChanged(new object(), new EventArgs());
+        }
         private void OnYawForwardTranslationChanged(object sender, EventArgs e)
         {
             SetTransOffsetF(transFNUP.Value);
@@ -1103,6 +1115,12 @@ namespace XRNeckSafer
             }
             YawPitchTab.Height = ManualGroup.Height + ARGroup.Height + 50;
             Height = YawPitchTab.Location.Y + YawPitchTab.Height + 60;
+            transLRNUP.Enabled = !ARlinear.Checked;
+            transFNUP.Enabled = !ARlinear.Checked;
+            label14.Enabled = !ARlinear.Checked;
+            label15.Enabled = !ARlinear.Checked;
+            label16.Enabled = !ARlinear.Checked;
+            label17.Enabled = !ARlinear.Checked;
             UpdateLinearRotationSettings();
         }
 
@@ -1312,5 +1330,6 @@ namespace XRNeckSafer
         {
             KeyboardToJoystickAssignForm.ShowForm(Top, Right);
         }
+
     }
 }

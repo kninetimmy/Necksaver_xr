@@ -22,12 +22,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem1 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroup actionPropertyGroup1 = new XRNeckSafer.ActionPropertyGroup();
             XRNeckSafer.ActionPropertyGroup actionPropertyGroup2 = new XRNeckSafer.ActionPropertyGroup();
@@ -37,24 +31,30 @@
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem2 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem3 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem4 = new XRNeckSafer.ActionPropertyGroupItem();
-            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem12 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem5 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem6 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem7 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem8 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem9 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem10 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem11 = new XRNeckSafer.ActionPropertyGroupItem();
+            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem12 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem13 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem14 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem15 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem16 = new XRNeckSafer.ActionPropertyGroupItem();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem17 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem18 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem19 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem20 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem21 = new XRNeckSafer.ActionPropertyGroupItem();
             XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem22 = new XRNeckSafer.ActionPropertyGroupItem();
-            XRNeckSafer.ActionPropertyGroupItem actionPropertyGroupItem5 = new XRNeckSafer.ActionPropertyGroupItem();
             this.stepwiseGroup = new System.Windows.Forms.GroupBox();
             this.error_label2 = new System.Windows.Forms.Label();
             this.error_label = new System.Windows.Forms.Label();
@@ -76,19 +76,33 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.numericUpDownMultRight = new XRNeckSafer.NumericActionUpDown();
             this._numericUpDownMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setJoystickkeyShortcutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._groups = new XRNeckSafer.ActionPropertyGroups();
+            this.numericUpDownMultLeft = new XRNeckSafer.NumericActionUpDown();
+            this.numericUpDownStartRight = new XRNeckSafer.NumericActionUpDown();
+            this.numericUpDownStartLeft = new XRNeckSafer.NumericActionUpDown();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.HMDYawBox = new System.Windows.Forms.GroupBox();
+            this.label42 = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.SetResetButton = new XRNeckSafer.BooleanActionButton();
             this.HMDYawLabel = new System.Windows.Forms.Label();
             this.VersionLabel = new System.Windows.Forms.Label();
             this.ManualGroup = new System.Windows.Forms.GroupBox();
+            this.AccumReset = new XRNeckSafer.BooleanActionButton();
             this.label25 = new System.Windows.Forms.Label();
+            this.transFNUP = new XRNeckSafer.NumericActionUpDown();
             this.label24 = new System.Windows.Forms.Label();
+            this.angleNUD = new XRNeckSafer.NumericActionUpDown();
+            this.transLRNUP = new XRNeckSafer.NumericActionUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -98,6 +112,8 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
+            this.SetLeftButton = new XRNeckSafer.BooleanActionButton();
+            this.SetRightButton = new XRNeckSafer.BooleanActionButton();
             this.RightLabel = new System.Windows.Forms.Label();
             this.LeftLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -121,9 +137,9 @@
             this.disableAllGUIOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.showJoystickkeyConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showJoystickkeyboardMappsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.resetOptionsToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showJoystickkeyboardMappsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aPILayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listApiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disableAPILayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -135,6 +151,7 @@
             this.ARlinear = new System.Windows.Forms.RadioButton();
             this.ARstepwise = new System.Windows.Forms.RadioButton();
             this.AROffButton = new System.Windows.Forms.RadioButton();
+            this.YawAutorotationHoldButton = new XRNeckSafer.BooleanActionButton();
             this.YawPitchTab = new System.Windows.Forms.TabControl();
             this.YawTab = new System.Windows.Forms.TabPage();
             this.PitchTab = new System.Windows.Forms.TabPage();
@@ -150,6 +167,10 @@
             this.label37 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
+            this.numericUpDownMultDown = new XRNeckSafer.NumericActionUpDown();
+            this.numericUpDownMultUp = new XRNeckSafer.NumericActionUpDown();
+            this.numericUpDownStartDown = new XRNeckSafer.NumericActionUpDown();
+            this.numericUpDownStartUp = new XRNeckSafer.NumericActionUpDown();
             this.pAROffButton = new System.Windows.Forms.RadioButton();
             this.pStepwiseGroup = new System.Windows.Forms.GroupBox();
             this.label43 = new System.Windows.Forms.Label();
@@ -170,50 +191,40 @@
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UpAddButton = new System.Windows.Forms.Button();
             this.UpDelButton = new System.Windows.Forms.Button();
+            this.PitchAutorotationHoldButton = new XRNeckSafer.BooleanActionButton();
             this.pManualGroup = new System.Windows.Forms.GroupBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
+            this.pAccumReset = new XRNeckSafer.BooleanActionButton();
             this.label19 = new System.Windows.Forms.Label();
+            this.upNUD = new XRNeckSafer.NumericActionUpDown();
+            this.downNUD = new XRNeckSafer.NumericActionUpDown();
             this.label22 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.pSnapRP = new System.Windows.Forms.RadioButton();
             this.pAdditivRB = new System.Windows.Forms.RadioButton();
             this.label31 = new System.Windows.Forms.Label();
+            this.SetUpButton = new XRNeckSafer.BooleanActionButton();
+            this.SetDownButton = new XRNeckSafer.BooleanActionButton();
             this.DownLabel = new System.Windows.Forms.Label();
             this.UpLabel = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.loopTimer = new System.Windows.Forms.Timer(this.components);
             this._devicesStatusLabel = new System.Windows.Forms.Label();
             this._devicesStatusImage = new System.Windows.Forms.PictureBox();
-            this.numericUpDownMultRight = new XRNeckSafer.NumericActionUpDown();
-            this._groups = new XRNeckSafer.ActionPropertyGroups();
-            this.numericUpDownMultLeft = new XRNeckSafer.NumericActionUpDown();
-            this.numericUpDownStartRight = new XRNeckSafer.NumericActionUpDown();
-            this.numericUpDownStartLeft = new XRNeckSafer.NumericActionUpDown();
-            this.YawAutorotationHoldButton = new XRNeckSafer.BooleanActionButton();
-            this.AccumReset = new XRNeckSafer.BooleanActionButton();
-            this.transFNUP = new XRNeckSafer.NumericActionUpDown();
-            this.angleNUD = new XRNeckSafer.NumericActionUpDown();
-            this.transLRNUP = new XRNeckSafer.NumericActionUpDown();
-            this.SetLeftButton = new XRNeckSafer.BooleanActionButton();
-            this.SetRightButton = new XRNeckSafer.BooleanActionButton();
-            this.numericUpDownMultDown = new XRNeckSafer.NumericActionUpDown();
-            this.numericUpDownMultUp = new XRNeckSafer.NumericActionUpDown();
-            this.numericUpDownStartDown = new XRNeckSafer.NumericActionUpDown();
-            this.numericUpDownStartUp = new XRNeckSafer.NumericActionUpDown();
-            this.PitchAutorotationHoldButton = new XRNeckSafer.BooleanActionButton();
-            this.pAccumReset = new XRNeckSafer.BooleanActionButton();
-            this.upNUD = new XRNeckSafer.NumericActionUpDown();
-            this.downNUD = new XRNeckSafer.NumericActionUpDown();
-            this.SetUpButton = new XRNeckSafer.BooleanActionButton();
-            this.SetDownButton = new XRNeckSafer.BooleanActionButton();
-            this.SetResetButton = new XRNeckSafer.BooleanActionButton();
             this.stepwiseGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AutorotGridView)).BeginInit();
             this.linearGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultRight)).BeginInit();
             this._numericUpDownMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultLeft)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartRight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLeft)).BeginInit();
             this.HMDYawBox.SuspendLayout();
             this.ManualGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.transFNUP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.angleNUD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.transLRNUP)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.ARGroup.SuspendLayout();
@@ -222,24 +233,17 @@
             this.PitchTab.SuspendLayout();
             this.pARGroup.SuspendLayout();
             this.pLinearGroup.SuspendLayout();
-            this.pStepwiseGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DownAutorotGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.UpAutorotGridView)).BeginInit();
-            this.pManualGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._devicesStatusImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultRight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultLeft)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartRight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLeft)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.transFNUP)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.angleNUD)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.transLRNUP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultUp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartUp)).BeginInit();
+            this.pStepwiseGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DownAutorotGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.UpAutorotGridView)).BeginInit();
+            this.pManualGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.upNUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.downNUD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._devicesStatusImage)).BeginInit();
             this.SuspendLayout();
             // 
             // stepwiseGroup
@@ -499,6 +503,44 @@
             this.label2.TabIndex = 30;
             this.label2.Text = "L";
             // 
+            // numericUpDownMultRight
+            // 
+            this.numericUpDownMultRight.ActionPropertyDescription = null;
+            this.numericUpDownMultRight.ActionPropertyId = "AutorotationRAmplifyBy";
+            this.numericUpDownMultRight.ActionPropertyName = "R Amplify By";
+            this.numericUpDownMultRight.ActionPropertyOrder = 3;
+            this.numericUpDownMultRight.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownMultRight.DefaultValue = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.numericUpDownMultRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMultRight.GroupsComponent = this._groups;
+            this.numericUpDownMultRight.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownMultRight.Location = new System.Drawing.Point(146, 57);
+            this.numericUpDownMultRight.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericUpDownMultRight.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.numericUpDownMultRight.Name = "numericUpDownMultRight";
+            actionPropertyGroupItem1.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem1.Tag = actionPropertyGroup5;
+            this.numericUpDownMultRight.SelectedGroup = actionPropertyGroupItem1;
+            this.numericUpDownMultRight.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownMultRight.TabIndex = 29;
+            this.numericUpDownMultRight.ValueChanged += new System.EventHandler(this.numericUpDownMultRight_ValueChanged);
+            // 
             // _numericUpDownMenuStrip
             // 
             this._numericUpDownMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -513,11 +555,144 @@
             this.setJoystickkeyShortcutToolStripMenuItem.Text = "Set joystick/keyboard shortcut";
             this.setJoystickkeyShortcutToolStripMenuItem.Click += new System.EventHandler(this.OnSetJoystickKeyShortcutMenuClick);
             // 
+            // _groups
+            // 
+            actionPropertyGroup1.Name = "Reset Buttons";
+            actionPropertyGroup1.Order = 0;
+            actionPropertyGroup2.Name = "Manual Rotation Buttons";
+            actionPropertyGroup2.Order = 1;
+            actionPropertyGroup3.Name = "Hold Buttons";
+            actionPropertyGroup3.Order = 2;
+            actionPropertyGroup4.Name = "Manual Rotation Values";
+            actionPropertyGroup4.Order = 3;
+            actionPropertyGroup5.Name = "Smooth Autorotation Values";
+            actionPropertyGroup5.Order = 4;
+            this._groups.Groups = new XRNeckSafer.ActionPropertyGroup[] {
+        actionPropertyGroup1,
+        actionPropertyGroup2,
+        actionPropertyGroup3,
+        actionPropertyGroup4,
+        actionPropertyGroup5};
+            // 
+            // numericUpDownMultLeft
+            // 
+            this.numericUpDownMultLeft.ActionPropertyDescription = null;
+            this.numericUpDownMultLeft.ActionPropertyId = "AutorotationLAmplifyBy";
+            this.numericUpDownMultLeft.ActionPropertyName = "L Amplify By";
+            this.numericUpDownMultLeft.ActionPropertyOrder = 1;
+            this.numericUpDownMultLeft.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownMultLeft.DefaultValue = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.numericUpDownMultLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMultLeft.GroupsComponent = this._groups;
+            this.numericUpDownMultLeft.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownMultLeft.Location = new System.Drawing.Point(146, 31);
+            this.numericUpDownMultLeft.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericUpDownMultLeft.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.numericUpDownMultLeft.Name = "numericUpDownMultLeft";
+            actionPropertyGroupItem2.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem2.Tag = actionPropertyGroup5;
+            this.numericUpDownMultLeft.SelectedGroup = actionPropertyGroupItem2;
+            this.numericUpDownMultLeft.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownMultLeft.TabIndex = 28;
+            this.numericUpDownMultLeft.ValueChanged += new System.EventHandler(this.numericUpDownMultLeft_ValueChanged);
+            // 
+            // numericUpDownStartRight
+            // 
+            this.numericUpDownStartRight.ActionPropertyDescription = null;
+            this.numericUpDownStartRight.ActionPropertyId = "AutorotationRStartAt";
+            this.numericUpDownStartRight.ActionPropertyName = "R Start At";
+            this.numericUpDownStartRight.ActionPropertyOrder = 2;
+            this.numericUpDownStartRight.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownStartRight.DefaultValue = new decimal(new int[] {
+            95,
+            0,
+            0,
+            0});
+            this.numericUpDownStartRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownStartRight.GroupsComponent = this._groups;
+            this.numericUpDownStartRight.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownStartRight.Location = new System.Drawing.Point(47, 57);
+            this.numericUpDownStartRight.Maximum = new decimal(new int[] {
+            180,
+            0,
+            0,
+            0});
+            this.numericUpDownStartRight.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.numericUpDownStartRight.Name = "numericUpDownStartRight";
+            actionPropertyGroupItem3.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem3.Tag = actionPropertyGroup5;
+            this.numericUpDownStartRight.SelectedGroup = actionPropertyGroupItem3;
+            this.numericUpDownStartRight.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownStartRight.TabIndex = 27;
+            this.numericUpDownStartRight.ValueChanged += new System.EventHandler(this.numericUpDownStartRight_ValueChanged);
+            // 
+            // numericUpDownStartLeft
+            // 
+            this.numericUpDownStartLeft.ActionPropertyDescription = null;
+            this.numericUpDownStartLeft.ActionPropertyId = "AutorotationLStartAt";
+            this.numericUpDownStartLeft.ActionPropertyName = "L Start At";
+            this.numericUpDownStartLeft.ActionPropertyOrder = 0;
+            this.numericUpDownStartLeft.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownStartLeft.DefaultValue = new decimal(new int[] {
+            95,
+            0,
+            0,
+            0});
+            this.numericUpDownStartLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownStartLeft.GroupsComponent = this._groups;
+            this.numericUpDownStartLeft.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownStartLeft.Location = new System.Drawing.Point(47, 31);
+            this.numericUpDownStartLeft.Maximum = new decimal(new int[] {
+            180,
+            0,
+            0,
+            0});
+            this.numericUpDownStartLeft.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.numericUpDownStartLeft.Name = "numericUpDownStartLeft";
+            actionPropertyGroupItem4.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem4.Tag = actionPropertyGroup5;
+            this.numericUpDownStartLeft.SelectedGroup = actionPropertyGroupItem4;
+            this.numericUpDownStartLeft.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownStartLeft.TabIndex = 26;
+            this.numericUpDownStartLeft.ValueChanged += new System.EventHandler(this.numericUpDownStartLeft_ValueChanged);
+            // 
             // label12
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(8, 36);
+            this.label12.Location = new System.Drawing.Point(8, 33);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(239, 13);
             this.label12.TabIndex = 26;
@@ -527,24 +702,28 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(6, 54);
+            this.label11.Location = new System.Drawing.Point(8, 49);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(137, 13);
+            this.label11.Size = new System.Drawing.Size(46, 13);
             this.label11.TabIndex = 25;
-            this.label11.Text = "-  IL-2:  \"Default VR View\"  ";
+            this.label11.Text = "-  IL-2:   ";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(6, 70);
+            this.label10.Location = new System.Drawing.Point(8, 64);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(154, 13);
+            this.label10.Size = new System.Drawing.Size(47, 13);
             this.label10.TabIndex = 24;
-            this.label10.Text = "-  DCS: \"recenter VR Headset\"";
+            this.label10.Text = "-  DCS:  ";
             // 
             // HMDYawBox
             // 
+            this.HMDYawBox.Controls.Add(this.label42);
+            this.HMDYawBox.Controls.Add(this.label41);
+            this.HMDYawBox.Controls.Add(this.label40);
+            this.HMDYawBox.Controls.Add(this.label33);
             this.HMDYawBox.Controls.Add(this.label1);
             this.HMDYawBox.Controls.Add(this.label3);
             this.HMDYawBox.Controls.Add(this.SetResetButton);
@@ -554,15 +733,55 @@
             this.HMDYawBox.Controls.Add(this.label10);
             this.HMDYawBox.Location = new System.Drawing.Point(12, 25);
             this.HMDYawBox.Name = "HMDYawBox";
-            this.HMDYawBox.Size = new System.Drawing.Size(256, 109);
+            this.HMDYawBox.Size = new System.Drawing.Size(256, 113);
             this.HMDYawBox.TabIndex = 31;
             this.HMDYawBox.TabStop = false;
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label42.Location = new System.Drawing.Point(53, 79);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(125, 13);
+            this.label42.TabIndex = 59;
+            this.label42.Text = "\"VR - CAMERA RESET\"";
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label41.Location = new System.Drawing.Point(53, 64);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(117, 13);
+            this.label41.TabIndex = 58;
+            this.label41.Text = "\"recenter VR Headset\"";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.Location = new System.Drawing.Point(53, 49);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(101, 13);
+            this.label40.TabIndex = 57;
+            this.label40.Text = "\"Default VR View\"  ";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label33.Location = new System.Drawing.Point(8, 79);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(51, 13);
+            this.label33.TabIndex = 56;
+            this.label33.Text = "-  MSFS: ";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(9, 88);
+            this.label1.Location = new System.Drawing.Point(9, 94);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(236, 13);
             this.label1.TabIndex = 55;
@@ -574,9 +793,32 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(5, -2);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 16);
+            this.label3.Size = new System.Drawing.Size(83, 16);
             this.label3.TabIndex = 54;
             this.label3.Text = "Calibration";
+            // 
+            // SetResetButton
+            // 
+            this.SetResetButton.ActionPropertyDescription = null;
+            this.SetResetButton.ActionPropertyId = "SetResetCenter";
+            this.SetResetButton.ActionPropertyName = "Center";
+            this.SetResetButton.ActionPropertyOrder = 0;
+            this.SetResetButton.ActiveBackColour = System.Drawing.SystemColors.ControlText;
+            this.SetResetButton.ActiveForeColour = System.Drawing.Color.LightGreen;
+            this.SetResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetResetButton.GroupsComponent = this._groups;
+            this.SetResetButton.InActiveBackColour = System.Drawing.Color.Empty;
+            this.SetResetButton.InActiveForeColour = System.Drawing.Color.Empty;
+            this.SetResetButton.Location = new System.Drawing.Point(179, 50);
+            this.SetResetButton.Name = "SetResetButton";
+            actionPropertyGroupItem5.Name = "Reset Buttons";
+            actionPropertyGroupItem5.Tag = actionPropertyGroup1;
+            this.SetResetButton.SelectedGroup = actionPropertyGroupItem5;
+            this.SetResetButton.Size = new System.Drawing.Size(71, 43);
+            this.SetResetButton.TabIndex = 28;
+            this.SetResetButton.Text = "Set Center Button";
+            this.SetResetButton.UseVisualStyleBackColor = true;
+            this.SetResetButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // HMDYawLabel
             // 
@@ -629,6 +871,29 @@
             this.ManualGroup.TabStop = false;
             this.ManualGroup.Text = "Manual Rotation";
             // 
+            // AccumReset
+            // 
+            this.AccumReset.ActionPropertyDescription = null;
+            this.AccumReset.ActionPropertyId = "SetAccumResetYaw";
+            this.AccumReset.ActionPropertyName = "Accum Yaw";
+            this.AccumReset.ActionPropertyOrder = 1;
+            this.AccumReset.ActiveBackColour = System.Drawing.Color.Black;
+            this.AccumReset.ActiveForeColour = System.Drawing.Color.LightGreen;
+            this.AccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AccumReset.GroupsComponent = this._groups;
+            this.AccumReset.InActiveBackColour = System.Drawing.Color.Empty;
+            this.AccumReset.InActiveForeColour = System.Drawing.Color.Empty;
+            this.AccumReset.Location = new System.Drawing.Point(69, 99);
+            this.AccumReset.Name = "AccumReset";
+            actionPropertyGroupItem6.Name = "Reset Buttons";
+            actionPropertyGroupItem6.Tag = actionPropertyGroup1;
+            this.AccumReset.SelectedGroup = actionPropertyGroupItem6;
+            this.AccumReset.Size = new System.Drawing.Size(57, 34);
+            this.AccumReset.TabIndex = 54;
+            this.AccumReset.Text = "Set Acc. Reset";
+            this.AccumReset.UseVisualStyleBackColor = true;
+            this.AccumReset.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
             // label25
             // 
             this.label25.AutoSize = true;
@@ -639,6 +904,44 @@
             this.label25.TabIndex = 53;
             this.label25.Text = "Mode";
             // 
+            // transFNUP
+            // 
+            this.transFNUP.ActionPropertyDescription = null;
+            this.transFNUP.ActionPropertyId = "TransitionOffsetForward";
+            this.transFNUP.ActionPropertyName = "Translation Fwd";
+            this.transFNUP.ActionPropertyOrder = 2;
+            this.transFNUP.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.transFNUP.DefaultValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.transFNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.transFNUP.GroupsComponent = this._groups;
+            this.transFNUP.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.transFNUP.Location = new System.Drawing.Point(176, 87);
+            this.transFNUP.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.transFNUP.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.transFNUP.Name = "transFNUP";
+            actionPropertyGroupItem7.Name = "Manual Rotation Values";
+            actionPropertyGroupItem7.Tag = actionPropertyGroup4;
+            this.transFNUP.SelectedGroup = actionPropertyGroupItem7;
+            this.transFNUP.Size = new System.Drawing.Size(44, 20);
+            this.transFNUP.TabIndex = 26;
+            this.transFNUP.ValueChanged += new System.EventHandler(this.OnYawForwardTranslationChanged);
+            // 
             // label24
             // 
             this.label24.AutoSize = true;
@@ -648,6 +951,81 @@
             this.label24.Size = new System.Drawing.Size(68, 15);
             this.label24.TabIndex = 52;
             this.label24.Text = "Translation";
+            // 
+            // angleNUD
+            // 
+            this.angleNUD.ActionPropertyDescription = null;
+            this.angleNUD.ActionPropertyId = "YawRotationLR";
+            this.angleNUD.ActionPropertyName = "Yaw Rotation L/R";
+            this.angleNUD.ActionPropertyOrder = 0;
+            this.angleNUD.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.angleNUD.DefaultValue = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.angleNUD.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.angleNUD.GroupsComponent = this._groups;
+            this.angleNUD.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.angleNUD.Location = new System.Drawing.Point(34, 63);
+            this.angleNUD.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.angleNUD.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.angleNUD.Name = "angleNUD";
+            actionPropertyGroupItem8.Name = "Manual Rotation Values";
+            actionPropertyGroupItem8.Tag = actionPropertyGroup4;
+            this.angleNUD.SelectedGroup = actionPropertyGroupItem8;
+            this.angleNUD.Size = new System.Drawing.Size(38, 20);
+            this.angleNUD.TabIndex = 9;
+            // 
+            // transLRNUP
+            // 
+            this.transLRNUP.ActionPropertyDescription = null;
+            this.transLRNUP.ActionPropertyId = "TransitionOffsetLeftRight";
+            this.transLRNUP.ActionPropertyName = "Translation L/R";
+            this.transLRNUP.ActionPropertyOrder = 1;
+            this.transLRNUP.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.transLRNUP.DefaultValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.transLRNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.transLRNUP.GroupsComponent = this._groups;
+            this.transLRNUP.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.transLRNUP.Location = new System.Drawing.Point(176, 63);
+            this.transLRNUP.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.transLRNUP.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.transLRNUP.Name = "transLRNUP";
+            actionPropertyGroupItem9.Name = "Manual Rotation Values";
+            actionPropertyGroupItem9.Tag = actionPropertyGroup4;
+            this.transLRNUP.SelectedGroup = actionPropertyGroupItem9;
+            this.transLRNUP.Size = new System.Drawing.Size(44, 20);
+            this.transLRNUP.TabIndex = 25;
+            this.transLRNUP.ValueChanged += new System.EventHandler(this.OnYawLeftRightTranslationChanged);
             // 
             // label8
             // 
@@ -743,6 +1121,54 @@
             this.label15.Size = new System.Drawing.Size(21, 13);
             this.label15.TabIndex = 28;
             this.label15.Text = "cm";
+            // 
+            // SetLeftButton
+            // 
+            this.SetLeftButton.ActionPropertyDescription = null;
+            this.SetLeftButton.ActionPropertyId = "ManualRotationLeft";
+            this.SetLeftButton.ActionPropertyName = "Left";
+            this.SetLeftButton.ActionPropertyOrder = 0;
+            this.SetLeftButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.SetLeftButton.ActiveForeColour = System.Drawing.Color.LightGreen;
+            this.SetLeftButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetLeftButton.GroupsComponent = this._groups;
+            this.SetLeftButton.InActiveBackColour = System.Drawing.SystemColors.Control;
+            this.SetLeftButton.InActiveForeColour = System.Drawing.SystemColors.ControlText;
+            this.SetLeftButton.Location = new System.Drawing.Point(39, 20);
+            this.SetLeftButton.Name = "SetLeftButton";
+            actionPropertyGroupItem10.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem10.Tag = actionPropertyGroup2;
+            this.SetLeftButton.SelectedGroup = actionPropertyGroupItem10;
+            this.SetLeftButton.Size = new System.Drawing.Size(72, 27);
+            this.SetLeftButton.TabIndex = 36;
+            this.SetLeftButton.Text = "Set Button";
+            this.SetLeftButton.UseVisualStyleBackColor = false;
+            this.SetLeftButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetLeftButtonActionPropertyValueChanged);
+            this.SetLeftButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
+            // SetRightButton
+            // 
+            this.SetRightButton.ActionPropertyDescription = null;
+            this.SetRightButton.ActionPropertyId = "ManualRotationRight";
+            this.SetRightButton.ActionPropertyName = "Right";
+            this.SetRightButton.ActionPropertyOrder = 1;
+            this.SetRightButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.SetRightButton.ActiveForeColour = System.Drawing.Color.LightGreen;
+            this.SetRightButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SetRightButton.GroupsComponent = this._groups;
+            this.SetRightButton.InActiveBackColour = System.Drawing.SystemColors.Control;
+            this.SetRightButton.InActiveForeColour = System.Drawing.SystemColors.ControlText;
+            this.SetRightButton.Location = new System.Drawing.Point(167, 20);
+            this.SetRightButton.Name = "SetRightButton";
+            actionPropertyGroupItem11.Name = "Manual Rotation Buttons";
+            actionPropertyGroupItem11.Tag = actionPropertyGroup2;
+            this.SetRightButton.SelectedGroup = actionPropertyGroupItem11;
+            this.SetRightButton.Size = new System.Drawing.Size(72, 27);
+            this.SetRightButton.TabIndex = 37;
+            this.SetRightButton.Text = "Set Button";
+            this.SetRightButton.UseVisualStyleBackColor = false;
+            this.SetRightButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetRightButtonActionPropertyValueChanged);
+            this.SetRightButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // RightLabel
             // 
@@ -923,6 +1349,13 @@
             this.showJoystickkeyConfigurationToolStripMenuItem.Text = "Show joystick/key mapping config";
             this.showJoystickkeyConfigurationToolStripMenuItem.Click += new System.EventHandler(this.OnShowJoystickKeyConfigMenuClick);
             // 
+            // showJoystickkeyboardMappsToolStripMenuItem
+            // 
+            this.showJoystickkeyboardMappsToolStripMenuItem.Name = "showJoystickkeyboardMappsToolStripMenuItem";
+            this.showJoystickkeyboardMappsToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
+            this.showJoystickkeyboardMappsToolStripMenuItem.Text = "Assign keyboard buttons to joystick";
+            this.showJoystickkeyboardMappsToolStripMenuItem.Click += new System.EventHandler(this.OnShowJoyKeyboardMapsClick);
+            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
@@ -934,13 +1367,6 @@
             this.resetOptionsToDefaultToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
             this.resetOptionsToDefaultToolStripMenuItem.Text = "Reset options to default";
             this.resetOptionsToDefaultToolStripMenuItem.Click += new System.EventHandler(this.resetOptionsToDefaultToolStripMenuItem_Click);
-            // 
-            // showJoystickkeyboardMappsToolStripMenuItem
-            // 
-            this.showJoystickkeyboardMappsToolStripMenuItem.Name = "showJoystickkeyboardMappsToolStripMenuItem";
-            this.showJoystickkeyboardMappsToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
-            this.showJoystickkeyboardMappsToolStripMenuItem.Text = "Assign keyboard buttons to joystick";
-            this.showJoystickkeyboardMappsToolStripMenuItem.Click += new System.EventHandler(this.OnShowJoyKeyboardMapsClick);
             // 
             // aPILayerToolStripMenuItem
             // 
@@ -1047,6 +1473,29 @@
             this.AROffButton.Text = "Off";
             this.AROffButton.UseVisualStyleBackColor = true;
             this.AROffButton.CheckedChanged += new System.EventHandler(this.autorot_changed);
+            // 
+            // YawAutorotationHoldButton
+            // 
+            this.YawAutorotationHoldButton.ActionPropertyDescription = null;
+            this.YawAutorotationHoldButton.ActionPropertyId = "YawAutorotationHold";
+            this.YawAutorotationHoldButton.ActionPropertyName = "Yaw";
+            this.YawAutorotationHoldButton.ActionPropertyOrder = 0;
+            this.YawAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.YawAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LightGreen;
+            this.YawAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YawAutorotationHoldButton.GroupsComponent = this._groups;
+            this.YawAutorotationHoldButton.InActiveBackColour = System.Drawing.Color.Empty;
+            this.YawAutorotationHoldButton.InActiveForeColour = System.Drawing.Color.Empty;
+            this.YawAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
+            this.YawAutorotationHoldButton.Name = "YawAutorotationHoldButton";
+            actionPropertyGroupItem12.Name = "Hold Buttons";
+            actionPropertyGroupItem12.Tag = actionPropertyGroup3;
+            this.YawAutorotationHoldButton.SelectedGroup = actionPropertyGroupItem12;
+            this.YawAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
+            this.YawAutorotationHoldButton.TabIndex = 42;
+            this.YawAutorotationHoldButton.Text = "Hold";
+            this.YawAutorotationHoldButton.UseVisualStyleBackColor = true;
+            this.YawAutorotationHoldButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
             // YawPitchTab
             // 
@@ -1226,6 +1675,158 @@
             this.label39.TabIndex = 30;
             this.label39.Text = "U";
             // 
+            // numericUpDownMultDown
+            // 
+            this.numericUpDownMultDown.ActionPropertyDescription = null;
+            this.numericUpDownMultDown.ActionPropertyId = "AutorotationDAmplifyBy";
+            this.numericUpDownMultDown.ActionPropertyName = "D Amplify By";
+            this.numericUpDownMultDown.ActionPropertyOrder = 7;
+            this.numericUpDownMultDown.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownMultDown.DefaultValue = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.numericUpDownMultDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMultDown.GroupsComponent = this._groups;
+            this.numericUpDownMultDown.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownMultDown.Location = new System.Drawing.Point(146, 57);
+            this.numericUpDownMultDown.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericUpDownMultDown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.numericUpDownMultDown.Name = "numericUpDownMultDown";
+            actionPropertyGroupItem13.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem13.Tag = actionPropertyGroup5;
+            this.numericUpDownMultDown.SelectedGroup = actionPropertyGroupItem13;
+            this.numericUpDownMultDown.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownMultDown.TabIndex = 29;
+            this.numericUpDownMultDown.ValueChanged += new System.EventHandler(this.numericUpDownMultDown_ValueChanged);
+            // 
+            // numericUpDownMultUp
+            // 
+            this.numericUpDownMultUp.ActionPropertyDescription = null;
+            this.numericUpDownMultUp.ActionPropertyId = "AutorotationUAmplifyBy";
+            this.numericUpDownMultUp.ActionPropertyName = "U Amplify By";
+            this.numericUpDownMultUp.ActionPropertyOrder = 5;
+            this.numericUpDownMultUp.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownMultUp.DefaultValue = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.numericUpDownMultUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMultUp.GroupsComponent = this._groups;
+            this.numericUpDownMultUp.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownMultUp.Location = new System.Drawing.Point(146, 31);
+            this.numericUpDownMultUp.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericUpDownMultUp.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.numericUpDownMultUp.Name = "numericUpDownMultUp";
+            actionPropertyGroupItem14.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem14.Tag = actionPropertyGroup5;
+            this.numericUpDownMultUp.SelectedGroup = actionPropertyGroupItem14;
+            this.numericUpDownMultUp.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownMultUp.TabIndex = 28;
+            this.numericUpDownMultUp.ValueChanged += new System.EventHandler(this.numericUpDownMultUp_ValueChanged);
+            // 
+            // numericUpDownStartDown
+            // 
+            this.numericUpDownStartDown.ActionPropertyDescription = null;
+            this.numericUpDownStartDown.ActionPropertyId = "AutorotationDStartAt";
+            this.numericUpDownStartDown.ActionPropertyName = "D Start At";
+            this.numericUpDownStartDown.ActionPropertyOrder = 6;
+            this.numericUpDownStartDown.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownStartDown.DefaultValue = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.numericUpDownStartDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownStartDown.GroupsComponent = this._groups;
+            this.numericUpDownStartDown.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownStartDown.Location = new System.Drawing.Point(47, 57);
+            this.numericUpDownStartDown.Maximum = new decimal(new int[] {
+            180,
+            0,
+            0,
+            0});
+            this.numericUpDownStartDown.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.numericUpDownStartDown.Name = "numericUpDownStartDown";
+            actionPropertyGroupItem15.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem15.Tag = actionPropertyGroup5;
+            this.numericUpDownStartDown.SelectedGroup = actionPropertyGroupItem15;
+            this.numericUpDownStartDown.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownStartDown.TabIndex = 27;
+            this.numericUpDownStartDown.ValueChanged += new System.EventHandler(this.numericUpDownStartDown_ValueChanged);
+            // 
+            // numericUpDownStartUp
+            // 
+            this.numericUpDownStartUp.ActionPropertyDescription = null;
+            this.numericUpDownStartUp.ActionPropertyId = "AutorotationUStartAt";
+            this.numericUpDownStartUp.ActionPropertyName = "U Start At";
+            this.numericUpDownStartUp.ActionPropertyOrder = 4;
+            this.numericUpDownStartUp.ContextMenuStrip = this._numericUpDownMenuStrip;
+            this.numericUpDownStartUp.DefaultValue = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.numericUpDownStartUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownStartUp.GroupsComponent = this._groups;
+            this.numericUpDownStartUp.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownStartUp.Location = new System.Drawing.Point(47, 31);
+            this.numericUpDownStartUp.Maximum = new decimal(new int[] {
+            180,
+            0,
+            0,
+            0});
+            this.numericUpDownStartUp.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.numericUpDownStartUp.Name = "numericUpDownStartUp";
+            actionPropertyGroupItem16.Name = "Smooth Autorotation Values";
+            actionPropertyGroupItem16.Tag = actionPropertyGroup5;
+            this.numericUpDownStartUp.SelectedGroup = actionPropertyGroupItem16;
+            this.numericUpDownStartUp.Size = new System.Drawing.Size(44, 20);
+            this.numericUpDownStartUp.TabIndex = 26;
+            this.numericUpDownStartUp.ValueChanged += new System.EventHandler(this.numericUpDownStartUp_ValueChanged);
+            // 
             // pAROffButton
             // 
             this.pAROffButton.AutoSize = true;
@@ -1269,7 +1870,7 @@
             this.label43.Location = new System.Drawing.Point(123, 15);
             this.label43.Name = "label43";
             this.label43.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label43.Size = new System.Drawing.Size(46, 16);
+            this.label43.Size = new System.Drawing.Size(47, 16);
             this.label43.TabIndex = 64;
             this.label43.Text = "Down";
             // 
@@ -1302,7 +1903,7 @@
             this.label32.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label32.Location = new System.Drawing.Point(7, 15);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(26, 16);
+            this.label32.Size = new System.Drawing.Size(27, 16);
             this.label32.TabIndex = 61;
             this.label32.Text = "Up";
             // 
@@ -1498,6 +2099,29 @@
             this.UpDelButton.UseVisualStyleBackColor = true;
             this.UpDelButton.Click += new System.EventHandler(this.UpDeleteButton_Click);
             // 
+            // PitchAutorotationHoldButton
+            // 
+            this.PitchAutorotationHoldButton.ActionPropertyDescription = null;
+            this.PitchAutorotationHoldButton.ActionPropertyId = "PitchAutorotationHold";
+            this.PitchAutorotationHoldButton.ActionPropertyName = "Pitch";
+            this.PitchAutorotationHoldButton.ActionPropertyOrder = 1;
+            this.PitchAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
+            this.PitchAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LightGreen;
+            this.PitchAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PitchAutorotationHoldButton.GroupsComponent = this._groups;
+            this.PitchAutorotationHoldButton.InActiveBackColour = System.Drawing.Color.Empty;
+            this.PitchAutorotationHoldButton.InActiveForeColour = System.Drawing.Color.Empty;
+            this.PitchAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
+            this.PitchAutorotationHoldButton.Name = "PitchAutorotationHoldButton";
+            actionPropertyGroupItem17.Name = "Hold Buttons";
+            actionPropertyGroupItem17.Tag = actionPropertyGroup3;
+            this.PitchAutorotationHoldButton.SelectedGroup = actionPropertyGroupItem17;
+            this.PitchAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
+            this.PitchAutorotationHoldButton.TabIndex = 42;
+            this.PitchAutorotationHoldButton.Text = "Hold";
+            this.PitchAutorotationHoldButton.UseVisualStyleBackColor = true;
+            this.PitchAutorotationHoldButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
             // pManualGroup
             // 
             this.pManualGroup.Controls.Add(this.label21);
@@ -1544,683 +2168,6 @@
             this.label27.TabIndex = 56;
             this.label27.Text = "down";
             // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(7, 85);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(39, 15);
-            this.label19.TabIndex = 53;
-            this.label19.Text = "Mode";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(80, 59);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(25, 13);
-            this.label22.TabIndex = 20;
-            this.label22.Text = "deg";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.Location = new System.Drawing.Point(9, 52);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(23, 15);
-            this.label28.TabIndex = 51;
-            this.label28.Text = "Tilt";
-            // 
-            // pSnapRP
-            // 
-            this.pSnapRP.AutoSize = true;
-            this.pSnapRP.Checked = true;
-            this.pSnapRP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pSnapRP.Location = new System.Drawing.Point(12, 101);
-            this.pSnapRP.Name = "pSnapRP";
-            this.pSnapRP.Size = new System.Drawing.Size(50, 17);
-            this.pSnapRP.TabIndex = 1;
-            this.pSnapRP.TabStop = true;
-            this.pSnapRP.Text = "Snap";
-            this.pSnapRP.UseVisualStyleBackColor = true;
-            // 
-            // pAdditivRB
-            // 
-            this.pAdditivRB.AutoSize = true;
-            this.pAdditivRB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pAdditivRB.Location = new System.Drawing.Point(12, 116);
-            this.pAdditivRB.Name = "pAdditivRB";
-            this.pAdditivRB.Size = new System.Drawing.Size(58, 17);
-            this.pAdditivRB.TabIndex = 12;
-            this.pAdditivRB.Text = "Accum";
-            this.pAdditivRB.UseVisualStyleBackColor = true;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label31.Location = new System.Drawing.Point(223, 59);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(25, 13);
-            this.label31.TabIndex = 28;
-            this.label31.Text = "deg";
-            // 
-            // DownLabel
-            // 
-            this.DownLabel.AutoSize = true;
-            this.DownLabel.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DownLabel.Location = new System.Drawing.Point(134, 22);
-            this.DownLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.DownLabel.Name = "DownLabel";
-            this.DownLabel.Size = new System.Drawing.Size(36, 22);
-            this.DownLabel.TabIndex = 39;
-            this.DownLabel.Text = "D :";
-            // 
-            // UpLabel
-            // 
-            this.UpLabel.AutoSize = true;
-            this.UpLabel.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UpLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.UpLabel.Location = new System.Drawing.Point(4, 21);
-            this.UpLabel.Name = "UpLabel";
-            this.UpLabel.Size = new System.Drawing.Size(37, 24);
-            this.UpLabel.TabIndex = 38;
-            this.UpLabel.Text = "U :";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.Location = new System.Drawing.Point(11, 64);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(21, 15);
-            this.label26.TabIndex = 55;
-            this.label26.Text = "up";
-            // 
-            // loopTimer
-            // 
-            this.loopTimer.Interval = 20;
-            this.loopTimer.Tick += new System.EventHandler(this.loopTimer_Tick);
-            // 
-            // _devicesStatusLabel
-            // 
-            this._devicesStatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this._devicesStatusLabel.AutoSize = true;
-            this._devicesStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this._devicesStatusLabel.Location = new System.Drawing.Point(18, 831);
-            this._devicesStatusLabel.Name = "_devicesStatusLabel";
-            this._devicesStatusLabel.Size = new System.Drawing.Size(62, 13);
-            this._devicesStatusLabel.TabIndex = 58;
-            this._devicesStatusLabel.Text = "Joysticks: 0";
-            // 
-            // _devicesStatusImage
-            // 
-            this._devicesStatusImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this._devicesStatusImage.Image = global::XRNeckSaferApp.Properties.Resources.red_circle;
-            this._devicesStatusImage.InitialImage = null;
-            this._devicesStatusImage.Location = new System.Drawing.Point(7, 833);
-            this._devicesStatusImage.Name = "_devicesStatusImage";
-            this._devicesStatusImage.Size = new System.Drawing.Size(10, 10);
-            this._devicesStatusImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this._devicesStatusImage.TabIndex = 59;
-            this._devicesStatusImage.TabStop = false;
-            // 
-            // numericUpDownMultRight
-            // 
-            this.numericUpDownMultRight.ActionPropertyDescription = null;
-            this.numericUpDownMultRight.ActionPropertyId = "AutorotationRAmplifyBy";
-            this.numericUpDownMultRight.ActionPropertyName = "R Amplify By";
-            this.numericUpDownMultRight.ActionPropertyOrder = 3;
-            this.numericUpDownMultRight.ContextMenuStrip = this._numericUpDownMenuStrip;
-            this.numericUpDownMultRight.DefaultValue = new decimal(new int[] {
-            120,
-            0,
-            0,
-            0});
-            this.numericUpDownMultRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownMultRight.GroupsComponent = this._groups;
-            this.numericUpDownMultRight.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownMultRight.Location = new System.Drawing.Point(146, 57);
-            this.numericUpDownMultRight.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.numericUpDownMultRight.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.numericUpDownMultRight.Name = "numericUpDownMultRight";
-            actionPropertyGroupItem1.Name = "Smooth Autorotation Values";
-            actionPropertyGroupItem1.Tag = actionPropertyGroup5;
-            this.numericUpDownMultRight.SelectedGroup = actionPropertyGroupItem1;
-            this.numericUpDownMultRight.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDownMultRight.TabIndex = 29;
-            this.numericUpDownMultRight.ValueChanged += new System.EventHandler(this.numericUpDownMultRight_ValueChanged);
-            // 
-            // _groups
-            // 
-            actionPropertyGroup1.Name = "Reset Buttons";
-            actionPropertyGroup1.Order = 0;
-            actionPropertyGroup2.Name = "Manual Rotation Buttons";
-            actionPropertyGroup2.Order = 1;
-            actionPropertyGroup3.Name = "Hold Buttons";
-            actionPropertyGroup3.Order = 2;
-            actionPropertyGroup4.Name = "Manual Rotation Values";
-            actionPropertyGroup4.Order = 3;
-            actionPropertyGroup5.Name = "Smooth Autorotation Values";
-            actionPropertyGroup5.Order = 4;
-            this._groups.Groups = new XRNeckSafer.ActionPropertyGroup[] {
-        actionPropertyGroup1,
-        actionPropertyGroup2,
-        actionPropertyGroup3,
-        actionPropertyGroup4,
-        actionPropertyGroup5};
-            // 
-            // numericUpDownMultLeft
-            // 
-            this.numericUpDownMultLeft.ActionPropertyDescription = null;
-            this.numericUpDownMultLeft.ActionPropertyId = "AutorotationLAmplifyBy";
-            this.numericUpDownMultLeft.ActionPropertyName = "L Amplify By";
-            this.numericUpDownMultLeft.ActionPropertyOrder = 1;
-            this.numericUpDownMultLeft.ContextMenuStrip = this._numericUpDownMenuStrip;
-            this.numericUpDownMultLeft.DefaultValue = new decimal(new int[] {
-            120,
-            0,
-            0,
-            0});
-            this.numericUpDownMultLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownMultLeft.GroupsComponent = this._groups;
-            this.numericUpDownMultLeft.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownMultLeft.Location = new System.Drawing.Point(146, 31);
-            this.numericUpDownMultLeft.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.numericUpDownMultLeft.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.numericUpDownMultLeft.Name = "numericUpDownMultLeft";
-            actionPropertyGroupItem2.Name = "Smooth Autorotation Values";
-            actionPropertyGroupItem2.Tag = actionPropertyGroup5;
-            this.numericUpDownMultLeft.SelectedGroup = actionPropertyGroupItem2;
-            this.numericUpDownMultLeft.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDownMultLeft.TabIndex = 28;
-            this.numericUpDownMultLeft.ValueChanged += new System.EventHandler(this.numericUpDownMultLeft_ValueChanged);
-            // 
-            // numericUpDownStartRight
-            // 
-            this.numericUpDownStartRight.ActionPropertyDescription = null;
-            this.numericUpDownStartRight.ActionPropertyId = "AutorotationRStartAt";
-            this.numericUpDownStartRight.ActionPropertyName = "R Start At";
-            this.numericUpDownStartRight.ActionPropertyOrder = 2;
-            this.numericUpDownStartRight.ContextMenuStrip = this._numericUpDownMenuStrip;
-            this.numericUpDownStartRight.DefaultValue = new decimal(new int[] {
-            95,
-            0,
-            0,
-            0});
-            this.numericUpDownStartRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownStartRight.GroupsComponent = this._groups;
-            this.numericUpDownStartRight.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownStartRight.Location = new System.Drawing.Point(47, 57);
-            this.numericUpDownStartRight.Maximum = new decimal(new int[] {
-            180,
-            0,
-            0,
-            0});
-            this.numericUpDownStartRight.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.numericUpDownStartRight.Name = "numericUpDownStartRight";
-            actionPropertyGroupItem3.Name = "Smooth Autorotation Values";
-            actionPropertyGroupItem3.Tag = actionPropertyGroup5;
-            this.numericUpDownStartRight.SelectedGroup = actionPropertyGroupItem3;
-            this.numericUpDownStartRight.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDownStartRight.TabIndex = 27;
-            this.numericUpDownStartRight.ValueChanged += new System.EventHandler(this.numericUpDownStartRight_ValueChanged);
-            // 
-            // numericUpDownStartLeft
-            // 
-            this.numericUpDownStartLeft.ActionPropertyDescription = null;
-            this.numericUpDownStartLeft.ActionPropertyId = "AutorotationLStartAt";
-            this.numericUpDownStartLeft.ActionPropertyName = "L Start At";
-            this.numericUpDownStartLeft.ActionPropertyOrder = 0;
-            this.numericUpDownStartLeft.ContextMenuStrip = this._numericUpDownMenuStrip;
-            this.numericUpDownStartLeft.DefaultValue = new decimal(new int[] {
-            95,
-            0,
-            0,
-            0});
-            this.numericUpDownStartLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownStartLeft.GroupsComponent = this._groups;
-            this.numericUpDownStartLeft.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownStartLeft.Location = new System.Drawing.Point(47, 31);
-            this.numericUpDownStartLeft.Maximum = new decimal(new int[] {
-            180,
-            0,
-            0,
-            0});
-            this.numericUpDownStartLeft.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.numericUpDownStartLeft.Name = "numericUpDownStartLeft";
-            actionPropertyGroupItem4.Name = "Smooth Autorotation Values";
-            actionPropertyGroupItem4.Tag = actionPropertyGroup5;
-            this.numericUpDownStartLeft.SelectedGroup = actionPropertyGroupItem4;
-            this.numericUpDownStartLeft.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDownStartLeft.TabIndex = 26;
-            this.numericUpDownStartLeft.ValueChanged += new System.EventHandler(this.numericUpDownStartLeft_ValueChanged);
-            // 
-            // YawAutorotationHoldButton
-            // 
-            this.YawAutorotationHoldButton.ActionPropertyDescription = null;
-            this.YawAutorotationHoldButton.ActionPropertyId = "YawAutorotationHold";
-            this.YawAutorotationHoldButton.ActionPropertyName = "Yaw";
-            this.YawAutorotationHoldButton.ActionPropertyOrder = 0;
-            this.YawAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.YawAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LightGreen;
-            this.YawAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.YawAutorotationHoldButton.GroupsComponent = this._groups;
-            this.YawAutorotationHoldButton.InActiveBackColour = System.Drawing.Color.Empty;
-            this.YawAutorotationHoldButton.InActiveForeColour = System.Drawing.Color.Empty;
-            this.YawAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
-            this.YawAutorotationHoldButton.Name = "YawAutorotationHoldButton";
-            actionPropertyGroupItem12.Name = "Hold Buttons";
-            actionPropertyGroupItem12.Tag = actionPropertyGroup3;
-            this.YawAutorotationHoldButton.SelectedGroup = actionPropertyGroupItem12;
-            this.YawAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
-            this.YawAutorotationHoldButton.TabIndex = 42;
-            this.YawAutorotationHoldButton.Text = "Hold";
-            this.YawAutorotationHoldButton.UseVisualStyleBackColor = true;
-            this.YawAutorotationHoldButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
-            // 
-            // AccumReset
-            // 
-            this.AccumReset.ActionPropertyDescription = null;
-            this.AccumReset.ActionPropertyId = "SetAccumResetYaw";
-            this.AccumReset.ActionPropertyName = "Accum Yaw";
-            this.AccumReset.ActionPropertyOrder = 1;
-            this.AccumReset.ActiveBackColour = System.Drawing.Color.Black;
-            this.AccumReset.ActiveForeColour = System.Drawing.Color.LightGreen;
-            this.AccumReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AccumReset.GroupsComponent = this._groups;
-            this.AccumReset.InActiveBackColour = System.Drawing.Color.Empty;
-            this.AccumReset.InActiveForeColour = System.Drawing.Color.Empty;
-            this.AccumReset.Location = new System.Drawing.Point(69, 99);
-            this.AccumReset.Name = "AccumReset";
-            actionPropertyGroupItem6.Name = "Reset Buttons";
-            actionPropertyGroupItem6.Tag = actionPropertyGroup1;
-            this.AccumReset.SelectedGroup = actionPropertyGroupItem6;
-            this.AccumReset.Size = new System.Drawing.Size(57, 34);
-            this.AccumReset.TabIndex = 54;
-            this.AccumReset.Text = "Set Acc. Reset";
-            this.AccumReset.UseVisualStyleBackColor = true;
-            this.AccumReset.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
-            // 
-            // transFNUP
-            // 
-            this.transFNUP.ActionPropertyDescription = null;
-            this.transFNUP.ActionPropertyId = "TransitionOffsetForward";
-            this.transFNUP.ActionPropertyName = "Translation Fwd";
-            this.transFNUP.ActionPropertyOrder = 2;
-            this.transFNUP.ContextMenuStrip = this._numericUpDownMenuStrip;
-            this.transFNUP.DefaultValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.transFNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.transFNUP.GroupsComponent = this._groups;
-            this.transFNUP.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.transFNUP.Location = new System.Drawing.Point(176, 87);
-            this.transFNUP.Maximum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.transFNUP.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            this.transFNUP.Name = "transFNUP";
-            actionPropertyGroupItem7.Name = "Manual Rotation Values";
-            actionPropertyGroupItem7.Tag = actionPropertyGroup4;
-            this.transFNUP.SelectedGroup = actionPropertyGroupItem7;
-            this.transFNUP.Size = new System.Drawing.Size(44, 20);
-            this.transFNUP.TabIndex = 26;
-            this.transFNUP.ValueChanged += new System.EventHandler(this.OnYawForwardTranslationChanged);
-            // 
-            // angleNUD
-            // 
-            this.angleNUD.ActionPropertyDescription = null;
-            this.angleNUD.ActionPropertyId = "YawRotationLR";
-            this.angleNUD.ActionPropertyName = "Yaw Rotation L/R";
-            this.angleNUD.ActionPropertyOrder = 0;
-            this.angleNUD.ContextMenuStrip = this._numericUpDownMenuStrip;
-            this.angleNUD.DefaultValue = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.angleNUD.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.angleNUD.GroupsComponent = this._groups;
-            this.angleNUD.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.angleNUD.Location = new System.Drawing.Point(34, 63);
-            this.angleNUD.Maximum = new decimal(new int[] {
-            360,
-            0,
-            0,
-            0});
-            this.angleNUD.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.angleNUD.Name = "angleNUD";
-            actionPropertyGroupItem8.Name = "Manual Rotation Values";
-            actionPropertyGroupItem8.Tag = actionPropertyGroup4;
-            this.angleNUD.SelectedGroup = actionPropertyGroupItem8;
-            this.angleNUD.Size = new System.Drawing.Size(38, 20);
-            this.angleNUD.TabIndex = 9;
-            // 
-            // transLRNUP
-            // 
-            this.transLRNUP.ActionPropertyDescription = null;
-            this.transLRNUP.ActionPropertyId = "TransitionOffsetLeftRight";
-            this.transLRNUP.ActionPropertyName = "Translation L/R";
-            this.transLRNUP.ActionPropertyOrder = 1;
-            this.transLRNUP.ContextMenuStrip = this._numericUpDownMenuStrip;
-            this.transLRNUP.DefaultValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.transLRNUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.transLRNUP.GroupsComponent = this._groups;
-            this.transLRNUP.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.transLRNUP.Location = new System.Drawing.Point(176, 63);
-            this.transLRNUP.Maximum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.transLRNUP.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            this.transLRNUP.Name = "transLRNUP";
-            actionPropertyGroupItem9.Name = "Manual Rotation Values";
-            actionPropertyGroupItem9.Tag = actionPropertyGroup4;
-            this.transLRNUP.SelectedGroup = actionPropertyGroupItem9;
-            this.transLRNUP.Size = new System.Drawing.Size(44, 20);
-            this.transLRNUP.TabIndex = 25;
-            this.transLRNUP.ValueChanged += new System.EventHandler(this.OnYawLeftRightTranslationChanged);
-            // 
-            // SetLeftButton
-            // 
-            this.SetLeftButton.ActionPropertyDescription = null;
-            this.SetLeftButton.ActionPropertyId = "ManualRotationLeft";
-            this.SetLeftButton.ActionPropertyName = "Left";
-            this.SetLeftButton.ActionPropertyOrder = 0;
-            this.SetLeftButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.SetLeftButton.ActiveForeColour = System.Drawing.Color.LightGreen;
-            this.SetLeftButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetLeftButton.GroupsComponent = this._groups;
-            this.SetLeftButton.InActiveBackColour = System.Drawing.SystemColors.Control;
-            this.SetLeftButton.InActiveForeColour = System.Drawing.SystemColors.ControlText;
-            this.SetLeftButton.Location = new System.Drawing.Point(39, 20);
-            this.SetLeftButton.Name = "SetLeftButton";
-            actionPropertyGroupItem10.Name = "Manual Rotation Buttons";
-            actionPropertyGroupItem10.Tag = actionPropertyGroup2;
-            this.SetLeftButton.SelectedGroup = actionPropertyGroupItem10;
-            this.SetLeftButton.Size = new System.Drawing.Size(72, 27);
-            this.SetLeftButton.TabIndex = 36;
-            this.SetLeftButton.Text = "Set Button";
-            this.SetLeftButton.UseVisualStyleBackColor = false;
-            this.SetLeftButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetLeftButtonActionPropertyValueChanged);
-            this.SetLeftButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
-            // 
-            // SetRightButton
-            // 
-            this.SetRightButton.ActionPropertyDescription = null;
-            this.SetRightButton.ActionPropertyId = "ManualRotationRight";
-            this.SetRightButton.ActionPropertyName = "Right";
-            this.SetRightButton.ActionPropertyOrder = 1;
-            this.SetRightButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.SetRightButton.ActiveForeColour = System.Drawing.Color.LightGreen;
-            this.SetRightButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetRightButton.GroupsComponent = this._groups;
-            this.SetRightButton.InActiveBackColour = System.Drawing.SystemColors.Control;
-            this.SetRightButton.InActiveForeColour = System.Drawing.SystemColors.ControlText;
-            this.SetRightButton.Location = new System.Drawing.Point(167, 20);
-            this.SetRightButton.Name = "SetRightButton";
-            actionPropertyGroupItem11.Name = "Manual Rotation Buttons";
-            actionPropertyGroupItem11.Tag = actionPropertyGroup2;
-            this.SetRightButton.SelectedGroup = actionPropertyGroupItem11;
-            this.SetRightButton.Size = new System.Drawing.Size(72, 27);
-            this.SetRightButton.TabIndex = 37;
-            this.SetRightButton.Text = "Set Button";
-            this.SetRightButton.UseVisualStyleBackColor = false;
-            this.SetRightButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetRightButtonActionPropertyValueChanged);
-            this.SetRightButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
-            // 
-            // numericUpDownMultDown
-            // 
-            this.numericUpDownMultDown.ActionPropertyDescription = null;
-            this.numericUpDownMultDown.ActionPropertyId = "AutorotationDAmplifyBy";
-            this.numericUpDownMultDown.ActionPropertyName = "D Amplify By";
-            this.numericUpDownMultDown.ActionPropertyOrder = 7;
-            this.numericUpDownMultDown.ContextMenuStrip = this._numericUpDownMenuStrip;
-            this.numericUpDownMultDown.DefaultValue = new decimal(new int[] {
-            120,
-            0,
-            0,
-            0});
-            this.numericUpDownMultDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownMultDown.GroupsComponent = this._groups;
-            this.numericUpDownMultDown.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownMultDown.Location = new System.Drawing.Point(146, 57);
-            this.numericUpDownMultDown.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.numericUpDownMultDown.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.numericUpDownMultDown.Name = "numericUpDownMultDown";
-            actionPropertyGroupItem13.Name = "Smooth Autorotation Values";
-            actionPropertyGroupItem13.Tag = actionPropertyGroup5;
-            this.numericUpDownMultDown.SelectedGroup = actionPropertyGroupItem13;
-            this.numericUpDownMultDown.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDownMultDown.TabIndex = 29;
-            this.numericUpDownMultDown.ValueChanged += new System.EventHandler(this.numericUpDownMultDown_ValueChanged);
-            // 
-            // numericUpDownMultUp
-            // 
-            this.numericUpDownMultUp.ActionPropertyDescription = null;
-            this.numericUpDownMultUp.ActionPropertyId = "AutorotationUAmplifyBy";
-            this.numericUpDownMultUp.ActionPropertyName = "U Amplify By";
-            this.numericUpDownMultUp.ActionPropertyOrder = 5;
-            this.numericUpDownMultUp.ContextMenuStrip = this._numericUpDownMenuStrip;
-            this.numericUpDownMultUp.DefaultValue = new decimal(new int[] {
-            120,
-            0,
-            0,
-            0});
-            this.numericUpDownMultUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownMultUp.GroupsComponent = this._groups;
-            this.numericUpDownMultUp.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownMultUp.Location = new System.Drawing.Point(146, 31);
-            this.numericUpDownMultUp.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.numericUpDownMultUp.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.numericUpDownMultUp.Name = "numericUpDownMultUp";
-            actionPropertyGroupItem14.Name = "Smooth Autorotation Values";
-            actionPropertyGroupItem14.Tag = actionPropertyGroup5;
-            this.numericUpDownMultUp.SelectedGroup = actionPropertyGroupItem14;
-            this.numericUpDownMultUp.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDownMultUp.TabIndex = 28;
-            this.numericUpDownMultUp.ValueChanged += new System.EventHandler(this.numericUpDownMultUp_ValueChanged);
-            // 
-            // numericUpDownStartDown
-            // 
-            this.numericUpDownStartDown.ActionPropertyDescription = null;
-            this.numericUpDownStartDown.ActionPropertyId = "AutorotationDStartAt";
-            this.numericUpDownStartDown.ActionPropertyName = "D Start At";
-            this.numericUpDownStartDown.ActionPropertyOrder = 6;
-            this.numericUpDownStartDown.ContextMenuStrip = this._numericUpDownMenuStrip;
-            this.numericUpDownStartDown.DefaultValue = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
-            this.numericUpDownStartDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownStartDown.GroupsComponent = this._groups;
-            this.numericUpDownStartDown.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownStartDown.Location = new System.Drawing.Point(47, 57);
-            this.numericUpDownStartDown.Maximum = new decimal(new int[] {
-            180,
-            0,
-            0,
-            0});
-            this.numericUpDownStartDown.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.numericUpDownStartDown.Name = "numericUpDownStartDown";
-            actionPropertyGroupItem15.Name = "Smooth Autorotation Values";
-            actionPropertyGroupItem15.Tag = actionPropertyGroup5;
-            this.numericUpDownStartDown.SelectedGroup = actionPropertyGroupItem15;
-            this.numericUpDownStartDown.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDownStartDown.TabIndex = 27;
-            this.numericUpDownStartDown.ValueChanged += new System.EventHandler(this.numericUpDownStartDown_ValueChanged);
-            // 
-            // numericUpDownStartUp
-            // 
-            this.numericUpDownStartUp.ActionPropertyDescription = null;
-            this.numericUpDownStartUp.ActionPropertyId = "AutorotationUStartAt";
-            this.numericUpDownStartUp.ActionPropertyName = "U Start At";
-            this.numericUpDownStartUp.ActionPropertyOrder = 4;
-            this.numericUpDownStartUp.ContextMenuStrip = this._numericUpDownMenuStrip;
-            this.numericUpDownStartUp.DefaultValue = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
-            this.numericUpDownStartUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownStartUp.GroupsComponent = this._groups;
-            this.numericUpDownStartUp.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownStartUp.Location = new System.Drawing.Point(47, 31);
-            this.numericUpDownStartUp.Maximum = new decimal(new int[] {
-            180,
-            0,
-            0,
-            0});
-            this.numericUpDownStartUp.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.numericUpDownStartUp.Name = "numericUpDownStartUp";
-            actionPropertyGroupItem16.Name = "Smooth Autorotation Values";
-            actionPropertyGroupItem16.Tag = actionPropertyGroup5;
-            this.numericUpDownStartUp.SelectedGroup = actionPropertyGroupItem16;
-            this.numericUpDownStartUp.Size = new System.Drawing.Size(44, 20);
-            this.numericUpDownStartUp.TabIndex = 26;
-            this.numericUpDownStartUp.ValueChanged += new System.EventHandler(this.numericUpDownStartUp_ValueChanged);
-            // 
-            // PitchAutorotationHoldButton
-            // 
-            this.PitchAutorotationHoldButton.ActionPropertyDescription = null;
-            this.PitchAutorotationHoldButton.ActionPropertyId = "PitchAutorotationHold";
-            this.PitchAutorotationHoldButton.ActionPropertyName = "Pitch";
-            this.PitchAutorotationHoldButton.ActionPropertyOrder = 1;
-            this.PitchAutorotationHoldButton.ActiveBackColour = System.Drawing.Color.Black;
-            this.PitchAutorotationHoldButton.ActiveForeColour = System.Drawing.Color.LightGreen;
-            this.PitchAutorotationHoldButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PitchAutorotationHoldButton.GroupsComponent = this._groups;
-            this.PitchAutorotationHoldButton.InActiveBackColour = System.Drawing.Color.Empty;
-            this.PitchAutorotationHoldButton.InActiveForeColour = System.Drawing.Color.Empty;
-            this.PitchAutorotationHoldButton.Location = new System.Drawing.Point(196, 15);
-            this.PitchAutorotationHoldButton.Name = "PitchAutorotationHoldButton";
-            actionPropertyGroupItem17.Name = "Hold Buttons";
-            actionPropertyGroupItem17.Tag = actionPropertyGroup3;
-            this.PitchAutorotationHoldButton.SelectedGroup = actionPropertyGroupItem17;
-            this.PitchAutorotationHoldButton.Size = new System.Drawing.Size(48, 22);
-            this.PitchAutorotationHoldButton.TabIndex = 42;
-            this.PitchAutorotationHoldButton.Text = "Hold";
-            this.PitchAutorotationHoldButton.UseVisualStyleBackColor = true;
-            this.PitchAutorotationHoldButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
-            // 
             // pAccumReset
             // 
             this.pAccumReset.ActionPropertyDescription = null;
@@ -2243,6 +2190,16 @@
             this.pAccumReset.Text = "Set Acc. Reset";
             this.pAccumReset.UseVisualStyleBackColor = true;
             this.pAccumReset.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(7, 85);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(39, 15);
+            this.label19.TabIndex = 53;
+            this.label19.Text = "Mode";
             // 
             // upNUD
             // 
@@ -2318,6 +2275,61 @@
             this.downNUD.Size = new System.Drawing.Size(44, 20);
             this.downNUD.TabIndex = 25;
             // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(80, 59);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(25, 13);
+            this.label22.TabIndex = 20;
+            this.label22.Text = "deg";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(9, 52);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(23, 15);
+            this.label28.TabIndex = 51;
+            this.label28.Text = "Tilt";
+            // 
+            // pSnapRP
+            // 
+            this.pSnapRP.AutoSize = true;
+            this.pSnapRP.Checked = true;
+            this.pSnapRP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pSnapRP.Location = new System.Drawing.Point(12, 101);
+            this.pSnapRP.Name = "pSnapRP";
+            this.pSnapRP.Size = new System.Drawing.Size(50, 17);
+            this.pSnapRP.TabIndex = 1;
+            this.pSnapRP.TabStop = true;
+            this.pSnapRP.Text = "Snap";
+            this.pSnapRP.UseVisualStyleBackColor = true;
+            // 
+            // pAdditivRB
+            // 
+            this.pAdditivRB.AutoSize = true;
+            this.pAdditivRB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pAdditivRB.Location = new System.Drawing.Point(12, 116);
+            this.pAdditivRB.Name = "pAdditivRB";
+            this.pAdditivRB.Size = new System.Drawing.Size(58, 17);
+            this.pAdditivRB.TabIndex = 12;
+            this.pAdditivRB.Text = "Accum";
+            this.pAdditivRB.UseVisualStyleBackColor = true;
+            this.pAdditivRB.CheckedChanged += new System.EventHandler(this.pAdditivRB_CheckedChanged);
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Location = new System.Drawing.Point(223, 59);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(25, 13);
+            this.label31.TabIndex = 28;
+            this.label31.Text = "deg";
+            // 
             // SetUpButton
             // 
             this.SetUpButton.ActionPropertyDescription = null;
@@ -2366,28 +2378,65 @@
             this.SetDownButton.ActionPropertyValueChanged += new System.Action<bool>(this.OnSetDownButtonActionPropertyValueChanged);
             this.SetDownButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
             // 
-            // SetResetButton
+            // DownLabel
             // 
-            this.SetResetButton.ActionPropertyDescription = null;
-            this.SetResetButton.ActionPropertyId = "SetResetCenter";
-            this.SetResetButton.ActionPropertyName = "Center";
-            this.SetResetButton.ActionPropertyOrder = 0;
-            this.SetResetButton.ActiveBackColour = System.Drawing.SystemColors.ControlText;
-            this.SetResetButton.ActiveForeColour = System.Drawing.Color.LightGreen;
-            this.SetResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SetResetButton.GroupsComponent = this._groups;
-            this.SetResetButton.InActiveBackColour = System.Drawing.Color.Empty;
-            this.SetResetButton.InActiveForeColour = System.Drawing.Color.Empty;
-            this.SetResetButton.Location = new System.Drawing.Point(165, 51);
-            this.SetResetButton.Name = "SetResetButton";
-            actionPropertyGroupItem5.Name = "Reset Buttons";
-            actionPropertyGroupItem5.Tag = actionPropertyGroup1;
-            this.SetResetButton.SelectedGroup = actionPropertyGroupItem5;
-            this.SetResetButton.Size = new System.Drawing.Size(71, 35);
-            this.SetResetButton.TabIndex = 28;
-            this.SetResetButton.Text = "Set Center Button";
-            this.SetResetButton.UseVisualStyleBackColor = true;
-            this.SetResetButton.Click += new System.EventHandler(this.OnBooleanActionButtonClick);
+            this.DownLabel.AutoSize = true;
+            this.DownLabel.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DownLabel.Location = new System.Drawing.Point(134, 22);
+            this.DownLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.DownLabel.Name = "DownLabel";
+            this.DownLabel.Size = new System.Drawing.Size(36, 22);
+            this.DownLabel.TabIndex = 39;
+            this.DownLabel.Text = "D :";
+            // 
+            // UpLabel
+            // 
+            this.UpLabel.AutoSize = true;
+            this.UpLabel.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UpLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.UpLabel.Location = new System.Drawing.Point(4, 21);
+            this.UpLabel.Name = "UpLabel";
+            this.UpLabel.Size = new System.Drawing.Size(37, 24);
+            this.UpLabel.TabIndex = 38;
+            this.UpLabel.Text = "U :";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.Location = new System.Drawing.Point(11, 64);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(21, 15);
+            this.label26.TabIndex = 55;
+            this.label26.Text = "up";
+            // 
+            // loopTimer
+            // 
+            this.loopTimer.Interval = 20;
+            this.loopTimer.Tick += new System.EventHandler(this.loopTimer_Tick);
+            // 
+            // _devicesStatusLabel
+            // 
+            this._devicesStatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._devicesStatusLabel.AutoSize = true;
+            this._devicesStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this._devicesStatusLabel.Location = new System.Drawing.Point(18, 831);
+            this._devicesStatusLabel.Name = "_devicesStatusLabel";
+            this._devicesStatusLabel.Size = new System.Drawing.Size(62, 13);
+            this._devicesStatusLabel.TabIndex = 58;
+            this._devicesStatusLabel.Text = "Joysticks: 0";
+            // 
+            // _devicesStatusImage
+            // 
+            this._devicesStatusImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._devicesStatusImage.Image = global::XRNeckSaferApp.Properties.Resources.red_circle;
+            this._devicesStatusImage.InitialImage = null;
+            this._devicesStatusImage.Location = new System.Drawing.Point(7, 833);
+            this._devicesStatusImage.Name = "_devicesStatusImage";
+            this._devicesStatusImage.Size = new System.Drawing.Size(10, 10);
+            this._devicesStatusImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this._devicesStatusImage.TabIndex = 59;
+            this._devicesStatusImage.TabStop = false;
             // 
             // MainForm
             // 
@@ -2417,11 +2466,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.AutorotGridView)).EndInit();
             this.linearGroup.ResumeLayout(false);
             this.linearGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultRight)).EndInit();
             this._numericUpDownMenuStrip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultLeft)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartRight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLeft)).EndInit();
             this.HMDYawBox.ResumeLayout(false);
             this.HMDYawBox.PerformLayout();
             this.ManualGroup.ResumeLayout(false);
             this.ManualGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.transFNUP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.angleNUD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.transLRNUP)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.contextMenuStrip.ResumeLayout(false);
@@ -2434,26 +2490,19 @@
             this.pARGroup.PerformLayout();
             this.pLinearGroup.ResumeLayout(false);
             this.pLinearGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultUp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartUp)).EndInit();
             this.pStepwiseGroup.ResumeLayout(false);
             this.pStepwiseGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DownAutorotGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UpAutorotGridView)).EndInit();
             this.pManualGroup.ResumeLayout(false);
             this.pManualGroup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._devicesStatusImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultRight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultLeft)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartRight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartLeft)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.transFNUP)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.angleNUD)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.transLRNUP)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMultUp)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownStartUp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.upNUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.downNUD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._devicesStatusImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2614,6 +2663,10 @@
         private System.Windows.Forms.ContextMenuStrip _numericUpDownMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem setJoystickkeyShortcutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showJoystickkeyboardMappsToolStripMenuItem;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label label42;
     }
 }
 

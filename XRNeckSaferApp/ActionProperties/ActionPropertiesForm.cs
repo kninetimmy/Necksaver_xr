@@ -159,6 +159,7 @@ namespace XRNeckSafer
                     boolProp.Invert = model.InvertValue;
                 }
             }
+            Config.Instance.WriteConfig();
             Close();
         }
 

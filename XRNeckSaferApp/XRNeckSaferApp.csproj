@@ -285,6 +285,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="openxr_loader.dll" />
+    <None Include="Resources\notifyIcon.Icon.ico" />
     <Content Include="XRNS.ico" />
     <None Include="Graph.png" />
   </ItemGroup>

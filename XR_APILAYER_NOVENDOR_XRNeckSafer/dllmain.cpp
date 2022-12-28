@@ -581,7 +581,10 @@ namespace {
 
 		XrPosef pos1 = location->pose;
 
-		if (shmValues.yawOffset != 0 || shmValues.pitchOffset != 0) {
+		if (shmValues.yawOffset != 0
+			|| shmValues.pitchOffset != 0
+			|| shmValues.longitudinalOffset != 0
+			|| shmValues.lateralOffset != 0) {
 
 
 			if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
