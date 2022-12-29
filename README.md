@@ -1,6 +1,6 @@
 
 
-### Download link: [XRNeckSaferBeta4a.msi](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSafer-beta4a.msi)
+### Download link: [XRNeckSaferBeta5a.msi](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSafer-beta5a.msi)
 
 # **Description**
 
@@ -42,6 +42,16 @@ Pressing the graph button (above the table) shows you a representation of the en
 
 Smooth Autorotation gives a linear amplification of your head rotation, beginning at the **"Start at"** value. **"Amplify by"** 100%  means that for every degree head rotation you get one extra degree visual rotation. So, with a "Start at" value of 90 deg, if you turn your head to 100 you get 110 deg visual rotation (10 deg from 90 deg + 10 deg amplification). 200% gives 2 extra degrees for every "real" degree head rotation, and so on. **Please be aware that this non-1:1 motion can cause nausea!** (it does for me). If this is the case for you too, better use Stepwise Autorotation, It is much easier on your stomach.
 
+**Changelog for beta5a**
+- Compatibility with other OpenXR games (non opencomposite). Tested with **MSFS** but should work with other OPenXR games too
+- Complete overhaul of the input system (Nikoz)
+    * New input mapping GUI alowing for multiple buttons and modifiers per XRNS function 
+    * Ability to use keyboard for input 
+    * Option to map joystick buttons to keyboard strokes. This can be useful e.g. when the game only allows for keyboard modifiers
+- Fix for manual translation sometimes not working
+- Fixes for Hold function
+- Corrected tray icon
+
 **Changelog for beta4a**
 - Installer (thanks Nikoz!) No more messing around with copying files and running scripts. (see below how to uninstall older versions)
 - Location of XRNS app and layer files is now in %Program Files%/XRNeckSafer
@@ -78,16 +88,15 @@ Smooth Autorotation gives a linear amplification of your head rotation, beginnin
 - some UI work
 - Reset button is now called Center button to avoid confusion
 
-## **Installation (since beta4a)**
-
- 0. Uninstall old version before installing! (see below)  
- 1. Download the installer: [XRNeckSaferBeta4a.msi](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSafer-beta4a.msi)
+## **Installation**
+  
+ 1. Download the installer: [XRNeckSaferBeta5a.msi](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSafer-beta5a.msi)
  2. Run the installer
  3. Start XRNeckSaferApp.exe and go to OpenXR in the Menu on top. Select "Show active OpenXR API Layers"
   This should list all the active Layers and should include "XR_APILAYER_NOVENDOR_XRNeckSafer"
- 4. If this works you can configure XRNeckSafer as before
+ 4. If this works you can configure XRNeckSafer as usual
  5. Once in game press the combined Game/XRNS center button
- 6. Uninstallation of beta4a can now be done with the installer or via windows uninstall 
+ 6. Uninstallation can be done with the installer or via windows uninstall 
 
 **Uninstallation of older versions (before beta4)**
 1. Stop OpenXR Runtime (Mixed-Reality-Portal for Reverb G2)
@@ -98,8 +107,7 @@ Smooth Autorotation gives a linear amplification of your head rotation, beginnin
 
 **Installation of older versions (before beta4. Only if you really want to! Better use the newest version!)**
 
-0. Download [XRNeckSaferBeta3b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSaferBeta3c.zip)
-1. Create a folder and unzip XRNeckSaferBeta3.zip into it.
+1. Create a folder and unzip the old version (e.g. XRNeckSaferBeta3.zip) into it.
 2. Stop OpenXR Runtime (Mixed-Reality-Portal for Reverb G2) and copy the OpenXrApiLayer folder to %ProgramFiles% (e.g. C:\Program Files\OpenXrApiLayer) 
    You will need admin rights to put it there. The rest of the files in the .zip including the .exe can stay out of the %ProgramFiles% folder. 
 3. Go to the %ProgramFiles%\OpenXrApiLayer folder and run "Install-XR_APILAYER_NOVENDOR_XRNeckSafer.ps1" as a PowerShell script 
@@ -121,11 +129,10 @@ Smooth Autorotation gives a linear amplification of your head rotation, beginnin
 - If translation is not working correctly reset the OpenXR setup (for WMR reset HOME and ENVIRONMENT in Mixed Reality Portal, thanks Melanor8807).
 - "Smooth" autorotation might cause nausea for some users! It does for me... So be careful und stop it when you feel uncomfortable!
 - When you are experiencing FPS loss with XRNS try to minimize the XRNS App and/or disable angle output for the GUI and disable joystick auto reconnect under options.
-- XRNS works with games that can use OpenComposite (e.g. IL-2 and DCS). Native OpenXR games are not working yet. 
+- XRNS works with OpenXR games. For SteamVR use [VRNeckSafer](https://gitlab.com/NobiWan/vrnecksafer) 
 
 ## **Roadmap:**
  - user curves for smooth autorotation 
- - make it work with native OpenXR games (MSFS)
  - build instructions
  - better documentation
 
@@ -136,10 +143,11 @@ The easiest way to give feedback is to use the XRNS discord server:  https://dis
 ## **Thanks**
 
 The OpenXR API Layer is heavily based on Matthieu Bucchianeri's (mbucchia) [XR_APILAYER_NOVENDOR_fov_modifier](https://github.com/mbucchia/XR_APILAYER_NOVENDOR_fov_modifier). 
-XRNS would not be possible without his kind help! 
+XRNS would not be possible without his foundation work and his kind help!
+Thanks to BuzzteeBear for letting me use some of his OXRMC code to enable general OpenXR compatibility.
 Thanks to Firdimigdi for his support on smooth autorotation!
 Thanks to 65th Haack and 453 Jihadi Daddy for testing!
-Big Thanks to Nikoz for providing the installer, ideas, feedback and a lot of other improvements!
+Big Thanks to Nikoz for providing the new input system, installer, ideas, feedback and a lot of other improvements!
 
 This project uses several third-party libraries, which are used and distributed under their own license terms.
 
@@ -148,4 +156,4 @@ Thanks for your help and patience guys!
 Cheers,
  J2_NobiWan
 
-### Download link: [XRNeckSaferBeta3b.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSafer-beta4a.msi)
+### Download link: [XRNeckSaferBeta5a.zip](https://gitlab.com/NobiWan/xrnecksafer/-/blob/master/Assets/XRNeckSafer-beta5a.msi)
