@@ -460,11 +460,11 @@ namespace {
 					shmValues.yawOffset = holdYawOffsetValue;
 				}
 
-				trans = { 0 , 0, 0 };
+//				trans = { 0 , 0, 0 };
 			}
-			else {
+//			else {
 				trans = { shmValues.lateralOffset , 0, shmValues.longitudinalOffset };
-			}
+//			}
 
 			if (shmValues.useLinearPitchRotation) {
 				shmValues.upStartAt = buffer->upStartAt;
