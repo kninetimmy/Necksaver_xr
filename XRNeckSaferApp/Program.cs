@@ -35,8 +35,12 @@ namespace XRNeckSafer
                     {
                         using (new ActionPropertyProcessor(Config.Instance.ActionProperties))
                         {
-                            Application.Run(new MainForm());
-                            Config.Instance.WriteConfig();
+                            using (var form = new MainForm())
+                            {
+                                Application.Run(form);
+                                _logger.Debug($"Application form closed. {form.CloseReason.GetCloseReasonMessage()}");
+                                Config.Instance.WriteConfig();
+                            }
                         }
                     }
                     KeyInterceptor.RemoveHook();

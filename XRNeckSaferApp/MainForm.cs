@@ -44,6 +44,8 @@ namespace XRNeckSafer
 
         private readonly OpenXRApiLayerService _vr;
 
+        public CloseReason CloseReason { get; private set; }
+
         public MainForm()
         {
             InitializeComponent();
@@ -1331,5 +1333,9 @@ namespace XRNeckSafer
             KeyboardToJoystickAssignForm.ShowForm(Top, Right);
         }
 
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
+        {
+            CloseReason = e.CloseReason;
+        }
     }
 }
