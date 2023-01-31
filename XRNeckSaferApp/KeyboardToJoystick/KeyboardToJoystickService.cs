@@ -82,6 +82,7 @@ namespace XRNeckSafer
             if (_joystickScanner != null)
             {
                 _joystickScanner.Stop();
+                _joystickScanner.CurrentlyPressedChanged -= OnJoystickPressedChanged;
 
                 _joystickScanner.Dispose();
                 _joystickScanner = null;
