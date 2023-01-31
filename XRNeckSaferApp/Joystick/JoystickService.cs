@@ -1,4 +1,5 @@
 ﻿using NLog;
+using SharpDX;
 using SharpDX.DirectInput;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace XRNeckSafer
     public static class JoystickService
     {
         private const int SCAN_DELAY_INTERVAL_MSEC = 50;
+        private static readonly TimeSpan _devicesScanInterval = TimeSpan.FromSeconds(10);
         private static BackgroundWorker _worker;
         private static readonly AutoResetEvent _waitHandle = new AutoResetEvent(false);
         private static readonly ILogger _logger = LogManager.GetLogger(nameof(JoystickService));
@@ -99,9 +101,18 @@ namespace XRNeckSafer
         {
             lock (_joysticGuids)
             {
-                foreach (var joystick in _joysticGuids.Values.ToArray())
+                foreach (var pair in _joysticGuids)
                 {
-                    joystick.Unacquire();
+                    var guid = pair.Key;
+                    var joystick = pair.Value;
+                    try
+                    {
+                        joystick.Unacquire();
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error($"Error trying to unacquire device \"{GetJoystickName(guid)}\" ({guid}): {ex}");
+                    }
                     joystick.Dispose();
                 }
                 _joysticGuids.Clear();
@@ -116,30 +127,53 @@ namespace XRNeckSafer
 
         private static void ScanConnectedDevicesWork(object sender, DoWorkEventArgs e)
         {
-            var worker = (BackgroundWorker)sender;
-            var directInput = new DirectInput();
-            var stopwatch = new Stopwatch();
-            _logger.Debug($"Started scanning joysticks");
-            while (!worker.CancellationPending)
+            try
             {
-                PopulateJoysticks(directInput, stopwatch);
-                Guid[] guids = _joysticGuids.Keys.ToArray();
-                foreach (Guid guid in guids)
+                var worker = (BackgroundWorker)sender;
+                var directInput = new DirectInput();
+                var stopwatch = new Stopwatch();
+                _logger.Debug($"Started scanning joysticks");
+                while (!worker.CancellationPending)
                 {
-                    CheckJoystickUpdates(guid);
+                    try
+                    {
+                        PopulateJoysticks(directInput, stopwatch);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error("Unhandled error populating connected devices:" + ex);
+                    }
+                    Guid[] guids = _joysticGuids.Keys.ToArray();
+                    foreach (Guid guid in guids)
+                    {
+                        CheckJoystickUpdates(guid);
+                    }
+                    Thread.Sleep(SCAN_DELAY_INTERVAL_MSEC);
                 }
-                Thread.Sleep(SCAN_DELAY_INTERVAL_MSEC);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Unhandled error in the ScanConnectedDevicesWork job:" + ex);
             }
         }
 
         private static void PopulateJoysticks(DirectInput directInput, Stopwatch stopwatch)
         {
-            if (stopwatch.IsRunning && stopwatch.Elapsed < TimeSpan.FromSeconds(10))
+            if (stopwatch.IsRunning && stopwatch.Elapsed < _devicesScanInterval)
             {
                 return;
             }
             stopwatch.Restart();
-            var devices = directInput.GetDevices(DeviceClass.GameControl, DeviceEnumerationFlags.AttachedOnly);
+            IList<DeviceInstance> devices;
+            try
+            {
+                devices = directInput.GetDevices(DeviceClass.GameControl, DeviceEnumerationFlags.AttachedOnly);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error reading attached devices: {ex}");
+                return;
+            }
             _logger.Trace($"{devices.Count} joysticks found");
             foreach (DeviceInstance device in devices)
             {
@@ -150,12 +184,30 @@ namespace XRNeckSafer
                         var joystick = new Joystick(directInput, device.InstanceGuid);
                         var buttonCount = joystick.Capabilities.ButtonCount;
                         var povCount = joystick.Capabilities.PovCount;
-                        _logger.Debug($"Found Joystick with GUID: {device.InstanceGuid}." +
+                        _logger.Debug($"Found device \"{joystick?.Properties?.InstanceName}\" ({device.InstanceGuid}) with" +
                             $" {buttonCount} buttons, {povCount} POVs");
+                        try
+                        {
+                            joystick.Acquire();
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.Error($"Error trying to acquire device \"{joystick?.Properties?.InstanceName}\" ({device.InstanceGuid}): {ex}");
+                            continue;
+                        }
+                        JoystickState currentState;
+                        try
+                        {
+                            currentState = joystick.GetCurrentState();
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.Error($"Error getting state of device \"{joystick?.Properties?.InstanceName}\" ({device.InstanceGuid}): {ex}");
+                            continue;
+                        }
                         _joysticGuids.Add(device.InstanceGuid, joystick);
                         _joystickButtonPovCounts.Add(device.InstanceGuid, new Tuple<int, int>(buttonCount, povCount));
-                        joystick.Acquire();
-                        _joystickStates.Add(device.InstanceGuid, joystick.GetCurrentState());
+                        _joystickStates.Add(device.InstanceGuid, currentState);
                         DeviceConnected?.Invoke(device.InstanceGuid, joystick.Properties.InstanceName);
                     }
                 }
@@ -221,17 +273,17 @@ namespace XRNeckSafer
                     PressedButtonsUpdate?.Invoke(guid, joyBut, pressed);
                 }
             }
-            catch (SharpDX.SharpDXException err)
+            catch (SharpDXException err)
             {
-                _logger.Error(err.Message);
+                _logger.Error(err);
                 StopJoystickPolling(guid);
             }
         }
 
         private static void StopJoystickPolling(Guid guid)
         {
-            _logger.Debug($"Completed polling Joystick with GUID: {guid}");
             var joystickName = GetJoystickName(guid.ToString());
+            _logger.Debug($"Completed polling device \"{joystickName}\" ({guid})");
             lock (_joysticGuids)
             {
                 if (_joysticGuids.TryGetValue(guid, out Joystick joystick))
@@ -243,7 +295,7 @@ namespace XRNeckSafer
                 _joystickStates.Remove(guid);
                 _joystickButtonPovCounts.Remove(guid);
             }
-            _logger.Debug($"Removed Joystick with GUID: {guid}");
+            _logger.Debug($"Removed device \"{joystickName}\" ({guid})");
             DeviceDisconnected?.Invoke(guid, joystickName);
         }
 
