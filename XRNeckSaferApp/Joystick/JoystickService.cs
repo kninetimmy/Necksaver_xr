@@ -12,6 +12,7 @@ namespace XRNeckSafer
 {
     public static class JoystickService
     {
+        private const int POV_RELEASED_VALUE = -1;
         private const int SCAN_DELAY_INTERVAL_MSEC = 50;
         private static readonly TimeSpan _devicesScanInterval = TimeSpan.FromSeconds(10);
         private static BackgroundWorker _worker;
@@ -339,6 +340,11 @@ namespace XRNeckSafer
                     if (updates == null)
                     {
                         updates = new List<JoystickPollingUpdate>();
+                    }
+                    var povCurrentlyPressed = currentState.PointOfViewControllers[povIndex] > POV_RELEASED_VALUE;
+                    if (update.Value > POV_RELEASED_VALUE && povCurrentlyPressed)
+                    {
+                        updates.Add(new JoystickPollingUpdate { RawOffset = update.RawOffset, Value = POV_RELEASED_VALUE });
                     }
                     updates.Add(update);
                 }
