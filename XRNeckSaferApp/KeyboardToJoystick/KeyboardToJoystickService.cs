@@ -56,11 +56,11 @@ namespace XRNeckSafer
                 return;
             }
             var id = button.GetId();
-            var matchedMappings = _mappings.FindAll(m => m.JoystickButtons.All(b => _pressedJoystickButtons.Any(p =>
+            var matchedMappings = _mappings.FindAll(m => m.JoystickButtons.All(b =>
             {
-                var bId = b.GetId();
-                return id == bId || bId == p.GetId();
-            })));
+                var bid = b.GetId();
+                return bid == id || _pressedJoystickButtons.Any(p => bid == p.GetId());
+            }));
             var triggeredMappings = GetTriggeredMappings();
             var newMappings = matchedMappings.FindAll(m => !triggeredMappings.Any(t => t.Equals(m)));
 
