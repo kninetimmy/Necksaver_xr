@@ -195,6 +195,8 @@
     <Compile Include="Graph.Designer.cs">
       <DependentUpon>Graph.cs</DependentUpon>
     </Compile>
+    <Compile Include="Joystick\JoystickButtons.cs" />
+    <Compile Include="Joystick\KeyboardKeys.cs" />
     <Compile Include="KeyboardToJoystick\KeyboardToJoystickAssignForm.cs">
       <SubType>Form</SubType>
     </Compile>

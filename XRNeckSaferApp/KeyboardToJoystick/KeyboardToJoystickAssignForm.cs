@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using XRNeckSafer;
 using XRNeckSafer.Wpf;
@@ -45,8 +39,8 @@ namespace XRNeckSaferApp
             {
                 var dataModel = new KeyboardToJoysticAssignmentModel
                 {
-                    JoystickInput = new Input { InputCombination = mapping.JoystickButton?.ToString() ?? string.Empty },
-                    KeyboardInput = new Input { InputCombination = mapping.KeyboardKey != Keys.None ? mapping.KeyboardKey.ToDisplayString() : string.Empty },
+                    JoystickInput = new Input { InputCombination = mapping.JoystickButtons?.ToString() ?? string.Empty },
+                    KeyboardInput = new Input { InputCombination = mapping.KeyboardKeys?.ToString() ?? string.Empty },
                 };
                 props.Add(dataModel);
             });
@@ -71,7 +65,7 @@ namespace XRNeckSaferApp
                 return;
             }
             KeyboardToJoystickService.Instanse.Enabled = false;
-            var result = ScanJoystickKeyboardForm.ShowForm(FormStartPosition.CenterParent, Top, Left, 1, deviceType);
+            var result = ScanJoystickKeyboardForm.ShowForm(FormStartPosition.CenterParent, Top, Left, 2, deviceType);
             KeyboardToJoystickService.Instanse.Enabled = true;
             if (result == null)
             {
@@ -97,36 +91,37 @@ namespace XRNeckSaferApp
                 if (keyboardInput.NewInputCombination == null)
                 {
                     var existing = Config.Instance.KeyboardToJoystickAssignments.FirstOrDefault(m =>
-                        m.KeyboardKey.ToDisplayString() == keyboardInput.InputCombination);
+                        m.KeyboardKeys.ToString() == keyboardInput.InputCombination);
                     if (existing != null)
                     {
-                        newMapping.KeyboardKey = existing.KeyboardKey;
+                        newMapping.KeyboardKeys = existing.KeyboardKeys.Clone();
                     }
                 } 
                 else
                 {
                     var newKeyboardInput = keyboardInput.NewInputCombination as JoystickKeyboardInput;
-                    newMapping.KeyboardKey = newKeyboardInput.KeyboardKeys.First();
+                    newMapping.KeyboardKeys = newKeyboardInput.KeyboardKeys.Clone();
                 }
                 if (joystickInput.NewInputCombination == null)
                 {
                     var existing = Config.Instance.KeyboardToJoystickAssignments.FirstOrDefault(m =>
-                        m.JoystickButton != null &&
-                        m.JoystickButton.ToString() == joystickInput.InputCombination);
+                        m.JoystickButtons != null &&
+                        m.JoystickButtons.ToString() == joystickInput.InputCombination);
                     if (existing != null)
                     {
-                        newMapping.JoystickButton = existing.JoystickButton;
+                        newMapping.JoystickButtons = existing.JoystickButtons.Clone();
                     }
                 } 
                 else
                 {
                     var newJoystickInput = joystickInput.NewInputCombination as JoystickKeyboardInput;
-                    newMapping.JoystickButton = newJoystickInput.JoystickButtons.First();
+                    newMapping.JoystickButtons = newJoystickInput.JoystickButtons.Clone();
                 }
                 result.Add(newMapping);
             }
             Config.Instance.KeyboardToJoystickAssignments.Clear();
             Config.Instance.KeyboardToJoystickAssignments.AddRange(result);
+            Config.Instance.WriteConfig();
             Close();
         }
 

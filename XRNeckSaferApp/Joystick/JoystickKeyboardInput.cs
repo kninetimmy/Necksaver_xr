@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Windows.Forms;
 
 namespace XRNeckSafer
 {
@@ -10,10 +7,10 @@ namespace XRNeckSafer
     public class JoystickKeyboardInput
     {
         [DataMember]
-        public List<Keys> KeyboardKeys { get; set; } = new List<Keys>();
+        public KeyboardKeys KeyboardKeys { get; set; } = new KeyboardKeys();
 
         [DataMember]
-        public List<JoystickButton> JoystickButtons { get; set; } = new List<JoystickButton>();
+        public JoystickButtons JoystickButtons { get; set; } = new JoystickButtons();
 
         public bool IsEqual(JoystickKeyboardInput input)
         {
@@ -34,30 +31,7 @@ namespace XRNeckSafer
 
         public override string ToString()
         {
-            var builder = new StringBuilder();
-            foreach (var button in JoystickButtons)
-            {
-                if (builder.Length > 0)
-                {
-                    builder.Append("+");
-                }
-                //var joystickName = JoystickService.GetJoystickName(button.JoystickGuid) ?? "UNPLUGGED";
-                //if (button.POV != -1)
-                //{
-                //    builder.Append($"[{joystickName} POV:{button.POV + 1} {button.Button / 100}°]");
-                //    continue;
-                //}
-                builder.Append(button.ToString());
-            }
-            foreach (var key in KeyboardKeys)
-            {
-                if (builder.Length > 0)
-                {
-                    builder.Append("+");
-                }
-                builder.Append(key.ToDisplayString());
-            }
-            return builder.ToString();
+            return JoystickButtons.ToString()  + KeyboardKeys.ToString();
         }
 
         private bool IsEmpty()

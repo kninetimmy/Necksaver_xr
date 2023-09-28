@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace XRNeckSafer
 {
@@ -85,41 +86,69 @@ namespace XRNeckSafer
                 {
                     return CreateDefaultConfig();
                 }
-                Config c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configfilename), new Newtonsoft.Json.Converters.StringEnumConverter());
-                if (c.ActionProperties == null) c.ActionProperties = new List<ActionProperty>();
-                if (c.KeyboardToJoystickAssignments == null) c.KeyboardToJoystickAssignments = new List<KeyboardToJoystickModel>();
+                var config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configfilename), new Newtonsoft.Json.Converters.StringEnumConverter());
+                if (config.ActionProperties == null) config.ActionProperties = new List<ActionProperty>();
+                if (config.KeyboardToJoystickAssignments == null) config.KeyboardToJoystickAssignments = new List<KeyboardToJoystickModel>();
 
-                if (c.AutoSteps.Count == 0)
+                if (config.AutoSteps.Count == 0)
                 {
-                    c.AutoSteps.Add(new int[5] { 60, 51, 10, 0, 0 });
-                    c.AutoSteps.Add(new int[5] { 70, 61, 20, 5, 1 });
-                    c.AutoSteps.Add(new int[5] { 80, 71, 30, 7, 3 });
-                    c.AutoSteps.Add(new int[5] { 90, 81, 40, 10, 5 });
-                    c.AutoSteps.Add(new int[5] { 100, 91, 50, 10, 5 });
-                    c.AutoSteps.Add(new int[5] { 110, 101, 60, 10, 5 });
-                    c.AutoSteps.Add(new int[5] { 120, 111, 70, 10, 5 });
+                    config.AutoSteps.Add(new int[5] { 60, 51, 10, 0, 0 });
+                    config.AutoSteps.Add(new int[5] { 70, 61, 20, 5, 1 });
+                    config.AutoSteps.Add(new int[5] { 80, 71, 30, 7, 3 });
+                    config.AutoSteps.Add(new int[5] { 90, 81, 40, 10, 5 });
+                    config.AutoSteps.Add(new int[5] { 100, 91, 50, 10, 5 });
+                    config.AutoSteps.Add(new int[5] { 110, 101, 60, 10, 5 });
+                    config.AutoSteps.Add(new int[5] { 120, 111, 70, 10, 5 });
                 }
-                if (c.UpAutoSteps.Count == 0)
+                if (config.UpAutoSteps.Count == 0)
                 {
-                    c.UpAutoSteps.Add(new int[3] { 50, 41, 10 });
-                    c.UpAutoSteps.Add(new int[3] { 60, 51, 20 });
-                    c.UpAutoSteps.Add(new int[3] { 70, 61, 30 });
-                    c.UpAutoSteps.Add(new int[3] { 80, 71, 40 });
+                    config.UpAutoSteps.Add(new int[3] { 50, 41, 10 });
+                    config.UpAutoSteps.Add(new int[3] { 60, 51, 20 });
+                    config.UpAutoSteps.Add(new int[3] { 70, 61, 30 });
+                    config.UpAutoSteps.Add(new int[3] { 80, 71, 40 });
                 }
-                if (c.DownAutoSteps.Count == 0)
+                if (config.DownAutoSteps.Count == 0)
                 {
-                    c.DownAutoSteps.Add(new int[3] { 50, 41, 10 });
-                    c.DownAutoSteps.Add(new int[3] { 60, 51, 20 });
-                    c.DownAutoSteps.Add(new int[3] { 70, 61, 30 });
-                    c.DownAutoSteps.Add(new int[3] { 80, 71, 40 });
+                    config.DownAutoSteps.Add(new int[3] { 50, 41, 10 });
+                    config.DownAutoSteps.Add(new int[3] { 60, 51, 20 });
+                    config.DownAutoSteps.Add(new int[3] { 70, 61, 30 });
+                    config.DownAutoSteps.Add(new int[3] { 80, 71, 40 });
                 }
 
-                return c;
+                MigrateToMultibuttonMode(config);
+
+                return config;
             }
             catch (Exception)
             {
                 return CreateDefaultConfig();
             }
+        }
+
+        [Obsolete("Converts old Keyboard-To-Joystick assignments config to a new multibutton format. This should be removed in a new version")]
+        private static void MigrateToMultibuttonMode(Config config)
+        {
+            config.KeyboardToJoystickAssignments.ForEach(x =>
+            {
+                if (x.KeyboardKey != System.Windows.Forms.Keys.None)
+                {
+                    x.KeyboardKeys = x.KeyboardKeys ?? new KeyboardKeys();
+                    if (!x.KeyboardKeys.Contains(x.KeyboardKey))
+                    {
+                        x.KeyboardKeys.Add(x.KeyboardKey);
+                    }
+                    x.KeyboardKey = System.Windows.Forms.Keys.None;
+                }
+                if (x.JoystickButton != null)
+                {
+                    x.JoystickButtons = x.JoystickButtons ?? new JoystickButtons();
+                    if (!x.JoystickButtons.Any(b => b.GetId() == x.JoystickButton.GetId()))
+                    {
+                        x.JoystickButtons.Add(x.JoystickButton);
+                    }
+                    x.JoystickButton = null;
+                }
+            });
         }
 
         private static Config CreateDefaultConfig()

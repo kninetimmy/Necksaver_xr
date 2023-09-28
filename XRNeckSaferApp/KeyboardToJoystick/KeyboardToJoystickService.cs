@@ -33,7 +33,7 @@ namespace XRNeckSafer
             _joystickScanner = new JoystickButtonScanner(maxPressedButtonsCount);
             _joystickScanner.CurrentlyPressedChanged += OnJoystickPressedChanged;
             _joystickScanner.StartScan();
-            _mappings = mappings;
+            _mappings = mappings ?? new List<KeyboardToJoystickModel>();
         }
 
         private void OnJoystickPressedChanged(List<JoystickButton> buttons)
@@ -55,12 +55,23 @@ namespace XRNeckSafer
             {
                 return;
             }
-            var mapping = _mappings.FirstOrDefault(m => m.JoystickButton.GetId().Equals(button.GetId()));
-            if (mapping != null)
+            var id = button.GetId();
+            var matchedMappings = _mappings.FindAll(m => m.JoystickButtons.All(b => _pressedJoystickButtons.Any(p =>
             {
-                KeyPressSimulator.PressKey(mapping.KeyboardKey);
-                _logger.Debug($"'{mapping.KeyboardKey}' pressed.");
-            }
+                var bId = b.GetId();
+                return id == bId || bId == p.GetId();
+            })));
+            var triggeredMappings = GetTriggeredMappings();
+            var newMappings = matchedMappings.FindAll(m => !triggeredMappings.Any(t => t.Equals(m)));
+
+            newMappings.ForEach(m =>
+            {
+                m.KeyboardKeys.ForEach(k =>
+                {
+                    KeyPressSimulator.PressKey(k);
+                    _logger.Debug($"'{k}' pressed.");
+                });
+            });
         }
 
         private void ReleaseButton(JoystickButton button)
@@ -68,13 +79,27 @@ namespace XRNeckSafer
             if (!Enabled)
             {
                 return;
-            }
-            var mapping = _mappings.FirstOrDefault(m => m.JoystickButton.GetId().Equals(button.GetId()));
-            if (mapping != null)
+            } 
+            var id = button.GetId();
+            var triggeredMappings = GetTriggeredMappings();
+            var toRelease = triggeredMappings.FindAll(m => m.JoystickButtons.Any(b => b.GetId() == id));
+            toRelease.ForEach(m =>
             {
-                KeyPressSimulator.ReleaseKey(mapping.KeyboardKey);
-                _logger.Debug($"'{mapping.KeyboardKey}' released.");
-            }
+                m.KeyboardKeys.ForEach(k =>
+                {
+                    KeyPressSimulator.ReleaseKey(k);
+                    _logger.Debug($"'{k}' released.");
+                });
+            });
+        }
+
+        private List<KeyboardToJoystickModel> GetTriggeredMappings()
+        {
+            return _mappings.FindAll(m => m.JoystickButtons.All(b => _pressedJoystickButtons.Any(p =>
+            {
+                var bId = b.GetId();
+                return bId == p.GetId();
+            })));
         }
 
         public void Dispose()
