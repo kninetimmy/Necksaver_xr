@@ -43,7 +43,7 @@
         <DataGrid Grid.Row="0" Style="{StaticResource _dataGrid}" Name="_headersGrid" ItemsSource="{Binding ElementName=HostControl, Path=Assignments}" 
                   HeadersVisibility="Column" CellStyle="{StaticResource _cell}" BorderThickness="1,1,1,1">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Keyboard key" Width="*">
+                <DataGridTemplateColumn Header="Keyboard key(s)" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid>
@@ -55,7 +55,7 @@
                                     <TextBlock Text="{Binding KeyboardInput.InputCombination}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <Button ToolTip="Assign keyboard key" Click="OnScanKeyboardButtonClick" Background="Transparent" BorderBrush="Transparent">
+                                    <Button ToolTip="Assign keyboard key(s)" Click="OnScanKeyboardButtonClick" Background="Transparent" BorderBrush="Transparent">
                                         <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.scan}, Converter={StaticResource BitmapToImageSourceConverter}}" />
                                     </Button>
                                 </StackPanel>
@@ -63,7 +63,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Joystick button" Width="*">
+                <DataGridTemplateColumn Header="Joystick button(s)" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid>
@@ -75,7 +75,7 @@
                                     <TextBlock Text="{Binding JoystickInput.InputCombination}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <Button ToolTip="Assign joystick key" Click="OnScanJoystickButtonClick" Background="Transparent" BorderBrush="Transparent">
+                                    <Button ToolTip="Assign joystick buttons(s)" Click="OnScanJoystickButtonClick" Background="Transparent" BorderBrush="Transparent">
                                         <Image Width="15" Height="15" Source="{Binding Source={x:Static local:Resources.scan}, Converter={StaticResource BitmapToImageSourceConverter}}" />
                                     </Button>
                                 </StackPanel>
