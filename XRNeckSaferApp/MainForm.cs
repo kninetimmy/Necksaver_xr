@@ -26,9 +26,11 @@ namespace XRNeckSafer
         private int _lastOffsetAnglePitch;
         private float _lastOffsetX;
         private float _lastOffsetZ;
+        private float _lastOffsetY;
 
         private float _transOffsetLeftRight;
         private float _transOffsetForward;
+        private float _transOffsetUpDown;
         private Vector3 _transOffsetVector;
         private Vector3 _autoTransOffsetVector;
 
@@ -377,6 +379,7 @@ namespace XRNeckSafer
                     updateTransValues();
                     _transOffsetVector.X = _transOffsetLeftRight;
                     _transOffsetVector.Z = _transOffsetForward;
+                    _transOffsetVector.Y = _transOffsetUpDown;
                 }
                 else if (r_pressed)
                 {
@@ -384,12 +387,14 @@ namespace XRNeckSafer
                     updateTransValues();
                     _transOffsetVector.X = -_transOffsetLeftRight;
                     _transOffsetVector.Z = _transOffsetForward;
+                    _transOffsetVector.Y = _transOffsetUpDown;
                 }
                 else
                 {
                     _joyOffsetAngle = 0;
                     _transOffsetVector.X = 0;
                     _transOffsetVector.Z = 0;
+                    _transOffsetVector.Y = 0;
                 }
             }
 
@@ -479,10 +484,12 @@ namespace XRNeckSafer
 
             if (Math.Abs(_autoTransOffsetVector.X) > Math.Abs(_transOffsetVector.X)) _transOffsetVector.X = _autoTransOffsetVector.X;
             if (Math.Abs(_autoTransOffsetVector.Z) > Math.Abs(_transOffsetVector.Z)) _transOffsetVector.Z = _autoTransOffsetVector.Z;
+            if (Math.Abs(_autoTransOffsetVector.Y) > Math.Abs(_transOffsetVector.Y)) _transOffsetVector.Y = _autoTransOffsetVector.Y;
 
             if (_lastOffsetAngle != _sumOffsetAngle
                 || _lastOffsetX != _transOffsetVector.X
                 || _lastOffsetZ != _transOffsetVector.Z
+                || _lastOffsetY != _transOffsetVector.Y
                 || _lastOffsetAnglePitch != _sumOffsetAnglePitch)
             {
                 _vr.SetOffset(_sumOffsetAngle, _sumOffsetAnglePitch, _transOffsetVector);
@@ -499,6 +506,7 @@ namespace XRNeckSafer
             _lastOffsetAnglePitch = _sumOffsetAnglePitch;
             _lastOffsetX = _transOffsetVector.X;
             _lastOffsetZ = _transOffsetVector.Z;
+            _lastOffsetY = _transOffsetVector.Y;
 
             if (_graphForm != null)
             {
@@ -604,10 +612,16 @@ namespace XRNeckSafer
             _transOffsetLeftRight = (float)value / 100F;
         }
 
+        private void SetTransOffsetUD(decimal value)
+        {
+            _transOffsetUpDown = (float)value / 100F;
+        }
+
         private void updateTransValues()
         {
             OnYawForwardTranslationChanged(new object(), new EventArgs());
             OnYawLeftRightTranslationChanged(new object(), new EventArgs());
+            OnYawUpDownTranslationChanged(new object(), new EventArgs());
         }
         private void OnYawForwardTranslationChanged(object sender, EventArgs e)
         {
@@ -617,6 +631,11 @@ namespace XRNeckSafer
         private void OnYawLeftRightTranslationChanged(object sender, EventArgs e)
         {
             SetTransOffsetLR(transLRNUP.Value);
+        }
+
+        private void OnYawUpDownTranslationChanged(object sender, EventArgs e)
+        {
+            SetTransOffsetUD(transUDUP.Value);
         }
 
         private void AddButton_Click(object sender, EventArgs e)

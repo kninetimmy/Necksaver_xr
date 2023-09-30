@@ -8,6 +8,7 @@
         public float pitchOffset;
         public float lateralOffset;
         public float longitudinalOffset;
+        public float altitudeOffset;
         public float rightMultiplier;
         public float leftMultiplier;
         public float upMultiplier;

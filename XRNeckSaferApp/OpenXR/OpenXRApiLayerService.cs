@@ -142,6 +142,7 @@ namespace XRNeckSafer
             _sharedMemoryData.pitchOffset = (float)(-b * Math.PI / 180);
             _sharedMemoryData.lateralOffset = trans.X;
             _sharedMemoryData.longitudinalOffset = trans.Z;
+            _sharedMemoryData.altitudeOffset = trans.Y;
             _memoryAccessor.Write(0, ref _sharedMemoryData);
         }
 

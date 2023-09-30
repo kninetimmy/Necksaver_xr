@@ -70,6 +70,7 @@ namespace {
 		float pitchOffset;
 		float lateralOffset;
 		float longitudinalOffset;
+		float altitudeOffset;
 		float rightMultiplier;
 		float leftMultiplier;
 		float upMultiplier;
@@ -419,6 +420,7 @@ namespace {
 			shmValues.yawOffset = buffer->yawOffset;
 			shmValues.pitchOffset = buffer->pitchOffset;
 			shmValues.longitudinalOffset = buffer->longitudinalOffset;
+			shmValues.altitudeOffset = buffer->altitudeOffset;
 			shmValues.lateralOffset = buffer->lateralOffset;
 			shmValues.useLinearRotation = buffer->useLinearRotation;
 			shmValues.holdLinearRotation = buffer->holdLinearRotation;
@@ -463,7 +465,7 @@ namespace {
 //				trans = { 0 , 0, 0 };
 			}
 //			else {
-				trans = { shmValues.lateralOffset , 0, shmValues.longitudinalOffset };
+				trans = { shmValues.lateralOffset , shmValues.altitudeOffset, shmValues.longitudinalOffset };
 //			}
 
 			if (shmValues.useLinearPitchRotation) {
@@ -584,7 +586,8 @@ namespace {
 		if (shmValues.yawOffset != 0
 			|| shmValues.pitchOffset != 0
 			|| shmValues.longitudinalOffset != 0
-			|| shmValues.lateralOffset != 0) {
+			|| shmValues.lateralOffset != 0
+			|| shmValues.altitudeOffset != 0) {
 
 
 			if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
