@@ -638,6 +638,16 @@ namespace XRNeckSafer
             SetTransOffsetUD(transUDUP.Value);
         }
 
+        private void OnResetTranslationValueChanged(bool pressed)
+        {
+            if (pressed)
+            {
+                transFNUP.Value = 0;
+                transLRNUP.Value = 0;
+                transUDUP.Value = 0;
+            }
+        }
+
         private void AddButton_Click(object sender, EventArgs e)
         {
             int[] i = new int[5];

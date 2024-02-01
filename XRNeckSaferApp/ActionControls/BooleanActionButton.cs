@@ -56,15 +56,7 @@ namespace XRNeckSafer
         public string ActionPropertyId
         {
             get => _actionPropertyId;
-            set
-            {
-                _actionPropertyId = value;
-                if (DesignMode)
-                {
-                    return;
-                }
-                InitialiseActionProperty();
-            }
+            set => _actionPropertyId = value;
         }
 
         [Category("ActionProperty"), DisplayName("Action Property Name"), Description("ActionProperty user firendly name")]
@@ -182,6 +174,12 @@ namespace XRNeckSafer
         public BooleanActionButton() : base()
         {
             Config.ConfigReloaded += OnConfigReloaded;
+        }
+
+        protected override void OnCreateControl()
+        {
+            InitialiseActionProperty();
+            base.OnCreateControl();
         }
 
         private void InitialiseActionProperty()

@@ -52,15 +52,7 @@ namespace XRNeckSafer
         public string ActionPropertyId
         {
             get => _actionPropertyId;
-            set
-            {
-                _actionPropertyId = value;
-                if (DesignMode)
-                {
-                    return;
-                }
-                InitialiseActionProperty();
-            }
+            set => _actionPropertyId = value;
         }
 
         [Category("ActionProperty"), DisplayName("Action Property Name"), Description("ActionProperty user firendly name")]
@@ -117,7 +109,7 @@ namespace XRNeckSafer
                 _defaultValue = value;
                 if (_newProperty || DesignMode)
                 {
-                    base.Value = _defaultValue;
+                    Value = _defaultValue;
                 }
             }
         }
@@ -127,6 +119,7 @@ namespace XRNeckSafer
         public new decimal Value 
         { 
             get => base.Value;
+            set => base.Value = value;
         }
 
         public new decimal Minimum
@@ -174,6 +167,12 @@ namespace XRNeckSafer
             ValueChanged += OnValueChanged;
         }
 
+        protected override void OnCreateControl()
+        {
+            InitialiseActionProperty();
+            base.OnCreateControl();
+        }
+
         private void InitialiseActionProperty()
         {
             if (!_firstTimeRendered)
@@ -213,10 +212,10 @@ namespace XRNeckSafer
                 _actionProperty = NumericUpDownActionProperty.CreateProperty(ActionPropertyId);
                 Config.Instance.ActionProperties.Add(_actionProperty);
                 _newProperty = true;
-                base.Value = DefaultValue;
+                Value = DefaultValue;
             }
 
-            base.Value = _actionProperty.GetValue();
+            Value = _actionProperty.GetValue();
             _actionProperty.Name = _actionPropertyName;
             _actionProperty.Description = _actionPropertyDescription;
             _actionProperty.Order = _actionPropertyOrder;
@@ -234,7 +233,7 @@ namespace XRNeckSafer
                 Invoke(new Action<ActionPropertyEventArgs<decimal>>(ActionPropertyTriggered), args);
                 return;
             }
-            base.Value = args.Value;
+            Value = args.Value;
         }
 
         protected override void Dispose(bool disposing)
