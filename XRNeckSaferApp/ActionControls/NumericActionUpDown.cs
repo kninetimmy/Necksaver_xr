@@ -8,12 +8,13 @@ namespace XRNeckSafer
 {
     public class NumericActionUpDown : NumericUpDown, IActionPropertyGroups, IActionPropertyName
     {
+        private Form _form;
         private NumericUpDownActionProperty _actionProperty;
         private bool _firstTimeRendered;
         private string _actionPropertyId;
         private string _actionPropertyName;
         private string _actionPropertyDescription;
-        private int _actionPropertyOrder;
+        private short _actionPropertyOrder;
         private ActionPropertyGroupItem _selectedGroup;
         private ActionPropertyGroups _groupsComponent;
         private decimal _defaultValue;
@@ -86,7 +87,7 @@ namespace XRNeckSafer
         }
 
         [Category("ActionProperty"), Description("ActionProperty description")]
-        public int ActionPropertyOrder
+        public short ActionPropertyOrder
         {
             get => _actionPropertyOrder;
             set
@@ -165,17 +166,28 @@ namespace XRNeckSafer
         {
             Config.ConfigReloaded += OnConfigReloaded;
             ValueChanged += OnValueChanged;
+            
         }
 
-        protected override void OnCreateControl()
+        protected override void OnLayout(LayoutEventArgs e)
+        {
+            base.OnLayout(e);
+            var form = FindForm();
+            if (form != null && _form == null)
+            {
+                _form = form;
+                form.Activated += OnParentFormActivated;
+            }
+        }
+
+        private void OnParentFormActivated(object sender, EventArgs e)
         {
             InitialiseActionProperty();
-            base.OnCreateControl();
         }
 
         private void InitialiseActionProperty()
         {
-            if (!_firstTimeRendered)
+            if (!_firstTimeRendered && ActionPropertyId != null)
             {
                 _firstTimeRendered = true;
                 SubscribeActionProperty();
@@ -243,6 +255,11 @@ namespace XRNeckSafer
             {
                 Config.ConfigReloaded -= OnConfigReloaded;
                 _actionProperty.Triggered -= ActionPropertyTriggered;
+                if (_form != null)
+                {
+                    _form.Activated -= OnParentFormActivated;
+                    _form = null;
+                }
             }
         }
     }

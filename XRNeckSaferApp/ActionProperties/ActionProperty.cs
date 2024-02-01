@@ -21,7 +21,7 @@ namespace XRNeckSafer
         public string Description { get; set; }
 
         [JsonIgnore]
-        public int Order { get; set; }
+        public short Order { get; set; }
 
         [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.All)]
         public ActionPropertyEvent[] Events { get; set; }

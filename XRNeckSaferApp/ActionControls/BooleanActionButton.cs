@@ -9,6 +9,7 @@ namespace XRNeckSafer
 {
     public class BooleanActionButton : Button, IActionPropertyGroups, IActionPropertyName
     {
+        private Form _form;
         private Color _inactiveForeColour;
         private Color _inactiveBackColour;
         private Color _activeForeColour = Color.LightGreen;
@@ -19,7 +20,7 @@ namespace XRNeckSafer
         private string _actionPropertyId;
         private string _actionPropertyName;
         private string _actionPropertyDescription;
-        private int _actionPropertyOrder;
+        private short _actionPropertyOrder;
         private ActionPropertyGroupItem _selectedGroup;
         private ActionPropertyGroups _groupsComponent;
 
@@ -90,7 +91,7 @@ namespace XRNeckSafer
         }
 
         [Category("ActionProperty"), Description("ActionProperty description")]
-        public int ActionPropertyOrder
+        public short ActionPropertyOrder
         {
             get => _actionPropertyOrder;
             set
@@ -176,15 +177,25 @@ namespace XRNeckSafer
             Config.ConfigReloaded += OnConfigReloaded;
         }
 
-        protected override void OnCreateControl()
+        protected override void OnLayout(LayoutEventArgs e)
+        {
+            base.OnLayout(e);
+            var form = FindForm();
+            if (form != null && _form == null)
+            {
+                _form = form;
+                form.Activated += OnParentFormActivated;
+            }
+        }
+
+        private void OnParentFormActivated(object sender, EventArgs e)
         {
             InitialiseActionProperty();
-            base.OnCreateControl();
         }
 
         private void InitialiseActionProperty()
         {
-            if (!_firstTimeRendered)
+            if (!_firstTimeRendered && ActionPropertyId != null)
             {
                 _firstTimeRendered = true;
                 SubscribeActionProperty();

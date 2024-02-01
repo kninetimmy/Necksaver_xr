@@ -94,7 +94,7 @@ namespace XRNeckSafer
                         Description = prop.Description,
                         ActionPropertyOrder = prop.Order,
                         GroupName = prop.Group?.Name ?? "Miscellaneous",
-                        GroupOrder = prop.Group?.Order ?? int.MaxValue,
+                        GroupOrder = prop.Group?.Order ?? short.MaxValue,
                         EventName = actionEvent.Name,
                         IsToggleEnabled = toggleAction != null,
                         ToggleValue = toggleAction != null && toggleAction.Toggle,
