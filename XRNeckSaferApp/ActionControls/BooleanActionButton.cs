@@ -271,6 +271,11 @@ namespace XRNeckSafer
             {
                 Config.ConfigReloaded -= OnConfigReloaded;
                 _actionProperty.Triggered -= ActionPropertyTriggered;
+                if (_form != null)
+                {
+                    _form.Activated -= OnParentFormActivated;
+                    _form = null;
+                }
             }
         }
     }
