@@ -37,7 +37,6 @@
 #include "loader_interfaces.h"
 
 // OpenXR utilities.
-#include <XrError.h>
 #include <XrMath.h>
 
 #endif //PCH_H

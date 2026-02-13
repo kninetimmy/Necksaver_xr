@@ -628,7 +628,11 @@ namespace {
 			// determine eye poses
 			XrViewLocateInfo offsetViewLocateInfo{ viewLocateInfo->type, nullptr, viewLocateInfo->viewConfigurationType,viewLocateInfo->displayTime, m_ViewSpace };
 
-			CHECK_XRCMD(nextXrLocateViews(session, &offsetViewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views));
+			const XrResult offsetLocateResult = nextXrLocateViews(session, &offsetViewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views);
+			if (XR_FAILED(offsetLocateResult)) {
+				DebugLog("xrLocateViews (offset) failed: %d\n", offsetLocateResult);
+				return offsetLocateResult;
+			}
 			for (uint32_t i = 0; i < *viewCountOutput; i++)
 			{
 				m_EyeOffsets.push_back(views[i]);
@@ -636,7 +640,11 @@ namespace {
 		}
 		// manipulate reference space location
 		XrSpaceLocation location{ XR_TYPE_SPACE_LOCATION, nullptr };
-		CHECK_XRCMD(XRNeckSafer_xrLocateSpace(m_ViewSpace, viewLocateInfo->space, viewLocateInfo->displayTime, &location));
+		const XrResult locateSpaceResult = XRNeckSafer_xrLocateSpace(m_ViewSpace, viewLocateInfo->space, viewLocateInfo->displayTime, &location);
+		if (XR_FAILED(locateSpaceResult)) {
+			DebugLog("xrLocateSpace failed: %d\n", locateSpaceResult);
+			return locateSpaceResult;
+		}
 		for (uint32_t i = 0; i < *viewCountOutput; i++)
 		{
 			views[i].pose = Pose::Multiply(m_EyeOffsets[i].pose, location.pose);
