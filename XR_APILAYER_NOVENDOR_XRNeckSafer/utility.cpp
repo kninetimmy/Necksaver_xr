@@ -2,13 +2,10 @@
 
 #include "pch.h"
 
-#include <DirectXMath.h>
-#include <log.h>
-#include <util.h>
+#include "compat/log_compat.h"
 #include "utility.h"
 
 using namespace motion_compensation_layer::log;
-using namespace xr::math;
 
 namespace utility
 {
