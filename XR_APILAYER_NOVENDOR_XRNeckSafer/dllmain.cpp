@@ -57,6 +57,8 @@ namespace {
 
 	XrQuaternionf HmdOrientation;
 	DirectX::XMVECTOR qYawOffset;
+	bool loggedInvalidOrientationInLocateSpace = false;
+	bool loggedInvalidPositionInLocateSpace = false;
 
 	// float csin, ccos;
 
@@ -585,13 +587,45 @@ namespace {
 		XrPosef pos1 = location->pose;
 
 		if (shmValues.yawOffset != 0 || shmValues.pitchOffset != 0) {
+			const bool orientationValid = (location->locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT) != 0;
+			const bool positionValid = (location->locationFlags & XR_SPACE_LOCATION_POSITION_VALID_BIT) != 0;
 
 
 			if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
-				location->pose = XRNeckSafer_ManipulatePose(location->pose, baseSpaceIsStageSpace);
+				const XrPosef manipulatedPose = XRNeckSafer_ManipulatePose(location->pose, baseSpaceIsStageSpace);
+				if (orientationValid) {
+					location->pose.orientation = manipulatedPose.orientation;
+				}
+				else if (!loggedInvalidOrientationInLocateSpace) {
+					Log("xrLocateSpace: skipping orientation modification because orientation is not valid\n");
+					loggedInvalidOrientationInLocateSpace = true;
+				}
+
+				if (positionValid) {
+					location->pose.position = manipulatedPose.position;
+				}
+				else if (!loggedInvalidPositionInLocateSpace) {
+					Log("xrLocateSpace: skipping position modification because position is not valid\n");
+					loggedInvalidPositionInLocateSpace = true;
+				}
 			}
 			if (baseSpaceIsViewSpace && !spaceIsViewSpace) {
-				location->pose = Pose::Invert(XRNeckSafer_ManipulatePose(location->pose, baseSpaceIsStageSpace));
+				const XrPosef manipulatedPose = Pose::Invert(XRNeckSafer_ManipulatePose(location->pose, baseSpaceIsStageSpace));
+				if (orientationValid) {
+					location->pose.orientation = manipulatedPose.orientation;
+				}
+				else if (!loggedInvalidOrientationInLocateSpace) {
+					Log("xrLocateSpace: skipping orientation modification because orientation is not valid\n");
+					loggedInvalidOrientationInLocateSpace = true;
+				}
+
+				if (positionValid) {
+					location->pose.position = manipulatedPose.position;
+				}
+				else if (!loggedInvalidPositionInLocateSpace) {
+					Log("xrLocateSpace: skipping position modification because position is not valid\n");
+					loggedInvalidPositionInLocateSpace = true;
+				}
 			}
 		}
 
