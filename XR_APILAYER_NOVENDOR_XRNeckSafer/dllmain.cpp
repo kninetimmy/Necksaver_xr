@@ -665,9 +665,8 @@ namespace {
 
 		// Call the chain to resolve the next function pointer.
 		const XrResult result = nextXrGetInstanceProcAddr(instance, name, function);
-		if (result == XR_SUCCESS)
-			if (result == XR_SUCCESS)
-			{
+		if (XR_SUCCEEDED(result))
+		{
 				const std::string apiName(name);
 
 				// Intercept the calls handled by our layer.
