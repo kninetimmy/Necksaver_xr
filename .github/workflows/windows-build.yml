@@ -1,0 +1,28 @@
+name: Windows Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore packages
+        run: nuget restore XRNeckSafer.sln
+
+      - name: Build C++ layer (Release|x64)
+        run: msbuild XR_APILAYER_NOVENDOR_XRNeckSafer\XR_APILAYER_NOVENDOR_XRNeckSafer.vcxproj /m /p:Configuration=Release /p:Platform=x64
+
+      - name: Build WinForms app (Release|Any CPU)
+        run: msbuild XRNeckSaferApp\XRNeckSaferApp.csproj /m /p:Configuration=Release /p:Platform="Any CPU"

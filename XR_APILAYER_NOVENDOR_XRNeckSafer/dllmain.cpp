@@ -38,6 +38,7 @@ namespace {
 	PFN_xrLocateSpace nextXrLocateSpace = nullptr;
 	PFN_xrCreateSession nextXrCreateSession = nullptr;
 	PFN_xrEndFrame nextXrEndFrame = nullptr;
+	PFN_xrPollEvent nextXrPollEvent = nullptr;
 
 	std::set<XrSpace> isViewSpace;
 	std::set<XrSpace> isLocalSpace;
@@ -100,9 +101,41 @@ namespace {
 	XrSpace m_ViewSpace{ XR_NULL_HANDLE };
 	XrSpace m_StageSpace{ XR_NULL_HANDLE };
 	XrSession m_Session{ XR_NULL_HANDLE };
+	XrSessionState m_LastSessionState{ XR_SESSION_STATE_UNKNOWN };
 
 	float holdYawOffsetValue;
 	float holdPitchOffsetValue;
+
+	bool g_SharedMemoryReady = false;
+	bool g_PoseManipulationEnabled = true;
+	bool g_LoggedPosePassthrough = false;
+
+	auto disablePoseManipulation = [](const char* reason) {
+		if (g_PoseManipulationEnabled) {
+			Log("Disabling pose manipulation: %s\n", reason);
+		}
+		g_PoseManipulationEnabled = false;
+		g_LoggedPosePassthrough = false;
+	};
+
+	auto ensurePoseManipulationEnabled = []() {
+		if (!g_PoseManipulationEnabled) {
+			Log("Pose manipulation re-enabled (safe conditions restored).\n");
+			g_LoggedPosePassthrough = false;
+		}
+		g_PoseManipulationEnabled = true;
+	};
+
+	auto shouldPassthroughPose = []() -> bool {
+		if (!g_PoseManipulationEnabled) {
+			if (!g_LoggedPosePassthrough) {
+				Log("Pose manipulation passthrough mode active.\n");
+				g_LoggedPosePassthrough = true;
+			}
+			return true;
+		}
+		return false;
+	};
 
 	struct EulerAngles {
 		float roll, pitch, yaw;
@@ -131,14 +164,17 @@ namespace {
 			buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
 			if (NULL != buffer) {
 				Log("XRNeckSafer shared memory ready\n");
+				g_SharedMemoryReady = true;
 				buffer->hasBeenCentered = false;
 			}
 			else {
 				Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
+				g_SharedMemoryReady = false;
 			}
 		}
 		else {
 			Log("Couldn't create XRNeckSafer shared memory\n");
+			g_SharedMemoryReady = false;
 		}
 
 
@@ -146,14 +182,17 @@ namespace {
 			buffer = (shmVal_s*)MapViewOfFile(m_shmHandler, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(shmValues));
 			if (NULL != buffer) {
 				Log("XRNeckSafer shared memory ready\n");
+				g_SharedMemoryReady = true;
 				buffer->hasBeenCentered = false;
 			}
 			else {
 				Log("Cannot map XRNeckSafer shared memory: null buffer.\n");
+				g_SharedMemoryReady = false;
 			}
 		}
 		else {
 			Log("Couldn't create XRNeckSafer shared memory\n");
+			g_SharedMemoryReady = false;
 		}
 
 #ifdef _DEBUG
@@ -271,8 +310,15 @@ namespace {
 		XrSession* session)
 	{
 		DebugLog("--> XRNeckSafer_xrCreateSession\n");
+		Log("xrCreateSession intercepted (instance=%llu).\n", (unsigned long long)instance);
 		// Call the chain to perform the actual operation.
 		const XrResult result = nextXrCreateSession(instance, createInfo, session);
+		if (XR_FAILED(result)) {
+			Log("xrCreateSession failed in runtime chain: %d\n", result);
+			disablePoseManipulation("xrCreateSession failed");
+			return result;
+		}
+		ensurePoseManipulationEnabled();
 
 		m_Session = *session;
 
@@ -301,6 +347,10 @@ namespace {
 		const XrFrameEndInfo* frameEndInfo)
 	{
 		DebugLog("--> XRNeckSafer_xrEndFrame\n");
+		if (!frameEndInfo || !nextXrEndFrame || !nextXrLocateSpace) {
+			disablePoseManipulation("Missing frame info or required function pointers");
+			return nextXrEndFrame ? nextXrEndFrame(session, frameEndInfo) : XR_ERROR_HANDLE_INVALID;
+		}
 
 		// from OXRMC
 		// making sure that all viewsmanipulations are reverted to make sure that reprojection doesn't run havoc 
@@ -367,6 +417,10 @@ namespace {
 										 resetLayers.data() };
 
 		const XrResult result = nextXrEndFrame(session, &resetFrameEndInfo);
+		if (XR_FAILED(result)) {
+			disablePoseManipulation("xrEndFrame chain call failed");
+			return result;
+		}
 
 		// clean up memory
 		for (auto projection : resetProjectionLayers)
@@ -384,6 +438,21 @@ namespace {
 		location.type = XR_TYPE_SPACE_LOCATION;
 		location.next = nullptr;
 
+		if (shouldPassthroughPose()) {
+			DebugLog("xrEndFrame passthrough\n");
+			return result;
+		}
+
+		if (!g_SharedMemoryReady || !buffer) {
+			disablePoseManipulation("Shared memory missing or invalid");
+			return result;
+		}
+
+		if (m_ViewSpace == XR_NULL_HANDLE || m_LocalSpace == XR_NULL_HANDLE || m_StageSpace == XR_NULL_HANDLE) {
+			disablePoseManipulation("Reference spaces are invalid");
+			return result;
+		}
+
 		const XrResult result2 = nextXrLocateSpace(m_ViewSpace, m_LocalSpace, frameEndInfo->displayTime, &location);
 		DebugLog("XrLocateSpace for HMD %d\n", result2);
 
@@ -392,6 +461,10 @@ namespace {
 		locationStage.next = nullptr;
 
 		const XrResult result3 = nextXrLocateSpace(m_ViewSpace, m_StageSpace, frameEndInfo->displayTime, &locationStage);
+		if (XR_FAILED(result2) || XR_FAILED(result3)) {
+			disablePoseManipulation("xrLocateSpace failed in xrEndFrame");
+			return result;
+		}
 		DebugLog("XrLocateSpace in STAGE for HMD %d\n", result3);
 
 		toMonitor("LOCAL x", location.pose.position.x);
@@ -401,7 +474,8 @@ namespace {
 		toMonitor("STAGE y", locationStage.pose.position.y);
 		toMonitor("STAGE z", locationStage.pose.position.z);
 
-		if (location.locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT) {
+		if ((location.locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT) &&
+			(locationStage.locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT)) {
 
 			// center button pressed? -> current orientation gets center orientation
 			if (buffer->resetHmdOrientation) {
@@ -414,7 +488,7 @@ namespace {
 			}
 
 			// refuse to do anything before centering
-			if (!shmValues.hasBeenCentered) return result2;
+			if (!shmValues.hasBeenCentered) return result;
 
 			shmValues.yawOffset = buffer->yawOffset;
 			shmValues.pitchOffset = buffer->pitchOffset;
@@ -490,6 +564,9 @@ namespace {
 			// save yaw offset as quaternion for later use
 			qYawOffset = DirectX::XMQuaternionRotationRollPitchYaw(0.f, -shmValues.yawOffset, 0.f);
 
+		}
+		else {
+			disablePoseManipulation("Invalid orientation flags in xrEndFrame locate results");
 		}
 
 		DebugLog("<-- XRNeckSafer_xrEndFrame %d\n", result);
@@ -574,6 +651,9 @@ namespace {
 		DebugLog("--> XRNeckSafer_xrLocateSpace ");
 		// Call the chain to perform the actual operation.
 		const XrResult result = nextXrLocateSpace(space, baseSpace, time, location);
+		if (XR_FAILED(result) || !location || shouldPassthroughPose()) {
+			return result;
+		}
 
 		bool spaceIsViewSpace = isViewSpace.count(space);
 		bool baseSpaceIsViewSpace = isViewSpace.count(baseSpace);
@@ -583,6 +663,11 @@ namespace {
 		DebugLog("space: %d  bspace: %d ", space, baseSpace);
 
 		XrPosef pos1 = location->pose;
+
+		if ((location->locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT) == 0) {
+			disablePoseManipulation("xrLocateSpace returned invalid orientation flag");
+			return result;
+		}
 
 		if (shmValues.yawOffset != 0 || shmValues.pitchOffset != 0) {
 
@@ -616,6 +701,9 @@ namespace {
 		DebugLog("--> XRNeckSafer_xrLocateViews ");
 		// Call the chain to perform the actual operation.
 		const XrResult result = nextXrLocateViews(session, viewLocateInfo, viewState, viewCapacityInput, viewCountOutput, views);
+		if (XR_FAILED(result) || !viewLocateInfo || !viewCountOutput || !views || shouldPassthroughPose()) {
+			return result;
+		}
 
 		std::vector<XrPosef> originalEyePoses{};
 		for (uint32_t i = 0; i < *viewCountOutput; i++)
@@ -636,7 +724,11 @@ namespace {
 		}
 		// manipulate reference space location
 		XrSpaceLocation location{ XR_TYPE_SPACE_LOCATION, nullptr };
-		CHECK_XRCMD(XRNeckSafer_xrLocateSpace(m_ViewSpace, viewLocateInfo->space, viewLocateInfo->displayTime, &location));
+		const XrResult locateSpaceRes = XRNeckSafer_xrLocateSpace(m_ViewSpace, viewLocateInfo->space, viewLocateInfo->displayTime, &location);
+		if (XR_FAILED(locateSpaceRes)) {
+			disablePoseManipulation("xrLocateSpace failed while processing xrLocateViews");
+			return result;
+		}
 		for (uint32_t i = 0; i < *viewCountOutput; i++)
 		{
 			views[i].pose = Pose::Multiply(m_EyeOffsets[i].pose, location.pose);
@@ -644,6 +736,26 @@ namespace {
 
 		DebugLog("<-- XRNeckSafer_xrLocateViews %d\n", result);
 
+		return result;
+	}
+
+
+	XrResult XRNeckSafer_xrPollEvent(
+		XrInstance instance,
+		XrEventDataBuffer* eventData)
+	{
+		if (!nextXrPollEvent) {
+			disablePoseManipulation("xrPollEvent pointer not initialized");
+			return XR_ERROR_FUNCTION_UNSUPPORTED;
+		}
+		const XrResult result = nextXrPollEvent(instance, eventData);
+		if (XR_SUCCEEDED(result) && eventData && eventData->type == XR_TYPE_EVENT_DATA_SESSION_STATE_CHANGED) {
+			const auto* stateChanged = reinterpret_cast<const XrEventDataSessionStateChanged*>(eventData);
+			if (stateChanged->state != m_LastSessionState) {
+				Log("Session state changed: %d -> %d\n", (int)m_LastSessionState, (int)stateChanged->state);
+				m_LastSessionState = stateChanged->state;
+			}
+		}
 		return result;
 	}
 
@@ -666,21 +778,31 @@ namespace {
 				if (apiName == "xrLocateViews") {
 					nextXrLocateViews = reinterpret_cast<PFN_xrLocateViews>(*function);
 					*function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrLocateViews);
+					Log("Hooked function: xrLocateViews\n");
 				}
 				if (apiName == "xrLocateSpace") {
 					nextXrLocateSpace = reinterpret_cast<PFN_xrLocateSpace>(*function);
 					*function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrLocateSpace);
+					Log("Hooked function: xrLocateSpace\n");
 				}
 				if (apiName == "xrCreateSession") {
 					nextXrCreateSession = reinterpret_cast<PFN_xrCreateSession>(*function);
 					*function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrCreateSession);
+					Log("Hooked function: xrCreateSession\n");
 				}
 				if (apiName == "xrEndFrame") {
 					nextXrEndFrame = reinterpret_cast<PFN_xrEndFrame>(*function);
 					*function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrEndFrame);
+					Log("Hooked function: xrEndFrame\n");
 				}
 				if (apiName == "xrCreateReferenceSpace") {
 					*function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrCreateReferenceSpace);
+					Log("Hooked function: xrCreateReferenceSpace\n");
+				}
+				if (apiName == "xrPollEvent") {
+					nextXrPollEvent = reinterpret_cast<PFN_xrPollEvent>(*function);
+					*function = reinterpret_cast<PFN_xrVoidFunction>(XRNeckSafer_xrPollEvent);
+					Log("Hooked function: xrPollEvent\n");
 				}
 
 				// Leave all unhandled calls to the next layer.
@@ -793,6 +915,7 @@ extern "C" {
 			loaderInfo->minApiVersion > XR_CURRENT_API_VERSION)
 		{
 			Log("xrNegotiateLoaderApiLayerInterface validation failed\n");
+			Log("Negotiation failed for layer: %s\n", LayerName.c_str());
 			return XR_ERROR_INITIALIZATION_FAILED;
 		}
 
@@ -807,6 +930,7 @@ extern "C" {
 		DebugLog("<-- XRNeckSafer_xrNegotiateLoaderApiLayerInterface\n");
 
 		Log("%s layer is active\n", LayerName.c_str());
+		Log("Negotiation successful. API version=%u\n", XR_CURRENT_API_VERSION);
 
 		return XR_SUCCESS;
 	}
