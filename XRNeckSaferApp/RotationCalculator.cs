@@ -12,14 +12,14 @@ namespace XRNeckSafer
                 return;
             }
 
-            int yawsign = yaw > 0 ? 1 : -1;
-            int absyaw = yaw * yawsign;
-            int absarot = arot > 0 ? arot : -arot;
+            int yawsign = SignOrZero(yaw);
+            int absyaw = System.Math.Abs(yaw);
+            int absarot = System.Math.Abs(arot);
             int autorot = 0;
             int transx = 0;
             int transz = 0;
-
             int deact = 0;
+            bool hasValidStep = false;
 
             for (int i = 0; i < steps.Count; i++)
             {
@@ -28,6 +28,8 @@ namespace XRNeckSafer
                 {
                     continue;
                 }
+
+                hasValidStep = true;
 
                 int act = step[0];
                 deact = step[1];
@@ -47,6 +49,11 @@ namespace XRNeckSafer
                 }
             }
 
+            if (!hasValidStep)
+            {
+                return;
+            }
+
             if (absarot > autorot && absyaw >= deact)
             {
                 return;
@@ -64,12 +71,12 @@ namespace XRNeckSafer
                 return;
             }
 
-            int pitchsign = pitch > 0 ? 1 : -1;
-            int abspitch = pitch > 0 ? pitch : -pitch;
+            int pitchsign = SignOrZero(pitch);
+            int abspitch = System.Math.Abs(pitch);
             int autorot = 0;
-            int absarot = arot > 0 ? arot : -arot;
-
+            int absarot = System.Math.Abs(arot);
             int deact = 0;
+            bool hasValidStep = false;
 
             for (int i = 0; i < steps.Count; i++)
             {
@@ -78,6 +85,8 @@ namespace XRNeckSafer
                 {
                     continue;
                 }
+
+                hasValidStep = true;
 
                 int act = step[0];
                 deact = step[1];
@@ -93,12 +102,32 @@ namespace XRNeckSafer
                 }
             }
 
+            if (!hasValidStep)
+            {
+                return;
+            }
+
             if (absarot > autorot && abspitch >= deact)
             {
                 return;
             }
 
             arot = autorot * pitchsign;
+        }
+
+        private static int SignOrZero(int value)
+        {
+            if (value > 0)
+            {
+                return 1;
+            }
+
+            if (value < 0)
+            {
+                return -1;
+            }
+
+            return 0;
         }
     }
 }
