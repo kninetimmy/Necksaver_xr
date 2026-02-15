@@ -62,6 +62,46 @@ namespace XRNeckSafer.Tests
             Assert.Equal(0.4f, trans.Z, 3);
         }
 
+
+        [Fact]
+        public void CalcAutoRotAndTrans_UsesZeroSignWhenYawIsZero()
+        {
+            var steps = new List<int[]>
+            {
+                new[] { 0, 0, 15, 20, 30 }
+            };
+
+            int arot = 5;
+            var trans = new Vector3(1, 2, 3);
+
+            RotationCalculator.CalcAutoRotAndTrans(0, steps, ref arot, ref trans);
+
+            Assert.Equal(0, arot);
+            Assert.Equal(0f, trans.X);
+            Assert.Equal(0.3f, trans.Z, 3);
+            Assert.Equal(2f, trans.Y);
+        }
+
+
+        [Fact]
+        public void CalcAutoRotAndTrans_LeavesOutputUnchangedWhenAllRowsMalformed()
+        {
+            var steps = new List<int[]>
+            {
+                null,
+                new[] { 1, 1, 1 },
+                new[] { 2, 2, 2, 2 }
+            };
+
+            int arot = 4;
+            var trans = new Vector3(1, 2, 3);
+
+            RotationCalculator.CalcAutoRotAndTrans(12, steps, ref arot, ref trans);
+
+            Assert.Equal(4, arot);
+            Assert.Equal(new Vector3(1, 2, 3), trans);
+        }
+
         [Fact]
         public void CalcAutoPitch_UsesBoundaryStepWhenPitchEqualsActivation()
         {
@@ -88,6 +128,39 @@ namespace XRNeckSafer.Tests
 
             RotationCalculator.CalcAutoPitch(18, new List<int[]>(), ref arot);
             Assert.Equal(-9, arot);
+        }
+
+
+        [Fact]
+        public void CalcAutoPitch_UsesZeroSignWhenPitchIsZero()
+        {
+            var steps = new List<int[]>
+            {
+                new[] { 0, 0, 11 }
+            };
+
+            int arot = -9;
+
+            RotationCalculator.CalcAutoPitch(0, steps, ref arot);
+
+            Assert.Equal(0, arot);
+        }
+
+        [Fact]
+        public void CalcAutoPitch_LeavesOutputUnchangedWhenAllRowsMalformed()
+        {
+            var steps = new List<int[]>
+            {
+                null,
+                new[] { 1 },
+                new[] { 2, 1 }
+            };
+
+            int arot = 6;
+
+            RotationCalculator.CalcAutoPitch(12, steps, ref arot);
+
+            Assert.Equal(6, arot);
         }
 
         [Fact]

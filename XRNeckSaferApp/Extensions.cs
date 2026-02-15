@@ -9,16 +9,20 @@ namespace XRNeckSafer
     {
         public static bool CheckMatch(this IEnumerable<Keys> pressedKeys, params Keys[] keysToCheck)
         {
-            if (keysToCheck == null || keysToCheck.Length == 0)
+            if (pressedKeys == null || keysToCheck == null || keysToCheck.Length == 0)
             {
                 return false;
             }
-            var distinctKeysToCheck = keysToCheck.Distinct();
-            if (pressedKeys.Count() != distinctKeysToCheck.Count())
+
+            var pressedSet = new HashSet<Keys>(pressedKeys);
+            var checkSet = new HashSet<Keys>(keysToCheck);
+
+            if (pressedSet.Count != checkSet.Count)
             {
                 return false;
             }
-            return distinctKeysToCheck.All(k => pressedKeys.Contains(k));
+
+            return checkSet.All(pressedSet.Contains);
         }
     }
 }
