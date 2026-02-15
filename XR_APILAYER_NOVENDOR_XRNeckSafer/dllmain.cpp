@@ -57,8 +57,8 @@ namespace {
 
 	XrQuaternionf HmdOrientation;
 	DirectX::XMVECTOR qYawOffset;
-	bool loggedInvalidOrientationInLocateSpace = false;
-	bool loggedInvalidPositionInLocateSpace = false;
+	std::atomic<bool> loggedInvalidOrientationInLocateSpace{ false };
+	std::atomic<bool> loggedInvalidPositionInLocateSpace{ false };
 
 	// float csin, ccos;
 
@@ -292,6 +292,10 @@ namespace {
 		DebugLog("STAGE space: %d\n", m_StageSpace);
 
 		holdYawOffsetValue = 0;
+
+		// Reset log-once flags so new sessions get fresh diagnostics.
+		loggedInvalidOrientationInLocateSpace = false;
+		loggedInvalidPositionInLocateSpace = false;
 
 		DebugLog("<-- XRNeckSafer_xrCreateSession %d\n", result);
 
@@ -566,6 +570,27 @@ namespace {
 		return outpose;
 	}
 
+	// Apply a manipulated pose to a location, respecting validity flags.
+	// Only overwrites orientation/position components that the runtime reports as valid.
+	void ApplyValidPoseComponents(XrSpaceLocation* location, const XrPosef& manipulatedPose) {
+		const bool orientationValid = (location->locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT) != 0;
+		const bool positionValid = (location->locationFlags & XR_SPACE_LOCATION_POSITION_VALID_BIT) != 0;
+
+		if (orientationValid) {
+			location->pose.orientation = manipulatedPose.orientation;
+		}
+		else if (!loggedInvalidOrientationInLocateSpace.exchange(true)) {
+			Log("xrLocateSpace: skipping orientation modification because orientation is not valid\n");
+		}
+
+		if (positionValid) {
+			location->pose.position = manipulatedPose.position;
+		}
+		else if (!loggedInvalidPositionInLocateSpace.exchange(true)) {
+			Log("xrLocateSpace: skipping position modification because position is not valid\n");
+		}
+	}
+
 	// Overrides the behavior of xrLocateSpace()
 	XrResult XRNeckSafer_xrLocateSpace(
 		XrSpace space,
@@ -576,6 +601,11 @@ namespace {
 		DebugLog("--> XRNeckSafer_xrLocateSpace ");
 		// Call the chain to perform the actual operation.
 		const XrResult result = nextXrLocateSpace(space, baseSpace, time, location);
+
+		if (XR_FAILED(result)) {
+			DebugLog("<-- XRNeckSafer_xrLocateSpace (failed) %d\n", result);
+			return result;
+		}
 
 		bool spaceIsViewSpace = isViewSpace.count(space);
 		bool baseSpaceIsViewSpace = isViewSpace.count(baseSpace);
@@ -590,41 +620,16 @@ namespace {
 			const bool orientationValid = (location->locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT) != 0;
 			const bool positionValid = (location->locationFlags & XR_SPACE_LOCATION_POSITION_VALID_BIT) != 0;
 
-
-			if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
-				const XrPosef manipulatedPose = XRNeckSafer_ManipulatePose(location->pose, baseSpaceIsStageSpace);
-				if (orientationValid) {
-					location->pose.orientation = manipulatedPose.orientation;
+			// Skip ManipulatePose entirely when both components are invalid to
+			// avoid feeding undefined data into quaternion math.
+			if (orientationValid || positionValid) {
+				if (spaceIsViewSpace && !baseSpaceIsViewSpace) {
+					const XrPosef manipulatedPose = XRNeckSafer_ManipulatePose(location->pose, baseSpaceIsStageSpace);
+					ApplyValidPoseComponents(location, manipulatedPose);
 				}
-				else if (!loggedInvalidOrientationInLocateSpace) {
-					Log("xrLocateSpace: skipping orientation modification because orientation is not valid\n");
-					loggedInvalidOrientationInLocateSpace = true;
-				}
-
-				if (positionValid) {
-					location->pose.position = manipulatedPose.position;
-				}
-				else if (!loggedInvalidPositionInLocateSpace) {
-					Log("xrLocateSpace: skipping position modification because position is not valid\n");
-					loggedInvalidPositionInLocateSpace = true;
-				}
-			}
-			if (baseSpaceIsViewSpace && !spaceIsViewSpace) {
-				const XrPosef manipulatedPose = Pose::Invert(XRNeckSafer_ManipulatePose(location->pose, baseSpaceIsStageSpace));
-				if (orientationValid) {
-					location->pose.orientation = manipulatedPose.orientation;
-				}
-				else if (!loggedInvalidOrientationInLocateSpace) {
-					Log("xrLocateSpace: skipping orientation modification because orientation is not valid\n");
-					loggedInvalidOrientationInLocateSpace = true;
-				}
-
-				if (positionValid) {
-					location->pose.position = manipulatedPose.position;
-				}
-				else if (!loggedInvalidPositionInLocateSpace) {
-					Log("xrLocateSpace: skipping position modification because position is not valid\n");
-					loggedInvalidPositionInLocateSpace = true;
+				if (baseSpaceIsViewSpace && !spaceIsViewSpace) {
+					const XrPosef manipulatedPose = Pose::Invert(XRNeckSafer_ManipulatePose(location->pose, baseSpaceIsStageSpace));
+					ApplyValidPoseComponents(location, manipulatedPose);
 				}
 			}
 		}
@@ -679,10 +684,34 @@ namespace {
 			DebugLog("xrLocateSpace failed: %d\n", locateSpaceResult);
 			return locateSpaceResult;
 		}
-		for (uint32_t i = 0; i < *viewCountOutput; i++)
-		{
-			views[i].pose = Pose::Multiply(m_EyeOffsets[i].pose, location.pose);
+
+		const bool orientationValid = (location.locationFlags & XR_SPACE_LOCATION_ORIENTATION_VALID_BIT) != 0;
+		const bool positionValid = (location.locationFlags & XR_SPACE_LOCATION_POSITION_VALID_BIT) != 0;
+
+		if (orientationValid && positionValid) {
+			// Both components are valid — apply the full manipulated pose to each eye.
+			for (uint32_t i = 0; i < *viewCountOutput; i++)
+			{
+				views[i].pose = Pose::Multiply(m_EyeOffsets[i].pose, location.pose);
+			}
 		}
+		else if (orientationValid) {
+			// Only orientation is valid — apply orientation, keep original position.
+			for (uint32_t i = 0; i < *viewCountOutput; i++)
+			{
+				XrPosef combined = Pose::Multiply(m_EyeOffsets[i].pose, location.pose);
+				views[i].pose.orientation = combined.orientation;
+			}
+		}
+		else if (positionValid) {
+			// Only position is valid — apply position, keep original orientation.
+			for (uint32_t i = 0; i < *viewCountOutput; i++)
+			{
+				XrPosef combined = Pose::Multiply(m_EyeOffsets[i].pose, location.pose);
+				views[i].pose.position = combined.position;
+			}
+		}
+		// else: neither valid — leave the original eye poses from the runtime untouched.
 
 		DebugLog("<-- XRNeckSafer_xrLocateViews %d\n", result);
 

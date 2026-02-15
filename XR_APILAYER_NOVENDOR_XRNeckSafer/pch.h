@@ -8,6 +8,7 @@
 #define PCH_H
 
 // Standard library.
+#include <atomic>
 #include <cstdarg>
 #include <filesystem>
 #include <iostream>
