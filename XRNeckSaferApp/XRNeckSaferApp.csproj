@@ -185,6 +185,7 @@
     <Compile Include="ScanForm.Designer.cs">
       <DependentUpon>ScanForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RotationCalculator.cs" />
     <Compile Include="VRStuff.cs" />
     <EmbeddedResource Include="ButtonForm.resx">
       <DependentUpon>ButtonForm.cs</DependentUpon>

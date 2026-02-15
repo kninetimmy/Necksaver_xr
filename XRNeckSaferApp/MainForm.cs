@@ -508,7 +508,7 @@ namespace XRNeckSafer
                     _ARText = "Autorotation";
                     if (Config.Instance.AutoMode == "stepwise")
                     {
-                        calcAutoRotAndTrans((int)hmdYaw, ref _autoOffsetAngle, ref _autoTransOffsetVector);
+                        RotationCalculator.CalcAutoRotAndTrans((int)hmdYaw, Config.Instance.AutoSteps, ref _autoOffsetAngle, ref _autoTransOffsetVector);
                     }
                     else
                     {
@@ -537,7 +537,8 @@ namespace XRNeckSafer
                     _pARText = "Autorotation";
                     if (Config.Instance.PitchAutoMode == "stepwise")
                     {
-                        calcAutoPitch((int)hmdPitch, ref _autoOffsetAnglePitch);
+                        var pitchSteps = (hmdPitch > 0) ? Config.Instance.UpAutoSteps : Config.Instance.DownAutoSteps;
+                        RotationCalculator.CalcAutoPitch((int)hmdPitch, pitchSteps, ref _autoOffsetAnglePitch);
                     }
                     else
                     {
@@ -589,87 +590,6 @@ namespace XRNeckSafer
 
         }
 
-        private void calcAutoRotAndTrans(int yaw, ref int arot, ref Vector3 atrans)
-        {
-            int yawsign = (yaw > 0) ? 1 : -1;
-            int absyaw = yaw * yawsign;
-            int absarot = (arot > 0) ? arot : -arot;
-            int autorot = 0;
-            int transx = 0;
-            int transz = 0;
-
-
-            int act;
-            int deact = 0;
-            int rot;
-            int tx;
-            int tz;
-
-            for (int i = 0; i < Config.Instance.AutoSteps.Count; i++)
-            {
-                act = Config.Instance.AutoSteps[i][0];
-                deact = Config.Instance.AutoSteps[i][1];
-                rot = Config.Instance.AutoSteps[i][2];
-                tx = Config.Instance.AutoSteps[i][3];
-                tz = Config.Instance.AutoSteps[i][4];
-
-                if (absyaw >= act)
-                {
-                    autorot = rot;
-                    transx = tx;
-                    transz = tz;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            if ((absarot > autorot) && (absyaw >= deact))
-            {
-                return;
-            }
-            arot = yawsign * autorot;
-            atrans.X = (float)transx / 100.0F * -yawsign;
-            atrans.Z = (float)transz / 100.0F;
-        }
-        private void calcAutoPitch(int pitch, ref int arot)
-        {
-            List<int[]> Steps;
-            int pitchsign = (pitch > 0) ? 1 : -1;
-            int abspitch = (pitch > 0) ? pitch : -pitch;
-            int autorot = 0;
-            int absarot = (arot > 0) ? arot : -arot;
-
-            int act;
-            int deact = 0;
-            int rot;
-
-            Steps = (pitch > 0) ? Config.Instance.UpAutoSteps : Config.Instance.DownAutoSteps;
-
-            for (int i = 0; i < Steps.Count; i++)
-            {
-                act = Steps[i][0];
-                deact = Steps[i][1];
-                rot = Steps[i][2];
-
-                if (abspitch >= act)
-                {
-                    autorot = rot;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            if ((absarot > autorot) && (abspitch >= deact))
-            {
-                return;
-            }
-
-            arot = autorot * pitchsign;
-        }
         
         private void SetTransOffsetF(decimal value)
         {
